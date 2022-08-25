@@ -1,0 +1,9 @@
+.table-view{
+ -fx-text-fill: -fx-selection-bar-text;
+    -fx-font-size: 10;
+    -fx-size: 11 ;
+    -fx-font-family: "Arial";
+}
+.column-view{
+   -fx-padding: 5, 5, 5, 5;
+}

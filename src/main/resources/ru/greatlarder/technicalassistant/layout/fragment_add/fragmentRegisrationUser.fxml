@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="gridPaneAdd" alignment="CENTER" hgap="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="4.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentRegistrationUserController">
+    <columnConstraints>
+        <ColumnConstraints />
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <Label fx:id="labelLastName" text="Label" GridPane.rowIndex="1" />
+        <Label fx:id="labelFirstName" text="Label" GridPane.rowIndex="2" />
+        <Label fx:id="labelEmailAddress" text="Label" GridPane.rowIndex="3" />
+        <Label fx:id="labelPhone" text="Label" GridPane.rowIndex="4" />
+        <TextField fx:id="tfLastName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="tfFirstName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <TextField fx:id="tfMailAddress" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <TextField fx:id="tfPhone" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveUser" text="Button" GridPane.rowIndex="7" />
+        <MenuButton fx:id="menuButtonLanguage" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="MenuButton" GridPane.columnSpan="2" GridPane.rowIndex="6">
+            <items>
+                <MenuItem fx:id="menuItemRu" mnemonicParsing="false" onAction="#setMenuItemRu" text="Русский">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../images/ru.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuItem>
+                <MenuItem fx:id="menuItemEn" mnemonicParsing="false" onAction="#setMenuItemEn" text="English">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../images/ico-en.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuItem>
+            </items>
+        </MenuButton>
+        <ComboBox fx:id="comboBoxPost" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</GridPane>

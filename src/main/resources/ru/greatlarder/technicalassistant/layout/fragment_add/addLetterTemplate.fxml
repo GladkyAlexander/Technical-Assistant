@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="gridPaneAddLetterTemplate" alignment="TOP_CENTER" hgap="4.0" vgap="4.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentLetterTemplateController">
+  <columnConstraints>
+    <ColumnConstraints />
+    <ColumnConstraints />
+      <ColumnConstraints />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+  </rowConstraints>
+      <Label fx:id="labelTheme" text="Тема " GridPane.rowIndex="3" />
+      <TextField fx:id="tfTheme" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label fx:id="labelInfoTheme" text="Введите первое слово темы письма по которому будет происходить выборка писем." GridPane.columnIndex="2" GridPane.rowIndex="3">
+         <padding>
+            <Insets left="4.0" right="4.0" />
+         </padding></Label>
+      <Label fx:id="labalOpisanie" text="Слова должны быть разделены пробелами. Точек, тире или других знаков быть не должно." GridPane.columnSpan="3" GridPane.rowIndex="4" />
+      <Label fx:id="labelExampel" text="Пример" GridPane.rowIndex="5" />
+      <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnSpan="3" GridPane.rowIndex="8">
+            <Label fx:id="labelTime1" text="Время">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="labelWhit2" style="-fx-background-color: #ffff99;" text="пробел" />
+            <Label fx:id="labelVst" text="встречи">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="labelWhit3" style="-fx-background-color: #ffff99;" text="пробел" />
+            <Label fx:id="formatLabelTime2" text="12:30">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnSpan="3" GridPane.rowIndex="9">
+            <Label fx:id="labelOffice" text="Офис">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="labelWhit4" style="-fx-background-color: #ffff99;" text="пролбел" />
+            <Label fx:id="labelNimeOfice" text="Аврора">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnSpan="3" GridPane.rowIndex="10">
+            <Label fx:id="labelRegistr" text="Заказчик">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="labelWhit5" style="-fx-background-color: #ffff99;" text="пробел" />
+            <Label fx:id="labelFreg" text="Синева">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="labelWhit6" style="-fx-background-color: #ffff99;" text="пробел" />
+            <Label fx:id="labelNregister" text="Ирина">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="labelWhit8" style="-fx-background-color: #ffff99;" text="пробел" />
+            <Label fx:id="labelFreg1" text="Смирнова">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="labelWhit9" style="-fx-background-color: #ffff99;" text="пробел" />
+            <Label fx:id="labelNameReg1" text="Лариса">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+      </HBox>
+      <Label fx:id="labelEnd" text="Дальше произвольный текст" GridPane.rowIndex="12" />
+      <Label fx:id="labelMailAddress" text="Почта для мониторинга писем" />
+      <Label fx:id="labelPasswordMail" text="Пароль от почты" GridPane.rowIndex="1" />
+      <Label fx:id="labelHost" text="HOST" GridPane.rowIndex="2" />
+      <TextField fx:id="tfMailAddress" GridPane.columnIndex="1" />
+      <TextField fx:id="tfPasswordMail" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="tfHost" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+      <HBox spacing="10.0" GridPane.columnSpan="3" GridPane.rowIndex="6">
+            <Label fx:id="labelDate" text="дата">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelWhit" style="-fx-background-color: #ffff99;" text="пробел" />
+            <Label fx:id="labelFormatDate" text="21/07/2022">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </HBox>
+      <HBox spacing="10.0" GridPane.columnSpan="3" GridPane.rowIndex="7">
+            <Label fx:id="labelTime" text="Время">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelWhit1" style="-fx-background-color: #ffff99;" text="пробел" />
+            <Label fx:id="labelFormatTime" text="16:30">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+      </HBox>
+      <HBox spacing="10.0" GridPane.columnSpan="3" GridPane.rowIndex="11">
+            <Label fx:id="labelRoom" text=" Комната">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelWhit10" style="-fx-background-color: #ffff99;" text="пробел" />
+            <Label fx:id="labelNameRoom" text="Анапа">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+      </HBox>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="8.0" top="5.0" />
+   </padding>
+</GridPane>

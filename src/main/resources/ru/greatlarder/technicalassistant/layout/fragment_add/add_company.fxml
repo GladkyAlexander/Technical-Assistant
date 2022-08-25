@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="gridPaneAddCompany" hgap="4.0" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" vgap="4.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentCompanyController">
+  <columnConstraints>
+    <ColumnConstraints />
+    <ColumnConstraints />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+    <RowConstraints />
+    <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+  </rowConstraints>
+   <children>
+      <HBox alignment="CENTER_RIGHT" GridPane.columnSpan="2">
+         <children>
+            <ImageView fx:id="imgOk" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelOk" />
+            <ImageView fx:id="close1" fitHeight="25.0" fitWidth="400.0" onMouseClicked="#closeAddCompanyController" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/closed.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <Label fx:id="labelNameCompany" text="Название компании :" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelAddressCompany" text="Адрес компании :" GridPane.rowIndex="2">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelContactPerson" text="Связное лицо (представитель) :" GridPane.rowIndex="3">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelRepresentativePhoneNumber" text="Телефон представителя :" GridPane.rowIndex="4">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="mailRepresentative" text="Электронная почта представителя :" GridPane.rowIndex="5">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelWebsite" text="Веб сайт компании :" GridPane.rowIndex="6">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfNameCompany" promptText="Название компании" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="tfAddress" promptText="Адрес компании" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="tfCurator" promptText="Связное лицо (ФИО)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="tfNumberPhone" promptText="+7 (***)***-**-**" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <TextField fx:id="tfEmail" promptText="****@**.**" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <TextField fx:id="tfWeb" promptText="Вэб сайт компании" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <ImageView fx:id="imgLogoCompany" cache="true" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#imagePicker" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+         <image>
+            <Image url="@../../images/upphoto.png" />
+         </image></ImageView>
+      <Button fx:id="btnSendCompany" mnemonicParsing="false" onMouseClicked="#sendCompany" text="Сохранить" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+      <Label fx:id="labelLogoCompany" text="Логотип компании :" GridPane.rowIndex="7">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelNameManager" text="Менеджер :" GridPane.rowIndex="8">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelEngineer" text="Инженер :" GridPane.rowIndex="11">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfManager" promptText="Ответственный менеджер (ФИО)" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <TextField fx:id="tfManagerPhone" promptText="+7 (***)***-**-**" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <TextField fx:id="tfManagerMail" promptText="****@**.**" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <Label fx:id="labelPhoneManager" text="Телефон :" GridPane.rowIndex="9">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelMailManager" text="Электронная почта :" GridPane.rowIndex="10">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelPhoneEngineer" text="Телефон :" GridPane.rowIndex="12">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelMailEngineer" text="Электронная почта :" GridPane.rowIndex="13">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfEngineer" promptText="Ответственный инженер (ФИО)" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <TextField fx:id="tfEngineerPhone" promptText="+7 (***)***-**-**" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <TextField fx:id="tfEngineerMail" promptText="****@**.**" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>
