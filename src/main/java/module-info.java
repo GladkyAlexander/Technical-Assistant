@@ -7,6 +7,7 @@ module ru.greatlarder.technicalassistant {
     requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
     requires java.sql;
+    requires javafx.swing;
 
     opens ru.greatlarder.technicalassistant to javafx.fxml;
     exports ru.greatlarder.technicalassistant;
@@ -14,4 +15,8 @@ module ru.greatlarder.technicalassistant {
     opens ru.greatlarder.technicalassistant.controller to javafx.fxml;
     exports ru.greatlarder.technicalassistant.controller.fragment_add;
     opens ru.greatlarder.technicalassistant.controller.fragment_add to javafx.fxml;
+    exports ru.greatlarder.technicalassistant.controller.engineer;
+    opens ru.greatlarder.technicalassistant.controller.engineer to javafx.fxml;
+    exports ru.greatlarder.technicalassistant.controller.fragment;
+    opens ru.greatlarder.technicalassistant.controller.fragment to javafx.fxml;
 }

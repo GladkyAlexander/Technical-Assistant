@@ -25,6 +25,7 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
 		Company company = new Company();
 		try {
+			company.setId(resultSet.getInt("id"));
 			company.setNameCompany(resultSet.getString("nameCompany"));
 			company.setAddress(resultSet.getString("address"));
 			company.setCurator(resultSet.getString("curator"));

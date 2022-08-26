@@ -109,6 +109,8 @@ public interface Language {
     String ALREADY_HAVE(String language);
     String RESPONSIBLE_MANAGER(String language);
     String RESPONSIBLE_ENGINEER(String language);
+    String SELECT_A_COUNTRY(String language);
+    String PROFILE_SETTINGS (String language);
     List<String> status_sheet(String language);
     List<String> LIST_POST(String language);
 

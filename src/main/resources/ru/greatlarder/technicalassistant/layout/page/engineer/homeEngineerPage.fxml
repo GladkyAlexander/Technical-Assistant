@@ -6,13 +6,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="borderPaneHomePage" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.HomePageController">
+<BorderPane fx:id="borderPaneHomePage" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            minHeight="0.0" minWidth="0.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.HomeEngineerController">
    <top>
       <HBox prefHeight="25.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="imgMail" fitHeight="25.0" fitWidth="35.0" onMouseClicked="#uploadMail" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/upload_mail.png" />
+                  <Image url="@../../../images/upload_mail.png" />
                </image>
             </ImageView>
          </children>

@@ -69,7 +69,7 @@ public class LanguageImpl implements Language {
     public String REGISTRY(String language) {
         String registry = "";
         if (language.equals(ru)) {
-            registry = "Зарегистрироваться";
+            registry = "Зарегистрируйтесь";
         } else if (language.equals(en)) {
             registry = "Register";
         }
@@ -564,9 +564,9 @@ public class LanguageImpl implements Language {
     public String START_BY_REGISTERING_ON_THE_SETTINGS_PAGE(String language) {
         String sbot = "";
         if (language.equals(ru)) {
-            sbot = "Начните с регистрации на странице настройки";
+            sbot = "Начните с регистрации первой компании на странице настройки";
         } else if (language.equals(en)) {
-            sbot = "Start by registering on the settings page";
+            sbot = "Start by registering the first company on the settings page";
         }
         return sbot;
     }
@@ -811,6 +811,28 @@ public class LanguageImpl implements Language {
             cp = "Responsible Engineer";
         }
         return cp;
+    }
+
+    @Override
+    public String SELECT_A_COUNTRY(String language) {
+        String sac = "";
+        if (language.equals(ru)) {
+            sac = "Выберите страну";
+        } else if (language.equals(en)) {
+            sac = "Select a country";
+        }
+        return sac;
+    }
+
+    @Override
+    public String PROFILE_SETTINGS(String language) {
+        String ps = "";
+        if (language.equals(ru)) {
+            ps = "Настройки профиля";
+        } else if (language.equals(en)) {
+            ps = "Profile Settings";
+        }
+        return ps;
     }
 
     @Override

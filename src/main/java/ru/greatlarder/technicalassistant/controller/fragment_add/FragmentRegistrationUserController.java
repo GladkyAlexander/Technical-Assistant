@@ -15,7 +15,7 @@ import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 
-public class FragmentRegistrationUserController implements ObserverLang {
+public class FragmentRegistrationUserController implements ObserverLang{
     @FXML
     public Label labelLastName;
     @FXML
@@ -44,6 +44,7 @@ public class FragmentRegistrationUserController implements ObserverLang {
     public MenuItem menuItemEn;
     @FXML
     public ComboBox<String> comboBoxPost;
+    @FXML public Label labelRegister;
     Language lines = new LanguageImpl();
     String lang;
 
@@ -55,14 +56,18 @@ public class FragmentRegistrationUserController implements ObserverLang {
         user.setMailAddress(tfMailAddress.getText());
         user.setPhone(tfPhone.getText());
         user.setPost(comboBoxPost.getValue());
-        user.setLanguage(menuButtonLanguage.getText());
+        if(menuButtonLanguage.getText().equals("Россия")){
+            user.setLanguage("Русский");
+        }
+        if(menuButtonLanguage.getText().equals("England")){
+            user.setLanguage("English");
+        }
         userRepository.setUser(user);
 
         if (userRepository.getUser().getFirstName().equals(user.getFirstName()) && userRepository.getUser()
                 .getLastName().equals(user.getLastName())) {
-            GlobalLinkMainController.getMainController().updateUser(userRepository.getUser());
             gridPaneAdd.setStyle(StyleSRC.STYLE_EXCELLENT);
-
+            GlobalLinkMainController.getMainController().updateUser(userRepository.getUser());
         } else {
             gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
         }
@@ -82,12 +87,13 @@ public class FragmentRegistrationUserController implements ObserverLang {
     }
 
     public void setLanguage(String lange) {
+        labelRegister.setText(lines.REGISTRY(lange));
         this.labelLastName.setText(lines.LAST_NAME(lange));
         labelFirstName.setText(lines.FIRST_NAME(lange));
         labelEmailAddress.setText(lines.EMAIL(lange));
         labelPhone.setText(lines.PHONE(lange));
         comboBoxPost.setPromptText(lines.POST(lange));
-        menuButtonLanguage.setText(lines.SELECT_A_LANGUAGE(lange));
+        menuButtonLanguage.setText(lines.SELECT_A_COUNTRY(lange));
         btnSave.setText(lines.SAVE(lange));
         comboBoxPost.setItems(FXCollections.observableArrayList(lines.LIST_POST(lange)));
     }
