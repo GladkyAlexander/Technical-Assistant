@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.services.db;
+package ru.greatlarder.technicalassistant.services.db.sqlite;
 
 public interface SQLiteTools {
     String CREATE_TOOLS = "CREATE TABLE if not exists 'tools'( " +

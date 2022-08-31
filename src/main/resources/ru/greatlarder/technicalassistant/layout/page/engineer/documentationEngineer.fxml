@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<SplitPane fx:id="borderPaneDocumentation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+           xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ru.greatlarder.technicalassistant.controller.engineer.DocumentationEngineerController">
+    <VBox fx:id="vBoxLeft">
+        <padding>
+            <Insets top="5.0" />
+        </padding>
+        <HBox prefWidth="200.0" spacing="10.0">
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <VBox.margin>
+                <Insets left="10.0" />
+            </VBox.margin>
+            <Label cache="true" text="Учет :" textAlignment="CENTER">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Label>
+            <Button fx:id="btnZip" mnemonicParsing="false" onMouseClicked="#zip" text="Сформировать документ ЗИП" textAlignment="CENTER" />
+            <Button fx:id="btnLampProjector" mnemonicParsing="false" onAction="#createDocLamp" text="Сведения о лампе EXEL" />
+            <Button fx:id="btnCreateTimeShite" mnemonicParsing="false" onMouseClicked="#createTimeShite" text="Учет рабочего времени" />
+        </HBox>
+    </VBox>
+</SplitPane>

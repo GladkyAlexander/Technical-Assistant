@@ -5,39 +5,23 @@ import java.util.List;
 public interface Language {
     String ADDED(String language);
     String WILL_NOT_BE_ADDED(String language);
-    String PROJECTOR_RU = "Проектор";
-    String MICROPHONE_RU = "Микрофон";
-    String CONTROL_PROCESSOR_RU = "Процессор управления";
-    String AUDIO_PROCESSOR_RU = "Аудио процессор";
-    String AUDIO_AMPLIFIER_RU = "Аудио усилитель";
-    String ACOUSTIC_SPEAKER_RU = "Акустическая колонка";
-    String AUDIO_INTERFACE_RU = "Аудио интерфейс";
-    String TV_PANEL_RU = "Телевизионная панель";
-    String TV_TUNER_RU = "Телевизионный тюнер";
-    String MEDIA_PLAYER_RU = "Медиа плеер";
-    String LAPTOP_RU = "Ноутбук";
-    String VIDEO_TRANSMITTER_RU = "Видео передатчик";
-    String VIDEO_RECEIVER_RU = "Видео приемник";
-    String MATRIX_SWITCHER_RU = "Матричный коммутатор";
-    String NETWORK_SWITCH_RU = "Сетевой коммутатор";
-    String TOUCH_CONTROL_PANEL_RU = "Сенсорная панель управления";
-    String PATHS_PANEL_RU = "Патч панель";
-    String EQUIPMENT_RU = "Оборудование ";
-    String NAME_RU = " Наименование ";
-    String MODEL_RU = " Модель ";
-    String MANUFACTURER_RU = " Производитель ";
-    String SERIAL_NUMBER_RU = " Серийный номер ";
-    String MAC_ADDRESS_RU = " MAC адрес ";
-    String IP_ADDRESS_RU = " IP адрес ";
-    String MASC_RU = "Masc";
-    String GATEWAY_RU = "Gateway";
-    String LOGIN_RU = " Логин ";
-    String PASSWORD_RU = " Пароль ";
-    String ROOM_RU = " Помещение ";
-    String LOCATION_RU = " Расположение в помещении ";
-    String DATE_WORK_RU = " Дата начала эксплуатации  ";
-    String CONDITION_RU = " Состояние ";
-    String SATISFACTORY_RU = "Удовлетворительное";
+    String PROJECTOR(String language);
+    String MICROPHONE(String language);
+    String CONTROL_PROCESSOR(String language);
+    String AUDIO_PROCESSOR(String language);
+    String AUDIO_AMPLIFIER(String language);
+    String ACOUSTIC_SPEAKER(String language);
+    String AUDIO_INTERFACE(String language);
+    String TV_PANEL(String language);
+    String TV_TUNER(String language);
+    String MEDIA_PLAYER(String language);
+    String LAPTOP(String language);
+    String VIDEO_TRANSMITTER(String language);
+    String VIDEO_RECEIVER(String language);
+    String MATRIX_SWITCHER(String language);
+    String NETWORK_SWITCH(String language);
+    String TOUCH_CONTROL_PANEL(String language);
+    String PATHS_PANEL(String language);
     String POST(String language);
     String CONFIGURE_PERSONAL_DATA(String language);
     String ADD_A_COMPANY (String language);
@@ -59,7 +43,6 @@ public interface Language {
     String MAIL_FOR_MONITORING_EMAILS(String language);
     String EMAIL_PASSWORD(String language);
     String SUBJECT_OF_THE_LETTER(String language);
-    String ENTER_THE_FIRST_WORD(String language);
     String THE_WORDS_SHOULD(String language);
     String EXAMPLE(String language);
     String DATE(String language);
@@ -113,5 +96,70 @@ public interface Language {
     String PROFILE_SETTINGS (String language);
     List<String> status_sheet(String language);
     List<String> LIST_POST(String language);
+    String ACCOUNTING(String lang);
+    String MODEL(String lang);
 
+    String MANUFACTURER(String lang);
+
+    String SERIAL_NUMBER(String lang);
+
+    String MAC_ADDRESS(String lang);
+
+    String LOGIN(String lang);
+
+    String PASSWORD(String lang);
+
+    String LOCATION_IN_THE_ROOM(String lang);
+
+    String START_DATE_OF_OPERATION(String lang);
+
+    String CONDITION(String lang);
+
+    String INSTRUCTION(String lang);
+
+    String IP_ADDRESS(String lang);
+
+    String MAXIMUM_LAMP_OPERATING_TIME(String lang);
+
+    String FREQUENCY(String lang);
+
+    String IP_ADDRESS_DANTE(String lang);
+    String ENTER_THE_FIRST_WORD(String language);
+
+    String SELECT_A_NETWORK_SWITCH(String lang);
+
+    String SOCKET_NUMBER(String lang);
+
+    String DIAGONAL(String lang);
+
+    String INCHES(String lang);
+
+    String ENTER_THE_NAME_OF_THE_OPERATING_SYSTEM(String lang);
+
+    String SELECT_THE_NAME_OF_THE_EQUIPMENT(String lang);
+
+    String SELECT_THE_DEVICE_STATUS(String lang);
+
+    String TODAY_DATE_WILL_BE_SET_RU(String lang);
+
+    String EQUIPMENT(Language language);
+
+    String FILL_IN_THE_FIELDS(String lang);
+    String PROJECTOR_RU = "Проектор";
+    String MICROPHONE_RU = "Микрофон";
+    String CONTROL_PROCESSOR_RU = "Процессор управления";
+    String AUDIO_PROCESSOR_RU = "Аудио процессор";
+    String AUDIO_AMPLIFIER_RU = "Аудио усилитель";
+    String ACOUSTIC_SPEAKER_RU = "Акустическая колонка";
+    String AUDIO_INTERFACE_RU = "Аудио интерфейс";
+    String TV_PANEL_RU = "Телевизионная панель";
+    String TV_TUNER_RU = "Телевизионный тюнер";
+    String MEDIA_PLAYER_RU = "Медиа плеер";
+    String LAPTOP_RU = "Ноутбук";
+    String VIDEO_TRANSMITTER_RU = "Видео передатчик";
+    String VIDEO_RECEIVER_RU = "Видео приемник";
+    String MATRIX_SWITCHER_RU = "Матричный коммутатор";
+    String NETWORK_SWITCH_RU = "Сетевой коммутатор";
+    String TOUCH_CONTROL_PANEL_RU = "Сенсорная панель управления";
+    String PATHS_PANEL_RU = "Патч панель";
 }

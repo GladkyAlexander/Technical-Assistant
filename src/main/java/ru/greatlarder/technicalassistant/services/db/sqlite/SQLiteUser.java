@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.services.db;
+package ru.greatlarder.technicalassistant.services.db.sqlite;
 
 public interface SQLiteUser {
     String CREATE_TABLE_USER = "CREATE TABLE if not exists 'user' (" +

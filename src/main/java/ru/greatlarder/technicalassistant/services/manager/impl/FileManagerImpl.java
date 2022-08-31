@@ -4,6 +4,8 @@ package ru.greatlarder.technicalassistant.services.manager.impl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileManagerImpl implements FileManager {
 
@@ -47,12 +49,13 @@ public class FileManagerImpl implements FileManager {
     @Override
     public void createDirectoryCompany(String nameCompany) {
         createProjectDirectories();
-        File dir = new File( directoryCompany + "\\" + nameCompany);
-        File dirDoc = new File(directoryCompany + "\\" + nameCompany + "\\" + directoryDocumentations);
+        File dir = new File(folderProject() + "\\" + directoryCompany + "\\" + nameCompany);
+
         if(!dir.exists()) {
             dir.mkdir();
             //directoryDocumentations = dir.getAbsolutePath();
         }
+        File dirDoc = new File(folderProject() + "\\" + directoryCompany + "\\" + nameCompany + "\\" + directoryDocumentations);
         if(!dirDoc.exists()){
             dirDoc.mkdir();
             //directoryDocumentations = dirDoc.getAbsolutePath();
@@ -81,7 +84,7 @@ public class FileManagerImpl implements FileManager {
 
     @Override
     public String folderCompanyDocumentation(String nameCompany) {
-        return currentFolder + "\\" + directoryProject + "\\" + nameCompany + "\\" + directoryDocumentations;
+        return currentFolder + "\\" + directoryProject + "\\" + directoryCompany + "\\" + nameCompany + "\\" + directoryDocumentations;
     }
 
     @Override
@@ -113,7 +116,7 @@ public class FileManagerImpl implements FileManager {
 
     @Override
     public String getUrlFileDocumentations(String nameCompany, String nameFile) {
-        File currentFolderAsFile = new File(currentFolder + "\\" + directoryProject + "\\" + nameCompany + "\\" + directoryDocumentations);
+        File currentFolderAsFile = new File(currentFolder + "\\" + directoryProject + "\\" + directoryCompany + "\\" + nameCompany + "\\" + directoryDocumentations);
         File[] files = currentFolderAsFile.listFiles();
 
         assert files != null;
@@ -124,4 +127,21 @@ public class FileManagerImpl implements FileManager {
         }
         return null;
     }
+
+    @Override
+    public List<String> getListOfFileNamesInTheDirectory(String nameCompany, String nameDirectory) {
+        List<String> list = new ArrayList<>();
+
+        if(nameDirectory.equals(directoryDocumentations)) {
+            File currentFolderAsFile = new File(folderCompanyDocumentation(nameCompany));
+            File[] files = currentFolderAsFile.listFiles();
+            if(files != null) {
+                for (File file : files) {
+                    list.add(file.getName());
+                }
+            }
+        }
+        return list;
+    }
+
 }

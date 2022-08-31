@@ -4,7 +4,7 @@ import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.repository.CompanyRepository;
 import ru.greatlarder.technicalassistant.repository.MailSettingsRepository;
 import ru.greatlarder.technicalassistant.repository.UserRepository;
-import ru.greatlarder.technicalassistant.services.db.SQLiteUser;
+import ru.greatlarder.technicalassistant.services.db.sqlite.SQLiteUser;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

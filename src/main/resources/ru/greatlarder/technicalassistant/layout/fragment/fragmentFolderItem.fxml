@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox fx:id="hBoxOFI" alignment="CENTER_LEFT" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentFolderItemController">
+
+    <ImageView fx:id="imgFolder" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../../images/doc.png" />
+    </ImageView>
+      <Label fx:id="labelNameFolder" text="Label">
+      <HBox.margin>
+         <Insets left="10.0" />
+      </HBox.margin></Label>
+
+</HBox>

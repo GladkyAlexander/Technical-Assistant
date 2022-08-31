@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.services.db;
+package ru.greatlarder.technicalassistant.services.db.sqlite;
 
 public interface SQLiteCompany {
     String CREATE_COMPANY = "CREATE TABLE if not exists 'company' (" +

@@ -4,7 +4,7 @@ import ru.greatlarder.technicalassistant.controller.MainController;
 import ru.greatlarder.technicalassistant.domain.Port;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
 import ru.greatlarder.technicalassistant.repository.PortRepository;
-import ru.greatlarder.technicalassistant.services.db.SQLitePort;
+import ru.greatlarder.technicalassistant.services.db.sqlite.SQLitePort;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.services.db;
+package ru.greatlarder.technicalassistant.services.db.sqlite;
 
 public interface SQLiteMailSettings {
     String CREATE_TABLE_MAIL_SETTINGS = "CREATE TABLE if not exists 'mail_settings' (" +

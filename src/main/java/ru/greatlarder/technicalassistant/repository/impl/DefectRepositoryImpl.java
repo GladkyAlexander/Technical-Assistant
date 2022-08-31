@@ -2,7 +2,7 @@ package ru.greatlarder.technicalassistant.repository.impl;
 
 import ru.greatlarder.technicalassistant.domain.Defect;
 import ru.greatlarder.technicalassistant.repository.DefectRepository;
-import ru.greatlarder.technicalassistant.services.db.SQLiteDefect;
+import ru.greatlarder.technicalassistant.services.db.sqlite.SQLiteDefect;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 
@@ -17,7 +17,6 @@ import java.util.List;
 import static ru.greatlarder.technicalassistant.services.db.DBconnect.*;
 
 public class DefectRepositoryImpl implements DefectRepository {
-
 	Language lines = new LanguageImpl();
 	private Defect getDefect(ResultSet resultSet) throws SQLException {
 		Defect defect = new Defect();
@@ -101,7 +100,7 @@ public class DefectRepositoryImpl implements DefectRepository {
 			while (resultSet.next()){
 				Defect defect = getDefect(resultSet);
 
-				if(defect.getCondition().equals(lines.FAULTY("ru"))){
+				if(defect.getCondition().equals(lines.FAULTY("Русский"))){
 					defects.add(defect);
 				}
 			}

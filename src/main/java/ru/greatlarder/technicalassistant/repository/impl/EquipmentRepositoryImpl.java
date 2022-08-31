@@ -6,8 +6,9 @@ import ru.greatlarder.technicalassistant.domain.equipment.NetworkSwitch;
 import ru.greatlarder.technicalassistant.domain.equipment.Projector;
 import ru.greatlarder.technicalassistant.repository.DefectRepository;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.services.db.SQLiteEquipment;
+import ru.greatlarder.technicalassistant.services.db.sqlite.SQLiteEquipment;
 import ru.greatlarder.technicalassistant.services.lang.Language;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 
 import java.lang.reflect.Method;
 import java.sql.Date;
@@ -22,6 +23,7 @@ import static ru.greatlarder.technicalassistant.services.db.DBconnect.*;
 
 public class EquipmentRepositoryImpl implements EquipmentRepository {
     DefectRepository defectRepository = new DefectRepositoryImpl();
+    Language language = new LanguageImpl();
     private Projector getProjector(ResultSet resultSet) throws SQLException {
         Projector projector = new Projector();
         projector.setId(resultSet.getInt("id"));
@@ -75,17 +77,48 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
 
         return microphone;
     }
+    private Equipment getNetworkSwitch(ResultSet resultSet) throws SQLException {
+        NetworkSwitch networkSwitch = new NetworkSwitch();
+
+        networkSwitch.setId(resultSet.getInt("id"));
+        networkSwitch.setName(resultSet.getString("name"));
+        networkSwitch.setModel(resultSet.getString("model"));
+        networkSwitch.setManufacturer(resultSet.getString("manufacturer"));
+        networkSwitch.setSerialNumber(resultSet.getString("serialNumber"));
+        networkSwitch.setIpAddress(resultSet.getString("ipAddress"));
+        networkSwitch.setMasc(resultSet.getString("masc"));
+        networkSwitch.setGateway(resultSet.getString("gateway"));
+        networkSwitch.setMacAddress(resultSet.getString("macAddress"));
+        networkSwitch.setLogin(resultSet.getString("login"));
+        networkSwitch.setPassword(resultSet.getString("password"));
+        networkSwitch.setImage(resultSet.getString("image"));
+        networkSwitch.setRoom(resultSet.getString("room"));
+        networkSwitch.setLocation(resultSet.getString("location"));
+        networkSwitch.setCondition(resultSet.getString("condition"));
+        networkSwitch.setDateWork(resultSet.getDate("dateWork").toLocalDate());
+        networkSwitch.setCompany(resultSet.getString("company"));
+        networkSwitch.setManual(resultSet.getString("manual"));
+        networkSwitch.setDanteIpAddress(resultSet.getString("ipAddressDante"));
+        networkSwitch.setDanteMasc(resultSet.getString("mascDante"));
+        networkSwitch.setDanteGateway(resultSet.getString("gatewayDante"));
+        networkSwitch.setOutletNumber(resultSet.getString("outletNumber"));
+
+        return networkSwitch;
+    }
 
     private Equipment getEquipment(ResultSet resultSet) throws SQLException {
         Equipment equipment = new Equipment();
 
-        if (resultSet.getString("name").equals(Language.PROJECTOR_RU)) {
+        if (resultSet.getString("name").equals(language.PROJECTOR("Русский"))
+        || resultSet.getString("name").equals(language.PROJECTOR("English"))) {
             equipment = getProjector(resultSet);
         }
-        if (resultSet.getString("name").equals(Language.MICROPHONE_RU)) {
+        if (resultSet.getString("name").equals(language.MICROPHONE("Русский"))
+        || resultSet.getString("name").equals(language.MICROPHONE("English"))) {
             equipment = getMicrophone(resultSet);
         }
-        if (resultSet.getString("name").equals(Language.NETWORK_SWITCH_RU)) {
+        if (resultSet.getString("name").equals(language.NETWORK_SWITCH("Русский"))
+        || resultSet.getString("name").equals(language.NETWORK_SWITCH("English"))) {
             equipment = getNetworkSwitch(resultSet);
         }
         equipment.setId(resultSet.getInt("id"));
@@ -116,35 +149,6 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
         return equipment;
     }
 
-    private Equipment getNetworkSwitch(ResultSet resultSet) throws SQLException {
-        NetworkSwitch networkSwitch = new NetworkSwitch();
-
-        networkSwitch.setId(resultSet.getInt("id"));
-        networkSwitch.setName(resultSet.getString("name"));
-        networkSwitch.setModel(resultSet.getString("model"));
-        networkSwitch.setManufacturer(resultSet.getString("manufacturer"));
-        networkSwitch.setSerialNumber(resultSet.getString("serialNumber"));
-        networkSwitch.setIpAddress(resultSet.getString("ipAddress"));
-        networkSwitch.setMasc(resultSet.getString("masc"));
-        networkSwitch.setGateway(resultSet.getString("gateway"));
-        networkSwitch.setMacAddress(resultSet.getString("macAddress"));
-        networkSwitch.setLogin(resultSet.getString("login"));
-        networkSwitch.setPassword(resultSet.getString("password"));
-        networkSwitch.setImage(resultSet.getString("image"));
-        networkSwitch.setRoom(resultSet.getString("room"));
-        networkSwitch.setLocation(resultSet.getString("location"));
-        networkSwitch.setCondition(resultSet.getString("condition"));
-        networkSwitch.setDateWork(resultSet.getDate("dateWork").toLocalDate());
-        networkSwitch.setCompany(resultSet.getString("company"));
-        networkSwitch.setManual(resultSet.getString("manual"));
-        networkSwitch.setDanteIpAddress(resultSet.getString("ipAddressDante"));
-        networkSwitch.setDanteMasc(resultSet.getString("mascDante"));
-        networkSwitch.setDanteGateway(resultSet.getString("gatewayDante"));
-        networkSwitch.setOutletNumber(resultSet.getString("outletNumber"));
-
-        return networkSwitch;
-    }
-
     public List<String> getListIpAddressForCompany(String nameCompany) {
         List<String> list = new ArrayList<>();
         createEquipmentTable();
@@ -163,7 +167,6 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
         } finally {
             closeDB();
         }
-
         return list;
     }
 
@@ -208,7 +211,6 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
     @Override
     public List<Equipment> getListEquipmentForCompany(String nameCompany) {
         List<Equipment> equipmentListToCompany = new ArrayList<>();
-
         List<NetworkSwitch> networkSwitchList = new ArrayList<>();
         List<Equipment> equipmentList = new ArrayList<>();
 
@@ -219,14 +221,12 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
             while (resultSet.next()) {
                 equipmentListToCompany.add(getEquipment(resultSet));
             }
-
             closeDB();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeDB();
         }
-
         for (Equipment equipment : equipmentListToCompany) {
             if (equipment instanceof NetworkSwitch) {
                 networkSwitchList.add((NetworkSwitch) equipment);
@@ -626,24 +626,24 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
     }
 
     @Override
-    public List<String> getListEquipmentName() {
+    public List<String> getListEquipmentName(String lang) {
         List<String> list = new ArrayList<>();
-        list.add(Language.PROJECTOR_RU);
-        list.add(Language.MICROPHONE_RU);
-        list.add(Language.CONTROL_PROCESSOR_RU);
-        list.add(Language.AUDIO_PROCESSOR_RU);
-        list.add(Language.AUDIO_AMPLIFIER_RU);
-        list.add(Language.ACOUSTIC_SPEAKER_RU);
-        list.add(Language.AUDIO_INTERFACE_RU);
-        list.add(Language.TV_PANEL_RU);
-        list.add(Language.TV_TUNER_RU);
-        list.add(Language.MEDIA_PLAYER_RU);
-        list.add(Language.LAPTOP_RU);
-        list.add(Language.VIDEO_TRANSMITTER_RU);
-        list.add(Language.VIDEO_RECEIVER_RU);
-        list.add(Language.MATRIX_SWITCHER_RU);
-        list.add(Language.NETWORK_SWITCH_RU);
-        list.add(Language.TOUCH_CONTROL_PANEL_RU);
+        list.add(language.PROJECTOR(lang));
+        list.add(language.MICROPHONE(lang));
+        list.add(language.CONTROL_PROCESSOR(lang));
+        list.add(language.AUDIO_PROCESSOR(lang));
+        list.add(language.AUDIO_AMPLIFIER(lang));
+        list.add(language.ACOUSTIC_SPEAKER(lang));
+        list.add(language.AUDIO_INTERFACE(lang));
+        list.add(language.TV_PANEL(lang));
+        list.add(language.TV_TUNER(lang));
+        list.add(language.MEDIA_PLAYER(lang));
+        list.add(language.LAPTOP(lang));
+        list.add(language.VIDEO_TRANSMITTER(lang));
+        list.add(language.VIDEO_RECEIVER(lang));
+        list.add(language.MATRIX_SWITCHER(lang));
+        list.add(language.NETWORK_SWITCH(lang));
+        list.add(language.TOUCH_CONTROL_PANEL(lang));
 
         return list;
     }

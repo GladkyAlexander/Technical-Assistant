@@ -1,5 +1,7 @@
 package ru.greatlarder.technicalassistant.services.manager;
 
+import java.util.List;
+
 public interface FileManager {
     void createProjectDirectories();
     void createDirectoryCompany(String directoryName);
@@ -11,4 +13,5 @@ public interface FileManager {
     String getUrlFileManual(String nameFile);
     String getUrlFileImage(String nameFile);
     String getUrlFileDocumentations(String nameCompany, String nameFile);
+    List<String> getListOfFileNamesInTheDirectory(String nameCompany, String nameFolder);
 }

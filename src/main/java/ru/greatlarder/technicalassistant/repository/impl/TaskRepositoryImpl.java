@@ -2,7 +2,7 @@ package ru.greatlarder.technicalassistant.repository.impl;
 
 import ru.greatlarder.technicalassistant.domain.Task;
 import ru.greatlarder.technicalassistant.repository.TaskRepository;
-import ru.greatlarder.technicalassistant.services.db.SQLiteTask;
+import ru.greatlarder.technicalassistant.services.db.sqlite.SQLiteTask;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;

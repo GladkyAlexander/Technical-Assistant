@@ -1,9 +1,15 @@
 .list_item{
- -fx-font-size: 14px;
+    -fx-font-size: 14px;
     -fx-background-color: #FF8C00;
     -fx-text-fill: #FAF0E6;
     -fx-background-radius: 20
 }
 .combo-box:disabled, .combo-box:disabled > * {
   -fx-opacity: 1.0 ;
+}
+
+.item_equipment{
+ -fx-border-color: #31ff0a;
+ -fx-border-radius: 5;
+ -fx-border-width: 1;
 }

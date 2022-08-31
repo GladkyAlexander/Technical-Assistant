@@ -2,7 +2,7 @@ package ru.greatlarder.technicalassistant.repository.impl;
 
 import ru.greatlarder.technicalassistant.domain.MailSettings;
 import ru.greatlarder.technicalassistant.repository.MailSettingsRepository;
-import ru.greatlarder.technicalassistant.services.db.SQLiteMailSettings;
+import ru.greatlarder.technicalassistant.services.db.sqlite.SQLiteMailSettings;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

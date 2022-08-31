@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.services.db;
+package ru.greatlarder.technicalassistant.services.db.sqlite;
 
 public interface SQLiteDefect {
     String CREATE_DEFECT = "CREATE TABLE if not exists 'defect'(" +

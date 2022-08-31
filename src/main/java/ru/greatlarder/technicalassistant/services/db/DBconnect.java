@@ -1,5 +1,6 @@
 package ru.greatlarder.technicalassistant.services.db;
 
+import ru.greatlarder.technicalassistant.services.db.sqlite.*;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 

@@ -5,7 +5,7 @@ import ru.greatlarder.technicalassistant.repository.CompanyRepository;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
 import ru.greatlarder.technicalassistant.repository.TaskRepository;
 import ru.greatlarder.technicalassistant.repository.ToolsRepository;
-import ru.greatlarder.technicalassistant.services.db.SQLiteCompany;
+import ru.greatlarder.technicalassistant.services.db.sqlite.SQLiteCompany;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

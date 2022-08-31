@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.services.db;
+package ru.greatlarder.technicalassistant.services.db.sqlite;
 
 public interface SQLitePort {
     String CREATE_TABLE_PORT = "CREATE TABLE if not exists 'port' (" +

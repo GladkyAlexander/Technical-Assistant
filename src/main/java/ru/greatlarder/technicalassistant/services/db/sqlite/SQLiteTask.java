@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.services.db;
+package ru.greatlarder.technicalassistant.services.db.sqlite;
 
 public interface SQLiteTask {
     String CREATE_TASK = "CREATE TABLE if not exists 'task'(" +

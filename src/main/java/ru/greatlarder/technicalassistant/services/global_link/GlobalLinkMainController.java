@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.services;
+package ru.greatlarder.technicalassistant.services.global_link;
 
 import ru.greatlarder.technicalassistant.controller.MainController;
 

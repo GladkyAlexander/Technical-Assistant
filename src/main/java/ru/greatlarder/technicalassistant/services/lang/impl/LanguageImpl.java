@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LanguageImpl implements Language {
-
     String en = "English";
     String ru = "Русский";
 
@@ -28,6 +27,193 @@ public class LanguageImpl implements Language {
             will_not = "Не будет добавлено!";
         } else if (language.equals(en)) {
             will_not = "Will not be added!";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String PROJECTOR(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Проектор";
+        } else if (language.equals(en)) {
+            will_not = "Projector";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String MICROPHONE(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Микрофон";
+        } else if (language.equals(en)) {
+            will_not = "Microphone";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String CONTROL_PROCESSOR(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Процессор управления";
+        } else if (language.equals(en)) {
+            will_not = "Control processor";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String AUDIO_PROCESSOR(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Аудио процессор";
+        } else if (language.equals(en)) {
+            will_not = "Audio processor";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String AUDIO_AMPLIFIER(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Аудио усилитель";
+        } else if (language.equals(en)) {
+            will_not = "Audio amplifier";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String ACOUSTIC_SPEAKER(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Акустическая колонка";
+        } else if (language.equals(en)) {
+            will_not = "Audio speaker";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String AUDIO_INTERFACE(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Аудио интерфейс";
+        } else if (language.equals(en)) {
+            will_not = "Audio interface";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String TV_PANEL(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Телевизионная панель";
+        } else if (language.equals(en)) {
+            will_not = "TV panel";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String TV_TUNER(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Телевизионный тюнер";
+        } else if (language.equals(en)) {
+            will_not = "TV tuner";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String MEDIA_PLAYER(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Медиа плеер";
+        } else if (language.equals(en)) {
+            will_not = "Media player";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String LAPTOP(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Ноутбук";
+        } else if (language.equals(en)) {
+            will_not = "Laptop";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String VIDEO_TRANSMITTER(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Видео передатчик";
+        } else if (language.equals(en)) {
+            will_not = "Video transmitter";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String VIDEO_RECEIVER(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Видео приемник";
+        } else if (language.equals(en)) {
+            will_not = "Video receiver";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String MATRIX_SWITCHER(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Матричный коммутатор";
+        } else if (language.equals(en)) {
+            will_not = "Matrix switcher";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String NETWORK_SWITCH(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Сетевой коммутатор";
+        } else if (language.equals(en)) {
+            will_not = "Network switch";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String TOUCH_CONTROL_PANEL(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Сенсорная панель управления";
+        } else if (language.equals(en)) {
+            will_not = "Touch control panel";
+        }
+        return will_not;
+    }
+
+    @Override
+    public String PATHS_PANEL(String language) {
+        String will_not = "";
+        if (language.equals(ru)) {
+            will_not = "Патч панель";
+        } else if (language.equals(en)) {
+            will_not = "Paths panel";
         }
         return will_not;
     }
@@ -272,6 +458,116 @@ public class LanguageImpl implements Language {
             etfw = "Enter the first word of the subject of the letter for which the selection of letters will take place.";
         }
         return etfw;
+    }
+
+    @Override
+    public String SELECT_A_NETWORK_SWITCH(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Выберите сетевой коммутатор";
+        } else if (lang.equals(en)) {
+            theWS = "Select a network switch";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String SOCKET_NUMBER(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Номер розетки";
+        } else if (lang.equals(en)) {
+            theWS = "Socket Number";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String DIAGONAL(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Диагональ";
+        } else if (lang.equals(en)) {
+            theWS = "Diagonal";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String INCHES(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Дюймов";
+        } else if (lang.equals(en)) {
+            theWS = "Inches";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String ENTER_THE_NAME_OF_THE_OPERATING_SYSTEM(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Введите название Операционной системы";
+        } else if (lang.equals(en)) {
+            theWS = "Enter the name of the operating system";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String SELECT_THE_NAME_OF_THE_EQUIPMENT(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Выберите название оборудования";
+        } else if (lang.equals(en)) {
+            theWS = "Select the name of the equipment";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String SELECT_THE_DEVICE_STATUS(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Выберите состояние устройства";
+        } else if (lang.equals(en)) {
+            theWS = "Select the device status";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String TODAY_DATE_WILL_BE_SET_RU(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Будет установлена сегодняшняя дата !";
+        } else if (lang.equals(en)) {
+            theWS = "Today 's date will be set !";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String EQUIPMENT(Language lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Оборудование";
+        } else if (lang.equals(en)) {
+            theWS = "Equipment";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String FILL_IN_THE_FIELDS(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Заполните поля";
+        } else if (lang.equals(en)) {
+            theWS = "Fill in the fields";
+        }
+        return theWS;
     }
 
     @Override
@@ -888,5 +1184,170 @@ public class LanguageImpl implements Language {
         }
 
         return listPost;
+    }
+
+    @Override
+    public String ACCOUNTING(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Учет";
+        } else if (lang.equals(en)) {
+            ps = "Accounting";
+        }
+        return ps;
+    }
+
+    @Override
+    public String MODEL(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Модель";
+        } else if (lang.equals(en)) {
+            ps = "Model";
+        }
+        return ps;
+    }
+
+    @Override
+    public String MANUFACTURER(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Производитель";
+        } else if (lang.equals(en)) {
+            ps = "Manufacturer";
+        }
+        return ps;
+    }
+
+    @Override
+    public String SERIAL_NUMBER(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Серийный номер";
+        } else if (lang.equals(en)) {
+            ps = "Serial number";
+        }
+        return ps;
+    }
+
+    @Override
+    public String MAC_ADDRESS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "MAC адрес";
+        } else if (lang.equals(en)) {
+            ps = "MAC address";
+        }
+        return ps;
+    }
+
+    @Override
+    public String LOGIN(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Логин";
+        } else if (lang.equals(en)) {
+            ps = "Login";
+        }
+        return ps;
+    }
+
+    @Override
+    public String PASSWORD(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Пароль";
+        } else if (lang.equals(en)) {
+            ps = "Password";
+        }
+        return ps;
+    }
+
+    @Override
+    public String LOCATION_IN_THE_ROOM(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Расположение в помещении";
+        } else if (lang.equals(en)) {
+            ps = "Location in the room";
+        }
+        return ps;
+    }
+
+    @Override
+    public String START_DATE_OF_OPERATION(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Дата начала эксплуатации";
+        } else if (lang.equals(en)) {
+            ps = "Start date of operation";
+        }
+        return ps;
+    }
+
+    @Override
+    public String CONDITION(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Состояние";
+        } else if (lang.equals(en)) {
+            ps = "Condition";
+        }
+        return ps;
+    }
+
+    @Override
+    public String INSTRUCTION(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Инструкция в формате PDF";
+        } else if (lang.equals(en)) {
+            ps = "Instructions in PDF format";
+        }
+        return ps;
+    }
+
+    @Override
+    public String IP_ADDRESS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "IP адрес (TCP/IPv4)";
+        } else if (lang.equals(en)) {
+            ps = "IP address (TCP/IPv4)";
+        }
+        return ps;
+    }
+
+    @Override
+    public String MAXIMUM_LAMP_OPERATING_TIME(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Максимальное время работы лампы";
+        } else if (lang.equals(en)) {
+            ps = "Maximum lamp operating time";
+        }
+        return ps;
+    }
+
+    @Override
+    public String FREQUENCY(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Введите частоту";
+        } else if (lang.equals(en)) {
+            ps = "Enter the frequency";
+        }
+        return ps;
+    }
+
+    @Override
+    public String IP_ADDRESS_DANTE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "IP адрес (TCP/IPv4) Dante";
+        } else if (lang.equals(en)) {
+            ps = "IP address (TCP/IPv4) Dante";
+        }
+        return ps;
     }
 }

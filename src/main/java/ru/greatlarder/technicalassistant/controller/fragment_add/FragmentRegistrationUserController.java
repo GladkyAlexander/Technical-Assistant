@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.repository.UserRepository;
 import ru.greatlarder.technicalassistant.repository.impl.UserRepositoryImpl;
-import ru.greatlarder.technicalassistant.services.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;

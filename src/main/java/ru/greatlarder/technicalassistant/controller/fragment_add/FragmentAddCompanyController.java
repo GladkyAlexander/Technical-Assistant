@@ -15,7 +15,7 @@ import ru.greatlarder.technicalassistant.repository.CompanyRepository;
 import ru.greatlarder.technicalassistant.repository.UserRepository;
 import ru.greatlarder.technicalassistant.repository.impl.CompanyRepositoryImpl;
 import ru.greatlarder.technicalassistant.repository.impl.UserRepositoryImpl;
-import ru.greatlarder.technicalassistant.services.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
@@ -31,7 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
-public class FragmentCompanyController implements ObserverLang {
+public class FragmentAddCompanyController implements ObserverLang {
     @FXML
     public ImageView imgOk;
     @FXML public Label labelOk;

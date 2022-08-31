@@ -23,6 +23,6 @@ public interface EquipmentRepository {
 	Equipment getEquipmentByMacAddress(String nameCompany, String macAddress);
 	Equipment setEquipment(Equipment equipment);
 	Equipment change(int idEquipment, String column, Object value);
-	List<String> getListEquipmentName();
+	List<String> getListEquipmentName(String language);
 }
 

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="CENTER" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity" vgap="5.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentPortController">
+    <columnConstraints>
+        <ColumnConstraints/>
+        <ColumnConstraints/>
+        <ColumnConstraints/>
+        <ColumnConstraints/>
+        <ColumnConstraints/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+    </rowConstraints>
+    <padding>
+        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+    </padding>
+    <Label text="Порт 1" GridPane.columnIndex="1"/>
+    <Label text="Порт 2" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Label text="Порт 3" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <Label text="Порт 4" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <Label text="Порт 5" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <Label text="Порт 6" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <Label text="Порт 7" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+    <Label text="Порт 8" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+    <Label text="Порт 9" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+    <Label text="Порт 10" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+    <Label text="Порт 11" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+    <Label text="Порт 12" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+    <Label text="Порт 13" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+    <Label text="Порт 14" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
+    <Label text="Порт 15" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
+    <Label text="Порт 25" GridPane.columnIndex="2"/>
+    <Label text="Порт 26" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+    <Label text="Порт 27" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+    <Label text="Порт 28" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+    <Label text="Порт 29" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+    <Label text="Порт 30" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+    <Label text="Порт 31" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+    <Label text="Порт 32" GridPane.columnIndex="2" GridPane.rowIndex="7"/>
+    <Label text="Порт 33" GridPane.columnIndex="2" GridPane.rowIndex="8"/>
+    <Label text="Порт 34" GridPane.columnIndex="2" GridPane.rowIndex="9"/>
+    <Label text="Порт 35" GridPane.columnIndex="2" GridPane.rowIndex="10"/>
+    <Label text="Порт 36" GridPane.columnIndex="2" GridPane.rowIndex="11"/>
+    <Label text="Порт 37" GridPane.columnIndex="2" GridPane.rowIndex="12"/>
+    <Label text="Порт 38" GridPane.columnIndex="2" GridPane.rowIndex="13"/>
+    <Label text="Порт 39" GridPane.columnIndex="2" GridPane.rowIndex="14"/>
+    <Label text="Порт 16" GridPane.columnIndex="1" GridPane.rowIndex="15"/>
+    <Label text="Порт 17" GridPane.columnIndex="1" GridPane.rowIndex="16"/>
+    <Label text="Порт 18" GridPane.columnIndex="1" GridPane.rowIndex="17"/>
+    <Label text="Порт 19" GridPane.columnIndex="1" GridPane.rowIndex="18"/>
+    <Label text="Порт 20" GridPane.columnIndex="1" GridPane.rowIndex="19"/>
+    <Label text="Порт 21" GridPane.columnIndex="1" GridPane.rowIndex="20"/>
+    <Label text="Порт 22" GridPane.columnIndex="1" GridPane.rowIndex="21"/>
+    <Label text="Порт 23" GridPane.columnIndex="1" GridPane.rowIndex="22"/>
+    <Label text="Порт 24" GridPane.columnIndex="1" GridPane.rowIndex="23"/>
+    <Label text="Порт 40" GridPane.columnIndex="2" GridPane.rowIndex="15"/>
+    <Label text="Порт 41" GridPane.columnIndex="2" GridPane.rowIndex="16"/>
+    <Label text="Порт 42" GridPane.columnIndex="2" GridPane.rowIndex="17"/>
+    <Label text="Порт 43" GridPane.columnIndex="2" GridPane.rowIndex="18"/>
+    <Label text="Порт 44" GridPane.columnIndex="2" GridPane.rowIndex="19"/>
+    <Label text="Порт 45" GridPane.columnIndex="2" GridPane.rowIndex="20"/>
+    <Label text="Порт 46" GridPane.columnIndex="2" GridPane.rowIndex="21"/>
+    <Label text="Порт 47" GridPane.columnIndex="2" GridPane.rowIndex="22"/>
+    <Label text="Порт 48" GridPane.columnIndex="2" GridPane.rowIndex="23"/>
+    <ComboBox fx:id="kb1" onAction="#actionKB1" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css"/>
+    <ComboBox fx:id="kb2" onAction="#actionKB2" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="1"/>
+    <ComboBox fx:id="kb3" onAction="#actionKB3" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="2"/>
+    <ComboBox fx:id="kb4" onAction="#actionKB4" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="3"/>
+    <ComboBox fx:id="kb5" onAction="#actionKB5" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="4"/>
+    <ComboBox fx:id="kb6" onAction="#actionKB6" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="5"/>
+    <ComboBox fx:id="kb7" onAction="#actionKB7" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="6"/>
+    <ComboBox fx:id="kb8" onAction="#actionKB8" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="7"/>
+    <ComboBox fx:id="kb9" onAction="#actionKB9" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="8"/>
+    <ComboBox fx:id="kb10" onAction="#actionKB10" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="9"/>
+    <ComboBox fx:id="kb11" onAction="#actionKB11" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="10"/>
+    <ComboBox fx:id="kb12" onAction="#actionKB12" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="11"/>
+    <ComboBox fx:id="kb13" onAction="#actionKB13" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="12"/>
+    <ComboBox fx:id="kb14" onAction="#actionKB14" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="13"/>
+    <ComboBox fx:id="kb15" onAction="#actionKB15" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="14"/>
+    <ComboBox fx:id="kb16" onAction="#actionKB16" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="15"/>
+    <ComboBox fx:id="kb17" onAction="#actionKB17" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="16"/>
+    <ComboBox fx:id="kb18" onAction="#actionKB18" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="17"/>
+    <ComboBox fx:id="kb19" onAction="#actionKB19" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="18"/>
+    <ComboBox fx:id="kb20" onAction="#actionKB20" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="19"/>
+    <ComboBox fx:id="kb21" onAction="#actionKB21" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="20"/>
+    <ComboBox fx:id="kb22" onAction="#actionKB22" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="21"/>
+    <ComboBox fx:id="kb23" onAction="#actionKB23" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="22"/>
+    <ComboBox fx:id="kb25" onAction="#actionKB25" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4"/>
+    <ComboBox fx:id="kb26" onAction="#actionKB26" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+    <ComboBox fx:id="kb27" onAction="#actionKB27" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+    <ComboBox fx:id="kb28" onAction="#actionKB28" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="3"/>
+    <ComboBox fx:id="kb29" onAction="#actionKB29" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="4"/>
+    <ComboBox fx:id="kb30" onAction="#actionKB30" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="5"/>
+    <ComboBox fx:id="kb31" onAction="#actionKB31" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="6"/>
+    <ComboBox fx:id="kb32" onAction="#actionKB32" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="7"/>
+    <ComboBox fx:id="kb33" onAction="#actionKB33" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="8"/>
+    <ComboBox fx:id="kb34" onAction="#actionKB34" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="9"/>
+    <ComboBox fx:id="kb35" onAction="#actionKB35" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="10"/>
+    <ComboBox fx:id="kb36" onAction="#actionKB36" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="11"/>
+    <ComboBox fx:id="kb37" onAction="#actionKB37" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="12"/>
+    <ComboBox fx:id="kb38" onAction="#actionKB38" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="13"/>
+    <ComboBox fx:id="kb39" onAction="#actionKB39" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="14"/>
+    <ComboBox fx:id="kb40" onAction="#actionKB40" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="15"/>
+    <ComboBox fx:id="kb41" onAction="#actionKB41" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="16"/>
+    <ComboBox fx:id="kb42" onAction="#actionKB42" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="17"/>
+    <ComboBox fx:id="kb43" onAction="#actionKB43" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="18"/>
+    <ComboBox fx:id="kb44" onAction="#actionKB44" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="19"/>
+    <ComboBox fx:id="kb45" onAction="#actionKB45" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="20"/>
+    <ComboBox fx:id="kb46" onAction="#actionKB46" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="21"/>
+    <ComboBox id="combo-box" fx:id="kb47" onAction="#actionKB47" prefWidth="150.0" stylesheets="@../../css/main.css"
+              GridPane.columnIndex="4" GridPane.rowIndex="22"/>
+    <ComboBox fx:id="kb24" onAction="#actionKB24" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.rowIndex="23"/>
+    <ComboBox id="combo-box" fx:id="kb48" onAction="#actionKB48" prefWidth="150.0" styleClass="combo-box"
+              stylesheets="@../../css/main.css" GridPane.columnIndex="4" GridPane.rowIndex="23"/>
+    <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save" text="Сохранить" visible="false"
+            GridPane.columnIndex="2" GridPane.rowIndex="24"/>
+    <Button fx:id="btnChange" mnemonicParsing="false" onAction="#change" text="Изменить" GridPane.columnIndex="1"
+            GridPane.rowIndex="24"/>
+</GridPane>

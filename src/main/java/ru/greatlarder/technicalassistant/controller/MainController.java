@@ -15,7 +15,7 @@ import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentRegistr
 import ru.greatlarder.technicalassistant.controller.reception.StartReceptionController;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.services.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;

@@ -8,6 +8,10 @@ module ru.greatlarder.technicalassistant {
     requires java.desktop;
     requires java.sql;
     requires javafx.swing;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
+    requires org.apache.commons.io;
+    requires javafx.web;
 
     opens ru.greatlarder.technicalassistant to javafx.fxml;
     exports ru.greatlarder.technicalassistant;
@@ -19,4 +23,5 @@ module ru.greatlarder.technicalassistant {
     opens ru.greatlarder.technicalassistant.controller.engineer to javafx.fxml;
     exports ru.greatlarder.technicalassistant.controller.fragment;
     opens ru.greatlarder.technicalassistant.controller.fragment to javafx.fxml;
+
 }
