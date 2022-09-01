@@ -571,6 +571,204 @@ public class LanguageImpl implements Language {
     }
 
     @Override
+    public String LOCATION(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Расположение";
+        } else if (lang.equals(en)) {
+            theWS = "Location";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String NAME(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Наименование";
+        } else if (lang.equals(en)) {
+            theWS = "Name";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String MANUAL(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Мануал";
+        } else if (lang.equals(en)) {
+            theWS = "Manual";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String WEB_INTERFACE(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "WEB интерфейс";
+        } else if (lang.equals(en)) {
+            theWS = "WEB interface";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String DEFECT(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Дефект";
+        } else if (lang.equals(en)) {
+            theWS = "Defect";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String NEW_LOCATION(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Новое расположение";
+        } else if (lang.equals(en)) {
+            theWS = "New location";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String NEW_ROOM(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Новое помещение";
+        } else if (lang.equals(en)) {
+            theWS = "New room";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String NEW_PASSWORD(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Новый пароль";
+        } else if (lang.equals(en)) {
+            theWS = "New password";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String NEW_LOGIN(String lang) {
+        String theWS = "";
+        if (lang.equals(ru)) {
+            theWS = "Новый логин";
+        } else if (lang.equals(en)) {
+            theWS = "New login";
+        }
+        return theWS;
+    }
+
+    @Override
+    public String NEW_IP_ADDRESS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Новый IP адрес (TCP/IPv4)";
+        } else if (lang.equals(en)) {
+            ps = "New IP address (TCP/IPv4)";
+        }
+        return ps;
+    }
+
+    @Override
+    public String NEW_MASC(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Новая MASC";
+        } else if (lang.equals(en)) {
+            ps = "New MASC";
+        }
+        return ps;
+    }
+
+    @Override
+    public String NEW_GATEWAY(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Новый Gateway";
+        } else if (lang.equals(en)) {
+            ps = "New Gateway";
+        }
+        return ps;
+    }
+
+    @Override
+    public String NEW_IP_ADDRESS_DANTE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Новый IP адрес Dante (TCP/IPv4)";
+        } else if (lang.equals(en)) {
+            ps = "New IP address Dante (TCP/IPv4)";
+        }
+        return ps;
+    }
+
+    @Override
+    public String NEW_MASC_DANTE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Новая MASC Dante";
+        } else if (lang.equals(en)) {
+            ps = "New MASC Dante";
+        }
+        return ps;
+    }
+
+    @Override
+    public String NEW_GATEWAY_DANTE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Новый Gateway Dante";
+        } else if (lang.equals(en)) {
+            ps = "New Gateway Dante";
+        }
+        return ps;
+    }
+
+    @Override
+    public String CHANGE_FREQUENCY(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Измените частоту";
+        } else if (lang.equals(en)) {
+            ps = "Change the frequency";
+        }
+        return ps;
+    }
+
+    @Override
+    public String NEW_TIME_WORK_LAMP_PROJECTOR(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Новое время работы лампы проектора";
+        } else if (lang.equals(en)) {
+            ps = "New working time of the projector lamp";
+        }
+        return ps;
+    }
+
+    @Override
+    public String CHANGE_CONDITION(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Измените состояние";
+        } else if (lang.equals(en)) {
+            ps = "Change the state";
+        }
+        return ps;
+    }
+
+    @Override
     public String THE_WORDS_SHOULD(String language) {
         String theWS = "";
         if (language.equals(ru)) {

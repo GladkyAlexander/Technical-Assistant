@@ -1,20 +1,16 @@
 package ru.greatlarder.technicalassistant.services;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.controller.fragment.FragmentFolderItemController;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
-import ru.greatlarder.technicalassistant.services.work_doc.ReadExel;
 
+import java.io.File;
 import java.io.IOException;
 
 public class TheEntireCatalogList {
@@ -59,39 +55,10 @@ public class TheEntireCatalogList {
                     if (item.substring(item.lastIndexOf('.') + 1).equals("docx")) {
                         fragmentFolderItem.setImgFolder("/ru/greatlarder/technicalassistant/images/word.png");
                     }
+                    File file = new File(fileManager.getUrlFileDocumentations(company, item));
+                   fragmentFolderItem.setFile(file);
                     setGraphic(grafic);
                 }
-            }
-        });
-
-        listView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                //ManualFragmentController manualFragmentController;
-
-                String s = fileManager.getUrlFileDocumentations(company,
-                        listView.getSelectionModel().getSelectedItem());
-
-                FXMLLoader loader;
-
-                if (s.substring(s.lastIndexOf('.') + 1).equals("xls") || s.substring(s.lastIndexOf('.') + 1).equals("xlsx")) {
-                    ReadExel f = new ReadExel();
-                    System.out.println(f.parse(s) + "============================zdes 79 tec");
-                }
-                if (s.substring(s.lastIndexOf('.') + 1).equals("pdf")) {
-                    loader = new FXMLLoader(getClass().getResource("/layout/manualFragment.fxml"));
-                    try {
-
-                        Scene scene = new Scene(loader.load());
-                        Stage stage = new Stage();
-
-                        stage.setScene(scene);
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
             }
         });
         return listView;

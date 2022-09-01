@@ -162,4 +162,38 @@ public interface Language {
     String NETWORK_SWITCH_RU = "Сетевой коммутатор";
     String TOUCH_CONTROL_PANEL_RU = "Сенсорная панель управления";
     String PATHS_PANEL_RU = "Патч панель";
+    String LOCATION(String lang);
+    String NAME(String lang);
+
+    String MANUAL(String lang);
+
+    String WEB_INTERFACE(String lang);
+
+    String DEFECT(String lang);
+
+    String NEW_LOCATION(String lang);
+
+    String NEW_ROOM(String lang);
+
+    String NEW_PASSWORD(String lang);
+
+    String NEW_LOGIN(String lang);
+
+    String NEW_IP_ADDRESS(String lang);
+
+    String NEW_MASC(String lang);
+
+    String NEW_GATEWAY(String lang);
+
+    String NEW_IP_ADDRESS_DANTE(String lang);
+
+    String NEW_MASC_DANTE(String lang);
+
+    String NEW_GATEWAY_DANTE(String lang);
+
+    String CHANGE_FREQUENCY(String lang);
+
+    String NEW_TIME_WORK_LAMP_PROJECTOR(String lang);
+
+    String CHANGE_CONDITION(String lang);
 }

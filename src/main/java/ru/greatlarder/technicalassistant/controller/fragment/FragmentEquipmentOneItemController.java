@@ -5,7 +5,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -22,7 +27,6 @@ import ru.greatlarder.technicalassistant.repository.DefectRepository;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
 import ru.greatlarder.technicalassistant.repository.impl.DefectRepositoryImpl;
 import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
-import ru.greatlarder.technicalassistant.services.GlobalLinkFragmentEquipmentController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
@@ -30,9 +34,12 @@ import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_DANGER;
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_EXCELLENT;
@@ -68,7 +75,7 @@ public class FragmentEquipmentOneItemController implements ObserverLang {
     @FXML public Button btnSaveNewPassword;
     @FXML public Button btnSaveNewRoom;
     @FXML public Button btnSaveNewLocationToRoom;
-    @FXML public ComboBox<Object> menuButtonCondition;
+    @FXML public ComboBox<String> menuButtonCondition;
     @FXML public Button btnSaveNewCondition;
     @FXML public HBox hBoxConditions;
     @FXML public HBox hBoxNewRoomLocations;
@@ -149,7 +156,34 @@ public class FragmentEquipmentOneItemController implements ObserverLang {
     @FXML public ImageView imgOpenHBoxChangeOutletNumber;
     @FXML public HBox hBoxNewOutletNumber;
     @FXML public ComboBox<Object> comboBoxChoiceSwitcher;
-    @FXML public ChoiceBox choiceBoxPatchPanel;
+    @FXML public ChoiceBox<String> choiceBoxPatchPanel;
+    @FXML public Label labelModel;
+    @FXML public Label labelManufacturer;
+    @FXML public Label labelSerialNumber;
+    @FXML public Label labelIpAddress;
+    @FXML public Label labelMacAddress;
+    @FXML public Label labelLogin;
+    @FXML public Label labelPassword;
+    @FXML public Label labelRoom;
+    @FXML public Label labelLocation;
+    @FXML public Label labelStartWork;
+    @FXML public Label labelCondition;
+    @FXML public Label labelManual;
+    @FXML public Label labelWebInterface;
+    @FXML public Label labelDefect;
+    @FXML public Label labelNewLocation;
+    @FXML public Label labelNewRoom;
+    @FXML public Label labelNewPassword;
+    @FXML public Label labelNewLogin;
+    @FXML public Label labelNewIpAddress;
+    @FXML public Label labelNewMasc;
+    @FXML public Label labelNewGateway;
+    @FXML public Label labelIpAddressDante;
+    @FXML public Label labelNewIpAddressDante;
+    @FXML public Label labelNewMascDante;
+    @FXML public Label labelNewGatewayDante;
+    @FXML public Label labelChangeFrequency;
+    @FXML public Label labelNewTime;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
     Language language = new LanguageImpl();
     DefectRepository defectRepository = new DefectRepositoryImpl();
@@ -165,30 +199,73 @@ public class FragmentEquipmentOneItemController implements ObserverLang {
     }
 
     public void setLanguage(String lang1){
+
         labelOutletNumber.setText(language.OUTLET_NUMBER(lang1));
         labelPortNumber.setText(language.PORT_NUMBER_IN_THE_SWITCH(lang1));
         btnSaveNewOutletNumber.setText(language.SAVE(lang1));
         btnSaveNewPortNumber.setText(language.SAVE(lang1));
+
+        labelModel.setText(language.MODEL(lang1));
+        labelManufacturer.setText(language.MANUFACTURER(lang1));
+        labelSerialNumber.setText(language.SERIAL_NUMBER(lang1));
+        labelIpAddress.setText(language.IP_ADDRESS(lang1));
+        labelMacAddress.setText(language.MAC_ADDRESS(lang1));
+        labelLogin.setText(language.LOGIN(lang1));
+        labelPassword.setText(language.PASSWORD(lang1));
+        labelRoom.setText(language.ROOM(lang1));
+        labelLocation.setText(language.LOCATION(lang1));
+        labelStartWork.setText(language.START_DATE_OF_OPERATION(lang1));
+        labelCondition.setText(language.CONDITION(lang1));
+        labelManual.setText(language.MANUAL(lang1));
+        labelWebInterface.setText(language.WEB_INTERFACE(lang1));
+        labelDefect.setText(language.DEFECT(lang1));
+        labelNewLocation.setText(language.NEW_LOCATION(lang1));
+        labelNewRoom.setText(language.NEW_ROOM(lang1));
+        labelNewPassword.setText(language.NEW_PASSWORD(lang1));
+        labelNewLogin.setText(language.NEW_LOGIN(lang1));
+        labelNewIpAddress.setText(language.NEW_IP_ADDRESS(lang1));
+        labelNewMasc.setText(language.NEW_MASC(lang1));
+        labelNewGateway.setText(language.NEW_GATEWAY(lang1));
+        labelIpAddressDante.setText(language.IP_ADDRESS_DANTE(lang1));
+        labelNewIpAddressDante.setText(language.NEW_IP_ADDRESS_DANTE(lang1));
+        labelNewMascDante.setText(language.NEW_MASC_DANTE(lang1));
+        labelNewGatewayDante.setText(language.NEW_GATEWAY_DANTE(lang1));
+        labelChangeFrequency.setText(language.CHANGE_FREQUENCY(lang1));
+        labelNewTime.setText(language.NEW_TIME_WORK_LAMP_PROJECTOR(lang1));
+        menuButtonCondition.setPromptText(language.CHANGE_CONDITION(lang1));
+        labelFrequencyName.setText(language.FREQUENCY(lang1));
     }
 
     public void openManual(javafx.scene.input.MouseEvent mouseEvent) {
-
-        String s = fileManager.getUrlFileManual(equipment.getManual());
-
-        WebView webView = new WebView();
-        WebEngine webEngine = webView.getEngine();
-        webEngine.load(s);
-        GlobalLinkFragmentEquipmentController.getFragmentEquipmentController().splitPaneEquipment.getItems().add(webView);
-
+        if(equipment.getManual() != null) {
+            File pdfFile = new File(fileManager.getUrlFileManual(equipment.getManual()));
+            if (pdfFile.exists()) {
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        Desktop.getDesktop().open(pdfFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     public void connectWebInterface(javafx.scene.input.MouseEvent mouseEvent) {
-
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
+        webEngine.setJavaScriptEnabled(true);
         webEngine.load("http://" + equipment.getIpAddress());
-        GlobalLinkFragmentEquipmentController.getFragmentEquipmentController().splitPaneEquipment.getItems().add(webView);
 
+            Scene scene = new Scene(webView);
+            Stage stage = new Stage();
+
+            stage.setTitle(equipment.getName() + " : " + equipment.getSerialNumber());
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/equipment_img/"
+                    + equipment.getImage()))));
+
+            stage.setScene(scene);
+            stage.show();
     }
 
     public void changeIp(MouseEvent mouseEvent) {
@@ -1032,6 +1109,8 @@ public class FragmentEquipmentOneItemController implements ObserverLang {
     @Override
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
+        setLanguage(lang);
+
     }
     public boolean checkingForANumber(String value) {
         return value.chars().allMatch(Character :: isDigit);
@@ -1059,5 +1138,9 @@ public class FragmentEquipmentOneItemController implements ObserverLang {
             if (ipAddress.equals(str)) return true;
         }
         return false;
+    }
+
+    public void onActionMenuButtonCondition(MouseEvent actionEvent) {
+        menuButtonCondition.setItems(FXCollections.observableArrayList(language.status_sheet(lang)));
     }
 }

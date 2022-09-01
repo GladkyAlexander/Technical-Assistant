@@ -29,21 +29,21 @@ public class ExelWorker {
 
 		styleCell = createStyle(workbook);
 
-		int rowNum = 0;
+		int rowNum = 1;
 
 		Row row = sheet.createRow(rowNum);
 
-		row.createCell(0).setCellValue("Серийный номер");
-		row.getCell(0).setCellStyle(style);
-		sheet.autoSizeColumn(0);
-
-		row.createCell(1).setCellValue("Помещение");
+		row.createCell(1).setCellValue("Серийный номер");
 		row.getCell(1).setCellStyle(style);
 		sheet.autoSizeColumn(1);
 
-		row.createCell(2).setCellValue("Время наработки");
+		row.createCell(2).setCellValue("Помещение");
 		row.getCell(2).setCellStyle(style);
 		sheet.autoSizeColumn(2);
+
+		row.createCell(3).setCellValue("Время наработки");
+		row.getCell(3).setCellStyle(style);
+		sheet.autoSizeColumn(3);
 
 		for (Equipment equipment : listEquipment) {
 			createSheetHeader(sheet, ++rowNum, (Projector) equipment);

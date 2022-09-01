@@ -58,6 +58,17 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang 
     }
 
     public void allIpAddress(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentIpAddress.fxml"));
+        try {
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+            handlerCompanyListener.registerObserverCompany(loader.getController());
+            handlerLang.onNewDataLang(new DataLang(lang));
+            FragmentIpAddressController controller = loader.getController();
+            controller.loadFragment(company);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void allDefect(MouseEvent mouseEvent) {

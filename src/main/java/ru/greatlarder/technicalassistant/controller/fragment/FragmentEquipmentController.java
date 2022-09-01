@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
-import ru.greatlarder.technicalassistant.services.GlobalLinkFragmentEquipmentController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkFragmentEquipmentController;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;

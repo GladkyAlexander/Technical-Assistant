@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.Equipment;
-import ru.greatlarder.technicalassistant.services.GlobalLinkFragmentEquipmentController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkFragmentEquipmentController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
