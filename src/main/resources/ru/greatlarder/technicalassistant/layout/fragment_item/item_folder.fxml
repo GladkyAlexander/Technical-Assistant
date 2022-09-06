@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox fx:id="hBoxOFI" alignment="CENTER_LEFT" minWidth="-Infinity" onMouseClicked="#openFile" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentFolderItemController">
+<HBox fx:id="hBoxOFI" alignment="CENTER_LEFT" minWidth="-Infinity" onMouseClicked="#openFile" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemFolderController">
 
     <ImageView fx:id="imgFolder" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../images/doc.png" />

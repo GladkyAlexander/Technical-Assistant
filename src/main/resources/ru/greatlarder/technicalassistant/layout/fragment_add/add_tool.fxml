@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="gridPaneToolAdd" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" vgap="4.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddToolController">
+   <columnConstraints>
+      <ColumnConstraints halignment="LEFT" />
+      <ColumnConstraints halignment="CENTER" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+   </rowConstraints>
+   <children>
+      <HBox alignment="CENTER_RIGHT" GridPane.columnSpan="2">
+         <children>
+            <ImageView fx:id="imgOk1" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelOk1" />
+            <ImageView fx:id="close1" fitHeight="25.0" fitWidth="400.0" onMouseClicked="#closeAddToolController" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/closed.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <TextField fx:id="tfNameTool1" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="tfBrandTool1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="tfSerialNumberTool1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <DatePicker fx:id="dpStartOfOperation1" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <MenuButton fx:id="mbCondition1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Удовлетворительное" GridPane.columnSpan="2" GridPane.rowIndex="5">
+         <items>
+            <MenuItem fx:id="menuItemFaulty" mnemonicParsing="false" onAction="#faultyOnAction" text="Не исправно (утилизация)" />
+            <MenuItem fx:id="menuItemRequiresRepair" mnemonicParsing="false" onAction="#repairOnAction" text="Требует ремонта" />
+            <MenuItem fx:id="menuItemSatisfactory" mnemonicParsing="false" onAction="#satisfactoryOnAction" text="Удовлетворительное" />
+         </items>
+      </MenuButton>
+      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#sendTool" text="Добавить" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <Label fx:id="labelNameTool" text="Название инструмента" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelManufacturer" text="Фирма производитель" GridPane.rowIndex="2">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelSerialNumber" text="Серийный номер" GridPane.rowIndex="3">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelDateWork" text="Дата введения в эксплуатацию" GridPane.rowIndex="4">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboBoxChooseACompany" maxWidth="1.7976931348623157E308" promptText="Выберите компанию " GridPane.columnSpan="2" GridPane.rowIndex="6" />
+    </children>
+   <padding>
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+   </padding>
+   <opaqueInsets>
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+   </opaqueInsets>
+</GridPane>

@@ -13,8 +13,9 @@ import javafx.scene.layout.HBox;
 import ru.greatlarder.technicalassistant.controller.engineer.StartEngineerController;
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentRegistrationUserController;
 import ru.greatlarder.technicalassistant.controller.reception.StartReceptionController;
-import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.User;
+import ru.greatlarder.technicalassistant.repository.UserRepository;
+import ru.greatlarder.technicalassistant.repository.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
@@ -39,8 +40,8 @@ public class MainController implements ObserverLang {
     @FXML
     public ImageView imgLangMenuButton;
     public User user;
-    public static Company company;
     HandlerUserListener handlerUserListener = new HandlerUserListener();
+    UserRepository userRepository = new UserRepositoryImpl();
     HandlerLang handlerLang = new HandlerLang();
 
     @Override
@@ -63,8 +64,10 @@ public class MainController implements ObserverLang {
                         borderPaneMainPage.setCenter(loader.load());
                         handlerUserListener.registerObserverUser(loader.getController());
                         handlerLang.registerObserverLang(loader.getController());
+
                         handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
                         handlerUserListener.onNewDataUser(new DataUser(user));
+
                     StartEngineerController controller = loader.getController();
                     controller.loadPage();
 
@@ -87,7 +90,18 @@ public class MainController implements ObserverLang {
                     e.printStackTrace();
                 }
             }
-        } else {
+        } else if (userRepository.getListUser().size() > 1){
+            FXMLLoader loaderUserLogin = new FXMLLoader(getClass().
+                    getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/fragmentUserLogin.fxml"));
+            try {
+                borderPaneMainPage.setCenter(loaderUserLogin.load());
+                handlerLang.registerObserverLang(loaderUserLogin.getController());
+                handlerLang.onNewDataLang(new DataLang(mbtLang.getText()));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (userRepository.getListUser().size() == 0){
             FXMLLoader loaderRegistration = new FXMLLoader(getClass().
                     getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/fragmentRegisrationUser.fxml"));
             try {
@@ -117,12 +131,16 @@ public class MainController implements ObserverLang {
         handlerLang.registerObserverLang(this);
         handlerLang.onNewDataLang(new DataLang("English"));
     }
+    public void addPhoneBook(MouseEvent mouseEvent) {
+    }
 
-    public void updateUser(User user){
-        this.user = user;
+    public void updateUser() {
+        this.user = userRepository.getUserLoginPassword(user.getLogin(), user.getPassword());
         handlerUserListener.onNewDataUser(new DataUser(user));
         loadPage();
     }
-    public void addPhoneBook(MouseEvent mouseEvent) {
+    public void loadUser(User user){
+        this.user = user;
+        loadPage();
     }
 }

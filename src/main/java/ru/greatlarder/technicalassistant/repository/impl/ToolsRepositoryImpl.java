@@ -103,13 +103,12 @@ public class ToolsRepositoryImpl implements ToolsRepository {
 
     @Override
     public Tool getToolBySerialNumber(String toolSerialNumber) {
-        Tool tool = new Tool();
         for (Tool tool1 : getListTool()){
             if(tool1.getToolSerialNumber().equals(toolSerialNumber)){
-                tool = tool1;
+                return tool1;
             }
         }
-        return tool;
+        return null;
     }
 
     @Override

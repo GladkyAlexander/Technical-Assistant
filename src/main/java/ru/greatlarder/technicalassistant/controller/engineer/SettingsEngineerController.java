@@ -62,7 +62,7 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser {
     }
 
     public void openSettingsMail(ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/addLetterTemplate.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_mail_settings.fxml"));
         try {
             borderPaneSettings.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
@@ -108,7 +108,7 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser {
         FileManager fileManager = new FileManagerImpl();
         tfRefDirApp.setText(fileManager.folderProject());
         tfRefDirDB.setText(fileManager.folderDB());
-
+        tfRefDirDB.setPrefColumnCount(tfRefDirDB.getText().length());
         if(user == null){
             btnCompanyChoice.setDisable(true);
             btnSettingsMail.setDisable(true);

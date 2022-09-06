@@ -1,10 +1,10 @@
 package ru.greatlarder.technicalassistant.repository.impl;
 
-import ru.greatlarder.technicalassistant.controller.MainController;
 import ru.greatlarder.technicalassistant.domain.Port;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
 import ru.greatlarder.technicalassistant.repository.PortRepository;
 import ru.greatlarder.technicalassistant.services.db.sqlite.SQLitePort;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -106,54 +106,54 @@ public class PortRepositoryImpl implements PortRepository {
     }
     private Port get(HashMap<Integer, Integer> hashMap){
         Port port = new Port();
-        if(hashMap.get(1) != null) {port.setPort1(equipmentRepository.getEquipmentById(hashMap.get(1), MainController.company.getNameCompany()));}
-        if(hashMap.get(2) != null) {port.setPort2(equipmentRepository.getEquipmentById(hashMap.get(2), MainController.company.getNameCompany()));}
-        if(hashMap.get(3) != null) {port.setPort3(equipmentRepository.getEquipmentById(hashMap.get(3), MainController.company.getNameCompany()));}
-        if(hashMap.get(4) != null) {port.setPort4(equipmentRepository.getEquipmentById(hashMap.get(4), MainController.company.getNameCompany()));}
-        if(hashMap.get(5) != null) {port.setPort5(equipmentRepository.getEquipmentById(hashMap.get(5), MainController.company.getNameCompany()));}
-        if(hashMap.get(6) != null) {port.setPort6(equipmentRepository.getEquipmentById(hashMap.get(6), MainController.company.getNameCompany()));}
-        if(hashMap.get(7) != null) {port.setPort7(equipmentRepository.getEquipmentById(hashMap.get(7), MainController.company.getNameCompany()));}
-        if(hashMap.get(8) != null) {port.setPort8(equipmentRepository.getEquipmentById(hashMap.get(8), MainController.company.getNameCompany()));}
-        if(hashMap.get(9) != null) {port.setPort9(equipmentRepository.getEquipmentById(hashMap.get(9), MainController.company.getNameCompany()));}
-        if(hashMap.get(10) != null) {port.setPort10(equipmentRepository.getEquipmentById(hashMap.get(10), MainController.company.getNameCompany()));}
-        if(hashMap.get(11) != null) {port.setPort11(equipmentRepository.getEquipmentById(hashMap.get(11), MainController.company.getNameCompany()));}
-        if(hashMap.get(12) != null) {port.setPort12(equipmentRepository.getEquipmentById(hashMap.get(12), MainController.company.getNameCompany()));}
-        if(hashMap.get(13) != null) {port.setPort13(equipmentRepository.getEquipmentById(hashMap.get(13), MainController.company.getNameCompany()));}
-        if(hashMap.get(14) != null) {port.setPort14(equipmentRepository.getEquipmentById(hashMap.get(14), MainController.company.getNameCompany()));}
-        if(hashMap.get(15) != null) {port.setPort15(equipmentRepository.getEquipmentById(hashMap.get(15), MainController.company.getNameCompany()));}
-        if(hashMap.get(16) != null) {port.setPort16(equipmentRepository.getEquipmentById(hashMap.get(16), MainController.company.getNameCompany()));}
-        if(hashMap.get(17) != null) {port.setPort17(equipmentRepository.getEquipmentById(hashMap.get(17), MainController.company.getNameCompany()));}
-        if(hashMap.get(18) != null) {port.setPort18(equipmentRepository.getEquipmentById(hashMap.get(18), MainController.company.getNameCompany()));}
-        if(hashMap.get(19) != null) {port.setPort19(equipmentRepository.getEquipmentById(hashMap.get(19), MainController.company.getNameCompany()));}
-        if(hashMap.get(20) != null) {port.setPort20(equipmentRepository.getEquipmentById(hashMap.get(20), MainController.company.getNameCompany()));}
-        if(hashMap.get(21) != null) {port.setPort21(equipmentRepository.getEquipmentById(hashMap.get(21), MainController.company.getNameCompany()));}
-        if(hashMap.get(22) != null) {port.setPort22(equipmentRepository.getEquipmentById(hashMap.get(22), MainController.company.getNameCompany()));}
-        if(hashMap.get(23) != null) {port.setPort23(equipmentRepository.getEquipmentById(hashMap.get(23), MainController.company.getNameCompany()));}
-        if(hashMap.get(24) != null) {port.setPort24(equipmentRepository.getEquipmentById(hashMap.get(24), MainController.company.getNameCompany()));}
-        if(hashMap.get(25) != null) {port.setPort25(equipmentRepository.getEquipmentById(hashMap.get(25), MainController.company.getNameCompany()));}
-        if(hashMap.get(26) != null) {port.setPort26(equipmentRepository.getEquipmentById(hashMap.get(26), MainController.company.getNameCompany()));}
-        if(hashMap.get(27) != null) {port.setPort27(equipmentRepository.getEquipmentById(hashMap.get(27), MainController.company.getNameCompany()));}
-        if(hashMap.get(28) != null) {port.setPort28(equipmentRepository.getEquipmentById(hashMap.get(28), MainController.company.getNameCompany()));}
-        if(hashMap.get(29) != null) {port.setPort29(equipmentRepository.getEquipmentById(hashMap.get(29), MainController.company.getNameCompany()));}
-        if(hashMap.get(30) != null) {port.setPort30(equipmentRepository.getEquipmentById(hashMap.get(30), MainController.company.getNameCompany()));}
-        if(hashMap.get(31) != null) {port.setPort31(equipmentRepository.getEquipmentById(hashMap.get(31), MainController.company.getNameCompany()));}
-        if(hashMap.get(32) != null) {port.setPort32(equipmentRepository.getEquipmentById(hashMap.get(32), MainController.company.getNameCompany()));}
-        if(hashMap.get(33) != null) {port.setPort33(equipmentRepository.getEquipmentById(hashMap.get(33), MainController.company.getNameCompany()));}
-        if(hashMap.get(34) != null) {port.setPort34(equipmentRepository.getEquipmentById(hashMap.get(34), MainController.company.getNameCompany()));}
-        if(hashMap.get(35) != null) {port.setPort35(equipmentRepository.getEquipmentById(hashMap.get(35), MainController.company.getNameCompany()));}
-        if(hashMap.get(36) != null) {port.setPort36(equipmentRepository.getEquipmentById(hashMap.get(36), MainController.company.getNameCompany()));}
-        if(hashMap.get(37) != null) {port.setPort37(equipmentRepository.getEquipmentById(hashMap.get(37), MainController.company.getNameCompany()));}
-        if(hashMap.get(38) != null) {port.setPort38(equipmentRepository.getEquipmentById(hashMap.get(38), MainController.company.getNameCompany()));}
-        if(hashMap.get(39) != null) {port.setPort39(equipmentRepository.getEquipmentById(hashMap.get(39), MainController.company.getNameCompany()));}
-        if(hashMap.get(40) != null) {port.setPort40(equipmentRepository.getEquipmentById(hashMap.get(40), MainController.company.getNameCompany()));}
-        if(hashMap.get(41) != null) {port.setPort41(equipmentRepository.getEquipmentById(hashMap.get(41), MainController.company.getNameCompany()));}
-        if(hashMap.get(42) != null) {port.setPort42(equipmentRepository.getEquipmentById(hashMap.get(42), MainController.company.getNameCompany()));}
-        if(hashMap.get(43) != null) {port.setPort43(equipmentRepository.getEquipmentById(hashMap.get(43), MainController.company.getNameCompany()));}
-        if(hashMap.get(44) != null) {port.setPort44(equipmentRepository.getEquipmentById(hashMap.get(44), MainController.company.getNameCompany()));}
-        if(hashMap.get(45) != null) {port.setPort45(equipmentRepository.getEquipmentById(hashMap.get(45), MainController.company.getNameCompany()));}
-        if(hashMap.get(46) != null) {port.setPort46(equipmentRepository.getEquipmentById(hashMap.get(46), MainController.company.getNameCompany()));}
-        if(hashMap.get(47) != null) {port.setPort47(equipmentRepository.getEquipmentById(hashMap.get(47), MainController.company.getNameCompany()));}
-        if(hashMap.get(48) != null) {port.setPort48(equipmentRepository.getEquipmentById(hashMap.get(48), MainController.company.getNameCompany()));}
+        if(hashMap.get(1) != null) {port.setPort1(equipmentRepository.getEquipmentById(hashMap.get(1), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(2) != null) {port.setPort2(equipmentRepository.getEquipmentById(hashMap.get(2), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(3) != null) {port.setPort3(equipmentRepository.getEquipmentById(hashMap.get(3), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(4) != null) {port.setPort4(equipmentRepository.getEquipmentById(hashMap.get(4), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(5) != null) {port.setPort5(equipmentRepository.getEquipmentById(hashMap.get(5), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(6) != null) {port.setPort6(equipmentRepository.getEquipmentById(hashMap.get(6), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(7) != null) {port.setPort7(equipmentRepository.getEquipmentById(hashMap.get(7), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(8) != null) {port.setPort8(equipmentRepository.getEquipmentById(hashMap.get(8), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(9) != null) {port.setPort9(equipmentRepository.getEquipmentById(hashMap.get(9), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(10) != null) {port.setPort10(equipmentRepository.getEquipmentById(hashMap.get(10), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(11) != null) {port.setPort11(equipmentRepository.getEquipmentById(hashMap.get(11), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(12) != null) {port.setPort12(equipmentRepository.getEquipmentById(hashMap.get(12), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(13) != null) {port.setPort13(equipmentRepository.getEquipmentById(hashMap.get(13), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(14) != null) {port.setPort14(equipmentRepository.getEquipmentById(hashMap.get(14), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(15) != null) {port.setPort15(equipmentRepository.getEquipmentById(hashMap.get(15), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(16) != null) {port.setPort16(equipmentRepository.getEquipmentById(hashMap.get(16), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(17) != null) {port.setPort17(equipmentRepository.getEquipmentById(hashMap.get(17), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(18) != null) {port.setPort18(equipmentRepository.getEquipmentById(hashMap.get(18), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(19) != null) {port.setPort19(equipmentRepository.getEquipmentById(hashMap.get(19), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(20) != null) {port.setPort20(equipmentRepository.getEquipmentById(hashMap.get(20), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(21) != null) {port.setPort21(equipmentRepository.getEquipmentById(hashMap.get(21), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(22) != null) {port.setPort22(equipmentRepository.getEquipmentById(hashMap.get(22), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(23) != null) {port.setPort23(equipmentRepository.getEquipmentById(hashMap.get(23), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(24) != null) {port.setPort24(equipmentRepository.getEquipmentById(hashMap.get(24), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(25) != null) {port.setPort25(equipmentRepository.getEquipmentById(hashMap.get(25), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(26) != null) {port.setPort26(equipmentRepository.getEquipmentById(hashMap.get(26), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(27) != null) {port.setPort27(equipmentRepository.getEquipmentById(hashMap.get(27), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(28) != null) {port.setPort28(equipmentRepository.getEquipmentById(hashMap.get(28), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(29) != null) {port.setPort29(equipmentRepository.getEquipmentById(hashMap.get(29), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(30) != null) {port.setPort30(equipmentRepository.getEquipmentById(hashMap.get(30), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(31) != null) {port.setPort31(equipmentRepository.getEquipmentById(hashMap.get(31), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(32) != null) {port.setPort32(equipmentRepository.getEquipmentById(hashMap.get(32), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(33) != null) {port.setPort33(equipmentRepository.getEquipmentById(hashMap.get(33), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(34) != null) {port.setPort34(equipmentRepository.getEquipmentById(hashMap.get(34), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(35) != null) {port.setPort35(equipmentRepository.getEquipmentById(hashMap.get(35), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(36) != null) {port.setPort36(equipmentRepository.getEquipmentById(hashMap.get(36), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(37) != null) {port.setPort37(equipmentRepository.getEquipmentById(hashMap.get(37), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(38) != null) {port.setPort38(equipmentRepository.getEquipmentById(hashMap.get(38), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(39) != null) {port.setPort39(equipmentRepository.getEquipmentById(hashMap.get(39), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(40) != null) {port.setPort40(equipmentRepository.getEquipmentById(hashMap.get(40), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(41) != null) {port.setPort41(equipmentRepository.getEquipmentById(hashMap.get(41), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(42) != null) {port.setPort42(equipmentRepository.getEquipmentById(hashMap.get(42), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(43) != null) {port.setPort43(equipmentRepository.getEquipmentById(hashMap.get(43), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(44) != null) {port.setPort44(equipmentRepository.getEquipmentById(hashMap.get(44), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(45) != null) {port.setPort45(equipmentRepository.getEquipmentById(hashMap.get(45), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(46) != null) {port.setPort46(equipmentRepository.getEquipmentById(hashMap.get(46), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(47) != null) {port.setPort47(equipmentRepository.getEquipmentById(hashMap.get(47), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
+        if(hashMap.get(48) != null) {port.setPort48(equipmentRepository.getEquipmentById(hashMap.get(48), GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany()));}
         if(hashMap.get(49) != null) {port.setId(hashMap.get(49));}
         if(hashMap.get(50) != null) {port.setIdNetworkSwitch(hashMap.get(50));}
 

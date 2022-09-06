@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import ru.greatlarder.technicalassistant.controller.fragment.FragmentFolderItemController;
+import ru.greatlarder.technicalassistant.controller.fragment_item.ItemFolderController;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 
@@ -17,7 +17,7 @@ public class TheEntireCatalogList {
     FileManager fileManager = new FileManagerImpl();
     String company;
 
-    public ListView upVbox(String nameCompany) {
+    public ListView<String> upVbox(String nameCompany) {
         this.company = nameCompany;
 
         ObservableList<String> list = FXCollections.observableArrayList(fileManager.getListOfFileNamesInTheDirectory(nameCompany, "Documentations"));
@@ -25,11 +25,11 @@ public class TheEntireCatalogList {
         ListView<String> listView = new ListView<>(list);
         listView.setCellFactory(param -> new ListCell<>() {
             private Node grafic;
-            private FragmentFolderItemController fragmentFolderItem;
+            private ItemFolderController fragmentFolderItem;
 
             {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentFolderItem.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_folder.fxml"));
                     grafic = loader.load();
                     fragmentFolderItem = loader.getController();
                     setPrefWidth(0);

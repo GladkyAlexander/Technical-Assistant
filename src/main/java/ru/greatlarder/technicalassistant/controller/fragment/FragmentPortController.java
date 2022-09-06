@@ -6,11 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import ru.greatlarder.technicalassistant.controller.MainController;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.equipment.NetworkSwitch;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
 import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,7 +150,7 @@ public class FragmentPortController {
     public void change(ActionEvent actionEvent) {
         ObservableList<String> observableList = FXCollections.observableArrayList();
         disable(false);
-        for (Equipment equipment : equipmentRepository.getListEquipmentForCompany(MainController.company.getNameCompany())){
+        for (Equipment equipment : equipmentRepository.getListEquipmentForCompany(GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany())){
             observableList.add(equipment.getSerialNumber());
         }
 

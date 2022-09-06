@@ -13,6 +13,7 @@ import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class AppStart extends Application {
@@ -20,10 +21,10 @@ public class AppStart extends Application {
     UserRepository userRepository = new UserRepositoryImpl();
 
     private User getUser() {
-        User user = userRepository.getUser();
-        if (user.getId() == 0) {
-            return null;
-        } else return user;
+        List<User> user = userRepository.getListUser();
+        if (user.size() == 1){
+            return user.get(0);
+        } else return null;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class AppStart extends Application {
         stage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png")))));
         stage.setTitle("Technical Assistant");
         MainController controller = fxmlLoader.getController();
-        controller.updateUser(getUser());
+        controller.loadUser(getUser());
         stage.setScene(scene);
         stage.show();
     }

@@ -128,7 +128,7 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
             @Override
             public void changed(ObservableValue<? extends TableIpAddress> observableValue, TableIpAddress tableIpAddress, TableIpAddress t1) {
                 if (tableView.getSelectionModel().getSelectedItem().getSerialNumber() != null) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEquipmentOneItem.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEquipmentOne.fxml"));
 
                     try {
 
@@ -143,7 +143,7 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
                         }
                         handlerLang.registerObserverLang(loader.getController());
                         handlerLang.onNewDataLang(new DataLang(lang));
-                        FragmentEquipmentOneItemController fragmentEquipmentOneItemController = loader.getController();
+                        FragmentEquipmentOneController fragmentEquipmentOneItemController = loader.getController();
                         fragmentEquipmentOneItemController.setEquip(equipmentDate);
 
                         stage.setTitle((tableView.getSelectionModel().getSelectedItem().getModel() + " : "
@@ -219,7 +219,7 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
             @Override
             public void changed(ObservableValue<? extends TableIpAddress> observableValue, TableIpAddress tableIpAddress, TableIpAddress t1) {
                 if(tableView.getSelectionModel().getSelectedItem().getSerialNumber() != null) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEquipmentOneItem.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEquipmentOne.fxml"));
 
                     try {
 
@@ -234,7 +234,7 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
                         }
                         handlerLang.registerObserverLang(loader.getController());
                         handlerLang.onNewDataLang(new DataLang(lang));
-                        FragmentEquipmentOneItemController fragmentEquipmentOneItemController = loader.getController();
+                        FragmentEquipmentOneController fragmentEquipmentOneItemController = loader.getController();
                         fragmentEquipmentOneItemController.setEquip(equipmentDate);
 
                         stage.setTitle((tableView.getSelectionModel().getSelectedItem().getModel() + " : "

@@ -1,14 +1,10 @@
 package ru.greatlarder.technicalassistant.controller.engineer;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import ru.greatlarder.technicalassistant.controller.MainController;
+import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Task;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
@@ -31,15 +27,16 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DocumentationEngineerController implements ObserverLang, ObserverCompany {
-    @FXML public VBox vBoxLeft;
     @FXML public Button btnCreateTimeShite;
     @FXML public Button btnZip;
     @FXML public Button btnLampProjector;
+    @FXML public GridPane gridPaneDocumentation;
     @FXML public SplitPane splitPaneDocumentation;
     @FXML public Label labelAccounting;
-    @FXML public SplitPane borderPaneDocumentation;
     String lang;
     Company company;
     Language language = new LanguageImpl();
@@ -69,35 +66,56 @@ public class DocumentationEngineerController implements ObserverLang, ObserverCo
 
     public void startDocFragment() {
         loadFoldersList();
-        splitPaneDocumentation.setDividerPositions(0.85f, 0.15f);
-        splitPaneDocumentation.getItems().setAll(vBoxLeft);
     }
 
     public void zip(MouseEvent mouseEvent) {
         new ExelZip(equipmentRepository.getListEquipmentForCompanyCondition(company.getNameCompany(), language.SPARE_PARTS_INCLUDED(lang))
                 , "zip" + dateFormat + "."+ "xls", company.getNameCompany());
-
+        if(splitPaneDocumentation.getItems().size() == 2) {
+            splitPaneDocumentation.getItems().remove(1);
+        }
+        loadFoldersList();
     }
 
     public void createDocLamp(ActionEvent actionEvent) {
         new ExelWorker(equipmentRepository.getListEquipmentByName(language.PROJECTOR(lang), company.getNameCompany())
                 , "lamp_time_" + dateFormat + "."+ "xls", company.getNameCompany());
+        if(splitPaneDocumentation.getItems().size() == 2) {
+            splitPaneDocumentation.getItems().remove(1);
+        }
         loadFoldersList();
     }
 
     public void createTimeShite(MouseEvent mouseEvent) {
         List<Task> taskList = new ArrayList<>();
-        for(Task task : taskRepository.getListTask(MainController.company.getNameCompany())){
+        for(Task task : taskRepository.getListTask(company.getNameCompany())){
             if (localDate.getYear() == task.getDateOfCreation().getYear() && localDate.getMonth() == task.getDateOfCreation().getMonth()){
                 taskList.add(task);
             }
         }
-
         new ExelTask(taskList, "timeShite" + dateFormat + "_" + LocalTime.now().getMinute() + "." + "xls", company.getNameCompany());
+        if(splitPaneDocumentation.getItems().size() == 2) {
+            splitPaneDocumentation.getItems().remove(1);
+        }
+        loadFoldersList();
     }
     private void loadFoldersList(){
-        Platform.runLater(() ->{
-            splitPaneDocumentation.getItems().add(listOfDirectory.upVbox(company.getNameCompany()));
+        javafx.concurrent.Task<ListView<String>> task = new javafx.concurrent.Task<ListView<String>>() {
+            @Override
+            protected ListView<String> call() throws Exception {
+                return listOfDirectory.upVbox(company.getNameCompany());
+            }
+        };
+        splitPaneDocumentation.getItems().add(1, new ProgressBar(task.getProgress()));
+
+        task.setOnSucceeded((succeededEvent)->{
+            splitPaneDocumentation.getItems().remove(1);
+            splitPaneDocumentation.getItems().add(1,task.getValue());
         });
+
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(task);
+        executorService.shutdown();
+
     }
 }

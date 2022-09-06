@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.controller.fragment;
+package ru.greatlarder.technicalassistant.controller.fragment_item;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import ru.greatlarder.technicalassistant.controller.fragment.FragmentEquipmentOneController;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkFragmentEquipmentController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
@@ -52,13 +53,13 @@ public class ItemEquipmentController implements ObserverLang {
 
     public void openEquipment(MouseEvent mouseEvent) {
         FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEquipmentOneItem.fxml"));
+                .getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEquipmentOne.fxml"));
         try {
             GlobalLinkFragmentEquipmentController.getFragmentEquipmentController().tabPaneEquipment2.getTabs().add(
                     new Tab(equipment.getName() + " : " + equipment.getSerialNumber(), loader.load()));
             handlerLang.registerObserverLang(loader.getController());
             handlerLang.onNewDataLang(new DataLang(lang));
-            FragmentEquipmentOneItemController fragmentEquipmentOneItemController = loader.getController();
+            FragmentEquipmentOneController fragmentEquipmentOneItemController = loader.getController();
             fragmentEquipmentOneItemController.setEquip(equipment);
         } catch (IOException e) {
             e.printStackTrace();

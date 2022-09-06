@@ -10,29 +10,25 @@ public class User {
     private String phone;
     private String mailAddress;
     private String language;
+    private String login;
+    private String password;
     private List<Company> companyList;
     private List<MailSettings> mailSettings;
 
     public User() {
     }
 
-    public User(String lastName, String firstName, String post, String phone, String mailAddress, String language, List<Company> companyList, List<MailSettings> mailSettings) {
+    public User(String lastName, String firstName, String post, String phone, String mailAddress, String language, String login, String password, List<Company> companyList, List<MailSettings> mailSettings) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.post = post;
         this.phone = phone;
         this.mailAddress = mailAddress;
         this.language = language;
+        this.login = login;
+        this.password = password;
         this.companyList = companyList;
         this.mailSettings = mailSettings;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public int getId() {
@@ -83,6 +79,30 @@ public class User {
         this.mailAddress = mailAddress;
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public List<Company> getCompanyList() {
         return companyList;
     }
@@ -109,6 +129,8 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", mailAddress='" + mailAddress + '\'' +
                 ", language='" + language + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
                 ", companyList=" + companyList +
                 ", mailSettings=" + mailSettings +
                 '}';

@@ -1,0 +1,95 @@
+package ru.greatlarder.technicalassistant.services.tables;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import ru.greatlarder.technicalassistant.controller.fragment_item.ItemMailController;
+import ru.greatlarder.technicalassistant.domain.Company;
+import ru.greatlarder.technicalassistant.domain.Task;
+import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
+import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
+import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.lang.DataLang;
+import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
+import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ListMail implements ObserverLang, ObserverCompany {
+
+    HandlerLang handlerLang = new HandlerLang();
+    HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
+    String lang;
+    Company company;
+    public ListView<Task> upBox(List<Task> taskListIn){
+        ObservableList<Task> observableList = FXCollections.observableArrayList(taskListIn);
+        List<Task> listToday = new ArrayList<>();
+        for (Task task : taskListIn){
+            if(LocalDate.now().equals(task.getDateOfCreation())){
+                listToday.add(task);
+            }
+        }
+        List <Task> taskList = new ArrayList<>(listToday);
+        observableList.addAll(taskList);
+
+        ListView<Task> list = new ListView<>(observableList);
+        list.setCellFactory(param -> new ListCell<>(){
+            final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_mail.fxml"));
+            Node node;
+            ItemMailController listItemTaskController;
+            {
+                try {
+                    node = loader.load();
+
+                    handlerLang.registerObserverLang(loader.getController());
+                    handlerCompanyListener.registerObserverCompany(loader.getController());
+                    handlerLang.onNewDataLang(new DataLang(lang));
+                    handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+
+                    listItemTaskController = loader.getController();
+                    setPrefWidth(0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void updateItem(Task task, boolean b) {
+                super.updateItem(task, b);
+                if(b){
+                    setGraphic(null);
+                } else {
+                    Task requestor = new Task();
+                    requestor = task;
+                    listItemTaskController.setLabelDate(task.getDateOfCreation());
+                    listItemTaskController.setLabelTime(task.getTimeOfCreation());
+                    listItemTaskController.setLabelCustomer(task.getCreator());
+                    listItemTaskController.setLabelRoom(task.getRoom());
+                    listItemTaskController.setTaskHTML(task.getExecutor());
+
+                    setGraphic(node);
+                }
+            }
+        });
+
+        return list;
+    }
+
+    @Override
+    public void updateLang(DataLang dataLang) {
+        this.lang = dataLang.getLanguage();
+        handlerLang.onNewDataLang(new DataLang(lang));
+    }
+
+    @Override
+    public void updateCompany(DataCompany dataCompany) {
+        this.company = dataCompany.getCompany();
+        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+    }
+}

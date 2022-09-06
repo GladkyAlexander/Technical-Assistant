@@ -152,7 +152,7 @@ public class FragmentAddCompanyController implements ObserverLang {
                 imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
 
                 fileManager.createDirectoryCompany(company1.getNameCompany());
-                GlobalLinkMainController.getMainController().updateUser(userRepository.getUser());
+                GlobalLinkMainController.getMainController().updateUser();
                 cleanAddCompany();
             }
 

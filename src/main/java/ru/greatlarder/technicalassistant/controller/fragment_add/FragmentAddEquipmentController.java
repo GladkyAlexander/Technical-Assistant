@@ -126,13 +126,13 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     @FXML
     public TextField maximumLampOperatingTime;
     @FXML
-    public ComboBox cmbEquipmentType;
+    public ComboBox<String> cmbEquipmentType;
     @FXML
     public HBox hBoxMaxLamp;
     @FXML
     public GridPane gridPane;
     @FXML
-    public ComboBox<Object> comboBoxStatusSelection;
+    public ComboBox<String> comboBoxStatusSelection;
     @FXML
     public HBox hBoxTCPDante;
     @FXML
@@ -200,7 +200,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     @FXML
     public Label labelChoiseNetworkSwitcher;
     @FXML
-    public ChoiceBox choiceBoxNetworkSvitcher;
+    public ChoiceBox<String> choiceBoxNetworkSvitcher;
     @FXML
     public CheckBox checkModel;
     @FXML
@@ -1295,7 +1295,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                                 imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
                                 labelOk.setText(language.EQUIPMENT(language) + " " + language.SERIAL_NUMBER(lang) + " : " + equipment.getSerialNumber() + " " + language.ADDED(lang));
                                 btnSaveEquipment.setDisable(true);
-                                GlobalLinkMainController.getMainController().updateUser(userRepository.getUser());
+                                GlobalLinkMainController.getMainController().updateUser();
                             } else {
                                 imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/warning_min.png"))));
                                 labelOk.setText(equipment.getSerialNumber() + " : " + language.WILL_NOT_BE_ADDED(lang));

@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.controller.fragment;
+package ru.greatlarder.technicalassistant.controller.fragment_item;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public class FragmentFolderItemController {
+public class ItemFolderController {
     @FXML
     public Label labelNameFolder;
     @FXML public HBox hBoxOFI;

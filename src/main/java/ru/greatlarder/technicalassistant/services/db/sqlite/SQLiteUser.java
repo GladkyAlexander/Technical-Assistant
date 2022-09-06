@@ -8,7 +8,9 @@ public interface SQLiteUser {
             "    'mailAddress'                TEXT," +
             "    'phone'                      TEXT," +
             "    'post'                       TEXT," +
-            "    'language'                   TEXT);";
+            "    'language'                   TEXT," +
+            "    'login'                      TEXT  NOT NULL," +
+            "    'password'                   TEXT  NOT NULL);";
 
     String INSERT_TABLE_USER = "INSERT INTO user ( " +
             "    lastName," +
@@ -16,8 +18,10 @@ public interface SQLiteUser {
             "    mailAddress," +
             "    phone," +
             "    post," +
-            "    language) " +
-            "VALUES (?,?,?,?,?,?)";
+            "    language," +
+            "    login," +
+            "    password) " +
+            "VALUES (?,?,?,?,?,?,?,?)";
 
-    String READ_TABLE_user = "SELECT * FROM user";
+    String READ_TABLE_USER = "SELECT * FROM user";
 }

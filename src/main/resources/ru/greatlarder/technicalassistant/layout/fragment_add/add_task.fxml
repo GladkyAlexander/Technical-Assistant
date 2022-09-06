@@ -4,8 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="gridPaneAddTask" alignment="TOP_CENTER" hgap="15.0" vgap="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.AddTaskController">
+<GridPane fx:id="gridPaneAddTask" alignment="TOP_CENTER" hgap="15.0" vgap="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddTaskController">
   <columnConstraints>
     <ColumnConstraints />
       <ColumnConstraints />

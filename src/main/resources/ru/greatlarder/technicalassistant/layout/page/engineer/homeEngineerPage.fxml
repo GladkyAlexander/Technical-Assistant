@@ -6,22 +6,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="borderPaneHomePage" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-            minHeight="0.0" minWidth="0.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.HomeEngineerController">
+<BorderPane fx:id="borderPaneHomePage" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.HomeEngineerController">
    <top>
       <HBox prefHeight="25.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="imgMail" fitHeight="25.0" fitWidth="35.0" onMouseClicked="#uploadMail" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/upload_mail.png" />
-               </image>
-            </ImageView>
+            <Button fx:id="btnUpMail" alignment="CENTER" mnemonicParsing="false" onAction="#uploadMail" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fx:id="imgMail" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/upload_mail.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </HBox>
    </top>
    <right>
-      <SplitPane fx:id="splitPaneHF" orientation="VERTICAL" BorderPane.alignment="TOP_CENTER">
+      <SplitPane fx:id="splitPaneHF" nodeOrientation="LEFT_TO_RIGHT" orientation="VERTICAL" BorderPane.alignment="TOP_CENTER">
         <items>
              <GridPane fx:id="gridPaneHomeFragment" alignment="TOP_CENTER" hgap="5.0" vgap="5.0">
                  <columnConstraints>
@@ -57,10 +59,9 @@
                <Label fx:id="labelNumberOfTools" text="Количество инструментов :" GridPane.rowIndex="3" />
       
                <Label fx:id="labelQuantityTheTool" alignment="CENTER" contentDisplay="CENTER" prefWidth="40.0" style="-fx-border-color: #0066cc; -fx-border-radius: 5; -fx-border-width: 1;" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-               <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" progress="0.0" GridPane.columnSpan="2" GridPane.rowIndex="4" />
       
                <padding>
-                  <Insets left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
                <opaqueInsets>
                   <Insets />
@@ -69,4 +70,7 @@
         </items>
       </SplitPane>
    </right>
+   <center>
+      <TabPane fx:id="tabPaneEngineerHome" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

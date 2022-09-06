@@ -7,19 +7,21 @@ import ru.greatlarder.technicalassistant.repository.UserRepository;
 import ru.greatlarder.technicalassistant.services.db.sqlite.SQLiteUser;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static ru.greatlarder.technicalassistant.services.db.DBconnect.*;
 
 public class UserRepositoryImpl implements UserRepository {
     CompanyRepository companyRepository = new CompanyRepositoryImpl();
     MailSettingsRepository mailSettingsRepository = new MailSettingsRepositoryImpl();
-    @Override
-    public User getUser() {
+
+    public User getUser(ResultSet resultSet) {
         User user = new User();
-        createUserTable();
         try {
-            resultSet = statement.executeQuery(SQLiteUser.READ_TABLE_user);
+            resultSet = statement.executeQuery(SQLiteUser.READ_TABLE_USER);
             while (resultSet.next()){
                     user.setId(resultSet.getInt("id"));
                     user.setLastName(resultSet.getString("lastName"));
@@ -28,6 +30,8 @@ public class UserRepositoryImpl implements UserRepository {
                     user.setPhone(resultSet.getString("phone"));
                     user.setPost(resultSet.getString("post"));
                     user.setLanguage(resultSet.getString("language"));
+                    user.setLogin(resultSet.getString("login"));
+                    user.setPassword(resultSet.getString("password"));
             }
             user.setCompanyList(companyRepository.getAllCompany());
             user.setMailSettings(mailSettingsRepository.getListMailSettingsByUser(user.getId()));
@@ -52,6 +56,8 @@ public class UserRepositoryImpl implements UserRepository {
             cf.setString(4, user.getPhone());
             cf.setString(5, user.getPost());
             cf.setString(6,user.getLanguage());
+            cf.setString(7, user.getLogin());
+            cf.setString(8, user.getPassword());
 
             cf.executeUpdate();
             closeDB();
@@ -61,5 +67,34 @@ public class UserRepositoryImpl implements UserRepository {
         } finally {
             closeDB();
         }
+    }
+
+    @Override
+    public List<User> getListUser() {
+        List<User> users = new ArrayList<>();
+        createUserTable();
+        try {
+            resultSet = statement.executeQuery(SQLiteUser.READ_TABLE_USER);
+            while (resultSet.next()) {
+                users.add(getUser(resultSet));
+            }
+            closeDB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDB();
+        }
+
+        return users;
+    }
+
+    @Override
+    public User getUserLoginPassword(String login, String password) {
+       for (User user : getListUser()){
+           if(user.getLogin().equals(login) && user.getPassword().equals(password)){
+               return user;
+           }
+       }
+        return null;
     }
 }

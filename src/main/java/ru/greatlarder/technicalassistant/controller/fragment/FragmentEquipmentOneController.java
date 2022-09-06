@@ -44,7 +44,7 @@ import java.util.Objects;
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_DANGER;
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_EXCELLENT;
 
-public class FragmentEquipmentOneItemController implements ObserverLang {
+public class FragmentEquipmentOneController implements ObserverLang {
     @FXML
     public Label model;
     @FXML public Label manufacturer;

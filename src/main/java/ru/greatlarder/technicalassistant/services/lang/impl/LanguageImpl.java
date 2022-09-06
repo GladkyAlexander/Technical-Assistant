@@ -769,6 +769,248 @@ public class LanguageImpl implements Language {
     }
 
     @Override
+    public String ADD(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Добавить";
+        } else if (lang.equals(en)) {
+            ps = "Add";
+        }
+        return ps;
+    }
+
+    @Override
+    public String ALL_ACTIVE_APPLICATIONS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Все активные заявки";
+        } else if (lang.equals(en)) {
+            ps = "All active applications";
+        }
+        return ps;
+    }
+
+    @Override
+    public String ALL_APPLICATIONS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Все заявки";
+        } else if (lang.equals(en)) {
+            ps = "All applications";
+        }
+        return ps;
+    }
+
+    @Override
+    public String NAME_TOOL(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Название инструмента";
+        } else if (lang.equals(en)) {
+            ps = "Tool name";
+        }
+        return ps;
+    }
+
+    @Override
+    public String SATISFACTORY(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Удовлетворительное";
+        } else if (lang.equals(en)) {
+            ps = "Satisfactory";
+        }
+        return ps;
+    }
+
+    @Override
+    public String TOOL_WITH_SN(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Инструмент с S/N";
+        } else if (lang.equals(en)) {
+            ps = "Tool with S/N";
+        }
+        return ps;
+    }
+
+    @Override
+    public String NOT_ADDED(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Не добавлено";
+        } else if (lang.equals(en)) {
+            ps = "Not added";
+        }
+        return ps;
+    }
+
+    @Override
+    public String A_TOOL_WITH_THIS_SERIAL_NUMBER_HAS_ALREADY_BEEN_ADDED(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Инструмент с таким серийным номером уже добавлен";
+        } else if (lang.equals(en)) {
+            ps = "A tool with this serial number has already been added";
+        }
+        return ps;
+    }
+
+    @Override
+    public String REPAIR(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Ремонт";
+        } else if (lang.equals(en)) {
+            ps = "Repair";
+        }
+        return ps;
+    }
+
+    @Override
+    public String ENTER_THE_DATA(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Введите данные";
+        } else if (lang.equals(en)) {
+            ps = "Enter the data";
+        }
+        return ps;
+    }
+
+    @Override
+    public String ENTER(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Войти";
+        } else if (lang.equals(en)) {
+            ps = "Enter";
+        }
+        return ps;
+    }
+
+    @Override
+    public String MALFUNCTION(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Неисправность (опишите проблему)";
+        } else if (lang.equals(en)) {
+            ps = "Malfunction (describe the problem)";
+        }
+        return ps;
+    }
+
+    @Override
+    public String INITIATORS_FULL_NAME(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "ФИО инициатора";
+        } else if (lang.equals(en)) {
+            ps = "Initiator's full name";
+        }
+        return ps;
+    }
+
+    @Override
+    public String CHOOSE_A_ROOM(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Выберите помещение";
+        } else if (lang.equals(en)) {
+            ps = "Choose a room";
+        }
+        return ps;
+    }
+
+    @Override
+    public String SELECT_EQUIPMENT_BY_SERIAL_NUMBER(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Выберите  оборудование по серийному номеру";
+        } else if (lang.equals(en)) {
+            ps = "Select equipment by serial number";
+        }
+        return ps;
+    }
+
+    @Override
+    public String FIXED(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Исправлено";
+        } else if (lang.equals(en)) {
+            ps = "Fixed";
+        }
+        return ps;
+    }
+
+    @Override
+    public String NOTE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Примечание";
+        } else if (lang.equals(en)) {
+            ps = "Note";
+        }
+        return ps;
+    }
+
+    @Override
+    public String HOW_FIXED(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Как исправлено";
+        } else if (lang.equals(en)) {
+            ps = "How Fixed";
+        }
+        return ps;
+    }
+
+    @Override
+    public String SPECIFY_THE_REASON(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Укажите причину";
+        } else if (lang.equals(en)) {
+            ps = "Specify the reason";
+        }
+        return ps;
+    }
+
+    @Override
+    public String ACTIVE_DEFECTS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Активные дефекты";
+        } else if (lang.equals(en)) {
+            ps = "Active defects";
+        }
+        return ps;
+    }
+
+    @Override
+    public String ALL_DEFECTS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Все дефекты";
+        } else if (lang.equals(en)) {
+            ps = "All defects";
+        }
+        return ps;
+    }
+
+    @Override
+    public String OPERATING_HOURS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Часы наработки";
+        } else if (lang.equals(en)) {
+            ps = "Operating hours";
+        }
+        return ps;
+    }
+
+    @Override
     public String THE_WORDS_SHOULD(String language) {
         String theWS = "";
         if (language.equals(ru)) {

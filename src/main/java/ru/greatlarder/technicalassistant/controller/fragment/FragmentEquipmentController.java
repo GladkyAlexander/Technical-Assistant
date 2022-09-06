@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import ru.greatlarder.technicalassistant.controller.fragment_item.ItemEquipmentController;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkFragmentEquipmentController;
@@ -50,7 +51,7 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
         ObservableList<Equipment> list = FXCollections.observableArrayList(equipmentList);
         ListView<Equipment> equipmentListView = new ListView<>(list);
         equipmentListView.setCellFactory(param -> new ListCell<>(){
-            final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/itemEquipment.fxml"));
+            final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_equipment.fxml"));
             Node node;
             ItemEquipmentController controller;
             {

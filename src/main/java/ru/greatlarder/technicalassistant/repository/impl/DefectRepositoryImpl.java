@@ -141,7 +141,7 @@ public class DefectRepositoryImpl implements DefectRepository {
 	public List<Defect> getListAllDefectActiveToEquipment(String serialNumberEquipment, String nameCompany) {
 		List<Defect> defects = new ArrayList<>();
 		for (Defect defect : getListAllDefectByCompany(nameCompany)){
-			if(defect.getSerial_number_equipment().equals(serialNumberEquipment) && defect.getCondition().equals(lines.FAULTY("ru"))){
+			if(defect.getSerial_number_equipment().equals(serialNumberEquipment) && defect.getCondition().equals(lines.FAULTY("Русский"))){
 				defects.add(defect);
 			}
 		}
@@ -157,7 +157,7 @@ public class DefectRepositoryImpl implements DefectRepository {
 
 			while (resultSet.next()){
 				Defect defect = getDefect(resultSet);
-				if(defect.getName_Company().equals(nameCompany) && defect.getCondition().equals(lines.FAULTY("ru"))){
+				if(defect.getName_Company().equals(nameCompany) && defect.getCondition().equals(lines.FAULTY("Русский"))){
 					defects.add(defect);
 				}
 

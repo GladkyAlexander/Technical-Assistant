@@ -196,4 +196,48 @@ public interface Language {
     String NEW_TIME_WORK_LAMP_PROJECTOR(String lang);
 
     String CHANGE_CONDITION(String lang);
+
+    String ADD(String lang1);
+
+    String ALL_ACTIVE_APPLICATIONS(String lang);
+
+    String ALL_APPLICATIONS(String lang);
+
+    String NAME_TOOL(String lang);
+
+    String SATISFACTORY(String lang);
+
+    String TOOL_WITH_SN(String lang);
+
+    String NOT_ADDED(String lang);
+
+    String A_TOOL_WITH_THIS_SERIAL_NUMBER_HAS_ALREADY_BEEN_ADDED(String lang);
+
+    String REPAIR(String lang);
+
+    String ENTER_THE_DATA(String lang);
+
+    String ENTER(String lang);
+
+    String MALFUNCTION(String lang);
+
+    String INITIATORS_FULL_NAME(String lang);
+
+    String CHOOSE_A_ROOM(String lang);
+
+    String SELECT_EQUIPMENT_BY_SERIAL_NUMBER(String lang);
+
+    String FIXED(String lang);
+
+    String NOTE(String lang);
+
+    String HOW_FIXED(String lang);
+
+    String SPECIFY_THE_REASON(String lang);
+
+    String ACTIVE_DEFECTS(String lang);
+
+    String ALL_DEFECTS(String lang);
+
+    String OPERATING_HOURS(String lang);
 }

@@ -2,7 +2,10 @@ package ru.greatlarder.technicalassistant.repository;
 
 import ru.greatlarder.technicalassistant.domain.User;
 
+import java.util.List;
+
 public interface UserRepository {
-    User getUser();
     void setUser(User user);
+    List<User> getListUser();
+    User getUserLoginPassword(String login, String password);
 }

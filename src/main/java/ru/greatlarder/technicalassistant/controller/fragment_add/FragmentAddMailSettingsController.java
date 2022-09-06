@@ -10,6 +10,7 @@ import ru.greatlarder.technicalassistant.domain.MailSettings;
 import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.repository.MailSettingsRepository;
 import ru.greatlarder.technicalassistant.repository.impl.MailSettingsRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
@@ -18,7 +19,7 @@ import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
 import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
-public class FragmentLetterTemplateController implements ObserverLang, ObserverUser {
+public class FragmentAddMailSettingsController implements ObserverLang, ObserverUser {
     @FXML
     public Label labelTheme;
     @FXML public TextField tfTheme;
@@ -66,6 +67,7 @@ public class FragmentLetterTemplateController implements ObserverLang, ObserverU
             user.setMailSettings(mailSettingsRepository.getListMailSettingsByUser(mailSettings.getIdUser()));
             gridPaneAddLetterTemplate.getChildren().clear();
             gridPaneAddLetterTemplate.setStyle(new GridPane().getStyle());
+            GlobalLinkMainController.getMainController().updateUser();
         } else gridPaneAddLetterTemplate.setStyle(StyleSRC.STYLE_WARNING);
 
     }

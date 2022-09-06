@@ -16,6 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.User;
+import ru.greatlarder.technicalassistant.repository.CompanyRepository;
+import ru.greatlarder.technicalassistant.repository.impl.CompanyRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
@@ -75,25 +77,29 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
     HandlerLang handlerLang = new HandlerLang();
     HandlerUserListener handlerUserListener = new HandlerUserListener();
+    CompanyRepository companyRepository = new CompanyRepositoryImpl();
     User user;
-    Company company;
+    public Company company;
     String lang;
+
+    public void updateTheCompany() {
+        this.company = companyRepository.getCompanyName(company.getNameCompany());
+        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+    }
 
     public void clickHomePage(MouseEvent mouseEvent) {
         if(company != null){
             FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/engineer/homeEngineerPage.fxml"));
             try {
-                if (company == null) {
-                    borderPaneEngineerPage.setCenter(new Label(language.FILL_IN_THE_DB(user.getLanguage())));
-                } else {
-                    borderPaneEngineerPage.setCenter(loaderHomePage.load());
-                    handlerUserListener.registerObserverUser(loaderHomePage.getController());
-                    handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
-                    handlerLang.registerObserverLang(loaderHomePage.getController());
-                    handlerLang.onNewDataLang(new DataLang(lang));
-                    handlerUserListener.onNewDataUser(new DataUser(user));
-                    handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-                }
+                borderPaneEngineerPage.setCenter(loaderHomePage.load());
+                handlerUserListener.registerObserverUser(loaderHomePage.getController());
+                handlerLang.registerObserverLang(loaderHomePage.getController());
+                handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
+                handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
+                handlerUserListener.onNewDataUser(new DataUser(user));
+                handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                HomeEngineerController controller = loaderHomePage.getController();
+                controller.loadFragment();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -101,7 +107,7 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     }
 
     public void clickDocumentation(MouseEvent mouseEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/documentationPage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/engineer/documentationEngineerPage.fxml"));
         try {
             if (company == null) {
                 borderPaneEngineerPage.setCenter(new Label(language.FILL_IN_THE_DB(lang)));
@@ -273,6 +279,8 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
                 handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
                 handlerUserListener.onNewDataUser(new DataUser(user));
                 handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                HomeEngineerController controller = loaderHomePage.getController();
+                controller.loadFragment();
             } catch (IOException e) {
                 e.printStackTrace();
             }

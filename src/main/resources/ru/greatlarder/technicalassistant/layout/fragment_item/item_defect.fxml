@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="hBoxItemDefect" alignment="CENTER" spacing="5.0" style="-fx-border-color: #ffff00; -fx-border-radius: 10; -fx-border-width: 3;"
+      xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemDefectController">
+   <children>
+      <ImageView fx:id="imgLogoEquipment" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox alignment="CENTER_LEFT">
+         <children>
+            <Label fx:id="labelDateOfCreation" />
+            <Label fx:id="labelTimeOfCreation" />
+         </children>
+      </VBox>
+      <Label fx:id="labelEquipment" />
+      <Label fx:id="labelSerialNumber" />
+      <Label fx:id="labelRoot" />
+      <VBox alignment="TOP_CENTER">
+         <children>
+            <Label fx:id="labelSpecifyTheReason" text="Укажите причину" />
+            <TextArea fx:id="textAreaCauseMalfunction" prefColumnCount="15" prefRowCount="4" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER">
+         <children>
+            <Label fx:id="labelHowFixed" text="Как исправлено" />
+            <TextArea fx:id="textAreaHowFixed" prefColumnCount="15" prefRowCount="4" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER">
+         <children>
+            <Label fx:id="labelNote" text="Примечание" />
+            <TextArea fx:id="textAreaNote" prefColumnCount="15" prefRowCount="4" />
+         </children>
+      </VBox>
+      <Label fx:id="labelFixed" text="исправлено">
+         <graphic>
+            <CheckBox fx:id="checkBoxStatus" mnemonicParsing="false" />
+         </graphic>
+      </Label>
+      <Button fx:id="btnSaveDefectOne" mnemonicParsing="false" onAction="#save" text="Зафиксировать" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</HBox>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="gridPaneTaskItem" hgap="6.0" onMouseClicked="#clickGridPane" vgap="4.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemMailController">
+  <columnConstraints>
+    <ColumnConstraints />
+    <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+    <RowConstraints />
+    <RowConstraints vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label fx:id="labelDate" text="Date" />
+      <Label fx:id="labelTime" text="Time" GridPane.rowIndex="1" />
+      <Label fx:id="labelRoom" text="Room" GridPane.columnIndex="1" GridPane.rowSpan="2" />
+      <Label fx:id="labelCustomer" text="Customer" GridPane.columnIndex="2" GridPane.rowSpan="2" />
+      <Button fx:id="btnAdd" mnemonicParsing="false" onMouseClicked="#clickedTaskAdd" text="Добавить" GridPane.columnIndex="3" GridPane.rowSpan="2" />
+   </children>
+   <padding>
+      <Insets left="4.0" right="4.0" />
+   </padding>
+</GridPane>

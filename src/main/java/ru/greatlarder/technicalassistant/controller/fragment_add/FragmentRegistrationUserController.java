@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.repository.UserRepository;
@@ -14,6 +15,8 @@ import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
+
+import java.util.List;
 
 public class FragmentRegistrationUserController implements ObserverLang{
     @FXML
@@ -45,6 +48,11 @@ public class FragmentRegistrationUserController implements ObserverLang{
     @FXML
     public ComboBox<String> comboBoxPost;
     @FXML public Label labelRegister;
+    @FXML public Label labelLogin;
+    @FXML public Label labelPassword;
+    @FXML public TextField tfLogin;
+    @FXML public TextField tfPassword;
+    UserRepository userRepository = new UserRepositoryImpl();
     Language lines = new LanguageImpl();
     String lang;
 
@@ -55,6 +63,8 @@ public class FragmentRegistrationUserController implements ObserverLang{
         user.setFirstName(tfFirstName.getText());
         user.setMailAddress(tfMailAddress.getText());
         user.setPhone(tfPhone.getText());
+        user.setLogin(tfLogin.getText());
+        user.setPassword(tfPassword.getText());
         user.setPost(comboBoxPost.getValue());
         if(menuButtonLanguage.getText().equals("Россия")){
             user.setLanguage("Русский");
@@ -62,15 +72,18 @@ public class FragmentRegistrationUserController implements ObserverLang{
         if(menuButtonLanguage.getText().equals("England")){
             user.setLanguage("English");
         }
-        userRepository.setUser(user);
 
-        if (userRepository.getUser().getFirstName().equals(user.getFirstName()) && userRepository.getUser()
-                .getLastName().equals(user.getLastName())) {
-            gridPaneAdd.setStyle(StyleSRC.STYLE_EXCELLENT);
-            GlobalLinkMainController.getMainController().updateUser(userRepository.getUser());
-        } else {
-            gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
+        if (user.getLastName() != null && user.getLogin() != null && user.getPassword() != null){
+            if(checkUser(user) != null){
+                userRepository.setUser(user);
+            }else gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
         }
+        User ut = userRepository.getUserLoginPassword(user.getLogin(), user.getPassword());
+        if (ut.getLastName().equals(user.getLastName()) && ut.getFirstName().equals(user.getFirstName())
+        && ut.getLogin().equals(user.getLogin()) && ut.getPassword().equals(user.getPassword())){
+            gridPaneAdd.setStyle(StyleSRC.STYLE_EXCELLENT);
+            GlobalLinkMainController.getMainController().loadUser(ut);
+        } else gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
     }
 
     public void loadPage() {
@@ -92,6 +105,8 @@ public class FragmentRegistrationUserController implements ObserverLang{
         labelFirstName.setText(lines.FIRST_NAME(lange));
         labelEmailAddress.setText(lines.EMAIL(lange));
         labelPhone.setText(lines.PHONE(lange));
+        labelLogin.setText(lines.LOGIN(lange));
+        labelPassword.setText(lines.PASSWORD(lange));
         comboBoxPost.setPromptText(lines.POST(lange));
         menuButtonLanguage.setText(lines.SELECT_A_COUNTRY(lange));
         btnSave.setText(lines.SAVE(lange));
@@ -101,6 +116,30 @@ public class FragmentRegistrationUserController implements ObserverLang{
     @Override
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
-        setLanguage(dataLang.getLanguage());
+        setLanguage(lang);
+    }
+
+    public void onKeyRelisedTFLogin(KeyEvent keyEvent) {
+        List<User> users = userRepository.getListUser();
+        for(User user : users){
+            if(user.getLogin().equals(tfLogin.getText())){
+                tfLogin.setStyle(StyleSRC.STYLE_DANGER);
+            } else tfLogin.setStyle(new TextField().getStyle());
+        }
+    }
+
+    public void onKeyRelisedTFPassword(KeyEvent keyEvent) {
+    }
+    private User checkUser(User user){
+        for (User user1 : userRepository.getListUser()){
+                if (user1.getLogin().equals(user.getLogin())) {
+                    tfLogin.setStyle(StyleSRC.STYLE_DANGER);
+                    return null;
+                } else if (user1.getLastName().equals(user.getLastName())) {
+                    tfLastName.setStyle(StyleSRC.STYLE_DANGER);
+                    return null;
+                }
+        }
+       return user;
     }
 }
