@@ -2,16 +2,20 @@ package ru.greatlarder.technicalassistant.controller.fragment;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddDefectController;
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddEquipmentController;
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddToolController;
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddWatchWorkProjectorsController;
 import ru.greatlarder.technicalassistant.domain.Company;
+import ru.greatlarder.technicalassistant.domain.Equipment;
+import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.ProblemMonitor;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
@@ -58,7 +62,7 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang 
         }
     }
 
-    public void allListTool(MouseEvent mouseEvent) {
+    public void allTool(MouseEvent mouseEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentTool.fxml"));
         try {
             GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
@@ -182,6 +186,42 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang 
     }
 
     public void searchSerialNumber(MouseEvent mouseEvent) {
+        int length = tfSerNum.getLength();
+
+        FragmentEquipmentOneController equipmentItemController;
+
+        if (length > 0) {
+            Equipment equipment = new EquipmentRepositoryImpl().getEquipmentBySerialNumber(company.getNameCompany(), tfSerNum.getText());
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEquipmentOne.fxml"));
+
+            if (equipment != null) {
+                try {
+
+                    Scene scene = new Scene(loader.load());
+                    Stage stage = new Stage();
+
+                    handlerLang.registerObserverLang(loader.getController());
+                    handlerLang.onNewDataLang(new DataLang(lang));
+
+                    equipmentItemController = loader.getController();
+                    equipmentItemController.setEquip(equipment);
+
+                    stage.setTitle(equipment.getModel() + " : " + equipment.getSerialNumber());
+                    stage.setScene(scene);
+                    stage.show();
+                    tfSerNum.clear();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(new Label(language.NO_DEVICE_WITH_THIS_SERIAL_NUMBER(lang)));
+                tfSerNum.clear();
+            }
+        } else {
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(new Label(language.ENTER_THE_SERIAL_NUMBER(lang)));
+            tfSerNum.clear();
+        }
     }
 
     @Override
@@ -218,4 +258,5 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang 
         this.lang = dataLang.getLanguage();
         handlerLang.onNewDataLang(new DataLang(dataLang.getLanguage()));
     }
+
 }

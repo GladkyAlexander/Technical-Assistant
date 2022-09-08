@@ -18,10 +18,10 @@ import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.repository.CompanyRepository;
 import ru.greatlarder.technicalassistant.repository.impl.CompanyRepositoryImpl;
-import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
@@ -147,6 +147,15 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     }
 
     public void openPageInfo(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/info_page.fxml"));
+        try {
+            borderPaneEngineerPage.setCenter(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+            handlerLang.onNewDataLang(new DataLang(lang));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void startMenuButton(MouseEvent mouseEvent) {

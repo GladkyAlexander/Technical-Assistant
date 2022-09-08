@@ -9,7 +9,7 @@
 
 <BorderPane fx:id="borderPaneEngineerPage" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.StartEngineerController">
     <left>
-        <SplitPane dividerPositions="0.19220055710306408" orientation="VERTICAL" prefHeight="716.0" prefWidth="221.0" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.19220055710306408" orientation="VERTICAL" BorderPane.alignment="CENTER">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
@@ -49,22 +49,15 @@
                     <TextField fx:id="ptEmail" editable="false" promptText="Эл.почта" />
                 </VBox>
             </HBox>
-            <VBox fx:id="vBoxLeftButton" alignment="TOP_CENTER" cache="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="238.0" spacing="10.0">
-                <padding>
-                    <Insets top="10.0" />
-                </padding>
+            <VBox fx:id="vBoxLeftButton" alignment="TOP_CENTER" cache="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0">
                 <Label fx:id="labelHomePage" onMouseClicked="#clickHomePage" text="Домашняя страница" textAlignment="CENTER" />
                 <Label fx:id="labelManuals" onMouseClicked="#clickDocumentation" text="Документация" textAlignment="CENTER" />
                 <Label fx:id="labelSettings" onMouseClicked="#clickPageSettings" text="Настройки" textAlignment="CENTER" />
                 <HBox fx:id="hBoxInfo" alignment="CENTER" onMouseClicked="#openPageInfo" spacing="5.0">
-                    <children>
-                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../../images/info.png" />
-                            </image>
-                        </ImageView>
+                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../images/info.png"/>
+                    </ImageView>
                         <Label fx:id="labelInfo" text="Информация" />
-                    </children>
                 </HBox>
             </VBox>
         </SplitPane>

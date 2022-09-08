@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="3.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="3.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxController">
     <padding>
         <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
     </padding>
-    <ImageView fx:id="imgEquipment" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allEquipment" pickOnBounds="true"
-               preserveRatio="true">
-        <Image url="@../../images/all_equipment_un_active.png"/>
+    <ImageView fx:id="imgEquipment" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allEquipment" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../../images/all_equipment_un_active.png" />
     </ImageView>
-    <ImageView fx:id="imgTool" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allListTool" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="imgTool" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allTool" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../images/tool_button_in_active.png" />
     </ImageView>
     <ImageView fx:id="imgIpAddress" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allIpAddress" pickOnBounds="true" preserveRatio="true">

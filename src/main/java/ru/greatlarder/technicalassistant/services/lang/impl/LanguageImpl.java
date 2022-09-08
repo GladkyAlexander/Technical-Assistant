@@ -354,9 +354,9 @@ public class LanguageImpl implements Language {
     public String INFO_TEXT(String language) {
         String infoText = "";
         if (language.equals(ru)) {
-            infoText = "Здравствуйте! Мы - это стартап. Для обращения к нам можете воспользоваться информацией приведенной ниже.  ";
+            infoText = "Здравствуйте! По любым вопросам обращайтесь по приведенным ниже контактам.  ";
         } else if (language.equals(en)) {
-            infoText = "Hello! We are a startup. To contact us, you can use the information provided below.";
+            infoText = "Hello! For any questions, please contact the contacts listed below.  ";
         }
         return infoText;
     }
@@ -549,7 +549,7 @@ public class LanguageImpl implements Language {
     }
 
     @Override
-    public String EQUIPMENT(Language lang) {
+    public String EQUIPMENT(String lang) {
         String theWS = "";
         if (lang.equals(ru)) {
             theWS = "Оборудование";
