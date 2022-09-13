@@ -18,8 +18,8 @@ public class Projector extends Equipment {
         this.maximumLampOperatingTimeProjector = maximumLampOperatingTimeProjector;
     }
 
-    public Projector(String name, String model, String manufacturer, String serialNumber, String macAddress, String login, String password, String image, String room, String location, LocalDate dateWork, String condition, String company, String manual, String ipAddress, String masc, String gateway, String danteIpAddress, String danteMasc, String danteGateway, String outletNumber, Integer portNumberInTheSwitch, Integer idNetworkSwitcher, List<Defect> defectList, Class<? extends Equipment> cl, Integer timeWorkLampProjector, Integer maximumLampOperatingTimeProjector) {
-        super(name, model, manufacturer, serialNumber, macAddress, login, password, image, room, location, dateWork, condition, company, manual, ipAddress, masc, gateway, danteIpAddress, danteMasc, danteGateway, outletNumber, portNumberInTheSwitch, idNetworkSwitcher, defectList, cl);
+    public Projector(String name, String model, String manufacturer, String serialNumber, String macAddress, String macAddress1, String macAddress2, String macAddress3, String login, String password, String image, String room, String location, LocalDate dateWork, String condition, String company, String manual, String ipAddress, String masc, String gateway, String danteIpAddress, String danteMasc, String danteGateway, String outletNumber, Integer portNumberInTheSwitch, Integer idNetworkSwitcher, List<Defect> defectList, Class<? extends Equipment> cl, Integer timeWorkLampProjector, Integer maximumLampOperatingTimeProjector) {
+        super(name, model, manufacturer, serialNumber, macAddress, macAddress1, macAddress2, macAddress3, login, password, image, room, location, dateWork, condition, company, manual, ipAddress, masc, gateway, danteIpAddress, danteMasc, danteGateway, outletNumber, portNumberInTheSwitch, idNetworkSwitcher, defectList, cl);
         this.timeWorkLampProjector = timeWorkLampProjector;
         this.maximumLampOperatingTimeProjector = maximumLampOperatingTimeProjector;
     }

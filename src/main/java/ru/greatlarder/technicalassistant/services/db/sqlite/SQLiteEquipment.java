@@ -8,6 +8,9 @@ public interface SQLiteEquipment {
             "    'model'                             TEXT," +
             "    'serialNumber'                      TEXT," +
             "    'macAddress'                        TEXT," +
+            "    'macAddress1'                        TEXT," +
+            "    'macAddress2'                        TEXT," +
+            "    'macAddress3'                        TEXT," +
             "    'image'                             TEXT," +
             "    'room'                              TEXT," +
             "    'location'                          TEXT," +
@@ -84,6 +87,9 @@ public interface SQLiteEquipment {
             "    model," +
             "    serialNumber," +
             "    macAddress," +
+            "    macAddress1," +
+            "    macAddress2," +
+            "    macAddress3," +
             "    image," +
             "    room," +
             "    location," +
@@ -157,7 +163,7 @@ public interface SQLiteEquipment {
             "   ,?,?,?,?,?,?,?,?,?,?" +
             "   ,?,?,?,?,?,?,?,?,?,?" +
             "   ,?,?,?,?,?,?,?,?,?,?" +
-            "   ,?,?,?,?,?,?,?,?,?)";
+            "   ,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     String READ_TABLE_EQUIPMENT = "SELECT * FROM equipment";
 }

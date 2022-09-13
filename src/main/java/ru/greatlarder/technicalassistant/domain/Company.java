@@ -6,44 +6,48 @@ public class Company {
     private Integer id;
     private String nameCompany;
     private String address;
-    private String curator;
+    private String curatorLastName;
+    private String curatorFirstName;
     private String phoneCurator;
     private String mailCurator;
     private String websiteCompany;
     private String logoCompany;
-    private String manager;
+    private String managerLastName;
+    private String managerFirstName;
     private String phoneManager;
     private String mailManager;
-    private String engineer;
+    private String engineerLastName;
+    private String engineerFirstName;
     private String phoneEngineer;
     private String mailEngineer;
     private List<Equipment> equipmentList;
     private List<Tool> toolList;
     private List<Task> taskList;
 
-    public Company(String nameCompany, String address, String curator, String phoneCurator
-            , String mailCurator, String websiteCompany, String logoCompany, String manager, String phoneManager
-            , String mailManager, String engineer, String phoneEngineer, String mailEngineer
-            , List<Equipment> equipmentList, List<Tool> toolList, List<Task> taskList) {
+    public Company() {
+    }
+
+    public Company(Integer id, String nameCompany, String address, String curatorLastName, String curatorFirstName, String phoneCurator, String mailCurator, String websiteCompany, String logoCompany, String managerLastName, String managerFirstName, String phoneManager, String mailManager, String engineerLastName, String engineerFirstName, String phoneEngineer, String mailEngineer, List<Equipment> equipmentList, List<Tool> toolList, List<Task> taskList) {
+        this.id = id;
         this.nameCompany = nameCompany;
         this.address = address;
-        this.curator = curator;
+        this.curatorLastName = curatorLastName;
+        this.curatorFirstName = curatorFirstName;
         this.phoneCurator = phoneCurator;
         this.mailCurator = mailCurator;
         this.websiteCompany = websiteCompany;
         this.logoCompany = logoCompany;
-        this.manager = manager;
+        this.managerLastName = managerLastName;
+        this.managerFirstName = managerFirstName;
         this.phoneManager = phoneManager;
         this.mailManager = mailManager;
-        this.engineer = engineer;
+        this.engineerLastName = engineerLastName;
+        this.engineerFirstName = engineerFirstName;
         this.phoneEngineer = phoneEngineer;
         this.mailEngineer = mailEngineer;
         this.equipmentList = equipmentList;
         this.toolList = toolList;
         this.taskList = taskList;
-    }
-
-    public Company() {
     }
 
     public Integer getId() {
@@ -70,12 +74,20 @@ public class Company {
         this.address = address;
     }
 
-    public String getCurator() {
-        return curator;
+    public String getCuratorLastName() {
+        return curatorLastName;
     }
 
-    public void setCurator(String curator) {
-        this.curator = curator;
+    public void setCuratorLastName(String curatorLastName) {
+        this.curatorLastName = curatorLastName;
+    }
+
+    public String getCuratorFirstName() {
+        return curatorFirstName;
+    }
+
+    public void setCuratorFirstName(String curatorFirstName) {
+        this.curatorFirstName = curatorFirstName;
     }
 
     public String getPhoneCurator() {
@@ -110,12 +122,20 @@ public class Company {
         this.logoCompany = logoCompany;
     }
 
-    public String getManager() {
-        return manager;
+    public String getManagerLastName() {
+        return managerLastName;
     }
 
-    public void setManager(String manager) {
-        this.manager = manager;
+    public void setManagerLastName(String managerLastName) {
+        this.managerLastName = managerLastName;
+    }
+
+    public String getManagerFirstName() {
+        return managerFirstName;
+    }
+
+    public void setManagerFirstName(String managerFirstName) {
+        this.managerFirstName = managerFirstName;
     }
 
     public String getPhoneManager() {
@@ -134,12 +154,20 @@ public class Company {
         this.mailManager = mailManager;
     }
 
-    public String getEngineer() {
-        return engineer;
+    public String getEngineerLastName() {
+        return engineerLastName;
     }
 
-    public void setEngineer(String engineer) {
-        this.engineer = engineer;
+    public void setEngineerLastName(String engineerLastName) {
+        this.engineerLastName = engineerLastName;
+    }
+
+    public String getEngineerFirstName() {
+        return engineerFirstName;
+    }
+
+    public void setEngineerFirstName(String engineerFirstName) {
+        this.engineerFirstName = engineerFirstName;
     }
 
     public String getPhoneEngineer() {
@@ -188,15 +216,18 @@ public class Company {
                 "id=" + id +
                 ", nameCompany='" + nameCompany + '\'' +
                 ", address='" + address + '\'' +
-                ", curator='" + curator + '\'' +
+                ", curatorLastName='" + curatorLastName + '\'' +
+                ", curatorFirstName='" + curatorFirstName + '\'' +
                 ", phoneCurator='" + phoneCurator + '\'' +
                 ", mailCurator='" + mailCurator + '\'' +
                 ", websiteCompany='" + websiteCompany + '\'' +
                 ", logoCompany='" + logoCompany + '\'' +
-                ", manager='" + manager + '\'' +
+                ", managerLastName='" + managerLastName + '\'' +
+                ", managerFirstName='" + managerFirstName + '\'' +
                 ", phoneManager='" + phoneManager + '\'' +
                 ", mailManager='" + mailManager + '\'' +
-                ", engineer='" + engineer + '\'' +
+                ", engineerLastName='" + engineerLastName + '\'' +
+                ", engineerFirstName='" + engineerFirstName + '\'' +
                 ", phoneEngineer='" + phoneEngineer + '\'' +
                 ", mailEngineer='" + mailEngineer + '\'' +
                 ", equipmentList=" + equipmentList +

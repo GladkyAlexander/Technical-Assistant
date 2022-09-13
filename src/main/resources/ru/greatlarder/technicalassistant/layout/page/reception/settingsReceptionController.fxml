@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="borderPaneSettingsReception" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.reception.SettingsReceptionController">
+   <left>
+      <VBox BorderPane.alignment="CENTER">
+            <Button fx:id="btnSettingsDataBase" mnemonicParsing="false" onMouseClicked="#openSettingsDB" text="Button" />
+            <Button fx:id="btnSettingsMail" mnemonicParsing="false" onAction="#openSettingsMail" text="Button" />
+      </VBox>
+   </left>
+</BorderPane>

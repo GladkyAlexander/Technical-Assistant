@@ -7,6 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Task;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
 import ru.greatlarder.technicalassistant.repository.TaskRepository;
 import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
@@ -18,6 +19,8 @@ import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 import ru.greatlarder.technicalassistant.services.work_doc.ExelTask;
 import ru.greatlarder.technicalassistant.services.work_doc.ExelWorker;
 import ru.greatlarder.technicalassistant.services.work_doc.ExelZip;
@@ -30,7 +33,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class DocumentationEngineerController implements ObserverLang, ObserverCompany {
+public class DocumentationEngineerController implements ObserverLang, ObserverCompany, ObserverUser {
     @FXML public Button btnCreateTimeShite;
     @FXML public Button btnZip;
     @FXML public Button btnLampProjector;
@@ -46,6 +49,7 @@ public class DocumentationEngineerController implements ObserverLang, ObserverCo
     String dateFormat = localDate.format(formatter);
     TaskRepository taskRepository = new TaskRepositoryImpl();
     TheEntireCatalogList listOfDirectory = new TheEntireCatalogList();
+    private User user;
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
@@ -65,7 +69,20 @@ public class DocumentationEngineerController implements ObserverLang, ObserverCo
     }
 
     public void startDocFragment() {
-        loadFoldersList();
+        if(splitPaneDocumentation.getItems().size() == 2) {
+            splitPaneDocumentation.getItems().remove(1);
+        }
+        if(user != null){
+            btnZip.setDisable(false);
+            btnLampProjector.setDisable(false);
+            gridPaneDocumentation.setDisable(false);
+            loadFoldersList();
+        } else {
+            btnZip.setDisable(true);
+            btnLampProjector.setDisable(true);
+            gridPaneDocumentation.setDisable(true);
+        }
+
     }
 
     public void zip(MouseEvent mouseEvent) {
@@ -100,22 +117,27 @@ public class DocumentationEngineerController implements ObserverLang, ObserverCo
         loadFoldersList();
     }
     private void loadFoldersList(){
-        javafx.concurrent.Task<ListView<String>> task = new javafx.concurrent.Task<ListView<String>>() {
-            @Override
-            protected ListView<String> call() throws Exception {
-                return listOfDirectory.upVbox(company.getNameCompany());
-            }
-        };
-        splitPaneDocumentation.getItems().add(1, new ProgressBar(task.getProgress()));
+            javafx.concurrent.Task<ListView<String>> task = new javafx.concurrent.Task<ListView<String>>() {
+                @Override
+                protected ListView<String> call() throws Exception {
+                    return listOfDirectory.upVbox(company.getNameCompany());
+                }
+            };
+            splitPaneDocumentation.getItems().add(1, new ProgressBar(task.getProgress()));
 
-        task.setOnSucceeded((succeededEvent)->{
-            splitPaneDocumentation.getItems().remove(1);
-            splitPaneDocumentation.getItems().add(1,task.getValue());
-        });
+            task.setOnSucceeded((succeededEvent) -> {
+                splitPaneDocumentation.getItems().remove(1);
+                splitPaneDocumentation.getItems().add(1, task.getValue());
+            });
 
-        ExecutorService executorService = Executors.newFixedThreadPool(1);
-        executorService.execute(task);
-        executorService.shutdown();
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(task);
+            executorService.shutdown();
+    }
 
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
+        startDocFragment();
     }
 }

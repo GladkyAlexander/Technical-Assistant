@@ -28,15 +28,18 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 			company.setId(resultSet.getInt("id"));
 			company.setNameCompany(resultSet.getString("nameCompany"));
 			company.setAddress(resultSet.getString("address"));
-			company.setCurator(resultSet.getString("curator"));
+			company.setCuratorLastName(resultSet.getString("curatorLastName"));
+			company.setCuratorFirstName(resultSet.getString("curatorFirstName"));
 			company.setPhoneCurator(resultSet.getString("phoneCurator"));
 			company.setMailCurator(resultSet.getString("mailCurator"));
 			company.setWebsiteCompany(resultSet.getString("websiteCompany"));
 			company.setLogoCompany(resultSet.getString("logoCompany"));
-			company.setManager(resultSet.getString("manager"));
+			company.setManagerLastName(resultSet.getString("managerLastName"));
+			company.setManagerFirstName(resultSet.getString("managerFirstName"));
 			company.setPhoneManager(resultSet.getString("phoneManager"));
 			company.setMailManager(resultSet.getString("mailManager"));
-			company.setEngineer(resultSet.getString("engineer"));
+			company.setEngineerLastName(resultSet.getString("engineerLastName"));
+			company.setEngineerFirstName(resultSet.getString("engineerFirstName"));
 			company.setPhoneEngineer(resultSet.getString("phoneEngineer"));
 			company.setMailEngineer(resultSet.getString("mailEngineer"));
 		} catch (SQLException e) {
@@ -97,21 +100,23 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
 			cf.setString(1, company.getNameCompany());
 			cf.setString(2, company.getAddress());
-			cf.setString(3, company.getCurator());
-			cf.setString(4, company.getPhoneCurator());
-			cf.setString(5, company.getMailCurator());
-			cf.setString(6, company.getWebsiteCompany());
-			cf.setString(7, company.getLogoCompany());
-			cf.setString(8, company.getManager());
-			cf.setString(9, company.getPhoneManager());
-			cf.setString(10, company.getMailManager());
-			cf.setString(11, company.getEngineer());
-			cf.setString(12, company.getPhoneEngineer());
-			cf.setString(13, company.getMailEngineer());
+			cf.setString(3, company.getCuratorLastName());
+			cf.setString(4, company.getCuratorFirstName());
+			cf.setString(5, company.getPhoneCurator());
+			cf.setString(6, company.getMailCurator());
+			cf.setString(7, company.getWebsiteCompany());
+			cf.setString(8, company.getLogoCompany());
+			cf.setString(9, company.getManagerLastName());
+			cf.setString(10, company.getManagerFirstName());
+			cf.setString(11, company.getPhoneManager());
+			cf.setString(12, company.getMailManager());
+			cf.setString(13, company.getEngineerLastName());
+			cf.setString(14, company.getEngineerFirstName());
+			cf.setString(15, company.getPhoneEngineer());
+			cf.setString(16, company.getMailEngineer());
 
 			cf.executeUpdate();
 			closeDB();
-			System.out.println("Company " + company.getNameCompany() + " added !");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -130,9 +135,6 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 			cf.setString(1,valueOnWhat);
 			cf.setString(2, company.getNameCompany());
 			cf.executeUpdate();
-
-			System.out.println("The company table has been changed !");
-
 			closeDB();
 		} catch (SQLException e) {
 			e.printStackTrace();

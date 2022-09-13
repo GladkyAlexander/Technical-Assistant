@@ -17,8 +17,6 @@
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
-      <RowConstraints />
-
   </rowConstraints>
       <Label fx:id="labelTheme" text="Тема " GridPane.rowIndex="3" />
       <TextField fx:id="tfTheme" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -26,14 +24,13 @@
          <padding>
             <Insets left="4.0" right="4.0" />
          </padding></Label>
-      <Label fx:id="labalOpisanie" text="Слова должны быть разделены пробелами. Точек, тире или других знаков быть не должно." GridPane.columnSpan="3" GridPane.rowIndex="4" />
       <Label fx:id="labelMailAddress" text="Почта для мониторинга писем" />
       <Label fx:id="labelPasswordMail" text="Пароль от почты" GridPane.rowIndex="1" />
       <Label fx:id="labelHost" text="HOST" GridPane.rowIndex="2" />
       <TextField fx:id="tfMailAddress" GridPane.columnIndex="1" />
       <TextField fx:id="tfPasswordMail" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <TextField fx:id="tfHost" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="4" />
    <Label text="IMAP" GridPane.columnIndex="2" GridPane.rowIndex="2">
       <font>
          <Font name="System Bold" size="12.0" />

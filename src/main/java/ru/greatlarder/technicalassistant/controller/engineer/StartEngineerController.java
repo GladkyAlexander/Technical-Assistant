@@ -88,22 +88,26 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     }
 
     public void clickHomePage(MouseEvent mouseEvent) {
-        if(company != null){
-            FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/engineer/homeEngineerPage.fxml"));
-            try {
-                borderPaneEngineerPage.setCenter(loaderHomePage.load());
-                handlerUserListener.registerObserverUser(loaderHomePage.getController());
-                handlerLang.registerObserverLang(loaderHomePage.getController());
-                handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
-                handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
-                handlerUserListener.onNewDataUser(new DataUser(user));
-                handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-                HomeEngineerController controller = loaderHomePage.getController();
-                controller.loadFragment();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (company != null) {
+                FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/engineer/homeEngineerPage.fxml"));
+                try {
+                    borderPaneEngineerPage.setCenter(loaderHomePage.load());
+                    handlerUserListener.registerObserverUser(loaderHomePage.getController());
+                    handlerLang.registerObserverLang(loaderHomePage.getController());
+                    handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
+
+                    if(user != null){
+                        handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
+                    }
+                        handlerUserListener.onNewDataUser(new DataUser(user));
+                        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+
+                    HomeEngineerController controller = loaderHomePage.getController();
+                    controller.loadFragment();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
     }
 
     public void clickDocumentation(MouseEvent mouseEvent) {
@@ -114,11 +118,12 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
             } else {
                 fileManager.folderCompanyDocumentation(company.getNameCompany());
                 borderPaneEngineerPage.setCenter(loader.load());
-
+                handlerUserListener.registerObserverUser(loader.getController());
                 handlerLang.registerObserverLang(loader.getController());
                 handlerCompanyListener.registerObserverCompany(loader.getController());
                 handlerLang.onNewDataLang(new DataLang(lang));
                 handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                handlerUserListener.onNewDataUser(new DataUser(user));
 
                 DocumentationEngineerController documentationFragmentController = loader.getController();
                 documentationFragmentController.startDocFragment();
@@ -164,46 +169,48 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     }
 
     public void menuButtonStart() {
-        if (user.getCompanyList() != null) {
-            if (user.getCompanyList().size() == 1) {
-                for (Company company1 : user.getCompanyList()) {
-                    this.company = company1;
-                    btnSelectCompanies.setText(company.getNameCompany());
-                    handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+        if (user != null) {
+            if (user.getCompanyList() != null) {
+                if (user.getCompanyList().size() == 1) {
+                    for (Company company1 : user.getCompanyList()) {
+                        this.company = company1;
+                        btnSelectCompanies.setText(company.getNameCompany());
+                        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                        vBoxNameCompany.setVisible(true);
+                        vBoxNameCompany.setManaged(true);
+                        ptAdr.prefColumnCountProperty().bind(ptAdr.textProperty().length());
+                        ptAdr.setText(company.getAddress());
+                        ptCur.setText(company.getCuratorLastName() + " " + company.getCuratorFirstName());
+                        ptPhone.setText(company.getPhoneCurator());
+                        ptEmail.setText(company.getMailCurator());
+                        imageViewLogo.setFitHeight(50);
+                        imageViewLogo.setFitWidth(50);
+                        imageViewLogo.setImage(new Image(fileManager.folderImage() + "\\" + company.getLogoCompany()));
+                    }
+                }
+                if (user.getCompanyList().size() > 1) {
                     vBoxNameCompany.setVisible(true);
                     vBoxNameCompany.setManaged(true);
-                    ptAdr.prefColumnCountProperty().bind(ptAdr.textProperty().length());
-                    ptAdr.setText(company.getAddress());
-                    ptCur.setText(company.getCurator());
-                    ptPhone.setText(company.getPhoneCurator());
-                    ptEmail.setText(company.getMailCurator());
                     imageViewLogo.setFitHeight(50);
                     imageViewLogo.setFitWidth(50);
-                    imageViewLogo.setImage(new Image(fileManager.folderImage() + "\\" + company.getLogoCompany()));
+                    imageViewLogo.setImage(new Image(Objects.requireNonNull(getClass()
+                            .getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
+                    for (Company company : user.getCompanyList()) {
+                        MenuItem menuItem = new MenuItem(company.getNameCompany());
+                        menuItem.setOnAction(eventEventHandler);
+                        btnSelectCompanies.getItems().addAll(menuItem);
+                    }
+                }
+                if (user.getCompanyList().size() == 0) {
+                    vBoxNameCompany.setVisible(false);
+                    vBoxNameCompany.setManaged(false);
+                    imageViewLogo.setFitHeight(131);
+                    imageViewLogo.setFitWidth(220);
+                    imageViewLogo.setImage(new Image(Objects.requireNonNull(getClass()
+                            .getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
                 }
             }
-            if (user.getCompanyList().size() > 1) {
-                vBoxNameCompany.setVisible(true);
-                vBoxNameCompany.setManaged(true);
-                imageViewLogo.setFitHeight(50);
-                imageViewLogo.setFitWidth(50);
-                imageViewLogo.setImage(new Image(Objects.requireNonNull(getClass()
-                        .getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
-                for (Company company : user.getCompanyList()) {
-                    MenuItem menuItem = new MenuItem(company.getNameCompany());
-                    menuItem.setOnAction(eventEventHandler);
-                    btnSelectCompanies.getItems().addAll(menuItem);
-                }
-            }
-            if(user.getCompanyList().size() == 0){
-                vBoxNameCompany.setVisible(false);
-                vBoxNameCompany.setManaged(false);
-                imageViewLogo.setFitHeight(131);
-                imageViewLogo.setFitWidth(220);
-                imageViewLogo.setImage(new Image(Objects.requireNonNull(getClass()
-                        .getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
-            }
-        }
+        } else clean();
     }
 
     EventHandler<ActionEvent> eventEventHandler = new EventHandler<>() {
@@ -222,7 +229,7 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
             vBoxNameCompany.setManaged(true);
             ptAdr.prefColumnCountProperty().bind(ptAdr.textProperty().length());
             ptAdr.setText(company.getAddress());
-            ptCur.setText(company.getCurator());
+            ptCur.setText(company.getCuratorLastName() + " " + company.getCuratorFirstName());
             ptPhone.setText(company.getPhoneCurator());
             ptEmail.setText(company.getMailCurator());
             imageViewLogo.setImage(new Image(fileManager.folderImage() + "\\" + company.getLogoCompany()));
@@ -240,6 +247,7 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     @Override
     public void updateUser(DataUser dataUser) {
         this.user = dataUser.getUser();
+        loadPage();
         handlerUserListener.onNewDataUser(new DataUser(user));
     }
 
@@ -265,34 +273,47 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
 
     public void loadPage() {
         GlobalLinkStartEngineerController.setStartEngineerController(this);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentToolBox.fxml"));
-        try {
-            GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().clear();
-            GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().add(loader.load());
-            handlerLang.registerObserverLang(loader.getController());
-            handlerCompanyListener.registerObserverCompany(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
-            handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        menuButtonStart();
-
-        if(company != null){
-            FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/engineer/homeEngineerPage.fxml"));
+        if(user != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentToolBox.fxml"));
             try {
-                borderPaneEngineerPage.setCenter(loaderHomePage.load());
-                handlerUserListener.registerObserverUser(loaderHomePage.getController());
-                handlerLang.registerObserverLang(loaderHomePage.getController());
-                handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
-                handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
-                handlerUserListener.onNewDataUser(new DataUser(user));
+                GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().clear();
+                GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().add(loader.load());
+                handlerLang.registerObserverLang(loader.getController());
+                handlerCompanyListener.registerObserverCompany(loader.getController());
+                handlerLang.onNewDataLang(new DataLang(lang));
                 handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-                HomeEngineerController controller = loaderHomePage.getController();
-                controller.loadFragment();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            menuButtonStart();
+
+            if (company != null) {
+                FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/engineer/homeEngineerPage.fxml"));
+                try {
+                    borderPaneEngineerPage.setCenter(loaderHomePage.load());
+                    handlerUserListener.registerObserverUser(loaderHomePage.getController());
+                    handlerLang.registerObserverLang(loaderHomePage.getController());
+                    handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
+                    handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
+                    handlerUserListener.onNewDataUser(new DataUser(user));
+                    handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                    HomeEngineerController controller = loaderHomePage.getController();
+                    controller.loadFragment();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().clear();
+            menuButtonStart();
         }
+    }
+    private void clean(){
+        vBoxNameCompany.setVisible(false);
+        vBoxNameCompany.setManaged(false);
+        imageViewLogo.setFitHeight(131);
+        imageViewLogo.setFitWidth(220);
+        imageViewLogo.setImage(new Image(Objects.requireNonNull(getClass()
+                .getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
     }
 }

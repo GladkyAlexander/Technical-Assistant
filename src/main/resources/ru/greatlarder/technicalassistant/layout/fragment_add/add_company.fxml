@@ -1,132 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<GridPane fx:id="gridPaneAddCompany" hgap="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-          minWidth="-Infinity" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" vgap="4.0"
-          xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddCompanyController">
+<GridPane fx:id="gridPaneAddCompany" hgap="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" vgap="4.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddCompanyController">
     <columnConstraints>
-        <ColumnConstraints/>
-        <ColumnConstraints/>
+        <ColumnConstraints />
+        <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
-        <RowConstraints/>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
     </rowConstraints>
     <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
     <HBox alignment="CENTER_RIGHT" GridPane.columnSpan="2">
-        <ImageView fx:id="imgOk" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true"/>
-        <Label fx:id="labelOk"/>
-        <ImageView fx:id="close1" fitHeight="25.0" fitWidth="400.0" onMouseClicked="#closeAddCompanyController"
-                   pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../images/closed.png"/>
+        <ImageView fx:id="imgOk" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+        <Label fx:id="labelOk" />
+        <ImageView fx:id="close1" fitHeight="25.0" fitWidth="400.0" onMouseClicked="#closeAddCompanyController" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../images/closed.png" />
         </ImageView>
     </HBox>
     <Label fx:id="labelNameCompany" text="Название компании :" GridPane.rowIndex="1">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
     <Label fx:id="labelAddressCompany" text="Адрес компании :" GridPane.rowIndex="2">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
     <Label fx:id="labelContactPerson" text="Связное лицо (представитель) :" GridPane.rowIndex="3">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="labelRepresentativePhoneNumber" text="Телефон представителя :" GridPane.rowIndex="4">
+    <Label fx:id="labelRepresentativePhoneNumber" text="Телефон представителя :" GridPane.rowIndex="6">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="mailRepresentative" text="Электронная почта представителя :" GridPane.rowIndex="5">
+    <Label fx:id="mailRepresentative" text="Электронная почта представителя :" GridPane.rowIndex="7">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="labelWebsite" text="Веб сайт компании :" GridPane.rowIndex="6">
+    <Label fx:id="labelWebsite" text="Веб сайт компании :" GridPane.rowIndex="8">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <TextField fx:id="tfNameCompany" promptText="Название компании" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <TextField fx:id="tfAddress" promptText="Адрес компании" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-    <TextField fx:id="tfCurator" promptText="Связное лицо (ФИО)" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-    <TextField fx:id="tfNumberPhone" promptText="+7 (***)***-**-**" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-    <TextField fx:id="tfEmail" promptText="****@**.**" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-    <TextField fx:id="tfWeb" promptText="Вэб сайт компании" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-    <ImageView fx:id="imgLogoCompany" cache="true" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#imagePicker"
-               pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+    <TextField fx:id="tfNameCompany" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <TextField fx:id="tfAddress" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <TextField fx:id="tfCuratorLastName" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <TextField fx:id="tfNumberPhone" promptText="+7 (***)***-**-**" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <TextField fx:id="tfEmail" promptText="****@**.**" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+    <TextField fx:id="tfWeb" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+    <ImageView fx:id="imgLogoCompany" cache="true" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#imagePicker" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="9">
         <image>
-          <Image url="@../../images/upphoto.png"/>
+          <Image url="@../../images/upphoto.png" />
         </image>
     </ImageView>
-    <Button fx:id="btnSendCompany" mnemonicParsing="false" onMouseClicked="#sendCompany" text="Сохранить"
-            GridPane.columnIndex="1" GridPane.rowIndex="14"/>
-    <Label fx:id="labelLogoCompany" text="Логотип компании :" GridPane.rowIndex="7">
+    <Button fx:id="btnSendCompany" mnemonicParsing="false" onMouseClicked="#sendCompany" text="Сохранить" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+    <Label fx:id="labelLogoCompany" text="Логотип компании :" GridPane.rowIndex="9">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="labelNameManager" text="Менеджер :" GridPane.rowIndex="8">
+    <Label fx:id="labelNameManager" text="Менеджер :" GridPane.rowIndex="10">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="labelEngineer" text="Инженер :" GridPane.rowIndex="11">
+    <Label fx:id="labelEngineer" text="Инженер :" GridPane.rowIndex="15">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <TextField fx:id="tfManager" promptText="Ответственный менеджер (ФИО)" GridPane.columnIndex="1"
-               GridPane.rowIndex="8"/>
-    <TextField fx:id="tfManagerPhone" promptText="+7 (***)***-**-**" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
-    <TextField fx:id="tfManagerMail" promptText="****@**.**" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
-    <Label fx:id="labelPhoneManager" text="Телефон :" GridPane.rowIndex="9">
+    <TextField fx:id="tfManagerPhone" promptText="+7 (***)***-**-**" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+    <TextField fx:id="tfManagerMail" promptText="****@**.**" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+    <Label fx:id="labelPhoneManager" text="Телефон :" GridPane.rowIndex="13">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="labelMailManager" text="Электронная почта :" GridPane.rowIndex="10">
+    <Label fx:id="labelMailManager" text="Электронная почта :" GridPane.rowIndex="14">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="labelPhoneEngineer" text="Телефон :" GridPane.rowIndex="12">
+    <Label fx:id="labelPhoneEngineer" text="Телефон :" GridPane.rowIndex="18">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="labelMailEngineer" text="Электронная почта :" GridPane.rowIndex="13">
+    <Label fx:id="labelMailEngineer" text="Электронная почта :" GridPane.rowIndex="19">
         <font>
-          <Font name="System Bold" size="12.0"/>
+          <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <TextField fx:id="tfEngineer" promptText="Ответственный инженер (ФИО)" GridPane.columnIndex="1"
-               GridPane.rowIndex="11"/>
-    <TextField fx:id="tfEngineerPhone" promptText="+7 (***)***-**-**" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
-    <TextField fx:id="tfEngineerMail" promptText="****@**.**" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
+    <TextField fx:id="tfEngineerPhone" promptText="+7 (***)***-**-**" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+    <TextField fx:id="tfEngineerMail" promptText="****@**.**" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+   <TextField fx:id="tfCuratorFirstName" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+   <Label fx:id="labelLastNameCurator" text="Label" GridPane.rowIndex="4">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+   <Label fx:id="labelFirstNameCurator" text="Label" GridPane.rowIndex="5">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+   <Label fx:id="labelLastNameManager" text="Label" GridPane.rowIndex="11">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+   <Label fx:id="labelFirstNameManager" text="Label" GridPane.rowIndex="12">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+   <TextField fx:id="tfLastNameManager" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+   <TextField fx:id="tfFirstNameManager" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+   <TextField fx:id="tfLastNameEngineer" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+   <TextField fx:id="tfFirstNameEngineer" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+   <Label fx:id="labelLastNameEngineer" text="Label" GridPane.rowIndex="16">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+   <Label fx:id="labelFirstNameEngineer" text="Label" GridPane.rowIndex="17">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
 </GridPane>

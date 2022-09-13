@@ -24,7 +24,6 @@ public class FragmentAddMailSettingsController implements ObserverLang, Observer
     public Label labelTheme;
     @FXML public TextField tfTheme;
     @FXML public Label labelInfoTheme;
-    @FXML public Label labalOpisanie;
     @FXML public Label labelMailAddress;
     @FXML public Label labelPasswordMail;
     @FXML public Label labelHost;
@@ -49,7 +48,6 @@ public class FragmentAddMailSettingsController implements ObserverLang, Observer
         labelHost.setText(language.HOST(lang));
         labelTheme.setText(language.SUBJECT_OF_THE_LETTER(lang));
         labelInfoTheme.setText(language.ENTER_THE_FIRST_WORD(lang));
-        labalOpisanie.setText(language.THE_WORDS_SHOULD(lang));
         btnSave.setText(language.SAVE(lang));
     }
     public void save(ActionEvent actionEvent) {

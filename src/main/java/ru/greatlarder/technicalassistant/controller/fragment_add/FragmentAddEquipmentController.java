@@ -1,6 +1,7 @@
 package ru.greatlarder.technicalassistant.controller.fragment_add;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,9 +16,7 @@ import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.repository.UserRepository;
 import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
-import ru.greatlarder.technicalassistant.repository.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
@@ -219,23 +218,84 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public CheckBox checkNumberPortSwitcher;
     @FXML
     public HBox hBoxMacAddress;
-    @FXML public Label labelCondition;
-    @FXML public Label labelFrequency;
-    @FXML public Label labelInstruction;
-    @FXML public Label labelMaxTimeWorkLamp;
-    @FXML public Label labelDateTheWork;
-    @FXML public Label labelLocationToRoom;
-    @FXML public Label labelRoom;
-    @FXML public Label labelLogin;
-    @FXML public Label labelPassword;
-    @FXML public Label labelModel;
-    @FXML public Label labelManufacturer;
-    @FXML public Label labelSerialNumber;
+    @FXML
+    public Label labelCondition;
+    @FXML
+    public Label labelFrequency;
+    @FXML
+    public Label labelInstruction;
+    @FXML
+    public Label labelMaxTimeWorkLamp;
+    @FXML
+    public Label labelDateTheWork;
+    @FXML
+    public Label labelLocationToRoom;
+    @FXML
+    public Label labelRoom;
+    @FXML
+    public Label labelLogin;
+    @FXML
+    public Label labelPassword;
+    @FXML
+    public Label labelModel;
+    @FXML
+    public Label labelManufacturer;
+    @FXML
+    public Label labelSerialNumber;
+    @FXML
+    public HBox hBoxMacAddress1;
+    @FXML
+    public TextField oui11;
+    @FXML
+    public TextField oui21;
+    @FXML
+    public TextField oui31;
+    @FXML
+    public TextField uaa11;
+    @FXML
+    public TextField uaa21;
+    @FXML
+    public TextField uaa31;
+    @FXML
+    public HBox hBoxMacAddress2;
+    @FXML
+    public TextField oui12;
+    @FXML
+    public TextField oui22;
+    @FXML
+    public TextField oui32;
+    @FXML
+    public TextField uaa12;
+    @FXML
+    public TextField uaa22;
+    @FXML
+    public TextField uaa32;
+    @FXML
+    public HBox hBoxMacAddress3;
+    @FXML
+    public TextField oui13;
+    @FXML
+    public TextField oui23;
+    @FXML
+    public TextField oui33;
+    @FXML
+    public TextField uaa13;
+    @FXML
+    public TextField uaa23;
+    @FXML
+    public TextField uaa33;
+    @FXML
+    public Button btnAddMacDop;
+    @FXML
+    public CheckBox checkMacAddress1;
+    @FXML
+    public CheckBox checkMacAddress2;
+    @FXML
+    public CheckBox checkMacAddress3;
     private String lang;
     Language language = new LanguageImpl();
     Company company;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
-    UserRepository userRepository = new UserRepositoryImpl();
     List<Equipment> listNetworkSwitcher;
     FileManager fileManager = new FileManagerImpl();
     String nameFileManual;
@@ -282,7 +342,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         this.company = dataCompany.getCompany();
     }
 
-    public void loadFragment(){
+    public void loadFragment() {
         List<String> list = new ArrayList<>(equipmentRepository.getListEquipmentName(lang));
         this.listNetworkSwitcher = new ArrayList<>(equipmentRepository.getListEquipmentByName(language.NETWORK_SWITCH(lang), company.getNameCompany()));
 
@@ -302,7 +362,14 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         updatePanes("");
         updateCheckBox();
     }
+
     public void updatePanes(String value) {
+        this.hBoxMacAddress1.setVisible(false);
+        this.hBoxMacAddress1.setManaged(false);
+        this.hBoxMacAddress2.setVisible(false);
+        this.hBoxMacAddress2.setManaged(false);
+        this.hBoxMacAddress3.setVisible(false);
+        this.hBoxMacAddress3.setManaged(false);
 
         this.hBoxMaxLamp.setVisible(value.equals(language.PROJECTOR(lang)));
         this.hBoxMaxLamp.setManaged(value.equals(language.PROJECTOR(lang)));
@@ -335,6 +402,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         this.hBoxNetworkSwitcher.setManaged(d);
 
     }
+
     public void updateCheckBox() {
         checkModel.setVisible(false);
         checkModel.setManaged(false);
@@ -344,6 +412,12 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         checkSerialNumber.setManaged(false);
         checkMacAddress.setVisible(false);
         checkMacAddress.setManaged(false);
+        checkMacAddress1.setVisible(false);
+        checkMacAddress1.setManaged(false);
+        checkMacAddress2.setVisible(false);
+        checkMacAddress2.setManaged(false);
+        checkMacAddress3.setVisible(false);
+        checkMacAddress3.setManaged(false);
         checkIpv4.setVisible(false);
         checkIpv4.setManaged(false);
         checkFrequency.setVisible(false);
@@ -353,6 +427,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         checkNumberPortSwitcher.setVisible(false);
         checkNumberPortSwitcher.setManaged(false);
     }
+
     public void onKeyModel() {
         checkModel.setVisible(true);
         checkModel.setManaged(true);
@@ -980,38 +1055,63 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
         return textField;
     }
+
     public boolean checkingStringWithACondition(String value) {
         return value.matches("^\\w+$");
     }
+
     public boolean checkMacAddress(String nameCompany, String macAddress) {
-        if(equipmentRepository.getEquipmentByMacAddress(nameCompany, macAddress) == null){
+        if (equipmentRepository.getEquipmentByMacAddress(nameCompany, macAddress) == null) {
             return true;
         } else return false;
     }
-    public boolean checkingForANumber(String value) {
-        return value.chars().allMatch(Character :: isDigit);
+
+    public boolean checkMacAddress1(String nameCompany, String macAddress) {
+        if (equipmentRepository.getEquipmentByMacAddress1(nameCompany, macAddress) == null) {
+            return true;
+        } else return false;
     }
+
+    public boolean checkMacAddress2(String nameCompany, String macAddress) {
+        if (equipmentRepository.getEquipmentByMacAddress2(nameCompany, macAddress) == null) {
+            return true;
+        } else return false;
+    }
+
+    public boolean checkMacAddress3(String nameCompany, String macAddress) {
+        if (equipmentRepository.getEquipmentByMacAddress3(nameCompany, macAddress) == null) {
+            return true;
+        } else return false;
+    }
+
+    public boolean checkingForANumber(String value) {
+        return value.chars().allMatch(Character::isDigit);
+    }
+
     public boolean checkEquipmentIpAddress(String nameCompany, String ipAddress) {
-        for (String str : equipmentRepository.getListIpAddressForCompany(nameCompany)){
+        for (String str : equipmentRepository.getListIpAddressForCompany(nameCompany)) {
             if (ipAddress.equals(str)) return true;
         }
         return false;
     }
+
     public boolean checkingFrequency(String nameCompany, String frequency) {
-        for (Equipment equipment : equipmentRepository.getListEquipmentForCompany(nameCompany)){
+        for (Equipment equipment : equipmentRepository.getListEquipmentForCompany(nameCompany)) {
             if (equipment instanceof Microphone microphone
-                    && (frequency.equals(((Microphone) equipment).getFrequency()))){
+                    && (frequency.equals(((Microphone) equipment).getFrequency()))) {
                 return true;
             }
         }
         return false;
     }
+
     public boolean checkEquipmentIpAddressDante(String nameCompany, String ipAddress) {
-        for (String str : equipmentRepository.getListIpAddressDanteForCompany(nameCompany)){
+        for (String str : equipmentRepository.getListIpAddressDanteForCompany(nameCompany)) {
             if (ipAddress.equals(str)) return true;
         }
         return false;
     }
+
     public boolean checkingTheSwitchPort(NetworkSwitch networkSwitch, int numberPort) {
         HashMap<Integer, Equipment> hashMap = new HashMap<>();
         hashMap.put(1, networkSwitch.getPort1());
@@ -1065,14 +1165,15 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
         Equipment value = hashMap.get(numberPort);
 
-        if (value == null){
+        if (value == null) {
             return true;
         } else return false;
     }
+
     public Equipment getEquipment() {
         Equipment result = null;
         switch ((String) this.cmbEquipmentType.getValue()) {
-            case Language.PROJECTOR_RU:
+            case Language.PROJECTOR_RU -> {
                 Projector equipment = new Projector();
                 loadEquipment(equipment);
                 equipment.setTimeWorkLampProjector(0);
@@ -1081,120 +1182,106 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                     equipment.setMaximumLampOperatingTimeProjector(Integer.valueOf(maximumLampOperatingTime.getText()));
                 } else equipment.setMaximumLampOperatingTimeProjector(null);
                 result = equipment;
-
-                break;
-            case Language.MICROPHONE_RU:
+            }
+            case Language.MICROPHONE_RU -> {
                 Microphone equipment1 = new Microphone();
                 loadEquipment(equipment1);
                 equipment1.setFrequency(textFieldFrequency1.getText() + "." + textFieldFrequency2.getText());
                 equipment1.setImage("microphone.png");
                 result = equipment1;
-                break;
-
-            case Language.NETWORK_SWITCH_RU:
+            }
+            case Language.NETWORK_SWITCH_RU -> {
                 NetworkSwitch equipment2 = new NetworkSwitch();
                 loadEquipment(equipment2);
                 equipment2.setImage("projector.png");
                 result = equipment2;
-                break;
-
-            case Language.ACOUSTIC_SPEAKER_RU:
+            }
+            case Language.ACOUSTIC_SPEAKER_RU -> {
                 AcousticSpeaker equipment3 = new AcousticSpeaker();
                 loadEquipment(equipment3);
                 equipment3.setImage("projector.png");
                 result = equipment3;
-                break;
-
-            case Language.CONTROL_PROCESSOR_RU:
+            }
+            case Language.CONTROL_PROCESSOR_RU -> {
                 ControlProcessor equipment4 = new ControlProcessor();
                 loadEquipment(equipment4);
                 equipment4.setImage("projector.png");
                 result = equipment4;
-                break;
-
-            case Language.AUDIO_PROCESSOR_RU:
+            }
+            case Language.AUDIO_PROCESSOR_RU -> {
                 AudioProcessor equipment5 = new AudioProcessor();
                 loadEquipment(equipment5);
                 equipment5.setImage("projector.png");
                 result = equipment5;
-                break;
-
-            case Language.AUDIO_AMPLIFIER_RU:
+            }
+            case Language.AUDIO_AMPLIFIER_RU -> {
                 AudioAmplifier equipment6 = new AudioAmplifier();
                 loadEquipment(equipment6);
                 equipment6.setImage("projector.png");
                 result = equipment6;
-                break;
-
-            case Language.AUDIO_INTERFACE_RU:
+            }
+            case Language.AUDIO_INTERFACE_RU -> {
                 AudioInterface equipment7 = new AudioInterface();
                 loadEquipment(equipment7);
                 equipment7.setImage("projector.png");
                 result = equipment7;
-                break;
-
-            case Language.TV_PANEL_RU:
+            }
+            case Language.TV_PANEL_RU -> {
                 TvPanel equipment8 = new TvPanel();
                 loadEquipment(equipment8);
                 equipment8.setImage("projector.png");
                 equipment8.setDiagonal(tfDiagonal.getText());
                 result = equipment8;
-                break;
-
-            case Language.TV_TUNER_RU:
+            }
+            case Language.TV_TUNER_RU -> {
                 TvTuner equipment9 = new TvTuner();
                 loadEquipment(equipment9);
                 equipment9.setImage("projector.png");
                 result = equipment9;
-                break;
-
-            case Language.MEDIA_PLAYER_RU:
+            }
+            case Language.MEDIA_PLAYER_RU -> {
                 MediaPlayer equipment10 = new MediaPlayer();
                 loadEquipment(equipment10);
                 equipment10.setImage("projector.png");
                 result = equipment10;
-                break;
-
-            case Language.LAPTOP_RU:
+            }
+            case Language.LAPTOP_RU -> {
                 Laptop equipment11 = new Laptop();
                 loadEquipment(equipment11);
                 equipment11.setImage("projector.png");
                 equipment11.setOs(tfOs.getText());
                 result = equipment11;
-                break;
-
-            case Language.VIDEO_TRANSMITTER_RU:
+            }
+            case Language.VIDEO_TRANSMITTER_RU -> {
                 VideoTransmitter equipment12 = new VideoTransmitter();
                 loadEquipment(equipment12);
                 equipment12.setImage("projector.png");
                 result = equipment12;
-                break;
-
-            case Language.VIDEO_RECEIVER_RU:
+            }
+            case Language.VIDEO_RECEIVER_RU -> {
                 VideoReceiver equipment13 = new VideoReceiver();
                 loadEquipment(equipment13);
                 equipment13.setImage("projector.png");
                 result = equipment13;
-                break;
-
-            case Language.MATRIX_SWITCHER_RU:
+            }
+            case Language.MATRIX_SWITCHER_RU -> {
                 MatrixSwitcher equipment14 = new MatrixSwitcher();
                 loadEquipment(equipment14);
                 equipment14.setImage("projector.png");
                 result = equipment14;
-                break;
-
-            case Language.TOUCH_CONTROL_PANEL_RU:
+            }
+            case Language.TOUCH_CONTROL_PANEL_RU -> {
                 TouchControlPanel equipment15 = new TouchControlPanel();
                 loadEquipment(equipment15);
                 equipment15.setImage("projector.png");
                 equipment15.setDiagonal(tfDiagonal.getText());
                 result = equipment15;
-                break;
+            }
         }
 
         return result;
     }
+
     public Equipment loadEquipment(Equipment equipment) {
         Equipment returnEquipment = null;
 
@@ -1251,6 +1338,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         equipment.setManufacturer(textFieldManufacturer.getText());
         equipment.setSerialNumber(textFieldSerialNumber.getText());
         equipment.setMacAddress(checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText());
+        equipment.setMacAddress1(checkMac(oui11, oui21, oui31, uaa11, uaa21, uaa31).getText());
+        equipment.setMacAddress2(checkMac(oui12, oui22, oui32, uaa12, uaa22, uaa32).getText());
+        equipment.setMacAddress3(checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText());
         equipment.setLogin(textFieldLogin.getText());
         equipment.setPassword(textFieldPassword.getText());
         equipment.setRoom(textFieldRoom.getText());
@@ -1259,12 +1349,12 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             equipment.setDateWork(LocalDate.now());
             textFieldDateOfCommissioning.setPromptText(language.TODAY_DATE_WILL_BE_SET_RU(lang));
         } else equipment.setDateWork(textFieldDateOfCommissioning.getValue());
-        if(!checkNet(network1, network2, subnet, device).getText().isEmpty()) {
+        if (!checkNet(network1, network2, subnet, device).getText().isEmpty()) {
             equipment.setIpAddress(checkNet(network1, network2, subnet, device).getText());
         }
         equipment.setMasc(checkNet(networkMasc1, networkMasc2, subnetMasc, deviceMasc).getText());
         equipment.setGateway(checkNet(gateway1, gateway2, subnetGateway, deviceGateway).getText());
-        if(!checkNet(networkMasc1Dante, networkMasc2Dante, subnetMascDante, deviceMascDante).getText().isEmpty()) {
+        if (!checkNet(networkMasc1Dante, networkMasc2Dante, subnetMascDante, deviceMascDante).getText().isEmpty()) {
             equipment.setDanteIpAddress(checkNet(network1Dante, network2Dante, subnetDante, deviceDante).getText());
         }
         equipment.setDanteMasc(checkNet(networkMasc1Dante, networkMasc2Dante, subnetMascDante, deviceMascDante).getText());
@@ -1279,21 +1369,20 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         }
         return equipment;
     }
+
     public void saveEquipment(MouseEvent mouseEvent) {
         if (cmbEquipmentType.getValue() != null) {
-            cmbEquipmentType.setStyle(new ComboBox().getStyle());
+            cmbEquipmentType.setStyle(new ComboBox<String>().getStyle());
             if (comboBoxStatusSelection.getValue() != null) {
-                comboBoxStatusSelection.setStyle(new ComboBox().getStyle());
-
+                comboBoxStatusSelection.setStyle(new ComboBox<String>().getStyle());
                 if (getCheckBoxList()) {
-
                     Equipment equipment = getEquipment();
-                   if (this.cmbEquipmentType.getValue() != null) {
+                    if (this.cmbEquipmentType.getValue() != null) {
                         if (equipment != null) {
                             equipmentRepository.setEquipment(equipment);
                             if (equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()) != null) {
                                 imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
-                                labelOk.setText(language.EQUIPMENT(language) + " " + language.SERIAL_NUMBER(lang) + " : " + equipment.getSerialNumber() + " " + language.ADDED(lang));
+                                labelOk.setText(language.EQUIPMENT(lang) + " " + language.SERIAL_NUMBER(lang) + " : " + equipment.getSerialNumber() + " " + language.ADDED(lang));
                                 btnSaveEquipment.setDisable(true);
                                 GlobalLinkMainController.getMainController().updateUser();
                             } else {
@@ -1328,24 +1417,46 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                 GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getRight()
         );
     }
+
     public Boolean getCheckBoxList() {
+
         if (checkModel.isSelected() && checkManufacturer.isSelected() && checkSerialNumber.isSelected()) {
+
             if (checkMacAddress.isSelected() || (!checkMacAddress.isSelected() && !checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText().trim().isEmpty())) {
 
                 hBoxMacAddress.setStyle(new HBox().getStyle());
+
+                if (checkMacAddress1.isSelected() || (!checkMacAddress1.isSelected() && !checkMac(oui11, oui21, oui31, uaa11, uaa21, uaa31).getText().trim().isEmpty())) {
+                    hBoxMacAddress1.setStyle(new HBox().getStyle());
+                } else {
+                    hBoxMacAddress1.setStyle(STYLE_WARNING);
+                }
+
+                if (checkMacAddress2.isSelected() || (!checkMacAddress2.isSelected() && !checkMac(oui12, oui22, oui32, uaa12, uaa22, uaa32).getText().trim().isEmpty())) {
+                    hBoxMacAddress2.setStyle(new HBox().getStyle());
+                } else {
+                    hBoxMacAddress2.setStyle(STYLE_WARNING);
+                }
+                if (checkMacAddress3.isSelected() || (!checkMacAddress3.isSelected() && !checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText().trim().isEmpty())) {
+                    hBoxMacAddress3.setStyle(new HBox().getStyle());
+                } else {
+                    hBoxMacAddress3.setStyle(STYLE_WARNING);
+                }
+
                 if (checkIpv4.isSelected() || (!checkIpv4.isSelected() && checkNet(network1, network2, subnet, device).getText().trim().isEmpty())) {
 
                     hBoxTCP.setStyle(new HBox().getStyle());
 
-                    if (checkIpv4Dante.isSelected() || (!checkIpv4Dante.isSelected() && checkNet(network1Dante, network2Dante, subnetDante, deviceDante).getText().trim().isEmpty())){
+                    if (checkIpv4Dante.isSelected() || (!checkIpv4Dante.isSelected() && checkNet(network1Dante, network2Dante, subnetDante, deviceDante).getText().trim().isEmpty())) {
 
                         hBoxTCPDante.setStyle(new HBox().getStyle());
-                        if (checkNumberPortSwitcher.isSelected() || (!checkNumberPortSwitcher.isSelected() && tfPortSwitcher.getText().trim().isEmpty())) {
 
+                        if (checkNumberPortSwitcher.isSelected() || (!checkNumberPortSwitcher.isSelected() && tfPortSwitcher.getText().trim().isEmpty())) {
                             hBoxNetworkSwitcher.setStyle(new HBox().getStyle());
                             hBoxPortSwitcher.setStyle(new HBox().getStyle());
                             return true;
-                        } else { hBoxNetworkSwitcher.setStyle(STYLE_DANGER);
+                        } else {
+                            hBoxNetworkSwitcher.setStyle(STYLE_DANGER);
                             hBoxPortSwitcher.setStyle(STYLE_DANGER);
                             return false;
                         }
@@ -1362,6 +1473,243 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                 return false;
             }
         } else return false;
+    }
 
+
+    public void onActionBtnMacDop(ActionEvent actionEvent) {
+        this.hBoxMacAddress1.setVisible(true);
+        this.hBoxMacAddress1.setManaged(true);
+        this.hBoxMacAddress2.setVisible(true);
+        this.hBoxMacAddress2.setManaged(true);
+        this.hBoxMacAddress3.setVisible(true);
+        this.hBoxMacAddress3.setManaged(true);
+    }
+
+    public void onKeyOui1_1(KeyEvent keyEvent) {
+        if (oui11.getText().isEmpty()) {
+            oui11.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui11.getText()) || oui11.getText().length() > 2) {
+            oui11.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui11.getText())) {
+            oui11.setStyle(new TextField().getStyle());
+        } else oui11.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui2_1(KeyEvent keyEvent) {
+        if (oui21.getText().isEmpty()) {
+            oui21.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui21.getText()) || oui21.getText().length() > 2) {
+            oui21.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui21.getText())) {
+            oui21.setStyle(new TextField().getStyle());
+        } else oui21.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui3_1(KeyEvent keyEvent) {
+        if (oui31.getText().isEmpty()) {
+            oui31.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui31.getText()) || oui31.getText().length() > 2) {
+            oui31.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui31.getText())) {
+            oui31.setStyle(new TextField().getStyle());
+        } else oui31.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa1_1(KeyEvent keyEvent) {
+        if (uaa11.getText().isEmpty()) {
+            uaa11.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa11.getText()) || uaa11.getText().length() > 2) {
+            uaa11.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa11.getText())) {
+            uaa11.setStyle(new TextField().getStyle());
+        } else uaa11.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa2_1(KeyEvent keyEvent) {
+        if (uaa21.getText().isEmpty()) {
+            uaa21.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa21.getText()) || uaa21.getText().length() > 2) {
+            uaa21.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa21.getText())) {
+            uaa21.setStyle(new TextField().getStyle());
+        } else uaa21.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa3_1(KeyEvent keyEvent) {
+        checkMacAddress1.setVisible(true);
+        checkMacAddress1.setManaged(true);
+        if (uaa31.getText().isEmpty()) {
+            uaa31.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa31.getText()) || uaa31.getText().length() > 2) {
+            uaa31.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa31.getText())) {
+            uaa31.setStyle(new TextField().getStyle());
+        } else uaa31.setStyle(new TextField().getStyle());
+
+        if (!checkMac(oui11, oui21, oui31, uaa11, uaa21, uaa31).getText().trim().isEmpty()) {
+            hBoxMacAddress1.setStyle(new HBox().getStyle());
+            if (checkMacAddress1(company.getNameCompany(), checkMac(oui11, oui21, oui31, uaa11, uaa21, uaa31).getText())) {
+                checkMacAddress1.setSelected(true);
+                hBoxMacAddress1.setStyle(new HBox().getStyle());
+            } else {
+                checkMacAddress1.setSelected(false);
+                hBoxMacAddress1.setStyle(STYLE_DANGER);
+            }
+        } else {
+            checkMacAddress1.setSelected(false);
+            hBoxMacAddress1.setStyle(STYLE_DANGER);
+        }
+    }
+
+    public void onKeyOui1_2(KeyEvent keyEvent) {
+        if (oui12.getText().isEmpty()) {
+            oui12.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui12.getText()) || oui12.getText().length() > 2) {
+            oui12.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui12.getText())) {
+            oui12.setStyle(new TextField().getStyle());
+        } else oui12.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui2_2(KeyEvent keyEvent) {
+        if (oui22.getText().isEmpty()) {
+            oui22.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui22.getText()) || oui22.getText().length() > 2) {
+            oui22.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui22.getText())) {
+            oui22.setStyle(new TextField().getStyle());
+        } else oui22.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui3_2(KeyEvent keyEvent) {
+        if (oui32.getText().isEmpty()) {
+            oui32.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui32.getText()) || oui32.getText().length() > 2) {
+            oui32.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui32.getText())) {
+            oui32.setStyle(new TextField().getStyle());
+        } else oui32.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa1_2(KeyEvent keyEvent) {
+        if (uaa12.getText().isEmpty()) {
+            uaa12.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa12.getText()) || uaa12.getText().length() > 2) {
+            uaa12.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa12.getText())) {
+            uaa12.setStyle(new TextField().getStyle());
+        } else uaa12.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa2_2(KeyEvent keyEvent) {
+        if (uaa22.getText().isEmpty()) {
+            uaa22.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa22.getText()) || uaa22.getText().length() > 2) {
+            uaa22.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa22.getText())) {
+            uaa22.setStyle(new TextField().getStyle());
+        } else uaa22.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa3_2(KeyEvent keyEvent) {
+        checkMacAddress2.setVisible(true);
+        checkMacAddress2.setManaged(true);
+        if (uaa32.getText().isEmpty()) {
+            uaa32.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa32.getText()) || uaa32.getText().length() > 2) {
+            uaa32.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa32.getText())) {
+            uaa32.setStyle(new TextField().getStyle());
+        } else uaa32.setStyle(new TextField().getStyle());
+
+        if (!checkMac(oui12, oui22, oui32, uaa12, uaa22, uaa32).getText().trim().isEmpty()) {
+            hBoxMacAddress2.setStyle(new HBox().getStyle());
+            if (checkMacAddress2(company.getNameCompany(), checkMac(oui12, oui22, oui32, uaa12, uaa22, uaa32).getText())) {
+                checkMacAddress2.setSelected(true);
+                hBoxMacAddress2.setStyle(new HBox().getStyle());
+            } else {
+                checkMacAddress2.setSelected(false);
+                hBoxMacAddress2.setStyle(STYLE_DANGER);
+            }
+        } else {
+            checkMacAddress2.setSelected(false);
+            hBoxMacAddress2.setStyle(STYLE_DANGER);
+        }
+    }
+
+    public void onKeyOui1_3(KeyEvent keyEvent) {
+        if (oui13.getText().isEmpty()) {
+            oui13.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui13.getText()) || oui13.getText().length() > 2) {
+            oui13.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui13.getText())) {
+            oui13.setStyle(new TextField().getStyle());
+        } else oui13.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui2_3(KeyEvent keyEvent) {
+        if (oui23.getText().isEmpty()) {
+            oui23.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui23.getText()) || oui23.getText().length() > 2) {
+            oui23.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui23.getText())) {
+            oui23.setStyle(new TextField().getStyle());
+        } else oui23.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui3_3(KeyEvent keyEvent) {
+        if (oui33.getText().isEmpty()) {
+            oui33.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui33.getText()) || oui33.getText().length() > 2) {
+            oui33.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui33.getText())) {
+            oui33.setStyle(new TextField().getStyle());
+        } else oui33.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa1_3(KeyEvent keyEvent) {
+        if (uaa13.getText().isEmpty()) {
+            uaa13.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa13.getText()) || uaa13.getText().length() > 2) {
+            uaa13.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa13.getText())) {
+            uaa13.setStyle(new TextField().getStyle());
+        } else uaa13.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa2_3(KeyEvent keyEvent) {
+        if (uaa23.getText().isEmpty()) {
+            uaa23.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa23.getText()) || uaa23.getText().length() > 2) {
+            uaa23.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa23.getText())) {
+            uaa23.setStyle(new TextField().getStyle());
+        } else uaa23.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa3_3(KeyEvent keyEvent) {
+        checkMacAddress3.setVisible(true);
+        checkMacAddress3.setManaged(true);
+        if (uaa33.getText().isEmpty()) {
+            uaa33.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa33.getText()) || uaa33.getText().length() > 2) {
+            uaa33.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa33.getText())) {
+            uaa33.setStyle(new TextField().getStyle());
+        } else uaa33.setStyle(new TextField().getStyle());
+
+        if (!checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText().trim().isEmpty()) {
+            hBoxMacAddress3.setStyle(new HBox().getStyle());
+            if (checkMacAddress3(company.getNameCompany(), checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText())) {
+                checkMacAddress3.setSelected(true);
+                hBoxMacAddress3.setStyle(new HBox().getStyle());
+            } else {
+                checkMacAddress3.setSelected(false);
+                hBoxMacAddress3.setStyle(STYLE_DANGER);
+            }
+        } else {
+            checkMacAddress3.setSelected(false);
+            hBoxMacAddress3.setStyle(STYLE_DANGER);
+        }
     }
 }

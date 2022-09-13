@@ -10,6 +10,9 @@ public class Equipment {
     protected String manufacturer;
     protected String serialNumber;
     protected String macAddress;
+    protected String macAddress1;
+    protected String macAddress2;
+    protected String macAddress3;
     protected String login;
     protected String password;
     protected String image;
@@ -34,12 +37,20 @@ public class Equipment {
     public Equipment() {
     }
 
-    public Equipment(String name, String model, String manufacturer, String serialNumber, String macAddress, String login, String password, String image, String room, String location, LocalDate dateWork, String condition, String company, String manual, String ipAddress, String masc, String gateway, String danteIpAddress, String danteMasc, String danteGateway, String outletNumber, Integer portNumberInTheSwitch, Integer idNetworkSwitcher, List<Defect> defectList, Class<? extends Equipment> cl) {
+    public Equipment(String name, String model, String manufacturer, String serialNumber, String macAddress,
+                     String macAddress1, String macAddress2, String macAddress3,String login,
+                     String password, String image, String room, String location, LocalDate dateWork,
+                     String condition, String company, String manual, String ipAddress, String masc, String gateway,
+                     String danteIpAddress, String danteMasc, String danteGateway, String outletNumber,
+                     Integer portNumberInTheSwitch, Integer idNetworkSwitcher, List<Defect> defectList, Class<? extends Equipment> cl) {
         this.name = name;
         this.model = model;
         this.manufacturer = manufacturer;
         this.serialNumber = serialNumber;
         this.macAddress = macAddress;
+        this.macAddress1 = macAddress1;
+        this.macAddress2 = macAddress2;
+        this.macAddress3 = macAddress3;
         this.login = login;
         this.password = password;
         this.image = image;
@@ -270,6 +281,30 @@ public class Equipment {
         this.cl = cl;
     }
 
+    public String getMacAddress1() {
+        return macAddress1;
+    }
+
+    public void setMacAddress1(String macAddress1) {
+        this.macAddress1 = macAddress1;
+    }
+
+    public String getMacAddress2() {
+        return macAddress2;
+    }
+
+    public void setMacAddress2(String macAddress2) {
+        this.macAddress2 = macAddress2;
+    }
+
+    public String getMacAddress3() {
+        return macAddress3;
+    }
+
+    public void setMacAddress3(String macAddress3) {
+        this.macAddress3 = macAddress3;
+    }
+
     @Override
     public String toString() {
         return "Equipment{" +
@@ -279,6 +314,9 @@ public class Equipment {
                 ", manufacturer='" + manufacturer + '\'' +
                 ", serialNumber='" + serialNumber + '\'' +
                 ", macAddress='" + macAddress + '\'' +
+                ", macAddress1='" + macAddress1 + '\'' +
+                ", macAddress2='" + macAddress2 + '\'' +
+                ", macAddress3='" + macAddress3 + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", image='" + image + '\'' +
@@ -294,7 +332,7 @@ public class Equipment {
                 ", danteIpAddress='" + danteIpAddress + '\'' +
                 ", danteMasc='" + danteMasc + '\'' +
                 ", danteGateway='" + danteGateway + '\'' +
-                ", outletNumber=" + outletNumber +
+                ", outletNumber='" + outletNumber + '\'' +
                 ", portNumberInTheSwitch=" + portNumberInTheSwitch +
                 ", idNetworkSwitcher=" + idNetworkSwitcher +
                 ", defectList=" + defectList +

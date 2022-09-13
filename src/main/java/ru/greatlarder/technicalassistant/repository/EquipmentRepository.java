@@ -24,5 +24,11 @@ public interface EquipmentRepository {
 	Equipment setEquipment(Equipment equipment);
 	Equipment change(int idEquipment, String column, Object value);
 	List<String> getListEquipmentName(String language);
+
+	Equipment getEquipmentByMacAddress1(String nameCompany, String macAddress);
+
+	Equipment getEquipmentByMacAddress2(String nameCompany, String macAddress);
+
+	Equipment getEquipmentByMacAddress3(String nameCompany, String macAddress);
 }
 

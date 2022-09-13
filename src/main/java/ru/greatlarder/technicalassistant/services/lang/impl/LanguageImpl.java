@@ -1011,14 +1011,36 @@ public class LanguageImpl implements Language {
     }
 
     @Override
-    public String THE_WORDS_SHOULD(String language) {
-        String theWS = "";
-        if (language.equals(ru)) {
-            theWS = "Слова должны быть разделены пробелами. Точек, тире или других знаков быть не должно.";
-        } else if (language.equals(en)) {
-            theWS = "The words should be separated by spaces. There should be no dots, dashes or other signs.";
+    public String APPLICATION(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Заявки";
+        } else if (lang.equals(en)) {
+            ps = "Application";
         }
-        return theWS;
+        return ps;
+    }
+
+    @Override
+    public String DATABASE_SETTINGS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Настройки базы данных";
+        } else if (lang.equals(en)) {
+            ps = "database settings";
+        }
+        return ps;
+    }
+
+    @Override
+    public String EXIT(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Выйти";
+        } else if (lang.equals(en)) {
+            ps = "Exit";
+        }
+        return ps;
     }
 
     @Override

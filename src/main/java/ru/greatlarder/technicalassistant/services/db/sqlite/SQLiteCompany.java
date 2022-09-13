@@ -5,32 +5,38 @@ public interface SQLiteCompany {
             " 'id' INTEGER PRIMARY KEY AUTOINCREMENT," +
             " 'nameCompany' text," +
             " 'address' text," +
-            " 'curator' text," +
+            " 'curatorLastName' text," +
+            " 'curatorFirstName' text," +
             " 'phoneCurator' text," +
             " 'mailCurator' text," +
             " 'websiteCompany' text," +
             " 'logoCompany' text," +
-            " 'manager' text," +
+            " 'managerLastName' text," +
+            " 'managerFirstName' text," +
             " 'phoneManager' text," +
             " 'mailManager' text," +
-            " 'engineer' text," +
+            " 'engineerLastName' text," +
+            " 'engineerFirstName' text," +
             " 'phoneEngineer' text," +
             " 'mailEngineer' text);";
 
     String INSERT_COMPANY = "INSERT INTO company (" +
             " nameCompany," +
             " address," +
-            " curator," +
+            " curatorLastName," +
+            " curatorFirstName," +
             " phoneCurator," +
             " mailCurator," +
             " websiteCompany," +
             " logoCompany," +
-            " manager," +
+            " managerLastName," +
+            " managerFirstName," +
             " phoneManager," +
             " mailManager," +
-            " engineer," +
+            " engineerLastName," +
+            " engineerFirstName," +
             " phoneEngineer," +
-            " mailEngineer) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            " mailEngineer) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     String READE_COMPANY = "SELECT * FROM company";
 }

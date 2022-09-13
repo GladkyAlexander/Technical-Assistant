@@ -29,9 +29,10 @@ public class AppStart extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
         fileManager.createProjectDirectories();
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/ru/greatlarder/technicalassistant/mainPage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load() );
+        Scene scene = new Scene(fxmlLoader.load() ,1280, 820 );
         stage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png")))));
         stage.setTitle("Technical Assistant");
         MainController controller = fxmlLoader.getController();
@@ -43,4 +44,5 @@ public class AppStart extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }

@@ -23,19 +23,21 @@
       <ColumnConstraints />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints maxHeight="-Infinity" />
-      <RowConstraints maxHeight="-Infinity" />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
-    <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
     <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
+    <RowConstraints />
+    <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
@@ -133,37 +135,37 @@
             </Label>
             <TextField fx:id="uaa3" onKeyReleased="#onKeyUaa3" prefWidth="35.0" />
       </HBox>
-      <TextField fx:id="textFieldLogin" onKeyReleased="#onKeyLogin" promptText="Логин" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <TextField fx:id="textFieldPassword" promptText="Пароль" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <TextField fx:id="textFieldRoom" onKeyReleased="#onKeyRoom" promptText="Помещение" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-      <TextField fx:id="textFieldLocation" onKeyReleased="#onKeyLocation" promptText="Расположение в комнате" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-      <Label fx:id="labelLogin" text="Логин :" GridPane.rowIndex="6">
+      <TextField fx:id="textFieldLogin" onKeyReleased="#onKeyLogin" promptText="Логин" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <TextField fx:id="textFieldPassword" promptText="Пароль" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <TextField fx:id="textFieldRoom" onKeyReleased="#onKeyRoom" promptText="Помещение" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <TextField fx:id="textFieldLocation" onKeyReleased="#onKeyLocation" promptText="Расположение в комнате" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+      <Label fx:id="labelLogin" text="Логин :" GridPane.rowIndex="10">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="labelPassword" text="Пароль :" GridPane.rowIndex="7">
+      <Label fx:id="labelPassword" text="Пароль :" GridPane.rowIndex="11">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="labelRoom" text="Помещение :" GridPane.rowIndex="10">
+      <Label fx:id="labelRoom" text="Помещение :" GridPane.rowIndex="12">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="labelLocationToRoom" text="Расположение в комнате :" GridPane.rowIndex="11">
+      <Label fx:id="labelLocationToRoom" text="Расположение в комнате :" GridPane.rowIndex="13">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <DatePicker fx:id="textFieldDateOfCommissioning" editable="false" maxWidth="1.7976931348623157E308" nodeOrientation="RIGHT_TO_LEFT" onKeyReleased="#onKeyDatePicker" promptText="Дата начала эксплуатации" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-      <Label fx:id="labelDateTheWork" text="Дата начала эксплуатации :" GridPane.rowIndex="12">
+      <DatePicker fx:id="textFieldDateOfCommissioning" editable="false" maxWidth="1.7976931348623157E308" nodeOrientation="RIGHT_TO_LEFT" onKeyReleased="#onKeyDatePicker" promptText="Дата начала эксплуатации" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+      <Label fx:id="labelDateTheWork" text="Дата начала эксплуатации :" GridPane.rowIndex="14">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <HBox fx:id="hBoxTCP" alignment="CENTER_RIGHT" cache="true" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="15">
+      <HBox fx:id="hBoxTCP" alignment="CENTER_RIGHT" cache="true" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="17">
          <Label fx:id="labelIpv4" text="IP адрес (TCP/IPv4) :">
             <font>
                <Font name="System Bold" size="12.0" />
@@ -194,7 +196,7 @@
       </opaqueInsets>
 
       </HBox>
-      <HBox fx:id="hBoxMasc" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="16">
+      <HBox fx:id="hBoxMasc" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="18">
          <Label fx:id="labelMasc" text="Subnet masc :">
             <font>
                <Font name="System Bold" size="12.0" />
@@ -221,7 +223,7 @@
             <TextField fx:id="deviceMasc" onKeyReleased="#onKeyReleasedMascDevice" prefWidth="50.0" />
 
       </HBox>
-      <HBox fx:id="hBoxGateway" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="17">
+      <HBox fx:id="hBoxGateway" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="19">
          <Label fx:id="labelGateway" text="Default gateway :">
             <font>
                <Font name="System Bold" size="12.0" />
@@ -247,17 +249,16 @@
             </Label>
             <TextField fx:id="deviceGateway" onKeyReleased="#onKeyReleasedGatewayDevice" prefWidth="50.0" />
       </HBox>
-      <Label fx:id="labelCondition" text="Состояние :" GridPane.rowIndex="13">
+      <Label fx:id="labelCondition" text="Состояние :" GridPane.rowIndex="15">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-    <ImageView fx:id="pdfFile" fitHeight="30.0" fitWidth="60.0" nodeOrientation="INHERIT" onMouseClicked="#addManual"
-               pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="14">
-        <Image url="@../../images/doc.png"/>
+    <ImageView fx:id="pdfFile" fitHeight="30.0" fitWidth="60.0" nodeOrientation="INHERIT" onMouseClicked="#addManual" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="16">
+        <Image url="@../../images/doc.png" />
     </ImageView>
-      <Button fx:id="btnSaveEquipment" mnemonicParsing="false" onMouseClicked="#saveEquipment" text="Сохранить" GridPane.columnIndex="1" GridPane.rowIndex="28" />
-      <HBox fx:id="hBoxFrequency" alignment="CENTER" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="19">
+      <Button fx:id="btnSaveEquipment" mnemonicParsing="false" onMouseClicked="#saveEquipment" text="Сохранить" GridPane.columnIndex="1" GridPane.rowIndex="30" />
+      <HBox fx:id="hBoxFrequency" alignment="CENTER" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="21">
          <padding>
             <Insets right="5.0" />
          </padding>
@@ -265,6 +266,9 @@
             <font>
                <Font name="System Bold" size="12.0" />
             </font>
+         <padding>
+            <Insets right="25.0" />
+         </padding>
          </Label>
             <TextField fx:id="textFieldFrequency1" onKeyReleased="#onKeyReleasedFrequency1" prefWidth="50.0" />
             <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" text=".">
@@ -279,158 +283,298 @@
                </font>
             </Label>
       </HBox>
-      <Label fx:id="labelInstruction" text="Инструкция в формате PDF :" GridPane.rowIndex="14">
+      <Label fx:id="labelInstruction" text="Инструкция в формате PDF :" GridPane.rowIndex="16">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-    <HBox fx:id="hBoxMaxLamp" alignment="CENTER" cache="true" GridPane.columnSpan="2" GridPane.rowIndex="18">
+    <HBox fx:id="hBoxMaxLamp" alignment="CENTER" cache="true" GridPane.columnSpan="2" GridPane.rowIndex="20">
         <Label fx:id="labelMaxTimeWorkLamp" text="Максимальное время работы лампы :">
             <font>
-                <Font name="System Bold" size="12.0"/>
+                <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <TextField fx:id="maximumLampOperatingTime" onKeyReleased="#onKeyPressedMaximumLampOperatingTime"
-                   promptText="Максимальное время работы лампы"/>
+        <TextField fx:id="maximumLampOperatingTime" onKeyReleased="#onKeyPressedMaximumLampOperatingTime" promptText="Максимальное время работы лампы" />
     </HBox>
-   <ComboBox fx:id="comboBoxStatusSelection" maxWidth="1.7976931348623157E308" promptText="Выберите состояние устройства" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-    <HBox fx:id="hBoxTCPDante" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="20">
+   <ComboBox fx:id="comboBoxStatusSelection" maxWidth="1.7976931348623157E308" promptText="Выберите состояние устройства" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+    <HBox fx:id="hBoxTCPDante" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="22">
         <Label fx:id="labelIpv4Dante" text="IP адрес (TCP/IPv4) Dante:">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="network1Dante" onKeyReleased="#onKeyReleasedNetDante" prefWidth="50.0"/>
+        <TextField fx:id="network1Dante" onKeyReleased="#onKeyReleasedNetDante" prefWidth="50.0" />
         <Label text=".">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="network2Dante" onKeyReleased="#onKeyReleasedNet2Dante" prefWidth="50.0"/>
+        <TextField fx:id="network2Dante" onKeyReleased="#onKeyReleasedNet2Dante" prefWidth="50.0" />
         <Label text=".">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="subnetDante" onKeyReleased="#onKeyReleasedSubnetDante" prefWidth="50.0"/>
+        <TextField fx:id="subnetDante" onKeyReleased="#onKeyReleasedSubnetDante" prefWidth="50.0" />
         <Label text=".">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="deviceDante" onKeyReleased="#onKeyReleasedDeviceDante" prefWidth="50.0"/>
+        <TextField fx:id="deviceDante" onKeyReleased="#onKeyReleasedDeviceDante" prefWidth="50.0" />
     </HBox>
-    <HBox fx:id="hBoxMascDante" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="21">
+    <HBox fx:id="hBoxMascDante" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="23">
         <Label fx:id="labelMascDante" text="Subnet masc Dante">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="networkMasc1Dante" onKeyReleased="#onKeyReleasedMasc1Dante" prefWidth="50.0"/>
+        <TextField fx:id="networkMasc1Dante" onKeyReleased="#onKeyReleasedMasc1Dante" prefWidth="50.0" />
         <Label text=".">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="networkMasc2Dante" onKeyReleased="#onKeyReleasedMasc2Dante" prefWidth="50.0"/>
+        <TextField fx:id="networkMasc2Dante" onKeyReleased="#onKeyReleasedMasc2Dante" prefWidth="50.0" />
         <Label text=".">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="subnetMascDante" onKeyReleased="#onKeyReleasedMascSubnetDante" prefWidth="50.0"/>
+        <TextField fx:id="subnetMascDante" onKeyReleased="#onKeyReleasedMascSubnetDante" prefWidth="50.0" />
         <Label text=".">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="deviceMascDante" onKeyReleased="#onKeyReleasedMascDeviceDante" prefWidth="50.0"/>
+        <TextField fx:id="deviceMascDante" onKeyReleased="#onKeyReleasedMascDeviceDante" prefWidth="50.0" />
     </HBox>
-    <HBox fx:id="hBoxGatewayDante" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2"
-          GridPane.rowIndex="22">
+    <HBox fx:id="hBoxGatewayDante" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="24">
         <Label fx:id="labelGatewayDante" text="Default gateway Dante :">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="gateway1Dante" onKeyReleased="#onKeyReleasedGatewayDante" prefWidth="50.0"/>
+        <TextField fx:id="gateway1Dante" onKeyReleased="#onKeyReleasedGatewayDante" prefWidth="50.0" />
         <Label text=".">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="gateway2Dante" onKeyReleased="#onKeyReleasedGateway2Dante" prefWidth="50.0"/>
+        <TextField fx:id="gateway2Dante" onKeyReleased="#onKeyReleasedGateway2Dante" prefWidth="50.0" />
         <Label text=".">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="subnetGatewayDante" onKeyReleased="#onKeyReleasedGatewaySubnetDante" prefWidth="50.0"/>
+        <TextField fx:id="subnetGatewayDante" onKeyReleased="#onKeyReleasedGatewaySubnetDante" prefWidth="50.0" />
         <Label text=".">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="deviceGatewayDante" onKeyReleased="#onKeyReleasedGatewayDeviceDante" prefWidth="50.0"/>
+        <TextField fx:id="deviceGatewayDante" onKeyReleased="#onKeyReleasedGatewayDeviceDante" prefWidth="50.0" />
     </HBox>
-    <HBox fx:id="hBoxDiagonal" alignment="CENTER_RIGHT" spacing="6.0" GridPane.columnSpan="2" GridPane.rowIndex="26">
+    <HBox fx:id="hBoxDiagonal" alignment="CENTER_RIGHT" spacing="6.0" GridPane.columnSpan="2" GridPane.rowIndex="28">
         <GridPane.margin>
-            <Insets/>
+            <Insets />
         </GridPane.margin>
         <Label fx:id="labelDiagonal" text="Диагональ :">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="tfDiagonal"/>
+        <TextField fx:id="tfDiagonal" />
         <Label fx:id="labelDum" text="Дюймов">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
     </HBox>
-    <HBox fx:id="hBoxLaptop" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="27">
+    <HBox fx:id="hBoxLaptop" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="29">
         <Label fx:id="labelOs" text="Введите название Операционной системы :">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="tfOs"/>
+        <TextField fx:id="tfOs" />
     </HBox>
-    <HBox fx:id="hBoxPortSwitcher" alignment="CENTER_RIGHT" spacing="50.0" GridPane.columnSpan="2"
-          GridPane.rowIndex="24">
+    <HBox fx:id="hBoxPortSwitcher" alignment="CENTER_RIGHT" spacing="50.0" GridPane.columnSpan="2" GridPane.rowIndex="26">
         <Label fx:id="labelPortSwitcher" text="Номер порта в сетевом комутаторе">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="tfPortSwitcher" onKeyReleased="#onKeyRelisedPortSwitcher"/>
+        <TextField fx:id="tfPortSwitcher" onKeyReleased="#onKeyRelisedPortSwitcher" />
     </HBox>
-    <HBox fx:id="hBoxOutlander" alignment="TOP_RIGHT" spacing="50.0" GridPane.columnSpan="2" GridPane.rowIndex="25">
+    <HBox fx:id="hBoxOutlander" alignment="TOP_RIGHT" spacing="50.0" GridPane.columnSpan="2" GridPane.rowIndex="27">
         <Label fx:id="labelOutlet" text="Номер розетки (lan)">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <TextField fx:id="tfOutlet" onKeyPressed="#onKeyRelisedOutlet"/>
+        <TextField fx:id="tfOutlet" onKeyPressed="#onKeyRelisedOutlet" />
     </HBox>
-    <HBox fx:id="hBoxNetworkSwitcher" alignment="CENTER_RIGHT" spacing="50.0" GridPane.columnSpan="2"
-          GridPane.rowIndex="23">
+    <HBox fx:id="hBoxNetworkSwitcher" alignment="CENTER_RIGHT" spacing="50.0" GridPane.columnSpan="2" GridPane.rowIndex="25">
         <Label fx:id="labelChoiseNetworkSwitcher" text="Выберите сетевой коммутатор">
            <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
            </font>
         </Label>
-        <ChoiceBox fx:id="choiceBoxNetworkSvitcher" prefWidth="150.0"/>
+        <ChoiceBox fx:id="choiceBoxNetworkSvitcher" prefWidth="150.0" />
     </HBox>
    <CheckBox fx:id="checkModel" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
    <CheckBox fx:id="checkManufacturer" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
    <CheckBox fx:id="checkSerialNumber" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
    <CheckBox fx:id="checkMacAddress" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-   <CheckBox fx:id="checkIpv4" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="15" />
-   <CheckBox fx:id="checkFrequency" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="19" />
-   <CheckBox fx:id="checkIpv4Dante" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="20" />
-   <CheckBox fx:id="checkNumberPortSwitcher" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="24" />
+   <CheckBox fx:id="checkIpv4" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="19" />
+   <CheckBox fx:id="checkFrequency" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="23" />
+   <CheckBox fx:id="checkIpv4Dante" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="24" />
+   <CheckBox fx:id="checkNumberPortSwitcher" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="28" />
+   <HBox fx:id="hBoxMacAddress1" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="2.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
+      <children>
+         <Label text="MAC 1">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+            <padding>
+               <Insets right="25.0" />
+            </padding>
+         </Label>
+         <TextField fx:id="oui11" onKeyReleased="#onKeyOui1_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui21" onKeyReleased="#onKeyOui2_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui31" onKeyReleased="#onKeyOui3_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa11" onKeyReleased="#onKeyUaa1_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa21" onKeyReleased="#onKeyUaa2_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa31" onKeyReleased="#onKeyUaa3_1" prefWidth="35.0" />
+      </children>
+   </HBox>
+   <HBox fx:id="hBoxMacAddress2" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="2.0" GridPane.columnSpan="2" GridPane.rowIndex="8">
+      <children>
+         <Label text="MAC 2">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+            <padding>
+               <Insets right="25.0" />
+            </padding>
+         </Label>
+         <TextField fx:id="oui12" onKeyReleased="#onKeyOui1_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui22" onKeyReleased="#onKeyOui2_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui32" onKeyReleased="#onKeyOui3_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa12" onKeyReleased="#onKeyUaa1_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa22" onKeyReleased="#onKeyUaa2_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa32" onKeyReleased="#onKeyUaa3_2" prefWidth="35.0" />
+      </children>
+   </HBox>
+   <HBox fx:id="hBoxMacAddress3" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="2.0" GridPane.columnSpan="2" GridPane.rowIndex="9">
+      <children>
+         <Label text="MAC 3">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+            <padding>
+               <Insets right="25.0" />
+            </padding>
+         </Label>
+         <TextField fx:id="oui13" onKeyReleased="#onKeyOui1_3" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui23" onKeyReleased="#onKeyOui2_3" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui33" onKeyReleased="#onKeyOui3_3" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa13" onKeyReleased="#onKeyUaa1_3" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa23" onKeyReleased="#onKeyUaa2_3" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa33" onKeyReleased="#onKeyUaa3_3" prefWidth="35.0" />
+      </children>
+   </HBox>
+   <Button fx:id="btnAddMacDop" maxWidth="1.7976931348623157E308" minHeight="10.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onActionBtnMacDop" prefHeight="10.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
+      <graphic>
+         <ImageView fitHeight="7.0" fitWidth="7.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/plus.png" />
+            </image>
+         </ImageView>
+      </graphic>
+   </Button>
+   <CheckBox fx:id="checkMacAddress1" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+   <CheckBox fx:id="checkMacAddress2" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+   <CheckBox fx:id="checkMacAddress3" disable="true" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="9" />
    <padding>
       <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
    </padding>

@@ -19,6 +19,7 @@ import ru.greatlarder.technicalassistant.services.mail.Mail;
 import ru.greatlarder.technicalassistant.services.tables.ListMail;
 import ru.greatlarder.technicalassistant.services.tables.ListTask;
 import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.HandlerUserListener;
 import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.time.LocalDate;
@@ -64,6 +65,7 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
     private Company company;
     HandlerLang handlerLang = new HandlerLang();
     HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
+    HandlerUserListener handlerUserListener = new HandlerUserListener();
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
@@ -82,6 +84,8 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
     @Override
     public void updateUser(DataUser dataUser) {
         this.user = dataUser.getUser();
+        loadFragment();
+        handlerUserListener.onNewDataUser(new DataUser(user));
     }
 
     private void setLanguage(String lang) {
@@ -130,21 +134,23 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
     }
 
     public void loadFragment() {
-        if (company != null) {
-            for (Company company1 : user.getCompanyList()) {
-                if (company.equals(company1)) {
-                    setNumberOfDevice(company1.getEquipmentList());
-                    setNumberOfFaultyDevices(company1.getEquipmentList());
-                    setNumberOfDevicesOperatingForMoreThanFiveYears(company1.getEquipmentList());
-                    setNumberOfTools(company1.getToolList());
+        if(user != null) {
+            if (company != null) {
+                for (Company company1 : user.getCompanyList()) {
+                    if (company.equals(company1)) {
+                        setNumberOfDevice(company1.getEquipmentList());
+                        setNumberOfFaultyDevices(company1.getEquipmentList());
+                        setNumberOfDevicesOperatingForMoreThanFiveYears(company1.getEquipmentList());
+                        setNumberOfTools(company1.getToolList());
+                    }
                 }
+                tabPaneEngineerHome.getTabs().clear();
+                tabPaneEngineerHome.getTabs().add(new Tab(language.ALL_ACTIVE_APPLICATIONS(lang), loadTasksActive()));
+                tabPaneEngineerHome.getTabs().add(new Tab(language.ALL_APPLICATIONS(lang), loadTasksAll()));
             }
-            tabPaneEngineerHome.getTabs().clear();
-            tabPaneEngineerHome.getTabs().add(new Tab(language.ALL_ACTIVE_APPLICATIONS(lang),loadTasksActive()));
-            tabPaneEngineerHome.getTabs().add(new Tab(language.ALL_APPLICATIONS(lang), loadTasksAll()));
-        }
-        if(user.getMailSettings().size() > 0){
-            loadMail();
+            if (user.getMailSettings().size() > 0) {
+                loadMail();
+            }
         }
     }
 

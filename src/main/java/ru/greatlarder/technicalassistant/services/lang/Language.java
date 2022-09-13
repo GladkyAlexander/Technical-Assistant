@@ -43,7 +43,6 @@ public interface Language {
     String MAIL_FOR_MONITORING_EMAILS(String language);
     String EMAIL_PASSWORD(String language);
     String SUBJECT_OF_THE_LETTER(String language);
-    String THE_WORDS_SHOULD(String language);
     String EXAMPLE(String language);
     String DATE(String language);
     String WHITESPACE(String language);
@@ -142,7 +141,7 @@ public interface Language {
 
     String TODAY_DATE_WILL_BE_SET_RU(String lang);
 
-    String EQUIPMENT(Language language);
+    String EQUIPMENT(String language);
 
     String FILL_IN_THE_FIELDS(String lang);
     String PROJECTOR_RU = "Проектор";
@@ -240,4 +239,10 @@ public interface Language {
     String ALL_DEFECTS(String lang);
 
     String OPERATING_HOURS(String lang);
+
+    String APPLICATION(String l);
+
+    String DATABASE_SETTINGS(String l);
+
+    String EXIT(String lang);
 }
