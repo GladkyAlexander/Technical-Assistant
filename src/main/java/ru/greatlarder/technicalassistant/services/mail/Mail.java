@@ -29,6 +29,7 @@ public class Mail {
         Session.getDefaultInstance(prop);
         Store store = null;
         Folder inbox = null;
+
             try {
                 store = Session.getInstance(prop).getStore();
                 store.connect(host, mail, password);
@@ -54,8 +55,10 @@ public class Mail {
                 }
 
             } catch (MessagingException e) {
+
                 System.out.println("***************There is no Internet or the host is not specified correctly !*********");
                 e.printStackTrace();
+
             } finally {
                 if (inbox != null) {
                     try {

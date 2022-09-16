@@ -55,7 +55,7 @@
       <RowConstraints />
       <RowConstraints />
   </rowConstraints>
-   <ComboBox fx:id="cmbEquipmentType" maxWidth="1.7976931348623157E308" promptText="Выберите название оборудования" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+   <ComboBox fx:id="cmbEquipmentType" maxWidth="1.7976931348623157E308" onMouseClicked="#onActionCmbEquipmentType" promptText="Выберите название оборудования" GridPane.columnSpan="2" GridPane.rowIndex="1" />
 
       <HBox alignment="CENTER_RIGHT" spacing="7.0" GridPane.columnSpan="3">
 

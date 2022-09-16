@@ -41,8 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_DANGER;
-import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_EXCELLENT;
+import static ru.greatlarder.technicalassistant.services.style.StyleSRC.*;
+import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_WARNING;
 
 public class FragmentEquipmentOneController implements ObserverLang {
     @FXML
@@ -184,12 +184,55 @@ public class FragmentEquipmentOneController implements ObserverLang {
     @FXML public Label labelNewGatewayDante;
     @FXML public Label labelChangeFrequency;
     @FXML public Label labelNewTime;
+    @FXML public Label labelMac1;
+    @FXML public Label labelMac2;
+    @FXML public Label labelMac3;
+    @FXML public ImageView imgChangeMac1;
+    @FXML public ImageView imgChangeMac2;
+    @FXML public ImageView imgChangeMac3;
+    @FXML public ImageView imgChangeMac;
+    @FXML public HBox hBoxNewMacAddress;
+    @FXML public TextField oui1;
+    @FXML public TextField oui2;
+    @FXML public TextField oui3;
+    @FXML public TextField uaa1;
+    @FXML public TextField uaa2;
+    @FXML public TextField uaa3;
+    @FXML public Button btnSaveNewMac;
+    @FXML public HBox hBoxNewMacAddress1;
+    @FXML public TextField oui11;
+    @FXML public TextField oui12;
+    @FXML public TextField oui13;
+    @FXML public TextField uaa11;
+    @FXML public TextField uaa12;
+    @FXML public TextField uaa13;
+    @FXML public Button btnSaveNewMac1;
+    @FXML public HBox hBoxNewMacAddress2;
+    @FXML public TextField oui21;
+    @FXML public TextField oui22;
+    @FXML public TextField oui23;
+    @FXML public TextField uaa21;
+    @FXML public TextField uaa22;
+    @FXML public TextField uaa23;
+    @FXML public HBox hBoxMacAddress3;
+    @FXML public TextField oui31;
+    @FXML public TextField oui32;
+    @FXML public TextField oui33;
+    @FXML public TextField uaa31;
+    @FXML public TextField uaa32;
+    @FXML public TextField uaa33;
+    @FXML public Button btnSaveNewMac2;
+    @FXML public Button btnSaveNewMac3;
+    @FXML public Label m1;
+    @FXML public Label m2;
+    @FXML public Label m3;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
     Language language = new LanguageImpl();
     DefectRepository defectRepository = new DefectRepositoryImpl();
     FileManager fileManager = new FileManagerImpl();
     Equipment equipment;
     String lang;
+    String company;
 
     public void setEquip(Equipment equipment){
         this.equipment = equipment;
@@ -861,6 +904,14 @@ public class FragmentEquipmentOneController implements ObserverLang {
         hBoxPortNumber.setManaged(false);
         hBoxNewOutletNumber.setVisible(false);
         hBoxNewOutletNumber.setManaged(false);
+        hBoxNewMacAddress.setVisible(false);
+        hBoxNewMacAddress.setManaged(false);
+        hBoxNewMacAddress1.setVisible(false);
+        hBoxNewMacAddress1.setManaged(false);
+        hBoxNewMacAddress2.setVisible(false);
+        hBoxNewMacAddress2.setManaged(false);
+        hBoxMacAddress3.setVisible(false);
+        hBoxMacAddress3.setManaged(false);
     }
 
     public void changeFrequency(MouseEvent mouseEvent) {
@@ -913,6 +964,18 @@ public class FragmentEquipmentOneController implements ObserverLang {
     }
 
     public void displayLayout(Equipment equipment){
+        labelMac1.setVisible(false);
+        labelMac1.setManaged(false);
+        m1.setVisible(false);
+        m1.setManaged(false);
+        labelMac2.setVisible(false);
+        labelMac2.setManaged(false);
+        m2.setVisible(false);
+        m2.setManaged(false);
+        labelMac3.setVisible(false);
+        labelMac3.setManaged(false);
+        m3.setVisible(false);
+        m3.setManaged(false);
 
         model.setText(equipment.getModel());
         manufacturer.setText(equipment.getManufacturer());
@@ -996,6 +1059,30 @@ public class FragmentEquipmentOneController implements ObserverLang {
         labelQuantityDefect.setText(String.valueOf(defectRepository.getListAllDefectToEquipment(equipment.getSerialNumber()).size()));
         labelTextOutletNumber.setText(equipment.getOutletNumber());
         labelTextPortNumber.setText(equipment.getPortNumberInTheSwitch().toString());
+
+        if(equipment.getMacAddress1() != null && !equipment.getMacAddress1().isEmpty()){
+            labelMac1.setVisible(false);
+            labelMac1.setManaged(false);
+            m1.setVisible(false);
+            m1.setManaged(false);
+            labelMac1.setText(equipment.getMacAddress1());
+        }
+
+        if(equipment.getMacAddress2() != null && !equipment.getMacAddress2().isEmpty()){
+            labelMac2.setVisible(false);
+            labelMac2.setManaged(false);
+            m2.setVisible(false);
+            m2.setManaged(false);
+            labelMac2.setText(equipment.getMacAddress1());
+        }
+
+        if(equipment.getMacAddress3() != null && !equipment.getMacAddress3().isEmpty()){
+            labelMac3.setVisible(false);
+            labelMac3.setManaged(false);
+            m3.setVisible(false);
+            m3.setManaged(false);
+            labelMac3.setText(equipment.getMacAddress1());
+        }
     }
 
     public void changeTimeWorkLampProj(MouseEvent mouseEvent) {
@@ -1142,5 +1229,407 @@ public class FragmentEquipmentOneController implements ObserverLang {
 
     public void onActionMenuButtonCondition(MouseEvent actionEvent) {
         menuButtonCondition.setItems(FXCollections.observableArrayList(language.status_sheet(lang)));
+    }
+
+    public void onKeyOui1(KeyEvent keyEvent) {
+        if (oui1.getText().isEmpty()) {
+            oui1.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui1.getText()) || oui1.getText().length() > 2) {
+            oui1.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui1.getText())) {
+            oui1.setStyle(new TextField().getStyle());
+        } else oui1.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui2(KeyEvent keyEvent) {
+        if (oui2.getText().isEmpty()) {
+            oui2.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui2.getText()) || oui2.getText().length() > 2) {
+            oui2.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui2.getText())) {
+            oui2.setStyle(new TextField().getStyle());
+        } else oui2.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui3(KeyEvent keyEvent) {
+        if (oui3.getText().isEmpty()) {
+            oui3.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui3.getText()) || oui3.getText().length() > 2) {
+            oui3.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui3.getText())) {
+            oui3.setStyle(new TextField().getStyle());
+        } else oui3.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa1(KeyEvent keyEvent) {
+        if (uaa1.getText().isEmpty()) {
+            uaa1.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa1.getText()) || uaa1.getText().length() > 2) {
+            uaa1.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa1.getText())) {
+            uaa1.setStyle(new TextField().getStyle());
+        } else uaa1.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa2(KeyEvent keyEvent) {
+        if (uaa2.getText().isEmpty()) {
+            uaa2.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa2.getText()) || uaa2.getText().length() > 2) {
+            uaa2.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa2.getText())) {
+            uaa2.setStyle(new TextField().getStyle());
+        } else uaa2.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa3(KeyEvent keyEvent) {
+        if (uaa3.getText().isEmpty()) {
+            uaa3.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa3.getText()) || uaa3.getText().length() > 2) {
+            uaa3.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa3.getText())) {
+            uaa3.setStyle(new TextField().getStyle());
+        } else uaa3.setStyle(new TextField().getStyle());
+
+        if (!checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText().trim().isEmpty()) {
+            hBoxNewMacAddress.setStyle(new HBox().getStyle());
+            if (checkMacAddress(equipment.getCompany(), checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText())) {
+                hBoxNewMacAddress.setStyle(new HBox().getStyle());
+            } else {
+                hBoxNewMacAddress.setStyle(STYLE_DANGER);
+            }
+        } else {
+            hBoxNewMacAddress.setStyle(STYLE_DANGER);
+        }
+    }
+
+    public void onKeyOui1_1(KeyEvent keyEvent) {
+        if (oui11.getText().isEmpty()) {
+            oui11.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui11.getText()) || oui11.getText().length() > 2) {
+            oui11.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui11.getText())) {
+            oui11.setStyle(new TextField().getStyle());
+        } else oui11.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui1_2(KeyEvent keyEvent) {
+        if (oui21.getText().isEmpty()) {
+            oui21.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui21.getText()) || oui21.getText().length() > 2) {
+            oui21.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui21.getText())) {
+            oui21.setStyle(new TextField().getStyle());
+        } else oui21.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui1_3(KeyEvent keyEvent) {
+        if (oui31.getText().isEmpty()) {
+            oui31.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui31.getText()) || oui31.getText().length() > 2) {
+            oui31.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui31.getText())) {
+            oui31.setStyle(new TextField().getStyle());
+        } else oui31.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa1_1(KeyEvent keyEvent) {
+        if (uaa11.getText().isEmpty()) {
+            uaa11.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa11.getText()) || uaa11.getText().length() > 2) {
+            uaa11.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa11.getText())) {
+            uaa11.setStyle(new TextField().getStyle());
+        } else uaa11.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa1_2(KeyEvent keyEvent) {
+        if (uaa12.getText().isEmpty()) {
+            uaa12.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa12.getText()) || uaa12.getText().length() > 2) {
+            uaa12.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa21.getText())) {
+            uaa12.setStyle(new TextField().getStyle());
+        } else uaa12.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa1_3(KeyEvent keyEvent) {
+        if (uaa13.getText().isEmpty()) {
+            uaa13.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa13.getText()) || uaa13.getText().length() > 2) {
+            uaa13.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa13.getText())) {
+            uaa13.setStyle(new TextField().getStyle());
+        } else uaa13.setStyle(new TextField().getStyle());
+
+        if (!checkMac(oui11, oui12, oui13, uaa11, uaa12, uaa13).getText().trim().isEmpty()) {
+            hBoxNewMacAddress1.setStyle(new HBox().getStyle());
+            if (checkMacAddress1(equipment.getCompany(), checkMac(oui11, oui12, oui13, uaa11, uaa12, uaa13).getText())) {
+                hBoxNewMacAddress1.setStyle(new HBox().getStyle());
+            } else {
+                hBoxNewMacAddress1.setStyle(STYLE_DANGER);
+            }
+        } else {
+            hBoxNewMacAddress1.setStyle(STYLE_DANGER);
+        }
+    }
+
+    public void onKeyOui2_1(KeyEvent keyEvent) {
+        if (oui21.getText().isEmpty()) {
+            oui21.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui21.getText()) || oui21.getText().length() > 2) {
+            oui21.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui21.getText())) {
+            oui21.setStyle(new TextField().getStyle());
+        } else oui21.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui2_2(KeyEvent keyEvent) {
+        if (oui22.getText().isEmpty()) {
+            oui22.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui22.getText()) || oui22.getText().length() > 2) {
+            oui22.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui22.getText())) {
+            oui22.setStyle(new TextField().getStyle());
+        } else oui22.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui2_3(KeyEvent keyEvent) {
+        if (oui23.getText().isEmpty()) {
+            oui23.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui23.getText()) || oui23.getText().length() > 2) {
+            oui23.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui23.getText())) {
+            oui23.setStyle(new TextField().getStyle());
+        } else oui23.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa2_1(KeyEvent keyEvent) {
+        if (uaa21.getText().isEmpty()) {
+            uaa21.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa21.getText()) || uaa21.getText().length() > 2) {
+            uaa21.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa21.getText())) {
+            uaa21.setStyle(new TextField().getStyle());
+        } else uaa21.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa2_2(KeyEvent keyEvent) {
+        if (uaa22.getText().isEmpty()) {
+            uaa22.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa22.getText()) || uaa22.getText().length() > 2) {
+            uaa22.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa22.getText())) {
+            uaa22.setStyle(new TextField().getStyle());
+        } else uaa22.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa2_3(KeyEvent keyEvent) {
+        if (uaa23.getText().isEmpty()) {
+            uaa23.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa23.getText()) || uaa23.getText().length() > 2) {
+            uaa23.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa23.getText())) {
+            uaa23.setStyle(new TextField().getStyle());
+        } else uaa23.setStyle(new TextField().getStyle());
+
+        if (!checkMac(oui21, oui22, oui23, uaa21, uaa22, uaa23).getText().trim().isEmpty()) {
+            hBoxNewMacAddress2.setStyle(new HBox().getStyle());
+            if (checkMacAddress2(equipment.getCompany(), checkMac(oui21, oui22, oui23, uaa21, uaa22, uaa23).getText())) {
+                hBoxNewMacAddress2.setStyle(new HBox().getStyle());
+            } else {
+                hBoxNewMacAddress2.setStyle(STYLE_DANGER);
+            }
+        } else {
+            hBoxNewMacAddress2.setStyle(STYLE_DANGER);
+        }
+    }
+
+    public void onKeyOui3_1(KeyEvent keyEvent) {
+        if (oui31.getText().isEmpty()) {
+            oui31.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui31.getText()) || oui31.getText().length() > 2) {
+            oui31.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui31.getText())) {
+            oui31.setStyle(new TextField().getStyle());
+        } else oui31.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui3_2(KeyEvent keyEvent) {
+        if (oui32.getText().isEmpty()) {
+            oui32.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui32.getText()) || oui23.getText().length() > 2) {
+            oui32.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui32.getText())) {
+            oui32.setStyle(new TextField().getStyle());
+        } else oui32.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyOui3_3(KeyEvent keyEvent) {
+        if (oui33.getText().isEmpty()) {
+            oui33.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(oui33.getText()) || oui33.getText().length() > 2) {
+            oui33.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(oui33.getText())) {
+            oui33.setStyle(new TextField().getStyle());
+        } else oui33.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa3_1(KeyEvent keyEvent) {
+        if (uaa31.getText().isEmpty()) {
+            uaa31.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa31.getText()) || uaa31.getText().length() > 2) {
+            uaa31.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa31.getText())) {
+            uaa31.setStyle(new TextField().getStyle());
+        } else uaa31.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa3_2(KeyEvent keyEvent) {
+        if (uaa32.getText().isEmpty()) {
+            uaa32.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa32.getText()) || uaa32.getText().length() > 2) {
+            uaa32.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa32.getText())) {
+            uaa32.setStyle(new TextField().getStyle());
+        } else uaa32.setStyle(new TextField().getStyle());
+    }
+
+    public void onKeyUaa3_3(KeyEvent keyEvent) {
+        if (uaa33.getText().isEmpty()) {
+            uaa33.setStyle(new TextField().getStyle());
+        } else if (!checkingStringWithACondition(uaa33.getText()) || uaa33.getText().length() > 2) {
+            uaa33.setStyle(STYLE_DANGER);
+        } else if (checkingStringWithACondition(uaa33.getText())) {
+            uaa33.setStyle(new TextField().getStyle());
+        } else uaa33.setStyle(new TextField().getStyle());
+
+        if (!checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText().trim().isEmpty()) {
+            hBoxMacAddress3.setStyle(new HBox().getStyle());
+            if (checkMacAddress3(equipment.getCompany(), checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText())) {
+                hBoxMacAddress3.setStyle(new HBox().getStyle());
+            } else {
+                hBoxMacAddress3.setStyle(STYLE_DANGER);
+            }
+        } else {
+            hBoxMacAddress3.setStyle(STYLE_DANGER);
+        }
+    }
+
+    public void saveNewMac3(MouseEvent mouseEvent) {
+        if(checkMacAddress3(equipment.getCompany(), checkMac(oui31, oui32, oui33, uaa31, uaa32, uaa33).getText())) {
+            hBoxMacAddress3.setStyle(new HBox().getStyle());
+            equipmentRepository.change(equipment.getId(), "macAddress3", checkMac(oui31, oui32, oui33, uaa31, uaa32, uaa33).getText());
+            if(!checkMacAddress3(equipment.getCompany(), checkMac(oui31, oui32, oui33, uaa31, uaa32, uaa33).getText())){
+                hBoxMacAddress3.setVisible(false);
+                hBoxMacAddress3.setManaged(false);
+            }else hBoxMacAddress3.setStyle(STYLE_DANGER);
+        } else hBoxMacAddress3.setStyle(STYLE_DANGER);
+    }
+
+    public void saveNewMac2(MouseEvent mouseEvent) {
+        if(checkMacAddress2(equipment.getCompany(), checkMac(oui21, oui22, oui23, uaa21, uaa22, uaa23).getText())) {
+            hBoxNewMacAddress2.setStyle(new HBox().getStyle());
+            equipmentRepository.change(equipment.getId(), "macAddress2", checkMac(oui21, oui22, oui23, uaa21, uaa22, uaa23).getText());
+            if(!checkMacAddress2(equipment.getCompany(), checkMac(oui21, oui22, oui23, uaa21, uaa22, uaa23).getText())){
+                hBoxNewMacAddress2.setVisible(false);
+                hBoxNewMacAddress2.setManaged(false);
+            }else hBoxNewMacAddress2.setStyle(STYLE_DANGER);
+        } else hBoxNewMacAddress2.setStyle(STYLE_DANGER);
+    }
+
+    public void saveNewMac1(MouseEvent mouseEvent) {
+        if(checkMacAddress1(equipment.getCompany(), checkMac(oui11, oui12, oui13, uaa11, uaa12, uaa13).getText())) {
+            hBoxNewMacAddress1.setStyle(new HBox().getStyle());
+            equipmentRepository.change(equipment.getId(), "macAddress1", checkMac(oui11, oui12, oui13, uaa11, uaa12, uaa13).getText());
+            if(!checkMacAddress1(equipment.getCompany(), checkMac(oui11, oui12, oui13, uaa11, uaa12, uaa13).getText())){
+                hBoxNewMacAddress1.setVisible(false);
+                hBoxNewMacAddress1.setManaged(false);
+            }else hBoxNewMacAddress1.setStyle(STYLE_DANGER);
+        } else hBoxNewMacAddress1.setStyle(STYLE_DANGER);
+    }
+
+    public void saveBtnSaveNewMac(MouseEvent mouseEvent) {
+        if(checkMacAddress(equipment.getCompany(), checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText())) {
+            hBoxNewMacAddress.setStyle(new HBox().getStyle());
+            equipmentRepository.change(equipment.getId(), "macAddress", checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText());
+            if(!checkMacAddress(equipment.getCompany(), checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText())){
+                hBoxNewMacAddress.setVisible(false);
+                hBoxNewMacAddress.setManaged(false);
+            }else hBoxNewMacAddress.setStyle(STYLE_DANGER);
+        } else hBoxNewMacAddress.setStyle(STYLE_DANGER);
+    }
+
+    public boolean checkMacAddress(String nameCompany, String macAddress) {
+        if (equipmentRepository.getEquipmentByMacAddress(nameCompany, macAddress) == null) {
+            return true;
+        } else return false;
+    }
+
+    public boolean checkMacAddress1(String nameCompany, String macAddress) {
+        if (equipmentRepository.getEquipmentByMacAddress1(nameCompany, macAddress) == null) {
+            return true;
+        } else return false;
+    }
+
+    public boolean checkMacAddress2(String nameCompany, String macAddress) {
+        if (equipmentRepository.getEquipmentByMacAddress2(nameCompany, macAddress) == null) {
+            return true;
+        } else return false;
+    }
+
+    public boolean checkMacAddress3(String nameCompany, String macAddress) {
+        if (equipmentRepository.getEquipmentByMacAddress3(nameCompany, macAddress) == null) {
+            return true;
+        } else return false;
+    }
+    public TextField checkMac(TextField ou1, TextField ou2, TextField ou3, TextField ua1, TextField ua2, TextField ua3) {
+
+        TextField textField = new TextField();
+
+        if (!ou1.getText().trim().isEmpty() && !ou2.getText().trim().isEmpty() && !ou3.getText().trim().isEmpty()
+                && !ua1.getText().trim().isEmpty() && !ua2.getText().trim().isEmpty() && !ua3.getText().trim().isEmpty()) {
+            if (ou1.getText().length() == 2 && ou2.getText().length() == 2 && ou3.getText().length() == 2
+                    && ua1.getText().length() == 2 && ua2.getText().length() == 2 && ua3.getText().length() == 2) {
+                textField.setText(oui1.getText() + ":" + oui2.getText() + ":" + oui3.getText() + ":"
+                        + uaa1.getText() + ":" + uaa2.getText() + ":" + uaa3.getText());
+            }
+        } else {
+            ou1.setStyle(STYLE_WARNING);
+            ou2.setStyle(STYLE_WARNING);
+            ou3.setStyle(STYLE_WARNING);
+            ua1.setStyle(STYLE_WARNING);
+            ua2.setStyle(STYLE_WARNING);
+            ua3.setStyle(STYLE_WARNING);
+        }
+
+        return textField;
+    }
+
+    public void imgOpenChangeMac(MouseEvent mouseEvent) {
+        hBoxNewMacAddress.setVisible(true);
+        hBoxNewMacAddress.setManaged(true);
+        Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.sizeToScene();
+    }
+
+    public void imgOpenChangeMac1(MouseEvent mouseEvent) {
+        hBoxNewMacAddress1.setVisible(true);
+        hBoxNewMacAddress1.setManaged(true);
+        Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.sizeToScene();
+    }
+
+    public void imgOpenChangeMac2(MouseEvent mouseEvent) {
+        hBoxNewMacAddress2.setVisible(true);
+        hBoxNewMacAddress2.setManaged(true);
+        Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.sizeToScene();
+    }
+
+    public void imgOpenChangeMac3(MouseEvent mouseEvent) {
+        hBoxMacAddress3.setVisible(true);
+        hBoxMacAddress3.setManaged(true);
+        Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.sizeToScene();
     }
 }

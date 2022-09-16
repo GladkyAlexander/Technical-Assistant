@@ -245,4 +245,6 @@ public interface Language {
     String DATABASE_SETTINGS(String l);
 
     String EXIT(String lang);
+
+    String RECEPTION_SECRETARY(String lang);
 }

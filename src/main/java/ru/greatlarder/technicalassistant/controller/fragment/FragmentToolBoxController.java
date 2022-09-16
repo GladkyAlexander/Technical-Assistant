@@ -15,6 +15,7 @@ import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddTool
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddWatchWorkProjectorsController;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.ProblemMonitor;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
@@ -26,11 +27,14 @@ import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.HandlerUserListener;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class FragmentToolBoxController implements ObserverCompany, ObserverLang {
+public class FragmentToolBoxController implements ObserverCompany, ObserverLang, ObserverUser {
     @FXML public ImageView imgEquipment;
     @FXML public ImageView imgTool;
     @FXML public ImageView imgIpAddress;
@@ -47,6 +51,8 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang 
     Language language = new LanguageImpl();
     HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
     HandlerLang handlerLang = new HandlerLang();
+    HandlerUserListener handlerUserListener = new HandlerUserListener();
+    private User user;
 
     public void allEquipment(MouseEvent mouseEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEquipment.fxml"));
@@ -227,7 +233,7 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang 
     @Override
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
-        if(dataCompany.getCompany() != null){
+        if (company != null) {
             imgEquipment.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_equipment.png"))));
             imgAddEquipment.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_equipment.png"))));
             imgTool.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_button.png"))));
@@ -236,7 +242,7 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang 
             imgAllDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_defect.png"))));
             imgAddDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/defect_add.png"))));
             imgWatchWorkProg.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_time.png"))));
-            if (new ProblemMonitor().searchProblemMonitor(dataCompany.getCompany().getNameCompany())) {
+            if (new ProblemMonitor().searchProblemMonitor(company.getNameCompany())) {
                 imgEngine.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/brakes_warning_light.png"))));
             } else
                 imgEngine.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/brakes_ok_light.png"))));
@@ -259,4 +265,9 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang 
         handlerLang.onNewDataLang(new DataLang(dataLang.getLanguage()));
     }
 
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
+        handlerUserListener.onNewDataUser(new DataUser(user));
+    }
 }

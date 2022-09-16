@@ -68,6 +68,7 @@ public class MainController implements ObserverLang {
 
         if(user != null){
             if(user.getPost().equals("Engineer") || user.getPost().equals("Инженер")){
+
                 imgUserAct.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/login_active.png"))));
                 menuButtonUserInOut.setText(user.getLastName() + "   " + user.getFirstName());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/engineer/startEngineerPage.fxml"));
@@ -87,6 +88,7 @@ public class MainController implements ObserverLang {
                 }
             }
             if(user.getPost().equals("Reception Secretary") || user.getPost().equals("Секретарь приемной")){
+
                 imgUserAct.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/login_active.png"))));
                 menuButtonUserInOut.setText(user.getLastName() + "   " + user.getFirstName());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/reception/startReceptionPage.fxml"));
@@ -134,6 +136,30 @@ public class MainController implements ObserverLang {
         else {
             imgUserAct.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/login_unactive.png"))));
             menuButtonUserInOut.setText("");
+            if(userRepository.getListUser().size() != 0) {
+                imgUserAct.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/unactive.png"))));
+                FXMLLoader loaderUserLogin = new FXMLLoader(getClass().
+                        getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/fragmentUserLogin.fxml"));
+                try {
+                    borderPaneMainPage.setCenter(loaderUserLogin.load());
+                    handlerLang.registerObserverLang(loaderUserLogin.getController());
+                    handlerLang.onNewDataLang(new DataLang(mbtLang.getText()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if(userRepository.getListUser().size() == 0){
+                FXMLLoader loaderRegistration = new FXMLLoader(getClass().
+                        getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/fragmentRegisrationUser.fxml"));
+                try {
+                    borderPaneMainPage.setCenter(loaderRegistration.load());
+                    handlerLang.registerObserverLang(loaderRegistration.getController());
+                    handlerLang.onNewDataLang(new DataLang(mbtLang.getText()));
+                    FragmentRegistrationUserController fragmentRegistrationUserController = loaderRegistration.getController();
+                    fragmentRegistrationUserController.loadPage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
     }

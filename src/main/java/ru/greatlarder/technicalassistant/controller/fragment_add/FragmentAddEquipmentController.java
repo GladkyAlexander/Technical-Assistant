@@ -31,10 +31,7 @@ import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_DANGER;
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_WARNING;
@@ -343,10 +340,10 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     }
 
     public void loadFragment() {
-        List<String> list = new ArrayList<>(equipmentRepository.getListEquipmentName(lang));
+        List<String> listNameEquipment = new ArrayList<>(equipmentRepository.getListEquipmentName(lang));
         this.listNetworkSwitcher = new ArrayList<>(equipmentRepository.getListEquipmentByName(language.NETWORK_SWITCH(lang), company.getNameCompany()));
 
-        cmbEquipmentType.setItems(FXCollections.observableArrayList(list));
+        cmbEquipmentType.setItems(FXCollections.observableArrayList(listNameEquipment));
         comboBoxStatusSelection.setItems(FXCollections.observableArrayList(language.status_sheet(lang)));
 
         List<String> list1 = new ArrayList<>();
@@ -758,7 +755,6 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             FileUtils.copyFile(file, file1);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Broke out :" + e);
         }
     }
 
@@ -1193,87 +1189,87 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             case Language.NETWORK_SWITCH_RU -> {
                 NetworkSwitch equipment2 = new NetworkSwitch();
                 loadEquipment(equipment2);
-                equipment2.setImage("projector.png");
+                equipment2.setImage("network_switch.png");
                 result = equipment2;
             }
             case Language.ACOUSTIC_SPEAKER_RU -> {
                 AcousticSpeaker equipment3 = new AcousticSpeaker();
                 loadEquipment(equipment3);
-                equipment3.setImage("projector.png");
+                equipment3.setImage("acoustic_speaker.png");
                 result = equipment3;
             }
             case Language.CONTROL_PROCESSOR_RU -> {
                 ControlProcessor equipment4 = new ControlProcessor();
                 loadEquipment(equipment4);
-                equipment4.setImage("projector.png");
+                equipment4.setImage("control_processor.png");
                 result = equipment4;
             }
             case Language.AUDIO_PROCESSOR_RU -> {
                 AudioProcessor equipment5 = new AudioProcessor();
                 loadEquipment(equipment5);
-                equipment5.setImage("projector.png");
+                equipment5.setImage("audio_processor.png");
                 result = equipment5;
             }
             case Language.AUDIO_AMPLIFIER_RU -> {
                 AudioAmplifier equipment6 = new AudioAmplifier();
                 loadEquipment(equipment6);
-                equipment6.setImage("projector.png");
+                equipment6.setImage("audio_amplifer.png");
                 result = equipment6;
             }
             case Language.AUDIO_INTERFACE_RU -> {
                 AudioInterface equipment7 = new AudioInterface();
                 loadEquipment(equipment7);
-                equipment7.setImage("projector.png");
+                equipment7.setImage("audio_interface.png");
                 result = equipment7;
             }
             case Language.TV_PANEL_RU -> {
                 TvPanel equipment8 = new TvPanel();
                 loadEquipment(equipment8);
-                equipment8.setImage("projector.png");
+                equipment8.setImage("tv_panel.png");
                 equipment8.setDiagonal(tfDiagonal.getText());
                 result = equipment8;
             }
             case Language.TV_TUNER_RU -> {
                 TvTuner equipment9 = new TvTuner();
                 loadEquipment(equipment9);
-                equipment9.setImage("projector.png");
+                equipment9.setImage("tv_tuner.png");
                 result = equipment9;
             }
             case Language.MEDIA_PLAYER_RU -> {
                 MediaPlayer equipment10 = new MediaPlayer();
                 loadEquipment(equipment10);
-                equipment10.setImage("projector.png");
+                equipment10.setImage("media_player.png");
                 result = equipment10;
             }
             case Language.LAPTOP_RU -> {
                 Laptop equipment11 = new Laptop();
                 loadEquipment(equipment11);
-                equipment11.setImage("projector.png");
+                equipment11.setImage("laptop.png");
                 equipment11.setOs(tfOs.getText());
                 result = equipment11;
             }
             case Language.VIDEO_TRANSMITTER_RU -> {
                 VideoTransmitter equipment12 = new VideoTransmitter();
                 loadEquipment(equipment12);
-                equipment12.setImage("projector.png");
+                equipment12.setImage("tx_rx.jpg");
                 result = equipment12;
             }
             case Language.VIDEO_RECEIVER_RU -> {
                 VideoReceiver equipment13 = new VideoReceiver();
                 loadEquipment(equipment13);
-                equipment13.setImage("projector.png");
+                equipment13.setImage("tx_rx.jpg");
                 result = equipment13;
             }
             case Language.MATRIX_SWITCHER_RU -> {
                 MatrixSwitcher equipment14 = new MatrixSwitcher();
                 loadEquipment(equipment14);
-                equipment14.setImage("projector.png");
+                equipment14.setImage("matrix_switcher.jpg");
                 result = equipment14;
             }
             case Language.TOUCH_CONTROL_PANEL_RU -> {
                 TouchControlPanel equipment15 = new TouchControlPanel();
                 loadEquipment(equipment15);
-                equipment15.setImage("projector.png");
+                equipment15.setImage("control_patch_panel.png");
                 equipment15.setDiagonal(tfDiagonal.getText());
                 result = equipment15;
             }
@@ -1711,5 +1707,10 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             checkMacAddress3.setSelected(false);
             hBoxMacAddress3.setStyle(STYLE_DANGER);
         }
+    }
+
+    public void onActionCmbEquipmentType(MouseEvent actionEvent) {
+        List<String> listNameEquipment = new ArrayList<>(equipmentRepository.getListEquipmentName(lang));
+        cmbEquipmentType.setItems(FXCollections.observableArrayList(listNameEquipment));
     }
 }

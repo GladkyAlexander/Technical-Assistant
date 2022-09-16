@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxReception"
+      fx:id="hBoxToolBoxReception"
+        spacing="5.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="imgAllRoom" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openAllRoom" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/all_room_unactive.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgAllEquipment" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openAllEquipment" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/all_equipment_un_active.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgAddTask" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openAddTask" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/all_task_unactive.png" />
+         </image>
+      </ImageView>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</HBox>

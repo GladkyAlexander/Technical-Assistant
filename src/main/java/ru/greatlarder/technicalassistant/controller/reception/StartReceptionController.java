@@ -12,6 +12,7 @@ import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartReceptionController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
@@ -49,6 +50,33 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
         if(user != null) {
             labelLastName.setText(user.getLastName());
             labelFirstName.setText(user.getFirstName());
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentToolBoxReception.fxml"));
+            try {
+                GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().clear();
+                GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().add(loader.load());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/reception/homeReceptionPage.fxml"));
+            try {
+                borderPaneStartReception.setCenter(loaderHomePage.load());
+                handlerUserListener.registerObserverUser(loaderHomePage.getController());
+                handlerLang.registerObserverLang(loaderHomePage.getController());
+
+                if(user != null){
+                    handlerLang.onNewDataLang(new DataLang(lang));
+                }
+                handlerUserListener.onNewDataUser(new DataUser(user));
+
+                HomeReceptionController controller = loaderHomePage.getController();
+                controller.loadFragment();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         } else {
             labelLastName.setText("");
             labelFirstName.setText("");
@@ -94,6 +122,56 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
 
             SettingsReceptionController settingsReceptionController = loader.getController();
             settingsReceptionController.loadFragment();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openHomePageReception(MouseEvent mouseEvent) {
+        FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/reception/homeReceptionPage.fxml"));
+        try {
+            borderPaneStartReception.setCenter(loaderHomePage.load());
+            handlerUserListener.registerObserverUser(loaderHomePage.getController());
+            handlerLang.registerObserverLang(loaderHomePage.getController());
+
+            if(user != null){
+                handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
+            }
+            handlerUserListener.onNewDataUser(new DataUser(user));
+
+            HomeReceptionController controller = loaderHomePage.getController();
+            controller.loadFragment();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openInstructionPageReception(MouseEvent mouseEvent) {
+        FXMLLoader loaderInstructionPage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/reception/instructionReceptionPage.fxml"));
+        try {
+            borderPaneStartReception.setCenter(loaderInstructionPage.load());
+            handlerUserListener.registerObserverUser(loaderInstructionPage.getController());
+            handlerLang.registerObserverLang(loaderInstructionPage.getController());
+
+            if(user != null){
+                handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
+            }
+            handlerUserListener.onNewDataUser(new DataUser(user));
+
+            InstructionReceptionPage controller = loaderInstructionPage.getController();
+            controller.loadFragment();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openInfoPage(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/info_page.fxml"));
+        try {
+            borderPaneStartReception.setCenter(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+            handlerLang.onNewDataLang(new DataLang(lang));
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -21,8 +21,6 @@ public class UserRepositoryImpl implements UserRepository {
     public User getUser(ResultSet resultSet) {
         User user = new User();
         try {
-            resultSet = statement.executeQuery(SQLiteUser.READ_TABLE_USER);
-            while (resultSet.next()){
                     user.setId(resultSet.getInt("id"));
                     user.setLastName(resultSet.getString("lastName"));
                     user.setFirstName(resultSet.getString("firstName"));
@@ -32,14 +30,8 @@ public class UserRepositoryImpl implements UserRepository {
                     user.setLanguage(resultSet.getString("language"));
                     user.setLogin(resultSet.getString("login"));
                     user.setPassword(resultSet.getString("password"));
-            }
-            user.setCompanyList(companyRepository.getAllCompany());
-            user.setMailSettings(mailSettingsRepository.getListMailSettingsByUser(user.getId()));
-            closeDB();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDB();
         }
         return user;
     }
@@ -85,7 +77,14 @@ public class UserRepositoryImpl implements UserRepository {
             closeDB();
         }
 
-        return users;
+        List<User> returnUser = new ArrayList<>();
+        for (User user : users){
+            user.setCompanyList(companyRepository.getAllCompany());
+            user.setMailSettings(mailSettingsRepository.getListMailSettingsByUser(user.getId()));
+            returnUser.add(user);
+        }
+
+        return returnUser;
     }
 
     @Override
@@ -97,4 +96,5 @@ public class UserRepositoryImpl implements UserRepository {
        }
         return null;
     }
+
 }

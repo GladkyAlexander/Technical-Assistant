@@ -26,8 +26,8 @@
             </GridPane>
             <VBox alignment="TOP_CENTER" spacing="3.0">
                <children>
-                  <Label fx:id="labelHomePage" text="Домашняя страница" />
-                  <Label fx:id="labelInstructions" text="Инструкции" />
+                  <Label fx:id="labelHomePage" onMouseClicked="#openHomePageReception" text="Домашняя страница" />
+                  <Label fx:id="labelInstructions" onMouseClicked="#openInstructionPageReception" text="Инструкции" />
                   <Label fx:id="labelSettings" onMouseClicked="#openPageSettings" text="Настройки" />
                   <HBox alignment="CENTER" spacing="4.0">
                      <children>
@@ -36,7 +36,7 @@
                               <Image url="@../../../images/info.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="labelInfo" text="Информация" />
+                        <Label fx:id="labelInfo" onMouseClicked="#openInfoPage" text="Информация" />
                      </children>
                   </HBox>
                </children>

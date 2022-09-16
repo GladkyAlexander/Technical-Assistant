@@ -15,6 +15,7 @@ module ru.greatlarder.technicalassistant {
     requires org.jsoup;
     requires java.mail;
     requires org.xerial.sqlitejdbc;
+    requires jdk.jsobject;
 
     opens ru.greatlarder.technicalassistant to javafx.fxml;
     exports ru.greatlarder.technicalassistant;

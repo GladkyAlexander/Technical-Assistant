@@ -1044,6 +1044,17 @@ public class LanguageImpl implements Language {
     }
 
     @Override
+    public String RECEPTION_SECRETARY(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Секретарь приемной";
+        } else if (lang.equals(en)) {
+            ps = "Reception secretary";
+        }
+        return ps;
+    }
+
+    @Override
     public String EXAMPLE(String language) {
         String example = "";
         if (language.equals(ru)) {
