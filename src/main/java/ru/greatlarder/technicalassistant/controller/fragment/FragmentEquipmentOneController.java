@@ -247,6 +247,10 @@ public class FragmentEquipmentOneController implements ObserverLang {
         labelPortNumber.setText(language.PORT_NUMBER_IN_THE_SWITCH(lang1));
         btnSaveNewOutletNumber.setText(language.SAVE(lang1));
         btnSaveNewPortNumber.setText(language.SAVE(lang1));
+        btnSaveNewMac.setText(language.SAVE(lang1));
+        btnSaveNewMac1.setText(language.SAVE(lang1));
+        btnSaveNewMac2.setText(language.SAVE(lang1));
+        btnSaveNewMac3.setText(language.SAVE(lang1));
 
         labelModel.setText(language.MODEL(lang1));
         labelManufacturer.setText(language.MANUFACTURER(lang1));
@@ -912,6 +916,16 @@ public class FragmentEquipmentOneController implements ObserverLang {
         hBoxNewMacAddress2.setManaged(false);
         hBoxMacAddress3.setVisible(false);
         hBoxMacAddress3.setManaged(false);
+
+        btnSaveNewMac.setVisible(false);
+        btnSaveNewMac.setManaged(false);
+        btnSaveNewMac1.setVisible(false);
+        btnSaveNewMac1.setManaged(false);
+        btnSaveNewMac2.setVisible(false);
+        btnSaveNewMac2.setManaged(false);
+        btnSaveNewMac3.setVisible(false);
+        btnSaveNewMac3.setManaged(false);
+
     }
 
     public void changeFrequency(MouseEvent mouseEvent) {
@@ -1522,6 +1536,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
             if(!checkMacAddress3(equipment.getCompany(), checkMac(oui31, oui32, oui33, uaa31, uaa32, uaa33).getText())){
                 hBoxMacAddress3.setVisible(false);
                 hBoxMacAddress3.setManaged(false);
+                btnSaveNewMac3.setVisible(false);
+                btnSaveNewMac3.setManaged(false);
             }else hBoxMacAddress3.setStyle(STYLE_DANGER);
         } else hBoxMacAddress3.setStyle(STYLE_DANGER);
     }
@@ -1533,6 +1549,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
             if(!checkMacAddress2(equipment.getCompany(), checkMac(oui21, oui22, oui23, uaa21, uaa22, uaa23).getText())){
                 hBoxNewMacAddress2.setVisible(false);
                 hBoxNewMacAddress2.setManaged(false);
+                btnSaveNewMac2.setVisible(false);
+                btnSaveNewMac2.setManaged(false);
             }else hBoxNewMacAddress2.setStyle(STYLE_DANGER);
         } else hBoxNewMacAddress2.setStyle(STYLE_DANGER);
     }
@@ -1544,6 +1562,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
             if(!checkMacAddress1(equipment.getCompany(), checkMac(oui11, oui12, oui13, uaa11, uaa12, uaa13).getText())){
                 hBoxNewMacAddress1.setVisible(false);
                 hBoxNewMacAddress1.setManaged(false);
+                btnSaveNewMac1.setVisible(false);
+                btnSaveNewMac1.setManaged(false);
             }else hBoxNewMacAddress1.setStyle(STYLE_DANGER);
         } else hBoxNewMacAddress1.setStyle(STYLE_DANGER);
     }
@@ -1555,6 +1575,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
             if(!checkMacAddress(equipment.getCompany(), checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText())){
                 hBoxNewMacAddress.setVisible(false);
                 hBoxNewMacAddress.setManaged(false);
+                btnSaveNewMac.setVisible(false);
+                btnSaveNewMac.setManaged(false);
             }else hBoxNewMacAddress.setStyle(STYLE_DANGER);
         } else hBoxNewMacAddress.setStyle(STYLE_DANGER);
     }
@@ -1608,6 +1630,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
     public void imgOpenChangeMac(MouseEvent mouseEvent) {
         hBoxNewMacAddress.setVisible(true);
         hBoxNewMacAddress.setManaged(true);
+        btnSaveNewMac.setVisible(false);
+        btnSaveNewMac.setManaged(false);
         Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         stage.sizeToScene();
     }
@@ -1615,6 +1639,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
     public void imgOpenChangeMac1(MouseEvent mouseEvent) {
         hBoxNewMacAddress1.setVisible(true);
         hBoxNewMacAddress1.setManaged(true);
+        btnSaveNewMac1.setVisible(false);
+        btnSaveNewMac1.setManaged(false);
         Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         stage.sizeToScene();
     }
@@ -1622,6 +1648,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
     public void imgOpenChangeMac2(MouseEvent mouseEvent) {
         hBoxNewMacAddress2.setVisible(true);
         hBoxNewMacAddress2.setManaged(true);
+        btnSaveNewMac2.setVisible(false);
+        btnSaveNewMac2.setManaged(false);
         Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         stage.sizeToScene();
     }
@@ -1629,6 +1657,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
     public void imgOpenChangeMac3(MouseEvent mouseEvent) {
         hBoxMacAddress3.setVisible(true);
         hBoxMacAddress3.setManaged(true);
+        btnSaveNewMac3.setVisible(false);
+        btnSaveNewMac3.setManaged(false);
         Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         stage.sizeToScene();
     }
