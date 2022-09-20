@@ -186,7 +186,6 @@ public class MainController implements ObserverLang {
     public void updateUser() {
         this.user = userRepository.getUserLoginPassword(user.getLogin(), user.getPassword());
         handlerUserListener.onNewDataUser(new DataUser(user));
-        loadPage();
     }
     public void loadUser(User user){
         this.user = user;

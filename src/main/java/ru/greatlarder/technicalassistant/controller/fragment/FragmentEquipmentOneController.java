@@ -20,13 +20,13 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.domain.Equipment;
-import ru.greatlarder.technicalassistant.domain.equipment.Microphone;
-import ru.greatlarder.technicalassistant.domain.equipment.NetworkSwitch;
-import ru.greatlarder.technicalassistant.domain.equipment.Projector;
+import ru.greatlarder.technicalassistant.domain.equipment.*;
 import ru.greatlarder.technicalassistant.repository.DefectRepository;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
 import ru.greatlarder.technicalassistant.repository.impl.DefectRepositoryImpl;
 import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.check.CheckEquipment;
+import ru.greatlarder.technicalassistant.services.check.impl.CheckEquipmentImpl;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
@@ -226,12 +226,15 @@ public class FragmentEquipmentOneController implements ObserverLang {
     @FXML public Label m1;
     @FXML public Label m2;
     @FXML public Label m3;
+    @FXML public Label labelMascAddressDante;
+    @FXML public Label labelGatewayAddressDante;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
     Language language = new LanguageImpl();
     DefectRepository defectRepository = new DefectRepositoryImpl();
     FileManager fileManager = new FileManagerImpl();
     Equipment equipment;
     String lang;
+    CheckEquipment checkEquipment = new CheckEquipmentImpl();
 
     public void setEquip(Equipment equipment){
         this.equipment = equipment;
@@ -358,25 +361,28 @@ public class FragmentEquipmentOneController implements ObserverLang {
     }
 
     public void SaveNewIp(ActionEvent actionEvent) {
-        equipmentRepository.change(equipment.getId(), "ipAddress",
-                tfNet1.getText() + "." + tfNet2.getText() + "." + tfSubNet.getText() + "." + tfDeviceNet.getText());
-        if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany()
-                , equipment.getSerialNumber()).getIpAddress().equals(tfNet1.getText() + "." + tfNet2.getText()
-                + "." + tfSubNet.getText() + "." + tfDeviceNet.getText())){
-            ipAddress.setText(tfNet1.getText() + "." + tfNet2.getText() + "." + tfSubNet.getText() + "." + tfDeviceNet.getText());
-            hBoxNewIp.setVisible(false);
-            hBoxNewIp.setManaged(false);
-        } else {
-            tfNet1.setStyle(new TextField().getStyle());
-            tfNet2.setStyle(new TextField().getStyle());
-            tfSubNet.setStyle(new TextField().getStyle());
-            tfDeviceNet.setStyle(new TextField().getStyle());
+        if(!checkEquipment.checkingForAddressOccupancy(tfNet1.getText() + "." + tfNet2.getText() + "."
+                + tfSubNet.getText() + "." + tfDeviceNet.getText(), equipment.getCompany())) {
+            equipmentRepository.change(equipment.getId(), "ipAddress",
+                    tfNet1.getText() + "." + tfNet2.getText() + "." + tfSubNet.getText() + "." + tfDeviceNet.getText());
+            if (equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany()
+                    , equipment.getSerialNumber()).getIpAddress().equals(tfNet1.getText() + "." + tfNet2.getText()
+                    + "." + tfSubNet.getText() + "." + tfDeviceNet.getText())) {
+                ipAddress.setText(tfNet1.getText() + "." + tfNet2.getText() + "." + tfSubNet.getText() + "." + tfDeviceNet.getText());
+                hBoxNewIp.setVisible(false);
+                hBoxNewIp.setManaged(false);
+            } else {
+                tfNet1.setStyle(new TextField().getStyle());
+                tfNet2.setStyle(new TextField().getStyle());
+                tfSubNet.setStyle(new TextField().getStyle());
+                tfDeviceNet.setStyle(new TextField().getStyle());
+            }
         }
     }
 
     public void SaveNewLogin(ActionEvent actionEvent) {
-        equipmentRepository.change(equipment.getId(), "login", tfNewLogin);
-        if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getCondition().equals(
+        equipmentRepository.change(equipment.getId(), "login", tfNewLogin.getText());
+        if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getLogin().equals(
                 tfNewLogin.getText())){
             login.setText(tfNewLogin.getText());
             hBoxNewLogin.setVisible(false);
@@ -387,8 +393,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
     }
 
     public void SaveNewPassword(ActionEvent actionEvent) {
-        equipmentRepository.change(equipment.getId(), "password", tfNewPassword);
-        if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getCondition().equals(
+        equipmentRepository.change(equipment.getId(), "password", tfNewPassword.getText());
+        if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getPassword().equals(
                 tfNewPassword.getText())){
             password.setText(tfNewPassword.getText());
             hBoxNewPassword.setVisible(false);
@@ -399,8 +405,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
     }
 
     public void SaveNewRoom(ActionEvent actionEvent) {
-        equipmentRepository.change(equipment.getId(), "room", tfNewRoom);
-        if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getCondition().equals(
+        equipmentRepository.change(equipment.getId(), "room", tfNewRoom.getText());
+        if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getRoom().equals(
                 tfNewRoom.getText())){
             room.setText(tfNewRoom.getText());
             hBoxNewRoom.setVisible(false);
@@ -412,7 +418,7 @@ public class FragmentEquipmentOneController implements ObserverLang {
 
     public void SaveNewLocationToRoom(ActionEvent actionEvent) {
         equipmentRepository.change(equipment.getId(), "location", tfNewRoomLocation.getText());
-        if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getCondition().equals(
+        if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getLocation().equals(
                 tfNewRoomLocation.getText())){
             indoorLocation.setText(tfNewRoomLocation.getText());
             hBoxNewRoomLocations.setVisible(false);
@@ -723,20 +729,23 @@ public class FragmentEquipmentOneController implements ObserverLang {
     }
 
     public void saveDanteIp(ActionEvent actionEvent) {
-        equipmentRepository.change(equipment.getId(), "ipAddressDante",
-                tfDanteNet1.getText() + "." + tfDanteNet2.getText() + "." + tfDanteSubIp.getText() + "." + tfDanteDev.getText());
-        if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany()
-                , equipment.getSerialNumber()).getDanteIpAddress() != null && equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany()
-                , equipment.getSerialNumber()).getDanteIpAddress().equals(tfDanteNet1.getText() + "."
-                + tfDanteNet2.getText() + "." + tfDanteSubIp.getText() + "." + tfDanteDev.getText())){
-            labelIpDante.setText(tfDanteNet1.getText() + "." + tfDanteNet2.getText() + "." + tfDanteSubIp.getText() + "." + tfDanteDev.getText());
-            hBoxIpDanteChange.setVisible(false);
-            hBoxIpDanteChange.setManaged(false);
-        } else {
-            tfDanteNet1.setStyle(new TextField().getStyle());
-            tfDanteNet2.setStyle(new TextField().getStyle());
-            tfDanteSubIp.setStyle(new TextField().getStyle());
-            tfDanteDev.setStyle(new TextField().getStyle());
+        if (!checkEquipment.checkingForAddressOccupancyDante(tfDanteNet1.getText() + "." + tfDanteNet2.getText()
+                + "." + tfDanteSubIp.getText() + "." + tfDanteDev.getText(), equipment.getCompany())) {
+            equipmentRepository.change(equipment.getId(), "ipAddressDante",
+                    tfDanteNet1.getText() + "." + tfDanteNet2.getText() + "." + tfDanteSubIp.getText() + "." + tfDanteDev.getText());
+            if (equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany()
+                    , equipment.getSerialNumber()).getDanteIpAddress() != null && equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany()
+                    , equipment.getSerialNumber()).getDanteIpAddress().equals(tfDanteNet1.getText() + "."
+                    + tfDanteNet2.getText() + "." + tfDanteSubIp.getText() + "." + tfDanteDev.getText())) {
+                labelIpDante.setText(tfDanteNet1.getText() + "." + tfDanteNet2.getText() + "." + tfDanteSubIp.getText() + "." + tfDanteDev.getText());
+                hBoxIpDanteChange.setVisible(false);
+                hBoxIpDanteChange.setManaged(false);
+            } else {
+                tfDanteNet1.setStyle(new TextField().getStyle());
+                tfDanteNet2.setStyle(new TextField().getStyle());
+                tfDanteSubIp.setStyle(new TextField().getStyle());
+                tfDanteDev.setStyle(new TextField().getStyle());
+            }
         }
     }
 
@@ -875,6 +884,16 @@ public class FragmentEquipmentOneController implements ObserverLang {
     }
 
     public void start(){
+        hBoxNewMacAddress.setVisible(false);
+        hBoxNewMacAddress.setManaged(false);
+        hBoxNewMacAddress1.setVisible(false);
+        hBoxNewMacAddress1.setManaged(false);
+        hBoxNewMacAddress2.setVisible(false);
+        hBoxNewMacAddress2.setManaged(false);
+        hBoxMacAddress3.setVisible(false);
+        hBoxMacAddress3.setManaged(false);
+        hBoxFrequency.setVisible(false);
+        hBoxFrequency.setManaged(false);
         hBoxNewIp.setVisible(false);
         hBoxNewIp.setManaged(false);
         hBoxMasc.setVisible(false);
@@ -897,60 +916,81 @@ public class FragmentEquipmentOneController implements ObserverLang {
         hBoxNewRoomLocations.setManaged(false);
         hBoxConditions.setVisible(false);
         hBoxConditions.setManaged(false);
-        hBoxFrequency.setVisible(false);
-        hBoxFrequency.setManaged(false);
         hBoxChangeTimeWorkLampProj.setVisible(false);
         hBoxChangeTimeWorkLampProj.setManaged(false);
-        splitPaneOEI.setVisible(false);
-        splitPaneOEI.setManaged(false);
-        hBoxPortNumber.setVisible(false);
-        hBoxPortNumber.setManaged(false);
         hBoxNewOutletNumber.setVisible(false);
         hBoxNewOutletNumber.setManaged(false);
-
-        hBoxNewMacAddress.setVisible(false);
-        hBoxNewMacAddress.setManaged(false);
-        hBoxNewMacAddress1.setVisible(false);
-        hBoxNewMacAddress1.setManaged(false);
-        hBoxNewMacAddress2.setVisible(false);
-        hBoxNewMacAddress2.setManaged(false);
-        hBoxMacAddress3.setVisible(false);
-        hBoxMacAddress3.setManaged(false);
-
-        btnSaveNewMac.setVisible(false);
-        btnSaveNewMac.setManaged(false);
-        btnSaveNewMac1.setVisible(false);
-        btnSaveNewMac1.setManaged(false);
-        btnSaveNewMac2.setVisible(false);
-        btnSaveNewMac2.setManaged(false);
-        btnSaveNewMac3.setVisible(false);
-        btnSaveNewMac3.setManaged(false);
-
-        imgChangeMac1.setVisible(false);
-        imgChangeMac1.setManaged(false);
-        imgChangeMac2.setVisible(false);
-        imgChangeMac2.setManaged(false);
-        imgChangeMac3.setVisible(false);
-        imgChangeMac3.setManaged(false);
+        hBoxPortNumber.setVisible(false);
+        hBoxPortNumber.setManaged(false);
 
         m1.setVisible(false);
         m1.setManaged(false);
-        m2.setVisible(false);
-        m2.setManaged(false);
-        m3.setVisible(false);
-        m3.setManaged(false);
-
         labelMac1.setVisible(false);
         labelMac1.setManaged(false);
+        imgChangeMac1.setVisible(false);
+        imgChangeMac1.setManaged(false);
+
+        m2.setVisible(false);
+        m2.setManaged(false);
         labelMac2.setVisible(false);
         labelMac2.setManaged(false);
+        imgChangeMac2.setVisible(false);
+        imgChangeMac2.setManaged(false);
+
+        m3.setVisible(false);
+        m3.setManaged(false);
         labelMac3.setVisible(false);
         labelMac3.setManaged(false);
+        imgChangeMac3.setVisible(false);
+        imgChangeMac3.setManaged(false);
+
+        labelFrequencyName.setVisible(false);
+        labelFrequencyName.setManaged(false);
+        labelFrequency.setVisible(false);
+        labelFrequency.setManaged(false);
+        imgFrequencyChange.setVisible(false);
+        imgFrequencyChange.setManaged(false);
+
+        labelIpAddressDante.setVisible(false);
+        labelIpAddressDante.setManaged(false);
+        labelIpDante.setVisible(false);
+        labelIpDante.setManaged(false);
+        imgChangeIpDante.setVisible(false);
+        imgChangeIpDante.setManaged(false);
+
+        labelMascAddressDante.setVisible(false);
+        labelMascAddressDante.setManaged(false);
+        labelMascDante.setVisible(false);
+        labelMascDante.setManaged(false);
+        imgChangeMascDante.setVisible(false);
+        imgChangeMascDante.setManaged(false);
+
+        labelGatewayAddressDante.setVisible(false);
+        labelGatewayAddressDante.setManaged(false);
+        labelGatewayDante.setVisible(false);
+        labelGatewayDante.setManaged(false);
+        imgChangeGatewayDante.setVisible(false);
+        imgChangeGatewayDante.setManaged(false);
+
+        labelMaxTimeLampName.setVisible(false);
+        labelMaxTimeLampName.setManaged(false);
+        labelMaximumLampOperatingTime.setVisible(false);
+        labelMaximumLampOperatingTime.setManaged(false);
+
+        labelTimeWorkLampProjName.setVisible(false);
+        labelTimeWorkLampProjName.setManaged(false);
+        labelTimeWorkLampProj.setVisible(false);
+        labelTimeWorkLampProj.setManaged(false);
+        imgChangeLampTimeWork.setVisible(false);
+        imgChangeLampTimeWork.setManaged(false);
+
+        splitPaneOEI.setVisible(false);
+        splitPaneOEI.setManaged(false);
     }
 
     public void changeFrequency(MouseEvent mouseEvent) {
         hBoxFrequency.setVisible(true);
-        this.hBoxFrequency.setManaged(true);
+        hBoxFrequency.setManaged(true);
         Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         stage.sizeToScene();
     }
@@ -1005,55 +1045,81 @@ public class FragmentEquipmentOneController implements ObserverLang {
         macAddress.setText(equipment.getMacAddress());
 
         if(equipment instanceof Microphone microphone){
-            labelFrequency.setVisible(true);
-            labelFrequency.setManaged(true);
             labelFrequencyName.setVisible(true);
             labelFrequencyName.setManaged(true);
+            labelFrequency.setVisible(true);
+            labelFrequency.setManaged(true);
+            labelFrequency.setText(((Microphone) equipment).getFrequency());
             imgFrequencyChange.setVisible(true);
             imgFrequencyChange.setManaged(true);
-            labelFrequency.setText(((Microphone) equipment).getFrequency());
-        } else {
 
-            labelFrequency.setVisible(false);
-            labelFrequency.setManaged(false);
-            labelFrequencyName.setVisible(false);
-            labelFrequencyName.setManaged(false);
-            imgFrequencyChange.setVisible(false);
-            imgFrequencyChange.setManaged(false);
+            labelIpAddressDante.setVisible(true);
+            labelIpAddressDante.setManaged(true);
+            labelIpDante.setVisible(true);
+            labelIpDante.setManaged(true);
+            labelIpDante.setText(equipment.getDanteIpAddress());
+            imgChangeIpDante.setVisible(true);
+            imgChangeIpDante.setManaged(true);
+
+            labelMascAddressDante.setVisible(true);
+            labelMascAddressDante.setManaged(true);
+            labelMascDante.setVisible(true);
+            labelMascDante.setManaged(true);
+            labelMascDante.setText(equipment.getDanteMasc());
+            imgChangeMascDante.setVisible(true);
+            imgChangeMascDante.setManaged(true);
+
+            labelGatewayAddressDante.setVisible(true);
+            labelGatewayAddressDante.setManaged(true);
+            labelGatewayDante.setVisible(true);
+            labelGatewayDante.setManaged(true);
+            labelGatewayDante.setText(equipment.getDanteGateway());
+            imgChangeGatewayDante.setVisible(true);
+            imgChangeGatewayDante.setManaged(true);
 
         }
-
         if(equipment instanceof Projector projector){
             labelMaxTimeLampName.setVisible(true);
             labelMaxTimeLampName.setManaged(true);
             labelMaximumLampOperatingTime.setVisible(true);
             labelMaximumLampOperatingTime.setManaged(true);
+            labelMaximumLampOperatingTime.setText(((Projector) equipment).getMaximumLampOperatingTimeProjector().toString());
             labelTimeWorkLampProjName.setVisible(true);
             labelTimeWorkLampProjName.setManaged(true);
             labelTimeWorkLampProj.setVisible(true);
             labelTimeWorkLampProj.setManaged(true);
+            labelTimeWorkLampProj.setText(((Projector) equipment).getTimeWorkLampProjector().toString());
             imgChangeLampTimeWork.setVisible(true);
             imgChangeLampTimeWork.setManaged(true);
-            labelMaximumLampOperatingTime.setText(((Projector) equipment).getMaximumLampOperatingTimeProjector().toString());
-            labelTimeWorkLampProj.setText(((Projector) equipment).getTimeWorkLampProjector().toString());
-        } else {
-            labelMaxTimeLampName.setVisible(false);
-            labelMaxTimeLampName.setManaged(false);
-            labelMaximumLampOperatingTime.setVisible(false);
-            labelMaximumLampOperatingTime.setManaged(false);
-            labelTimeWorkLampProjName.setVisible(false);
-            labelTimeWorkLampProjName.setManaged(false);
-            labelTimeWorkLampProj.setVisible(false);
-            labelTimeWorkLampProj.setManaged(false);
-            imgChangeLampTimeWork.setVisible(false);
-            imgChangeLampTimeWork.setManaged(false);
         }
-
         if(equipment instanceof NetworkSwitch){
-            hBoxPortNumber.setVisible(false);
-            hBoxPortNumber.setManaged(false);
             splitPaneOEI.setVisible(true);
             splitPaneOEI.setManaged(true);
+
+            labelIpAddressDante.setVisible(true);
+            labelIpAddressDante.setManaged(true);
+            labelIpDante.setVisible(true);
+            labelIpDante.setManaged(true);
+            labelIpDante.setText(equipment.getDanteIpAddress());
+            imgChangeIpDante.setVisible(true);
+            imgChangeIpDante.setManaged(true);
+
+            labelMascAddressDante.setVisible(true);
+            labelMascAddressDante.setManaged(true);
+            labelMascDante.setVisible(true);
+            labelMascDante.setManaged(true);
+            labelMascDante.setText(equipment.getDanteMasc());
+            imgChangeMascDante.setVisible(true);
+            imgChangeMascDante.setManaged(true);
+
+            labelGatewayAddressDante.setVisible(true);
+            labelGatewayAddressDante.setManaged(true);
+            labelGatewayDante.setVisible(true);
+            labelGatewayDante.setManaged(true);
+            labelGatewayDante.setText(equipment.getDanteGateway());
+            imgChangeGatewayDante.setVisible(true);
+            imgChangeGatewayDante.setManaged(true);
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentPort.fxml"));
             try {
                 splitPaneOEI.getItems().add(loader.load());
@@ -1062,55 +1128,71 @@ public class FragmentEquipmentOneController implements ObserverLang {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-        } else {
-            splitPaneOEI.setVisible(false);
-            splitPaneOEI.setManaged(false);
         }
+        if(equipment instanceof VideoTransmitter || equipment instanceof VideoReceiver){
+            m1.setVisible(true);
+            m1.setManaged(true);
+            m2.setVisible(true);
+            m2.setManaged(true);
+            m3.setVisible(true);
+            m3.setManaged(true);
+            labelMac1.setVisible(true);
+            labelMac1.setManaged(true);
+            labelMac1.setText(equipment.getMacAddress1());
+            labelMac2.setVisible(true);
+            labelMac2.setManaged(true);
+            labelMac2.setText(equipment.getMacAddress2());
+            labelMac3.setVisible(true);
+            labelMac3.setManaged(true);
+            labelMac3.setText(equipment.getMacAddress3());
+            imgChangeMac1.setVisible(true);
+            imgChangeMac1.setManaged(true);
+            imgChangeMac2.setVisible(true);
+            imgChangeMac2.setManaged(true);
+            imgChangeMac3.setVisible(true);
+            imgChangeMac3.setManaged(true);
+        }
+        if(equipment instanceof AudioProcessor || equipment instanceof AcousticSpeaker
+              ||  equipment instanceof AudioAmplifier || equipment instanceof AudioInterface
+        || equipment instanceof MatrixSwitcher){
+            labelIpAddressDante.setVisible(true);
+            labelIpAddressDante.setManaged(true);
+            labelIpDante.setVisible(true);
+            labelIpDante.setManaged(true);
+            labelIpDante.setText(equipment.getDanteIpAddress());
+            imgChangeIpDante.setVisible(true);
+            imgChangeIpDante.setManaged(true);
+
+            labelMascAddressDante.setVisible(true);
+            labelMascAddressDante.setManaged(true);
+            labelMascDante.setVisible(true);
+            labelMascDante.setManaged(true);
+            labelMascDante.setText(equipment.getDanteMasc());
+            imgChangeMascDante.setVisible(true);
+            imgChangeMascDante.setManaged(true);
+
+            labelGatewayAddressDante.setVisible(true);
+            labelGatewayAddressDante.setManaged(true);
+            labelGatewayDante.setVisible(true);
+            labelGatewayDante.setManaged(true);
+            labelGatewayDante.setText(equipment.getDanteGateway());
+            imgChangeGatewayDante.setVisible(true);
+            imgChangeGatewayDante.setManaged(true);
+        }
+
         ipAddress.setText(equipment.getIpAddress());
         labelSubnetMasc.setText(equipment.getMasc());
         labelGateway.setText(equipment.getGateway());
-
         login.setText(equipment.getLogin());
         password.setText(equipment.getPassword());
         room.setText(equipment.getRoom());
         indoorLocation.setText(equipment.getLocation());
         condition.setText(equipment.getCondition());
         date.setText(equipment.getDateWork().toString());
-
         labelQuantityDefect.setText(String.valueOf(defectRepository.getListAllDefectToEquipment(equipment.getSerialNumber()).size()));
         labelTextOutletNumber.setText(equipment.getOutletNumber());
         labelTextPortNumber.setText(equipment.getPortNumberInTheSwitch().toString());
 
-        if(equipment.getMacAddress1() != null && !equipment.getMacAddress1().isEmpty()){
-            labelMac1.setVisible(true);
-            labelMac1.setManaged(true);
-            m1.setVisible(true);
-            m1.setManaged(true);
-            imgChangeMac1.setVisible(true);
-            imgChangeMac1.setManaged(true);
-            labelMac1.setText(equipment.getMacAddress1());
-        }
-
-        if(equipment.getMacAddress2() != null && !equipment.getMacAddress2().isEmpty()){
-            labelMac2.setVisible(true);
-            labelMac2.setManaged(true);
-            m2.setVisible(true);
-            m2.setManaged(true);
-            imgChangeMac2.setVisible(true);
-            imgChangeMac2.setManaged(true);
-            labelMac2.setText(equipment.getMacAddress1());
-        }
-
-        if(equipment.getMacAddress3() != null && !equipment.getMacAddress3().isEmpty()){
-            labelMac3.setVisible(true);
-            labelMac3.setManaged(true);
-            m3.setVisible(true);
-            m3.setManaged(true);
-            imgChangeMac3.setVisible(true);
-            imgChangeMac3.setManaged(true);
-            labelMac3.setText(equipment.getMacAddress1());
-        }
     }
 
     public void changeTimeWorkLampProj(MouseEvent mouseEvent) {
@@ -1206,7 +1288,7 @@ public class FragmentEquipmentOneController implements ObserverLang {
         stage.sizeToScene();
     }
 
-    public void saveNewPortSwitcher(ActionEvent actionEvent) {
+    public void saveNewPortSwitcher(MouseEvent actionEvent) {
         if (comboBoxChoiceSwitcher.getValue() != null && tfPortNumber.getText() != null) {
             NetworkSwitch networkSwitch = (NetworkSwitch) equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany()
                     , comboBoxChoiceSwitcher.getValue().toString());

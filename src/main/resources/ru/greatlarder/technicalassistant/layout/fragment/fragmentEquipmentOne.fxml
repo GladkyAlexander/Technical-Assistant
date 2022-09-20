@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<GridPane fx:id="gridPane" cache="true" hgap="1.0" vgap="3.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentEquipmentOneController">
+<GridPane fx:id="gridPane" cache="true" hgap="1.0" vgap="3.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentEquipmentOneController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints halignment="CENTER" />
-      <ColumnConstraints halignment="CENTER" />
+      <ColumnConstraints halignment="RIGHT" />
       <ColumnConstraints halignment="CENTER" />
    </columnConstraints>
    <rowConstraints>
@@ -27,7 +36,6 @@
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
-      <RowConstraints valignment="CENTER" />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
@@ -69,27 +77,27 @@
       <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
    </padding>
    <Label fx:id="labelModel" text="Модель :" />
-   <Label fx:id="model" minWidth="-Infinity" GridPane.columnIndex="1" />
+   <Label fx:id="model" GridPane.columnIndex="1" />
    <Label fx:id="labelManufacturer" text="Производитель :" GridPane.rowIndex="1" />
-   <Label fx:id="manufacturer" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   <Label fx:id="manufacturer" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    <Label fx:id="labelSerialNumber" text="Серийный номер :" GridPane.rowIndex="2" />
-   <Label fx:id="serialNumber" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+   <Label fx:id="serialNumber" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    <Label fx:id="labelIpAddress" text="IP адрес :" GridPane.rowIndex="13" />
-   <Label fx:id="ipAddress" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+   <Label fx:id="ipAddress" GridPane.columnIndex="1" GridPane.rowIndex="13" />
    <Label fx:id="labelMacAddress" text="MAC адрес :" GridPane.rowIndex="3" />
-   <Label fx:id="macAddress" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   <Label fx:id="macAddress" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    <Label fx:id="labelLogin" text="Логин к устройству :" GridPane.rowIndex="25" />
-   <Label fx:id="login" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="25" />
+   <Label fx:id="login" GridPane.columnIndex="1" GridPane.rowIndex="25" />
    <Label fx:id="labelPassword" text="Пароль к устройству :" GridPane.rowIndex="27" />
-   <Label fx:id="password" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="29" />
+   <Label fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="27" />
    <Label fx:id="labelRoom" text="Помещение в котором расположено устройство :" GridPane.rowIndex="29" />
-   <Label fx:id="room" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="27" />
+   <Label fx:id="room" GridPane.columnIndex="1" GridPane.rowIndex="29" />
    <Label fx:id="labelLocation" text="Расположение в помещении :" GridPane.rowIndex="31" />
    <Label fx:id="indoorLocation" GridPane.columnIndex="1" GridPane.rowIndex="31" />
    <Label fx:id="labelStartWork" text="Дата введения в эксплуатацию :" GridPane.rowIndex="33" />
-   <Label fx:id="date" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="33" />
+   <Label fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="33" />
    <Label fx:id="labelCondition" text="Состояние :" GridPane.rowIndex="34" />
-   <Label fx:id="condition" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="34" />
+   <Label fx:id="condition" GridPane.columnIndex="1" GridPane.rowIndex="34" />
    <Label fx:id="labelManual" text="Мануал к оборудованию :" GridPane.rowIndex="39" />
    <ImageView fitHeight="25.0" fitWidth="35.0" onMouseClicked="#openManual" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="39">
       <Image url="@../../images/doc.png" />
@@ -189,8 +197,8 @@
       <Image url="@../../images/change.png" />
    </ImageView>
    <Label fx:id="labelIpAddressDante" text="IP адрес Dante :" GridPane.rowIndex="19" />
-   <Label text="Masc Dante :" GridPane.rowIndex="21" />
-   <Label text="Gateway Dante :" GridPane.rowIndex="23" />
+   <Label fx:id="labelMascAddressDante" text="Masc Dante :" GridPane.rowIndex="21" />
+   <Label fx:id="labelGatewayAddressDante" text="Gateway Dante :" GridPane.rowIndex="23" />
    <Label fx:id="labelIpDante" GridPane.columnIndex="1" GridPane.rowIndex="19" />
    <Label fx:id="labelMascDante" GridPane.columnIndex="1" GridPane.rowIndex="21" />
    <Label fx:id="labelGatewayDante" GridPane.columnIndex="1" GridPane.rowIndex="23" />
@@ -271,7 +279,7 @@
    <HBox fx:id="hBoxPortNumber" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="45">
       <ComboBox fx:id="comboBoxChoiceSwitcher" prefWidth="150.0" />
       <TextField fx:id="tfPortNumber" onKeyReleased="#onKeyRelisedPortNumber" />
-      <Button fx:id="btnSaveNewPortNumber" mnemonicParsing="false" onAction="#saveNewPortSwitcher" text="Button" />
+      <Button fx:id="btnSaveNewPortNumber" mnemonicParsing="false" onMouseClicked="#saveNewPortSwitcher" text="Button" />
    </HBox>
    <ImageView fx:id="imgChangePortNumber" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#openHBoxChangePortNumber" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="44">
       <Image url="@../../images/change.png" />
@@ -307,7 +315,7 @@
          <Image url="@../../images/change.png" />
       </image>
    </ImageView>
-   <HBox fx:id="hBoxNewMacAddress" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="2.0" GridPane.rowIndex="4">
+   <HBox fx:id="hBoxNewMacAddress" alignment="CENTER_RIGHT" spacing="2.0" GridPane.columnSpan="3" GridPane.rowIndex="4">
       <children>
          <TextField fx:id="oui1" onKeyReleased="#onKeyOui1" prefWidth="35.0" />
          <Label text=":">
@@ -340,10 +348,14 @@
             </font>
          </Label>
          <TextField fx:id="uaa3" onKeyReleased="#onKeyUaa3" prefWidth="35.0" />
+         <Button fx:id="btnSaveNewMac" mnemonicParsing="false" onMouseClicked="#saveBtnSaveNewMac" text="Button">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin>
+         </Button>
       </children>
    </HBox>
-   <Button fx:id="btnSaveNewMac" mnemonicParsing="false" onMouseClicked="#saveBtnSaveNewMac" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-   <HBox fx:id="hBoxNewMacAddress1" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="2.0" GridPane.rowIndex="6">
+   <HBox fx:id="hBoxNewMacAddress1" alignment="CENTER_RIGHT" spacing="2.0" GridPane.columnSpan="3" GridPane.rowIndex="6">
       <children>
          <TextField fx:id="oui11" onKeyReleased="#onKeyOui1_1" prefWidth="35.0" />
          <Label text=":">
@@ -376,10 +388,14 @@
             </font>
          </Label>
          <TextField fx:id="uaa13" onKeyReleased="#onKeyUaa1_3" prefWidth="35.0" />
+         <Button fx:id="btnSaveNewMac1" mnemonicParsing="false" onMouseClicked="#saveNewMac1" text="Button">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin>
+         </Button>
       </children>
    </HBox>
-   <Button fx:id="btnSaveNewMac1" mnemonicParsing="false" onMouseClicked="#saveNewMac1" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-   <HBox fx:id="hBoxNewMacAddress2" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="2.0" GridPane.rowIndex="8">
+   <HBox fx:id="hBoxNewMacAddress2" alignment="CENTER_RIGHT" spacing="2.0" GridPane.columnSpan="3" GridPane.rowIndex="8">
       <children>
          <TextField fx:id="oui21" onKeyReleased="#onKeyOui2_1" prefWidth="35.0" />
          <Label text=":">
@@ -412,9 +428,14 @@
             </font>
          </Label>
          <TextField fx:id="uaa23" onKeyReleased="#onKeyUaa2_3" prefWidth="35.0" />
+         <Button fx:id="btnSaveNewMac2" mnemonicParsing="false" onMouseClicked="#saveNewMac2" text="Button">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin>
+         </Button>
       </children>
    </HBox>
-   <HBox fx:id="hBoxMacAddress3" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="2.0" GridPane.rowIndex="10">
+   <HBox fx:id="hBoxMacAddress3" alignment="CENTER_RIGHT" spacing="2.0" GridPane.columnSpan="3" GridPane.rowIndex="10">
       <children>
          <TextField fx:id="oui31" onKeyReleased="#onKeyOui3_1" prefWidth="35.0" />
          <Label text=":">
@@ -447,8 +468,11 @@
             </font>
          </Label>
          <TextField fx:id="uaa33" onKeyReleased="#onKeyUaa3_3" prefWidth="35.0" />
+         <Button fx:id="btnSaveNewMac3" mnemonicParsing="false" onMouseClicked="#saveNewMac3" text="Button">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin>
+         </Button>
       </children>
    </HBox>
-   <Button fx:id="btnSaveNewMac2" mnemonicParsing="false" onMouseClicked="#saveNewMac2" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-   <Button fx:id="btnSaveNewMac3" mnemonicParsing="false" onMouseClicked="#saveNewMac3" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="10" />
 </GridPane>

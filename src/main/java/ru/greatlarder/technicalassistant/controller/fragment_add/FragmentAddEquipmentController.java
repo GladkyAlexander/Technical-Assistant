@@ -1,6 +1,7 @@
 package ru.greatlarder.technicalassistant.controller.fragment_add;
 
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -17,6 +18,8 @@ import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
 import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.check.CheckEquipment;
+import ru.greatlarder.technicalassistant.services.check.impl.CheckEquipmentImpl;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
@@ -31,7 +34,11 @@ import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_DANGER;
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_WARNING;
@@ -198,22 +205,6 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     @FXML
     public ChoiceBox<String> choiceBoxNetworkSvitcher;
     @FXML
-    public CheckBox checkModel;
-    @FXML
-    public CheckBox checkManufacturer;
-    @FXML
-    public CheckBox checkSerialNumber;
-    @FXML
-    public CheckBox checkMacAddress;
-    @FXML
-    public CheckBox checkIpv4;
-    @FXML
-    public CheckBox checkFrequency;
-    @FXML
-    public CheckBox checkIpv4Dante;
-    @FXML
-    public CheckBox checkNumberPortSwitcher;
-    @FXML
     public HBox hBoxMacAddress;
     @FXML
     public Label labelCondition;
@@ -283,12 +274,6 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public TextField uaa33;
     @FXML
     public Button btnAddMacDop;
-    @FXML
-    public CheckBox checkMacAddress1;
-    @FXML
-    public CheckBox checkMacAddress2;
-    @FXML
-    public CheckBox checkMacAddress3;
     private String lang;
     Language language = new LanguageImpl();
     Company company;
@@ -296,9 +281,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     List<Equipment> listNetworkSwitcher;
     FileManager fileManager = new FileManagerImpl();
     String nameFileManual;
-
-    public FragmentAddEquipmentController() {
-    }
+    CheckEquipment checkEquipment = new CheckEquipmentImpl();
 
     @Override
     public void updateLang(DataLang dataLang) {
@@ -344,6 +327,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         this.listNetworkSwitcher = new ArrayList<>(equipmentRepository.getListEquipmentByName(language.NETWORK_SWITCH(lang), company.getNameCompany()));
 
         cmbEquipmentType.setItems(FXCollections.observableArrayList(listNameEquipment));
+
         comboBoxStatusSelection.setItems(FXCollections.observableArrayList(language.status_sheet(lang)));
 
         List<String> list1 = new ArrayList<>();
@@ -357,7 +341,6 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             updatePanes((String) newValue);
         });
         updatePanes("");
-        updateCheckBox();
     }
 
     public void updatePanes(String value) {
@@ -400,78 +383,40 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     }
 
-    public void updateCheckBox() {
-        checkModel.setVisible(false);
-        checkModel.setManaged(false);
-        checkManufacturer.setVisible(false);
-        checkManufacturer.setManaged(false);
-        checkSerialNumber.setVisible(false);
-        checkSerialNumber.setManaged(false);
-        checkMacAddress.setVisible(false);
-        checkMacAddress.setManaged(false);
-        checkMacAddress1.setVisible(false);
-        checkMacAddress1.setManaged(false);
-        checkMacAddress2.setVisible(false);
-        checkMacAddress2.setManaged(false);
-        checkMacAddress3.setVisible(false);
-        checkMacAddress3.setManaged(false);
-        checkIpv4.setVisible(false);
-        checkIpv4.setManaged(false);
-        checkFrequency.setVisible(false);
-        checkFrequency.setManaged(false);
-        checkIpv4Dante.setVisible(false);
-        checkIpv4Dante.setManaged(false);
-        checkNumberPortSwitcher.setVisible(false);
-        checkNumberPortSwitcher.setManaged(false);
-    }
-
     public void onKeyModel() {
-        checkModel.setVisible(true);
-        checkModel.setManaged(true);
         if (!textFiledModel.getText().trim().isEmpty()) {
             textFiledModel.setStyle(new TextField().getStyle());
-            checkModel.setSelected(true);
         } else if (textFiledModel.getText().trim().isEmpty()) {
             textFiledModel.setStyle(STYLE_WARNING);
-            checkModel.setSelected(false);
         }
     }
 
     public void onKeyManufacturer() {
-        checkManufacturer.setVisible(true);
-        checkManufacturer.setManaged(true);
         if (!textFieldManufacturer.getText().trim().isEmpty()) {
             textFieldManufacturer.setStyle(new TextField().getStyle());
-            checkManufacturer.setSelected(true);
         } else if (textFieldManufacturer.getText().trim().isEmpty()) {
             textFieldManufacturer.setStyle(STYLE_WARNING);
-            checkManufacturer.setSelected(false);
         }
     }
 
     public void onKeySerialNumber() {
         if (!textFieldSerialNumber.getText().trim().isEmpty()) {
-            checkSerialNumber.setVisible(true);
-            checkSerialNumber.setManaged(true);
             if (equipmentRepository.getEquipmentBySerialNumber(company.getNameCompany(), textFieldSerialNumber.getText()) == null) {
-                checkSerialNumber.setSelected(true);
                 textFieldSerialNumber.setStyle(new TextField().getStyle());
             } else {
-                checkSerialNumber.setSelected(false);
-                textFieldSerialNumber.setStyle(STYLE_DANGER);
+               textFieldSerialNumber.setStyle(STYLE_DANGER);
             }
         } else if (textFieldSerialNumber.getText().trim().isEmpty()) {
             textFieldSerialNumber.setStyle(STYLE_WARNING);
-            checkSerialNumber.setSelected(false);
         }
     }
 
     public void onKeyOui1() {
         if (oui1.getText().isEmpty()) {
             oui1.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui1.getText()) || oui1.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui1.getText()) || oui1.getText().length() > 2) {
             oui1.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui1.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui1.getText())) {
             oui1.setStyle(new TextField().getStyle());
         } else oui1.setStyle(new TextField().getStyle());
     }
@@ -479,9 +424,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui2() {
         if (oui2.getText().isEmpty()) {
             oui2.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui2.getText()) || oui2.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui2.getText()) || oui2.getText().length() > 2) {
             oui2.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui2.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui2.getText())) {
             oui2.setStyle(new TextField().getStyle());
         } else oui2.setStyle(new TextField().getStyle());
     }
@@ -489,9 +434,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui3() {
         if (oui3.getText().isEmpty()) {
             oui3.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui3.getText()) || oui3.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui3.getText()) || oui3.getText().length() > 2) {
             oui3.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui3.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui3.getText())) {
             oui3.setStyle(new TextField().getStyle());
         } else oui3.setStyle(new TextField().getStyle());
     }
@@ -499,9 +444,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyUaa1() {
         if (uaa1.getText().isEmpty()) {
             uaa1.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa1.getText()) || uaa1.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa1.getText()) || uaa1.getText().length() > 2) {
             uaa1.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa1.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa1.getText())) {
             uaa1.setStyle(new TextField().getStyle());
         } else uaa1.setStyle(new TextField().getStyle());
     }
@@ -509,45 +454,39 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyUaa2() {
         if (uaa2.getText().isEmpty()) {
             uaa2.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa2.getText()) || uaa2.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa2.getText()) || uaa2.getText().length() > 2) {
             uaa2.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa2.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa2.getText())) {
             uaa2.setStyle(new TextField().getStyle());
         } else uaa2.setStyle(new TextField().getStyle());
     }
 
     public void onKeyUaa3() {
-        checkMacAddress.setVisible(true);
-        checkMacAddress.setManaged(true);
         if (uaa3.getText().isEmpty()) {
             uaa3.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa3.getText()) || uaa3.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa3.getText()) || uaa3.getText().length() > 2) {
             uaa3.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa3.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa3.getText())) {
             uaa3.setStyle(new TextField().getStyle());
         } else uaa3.setStyle(new TextField().getStyle());
-
-        if (!checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText().trim().isEmpty()) {
+        if (checkEquipment.getMacAddressEquipment(oui1.getText(), oui2.getText(), oui3.getText(), uaa1.getText(), uaa2.getText(), uaa3.getText()) != null) {
             hBoxMacAddress.setStyle(new HBox().getStyle());
-            if (checkMacAddress(company.getNameCompany(), checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText())) {
-                checkMacAddress.setSelected(true);
+            if (!checkEquipment.checkingEquipmentMacAddress(checkEquipment.getMacAddressEquipment(oui1.getText(), oui2.getText(), oui3.getText(), uaa1.getText(), uaa2.getText(), uaa3.getText()), company.getNameCompany())) {
                 hBoxMacAddress.setStyle(new HBox().getStyle());
             } else {
-                checkMacAddress.setSelected(false);
                 hBoxMacAddress.setStyle(STYLE_DANGER);
             }
         } else {
-            checkMacAddress.setSelected(false);
             hBoxMacAddress.setStyle(STYLE_DANGER);
         }
     }
 
     public void onKeyLogin() {
-        if (!textFieldLogin.getText().trim().isEmpty() && checkingStringWithACondition(textFieldLogin.getText())) {
+        if (!textFieldLogin.getText().trim().isEmpty() && checkEquipment.checkingStringWithACondition(textFieldLogin.getText())) {
             textFieldLogin.setStyle(new TextField().getStyle());
         } else if (textFieldLogin.getText().trim().isEmpty()) {
             textFieldLogin.setStyle(STYLE_WARNING);
-        } else if (!textFieldLogin.getText().trim().isEmpty() && !checkingStringWithACondition(textFieldLogin.getText())) {
+        } else if (!textFieldLogin.getText().trim().isEmpty() && !checkEquipment.checkingStringWithACondition(textFieldLogin.getText())) {
             textFieldLogin.setStyle(STYLE_DANGER);
         }
     }
@@ -568,12 +507,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         }
     }
 
-    public void onKeyDatePicker(KeyEvent keyEvent) {
-    }
-
     public void onKeyReleased() {
         if (!network1.getText().isEmpty()) {
-            if (checkingForANumber(network1.getText())) {
+            if (checkEquipment.checkingForANumber(network1.getText())) {
                 if (network1.getText().length() <= 3) {
                     if (Integer.parseInt(network1.getText()) <= 256) {
                         network1.setStyle(new TextField().getStyle());
@@ -585,7 +521,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedNet2() {
         if (!network2.getText().isEmpty()) {
-            if (checkingForANumber(network2.getText())) {
+            if (checkEquipment.checkingForANumber(network2.getText())) {
                 if (network2.getText().length() <= 3) {
                     if (Integer.parseInt(network2.getText()) <= 256) {
                         network2.setStyle(new TextField().getStyle());
@@ -597,7 +533,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedSubnet() {
         if (!subnet.getText().isEmpty()) {
-            if (checkingForANumber(subnet.getText())) {
+            if (checkEquipment.checkingForANumber(subnet.getText())) {
                 if (subnet.getText().length() <= 3) {
                     if (Integer.parseInt(subnet.getText()) <= 256) {
                         subnet.setStyle(new TextField().getStyle());
@@ -608,15 +544,12 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     }
 
     public void onKeyReleasedDevice() {
-        checkIpv4.setVisible(true);
-        checkIpv4.setManaged(true);
         if (!device.getText().isEmpty()) {
-            if (checkingForANumber(device.getText())) {
+            if (checkEquipment.checkingForANumber(device.getText())) {
                 if (device.getText().length() <= 3) {
                     if (Integer.parseInt(device.getText()) <= 256) {
-                        if (!checkEquipmentIpAddress(company.getNameCompany()
-                                , network1.getText() + "." + network2.getText()
-                                        + "." + subnet.getText() + "." + device.getText())) {
+                        if (!checkEquipment.checkingForAddressOccupancy(checkEquipment.getIpAddressEquipment(network1.getText(), network2.getText(),
+                                subnet.getText(), device.getText()), company.getNameCompany())) {
                             network1.setStyle(new TextField().getStyle());
                             network2.setStyle(new TextField().getStyle());
                             subnet.setStyle(new TextField().getStyle());
@@ -631,23 +564,11 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                 } else device.setStyle(STYLE_DANGER);
             } else device.setStyle(STYLE_DANGER);
         } else device.setStyle(new TextField().getStyle());
-        if (!checkNet(network1, network2, subnet, device).getText().trim().isEmpty()) {
-            if (!checkEquipmentIpAddress(company.getNameCompany(), checkNet(network1, network2, subnet, device).getText())) {
-                hBoxTCP.setStyle(new HBox().getStyle());
-                checkIpv4.setSelected(true);
-            } else {
-                hBoxTCP.setStyle(STYLE_DANGER);
-                checkIpv4.setSelected(false);
-            }
-        } else {
-            hBoxTCP.setStyle(STYLE_DANGER);
-            checkIpv4.setSelected(false);
-        }
     }
 
     public void onKeyReleasedMasc() {
         if (!networkMasc1.getText().isEmpty()) {
-            if (checkingForANumber(networkMasc1.getText())) {
+            if (checkEquipment.checkingForANumber(networkMasc1.getText())) {
                 if (networkMasc1.getText().length() <= 3) {
                     if (Integer.parseInt(networkMasc1.getText()) <= 256) {
                         networkMasc1.setStyle(new TextField().getStyle());
@@ -659,7 +580,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedMasc2() {
         if (!networkMasc2.getText().isEmpty()) {
-            if (checkingForANumber(networkMasc2.getText())) {
+            if (checkEquipment.checkingForANumber(networkMasc2.getText())) {
                 if (networkMasc2.getText().length() <= 3) {
                     if (Integer.parseInt(networkMasc2.getText()) <= 256) {
                         networkMasc2.setStyle(new TextField().getStyle());
@@ -671,7 +592,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedMascSubnet() {
         if (!subnetMasc.getText().isEmpty()) {
-            if (checkingForANumber(subnetMasc.getText())) {
+            if (checkEquipment.checkingForANumber(subnetMasc.getText())) {
                 if (subnetMasc.getText().length() <= 3) {
                     if (Integer.parseInt(subnetMasc.getText()) <= 256) {
                         subnetMasc.setStyle(new TextField().getStyle());
@@ -683,7 +604,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedMascDevice() {
         if (!deviceMasc.getText().isEmpty()) {
-            if (checkingForANumber(deviceMasc.getText())) {
+            if (checkEquipment.checkingForANumber(deviceMasc.getText())) {
                 if (deviceMasc.getText().length() <= 3) {
                     if (Integer.parseInt(deviceMasc.getText()) <= 256) {
                         deviceMasc.setStyle(new TextField().getStyle());
@@ -695,7 +616,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedGateway() {
         if (!gateway1.getText().isEmpty()) {
-            if (checkingForANumber(gateway1.getText())) {
+            if (checkEquipment.checkingForANumber(gateway1.getText())) {
                 if (gateway1.getText().length() <= 3) {
                     if (Integer.parseInt(gateway1.getText()) <= 256) {
                         gateway1.setStyle(new TextField().getStyle());
@@ -707,7 +628,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedGateway2() {
         if (!gateway2.getText().isEmpty()) {
-            if (checkingForANumber(gateway2.getText())) {
+            if (checkEquipment.checkingForANumber(gateway2.getText())) {
                 if (gateway2.getText().length() <= 3) {
                     if (Integer.parseInt(gateway2.getText()) <= 256) {
                         gateway2.setStyle(new TextField().getStyle());
@@ -719,7 +640,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedGatewaySubnet() {
         if (!subnetGateway.getText().isEmpty()) {
-            if (checkingForANumber(subnetGateway.getText())) {
+            if (checkEquipment.checkingForANumber(subnetGateway.getText())) {
                 if (subnetGateway.getText().length() <= 3) {
                     if (Integer.parseInt(subnetGateway.getText()) <= 256) {
                         subnetGateway.setStyle(new TextField().getStyle());
@@ -731,7 +652,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedGatewayDevice() {
         if (!deviceGateway.getText().isEmpty()) {
-            if (checkingForANumber(deviceGateway.getText())) {
+            if (checkEquipment.checkingForANumber(deviceGateway.getText())) {
                 if (deviceGateway.getText().length() <= 3) {
                     if (Integer.parseInt(deviceGateway.getText()) <= 256) {
                         deviceGateway.setStyle(new TextField().getStyle());
@@ -760,7 +681,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedFrequency1() {
         if (!textFieldFrequency1.getText().trim().isEmpty()) {
-            if (checkingStringWithACondition(textFieldFrequency1.getText())) {
+            if (checkEquipment.checkingStringWithACondition(textFieldFrequency1.getText())) {
                 if (textFieldFrequency1.getText().length() <= 3) {
                     textFieldFrequency1.setStyle(new TextField().getStyle());
                 } else textFieldFrequency1.setStyle(STYLE_DANGER);
@@ -769,12 +690,10 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     }
 
     public void onKeyReleasedFrequency2() {
-        checkFrequency.setVisible(true);
-        checkFrequency.setManaged(false);
         if (!textFieldFrequency2.getText().isEmpty()) {
-            if (checkingStringWithACondition(textFieldFrequency2.getText())) {
+            if (checkEquipment.checkingStringWithACondition(textFieldFrequency2.getText())) {
                 if (textFieldFrequency2.getText().length() <= 3) {
-                    if (!checkingFrequency(company.getNameCompany(), textFieldFrequency1.getText() + "." + textFieldFrequency2.getText())) {
+                    if (!checkEquipment.checkingFrequency(checkEquipment.getFrequency(textFieldFrequency1.getText(), textFieldFrequency2.getText()), company.getNameCompany())) {
                         textFieldFrequency1.setStyle(new TextField().getStyle());
                         textFieldFrequency2.setStyle(new TextField().getStyle());
                     } else {
@@ -784,19 +703,17 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                 } else textFieldFrequency2.setStyle(STYLE_DANGER);
             } else textFieldFrequency2.setStyle(STYLE_DANGER);
         } else textFieldFrequency2.setStyle(new TextField().getStyle());
-        if (!checkingFrequency(company.getNameCompany(), textFieldFrequency1.getText() + "." + textFieldFrequency2.getText())) {
+        if (checkEquipment.checkingFrequency(checkEquipment.getFrequency(textFieldFrequency1.getText(), textFieldFrequency2.getText()), company.getNameCompany())) {
             hBoxFrequency.setStyle(new HBox().getStyle());
-            checkFrequency.setSelected(true);
         } else {
             hBoxFrequency.setStyle(STYLE_DANGER);
-            checkFrequency.setSelected(false);
         }
     }
 
     public void onKeyPressedMaximumLampOperatingTime() {
-        if (!checkingForANumber(maximumLampOperatingTime.getText()) || maximumLampOperatingTime.getText().length() > 7) {
+        if (!checkEquipment.checkingForANumber(maximumLampOperatingTime.getText()) || maximumLampOperatingTime.getText().length() > 7) {
             maximumLampOperatingTime.setStyle(STYLE_DANGER);
-        } else if (checkingForANumber(maximumLampOperatingTime.getText())) {
+        } else if (checkEquipment.checkingForANumber(maximumLampOperatingTime.getText())) {
             maximumLampOperatingTime.setStyle(new TextField().getStyle());
         } else {
             maximumLampOperatingTime.setStyle(new TextField().getStyle());
@@ -805,7 +722,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedNetDante(KeyEvent keyEvent) {
         if (!network1Dante.getText().isEmpty()) {
-            if (checkingForANumber(network1Dante.getText())) {
+            if (checkEquipment.checkingForANumber(network1Dante.getText())) {
                 if (network1Dante.getText().length() <= 3) {
                     if (Integer.parseInt(network1Dante.getText()) <= 256) {
                         network1Dante.setStyle(new TextField().getStyle());
@@ -817,7 +734,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedNet2Dante(KeyEvent keyEvent) {
         if (!network2Dante.getText().isEmpty()) {
-            if (checkingForANumber(network2Dante.getText())) {
+            if (checkEquipment.checkingForANumber(network2Dante.getText())) {
                 if (network2Dante.getText().length() <= 3) {
                     if (Integer.parseInt(network2Dante.getText()) <= 256) {
                         network2Dante.setStyle(new TextField().getStyle());
@@ -829,7 +746,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedSubnetDante(KeyEvent keyEvent) {
         if (!subnetDante.getText().isEmpty()) {
-            if (checkingForANumber(subnetDante.getText())) {
+            if (checkEquipment.checkingForANumber(subnetDante.getText())) {
                 if (subnetDante.getText().length() <= 3) {
                     if (Integer.parseInt(subnetDante.getText()) <= 256) {
                         subnetDante.setStyle(new TextField().getStyle());
@@ -843,12 +760,11 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         hBoxTCPDante.setVisible(true);
         hBoxTCPDante.setManaged(true);
         if (!deviceDante.getText().isEmpty()) {
-            if (checkingForANumber(deviceDante.getText())) {
+            if (checkEquipment.checkingForANumber(deviceDante.getText())) {
                 if (deviceDante.getText().length() <= 3) {
                     if (Integer.parseInt(deviceDante.getText()) <= 256) {
-                        if (!checkEquipmentIpAddressDante(company.getNameCompany()
-                                , network1Dante.getText() + "." + network2Dante.getText()
-                                        + "." + subnetDante.getText() + "." + deviceDante.getText())) {
+                        if (!checkEquipment.checkingForAddressOccupancyDante(checkEquipment.getIpAddressEquipment(network1Dante.getText(), network2Dante.getText()
+                                , subnetDante.getText(), deviceDante.getText()), company.getNameCompany())){
                             network1Dante.setStyle(new TextField().getStyle());
                             network2Dante.setStyle(new TextField().getStyle());
                             subnetDante.setStyle(new TextField().getStyle());
@@ -863,23 +779,11 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                 } else deviceDante.setStyle(STYLE_DANGER);
             } else deviceDante.setStyle(STYLE_DANGER);
         } else deviceDante.setStyle(new TextField().getStyle());
-        if (!checkNet(network1Dante, network2Dante, subnetDante, deviceDante).getText().trim().isEmpty()) {
-            if (!checkEquipmentIpAddressDante(company.getNameCompany(), checkNet(network1Dante, network2Dante, subnetDante, deviceDante).getText())) {
-                hBoxTCPDante.setStyle(new HBox().getStyle());
-                checkIpv4Dante.setSelected(true);
-            } else {
-                hBoxTCPDante.setStyle(STYLE_DANGER);
-                checkIpv4Dante.setSelected(false);
-            }
-        } else {
-            hBoxTCPDante.setStyle(STYLE_DANGER);
-            checkIpv4Dante.setSelected(false);
-        }
     }
 
     public void onKeyReleasedMasc1Dante(KeyEvent keyEvent) {
         if (!networkMasc1Dante.getText().isEmpty()) {
-            if (checkingForANumber(networkMasc1Dante.getText())) {
+            if (checkEquipment.checkingForANumber(networkMasc1Dante.getText())) {
                 if (networkMasc1Dante.getText().length() <= 3) {
                     if (Integer.parseInt(networkMasc1Dante.getText()) <= 256) {
                         networkMasc1Dante.setStyle(new TextField().getStyle());
@@ -891,7 +795,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedMasc2Dante(KeyEvent keyEvent) {
         if (!networkMasc2Dante.getText().isEmpty()) {
-            if (checkingForANumber(networkMasc2Dante.getText())) {
+            if (checkEquipment.checkingForANumber(networkMasc2Dante.getText())) {
                 if (networkMasc2Dante.getText().length() <= 3) {
                     if (Integer.parseInt(networkMasc2Dante.getText()) <= 256) {
                         networkMasc2Dante.setStyle(new TextField().getStyle());
@@ -903,7 +807,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedMascSubnetDante(KeyEvent keyEvent) {
         if (!subnetMascDante.getText().isEmpty()) {
-            if (checkingForANumber(subnetMascDante.getText())) {
+            if (checkEquipment.checkingForANumber(subnetMascDante.getText())) {
                 if (subnetMascDante.getText().length() <= 3) {
                     if (Integer.parseInt(subnetMascDante.getText()) <= 256) {
                         subnetMascDante.setStyle(new TextField().getStyle());
@@ -915,7 +819,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedMascDeviceDante(KeyEvent keyEvent) {
         if (!deviceMascDante.getText().isEmpty()) {
-            if (checkingForANumber(deviceMascDante.getText())) {
+            if (checkEquipment.checkingForANumber(deviceMascDante.getText())) {
                 if (deviceMascDante.getText().length() <= 3) {
                     if (Integer.parseInt(deviceMascDante.getText()) <= 256) {
                         deviceMascDante.setStyle(new TextField().getStyle());
@@ -927,7 +831,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedGatewayDante(KeyEvent keyEvent) {
         if (!gateway1Dante.getText().isEmpty()) {
-            if (checkingForANumber(gateway1Dante.getText())) {
+            if (checkEquipment.checkingForANumber(gateway1Dante.getText())) {
                 if (gateway1Dante.getText().length() <= 3) {
                     if (Integer.parseInt(gateway1Dante.getText()) <= 256) {
                         gateway1Dante.setStyle(new TextField().getStyle());
@@ -939,7 +843,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedGateway2Dante(KeyEvent keyEvent) {
         if (!gateway2Dante.getText().isEmpty()) {
-            if (checkingForANumber(gateway2Dante.getText())) {
+            if (checkEquipment.checkingForANumber(gateway2Dante.getText())) {
                 if (gateway2Dante.getText().length() <= 3) {
                     if (Integer.parseInt(gateway2Dante.getText()) <= 256) {
                         gateway2Dante.setStyle(new TextField().getStyle());
@@ -951,7 +855,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedGatewaySubnetDante(KeyEvent keyEvent) {
         if (!subnetGatewayDante.getText().isEmpty()) {
-            if (checkingForANumber(subnetGatewayDante.getText())) {
+            if (checkEquipment.checkingForANumber(subnetGatewayDante.getText())) {
                 if (subnetGatewayDante.getText().length() <= 3) {
                     if (Integer.parseInt(subnetGatewayDante.getText()) <= 256) {
                         subnetGatewayDante.setStyle(new TextField().getStyle());
@@ -963,7 +867,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void onKeyReleasedGatewayDeviceDante(KeyEvent keyEvent) {
         if (!deviceGatewayDante.getText().isEmpty()) {
-            if (checkingForANumber(deviceGatewayDante.getText())) {
+            if (checkEquipment.checkingForANumber(deviceGatewayDante.getText())) {
                 if (deviceGatewayDante.getText().length() <= 3) {
                     if (Integer.parseInt(deviceGatewayDante.getText()) <= 256) {
                         deviceGatewayDante.setStyle(new TextField().getStyle());
@@ -978,7 +882,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             hBoxNetworkSwitcher.setStyle(new HBox().getStyle());
             hBoxPortSwitcher.setStyle(new HBox().getStyle());
             if (!tfPortSwitcher.getText().isEmpty()) {
-                if (checkingForANumber(tfPortSwitcher.getText())) {
+                if (checkEquipment.checkingForANumber(tfPortSwitcher.getText())) {
                     if (tfPortSwitcher.getText().length() <= 2) {
                         if (Integer.parseInt(tfPortSwitcher.getText()) <= 48) {
                             tfPortSwitcher.setStyle(new TextField().getStyle());
@@ -987,13 +891,11 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                 } else tfPortSwitcher.setStyle(STYLE_DANGER);
             } else tfPortSwitcher.setStyle(new TextField().getStyle());
 
-            if (!checkingTheSwitchPort((NetworkSwitch) equipmentRepository.getEquipmentBySerialNumber(choiceBoxNetworkSvitcher.getValue().toString()
+            if (!checkEquipment.checkingTheSwitchPort((NetworkSwitch) equipmentRepository.getEquipmentBySerialNumber(choiceBoxNetworkSvitcher.getValue().toString()
                     , company.getNameCompany()), Integer.parseInt(tfPortSwitcher.getText()))) {
                 hBoxPortSwitcher.setStyle(new HBox().getStyle());
-                checkNumberPortSwitcher.setSelected(true);
             } else {
                 hBoxPortSwitcher.setStyle(STYLE_DANGER);
-                checkNumberPortSwitcher.setSelected(false);
             }
         } else {
             hBoxNetworkSwitcher.setStyle(STYLE_DANGER);
@@ -1004,166 +906,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyRelisedOutlet(KeyEvent keyEvent) {
         if (tfOutlet.getText().isEmpty()) {
             tfOutlet.setStyle(new TextField().getStyle());
-        } else if (checkingStringWithACondition(tfOutlet.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(tfOutlet.getText())) {
             tfOutlet.setStyle(new TextField().getStyle());
         } else tfOutlet.setStyle(new TextField().getStyle());
-    }
-
-    public TextField checkMac(TextField ou1, TextField ou2, TextField ou3, TextField ua1, TextField ua2, TextField ua3) {
-
-        TextField textField = new TextField();
-
-        if (!ou1.getText().trim().isEmpty() && !ou2.getText().trim().isEmpty() && !ou3.getText().trim().isEmpty()
-                && !ua1.getText().trim().isEmpty() && !ua2.getText().trim().isEmpty() && !ua3.getText().trim().isEmpty()) {
-            if (ou1.getText().length() == 2 && ou2.getText().length() == 2 && ou3.getText().length() == 2
-                    && ua1.getText().length() == 2 && ua2.getText().length() == 2 && ua3.getText().length() == 2) {
-                textField.setText(oui1.getText() + ":" + oui2.getText() + ":" + oui3.getText() + ":"
-                        + uaa1.getText() + ":" + uaa2.getText() + ":" + uaa3.getText());
-            }
-        } else {
-            ou1.setStyle(STYLE_WARNING);
-            ou2.setStyle(STYLE_WARNING);
-            ou3.setStyle(STYLE_WARNING);
-            ua1.setStyle(STYLE_WARNING);
-            ua2.setStyle(STYLE_WARNING);
-            ua3.setStyle(STYLE_WARNING);
-        }
-
-        return textField;
-    }
-
-    public TextField checkNet(TextField network1, TextField network2, TextField subnet, TextField device) {
-
-        TextField textField = new TextField();
-
-        if (!network1.getText().trim().isEmpty() && !network2.getText().trim().isEmpty()
-                && !subnet.getText().trim().isEmpty() && !device.getText().trim().isEmpty()) {
-
-            textField.setText(network1.getText() + "." + network2.getText() + "."
-                    + subnet.getText() + "." + device.getText());
-
-        } else {
-            network1.setStyle(STYLE_WARNING);
-            network2.setStyle(STYLE_WARNING);
-            subnet.setStyle(STYLE_WARNING);
-            device.setStyle(STYLE_WARNING);
-        }
-
-        return textField;
-    }
-
-    public boolean checkingStringWithACondition(String value) {
-        return value.matches("^\\w+$");
-    }
-
-    public boolean checkMacAddress(String nameCompany, String macAddress) {
-        if (equipmentRepository.getEquipmentByMacAddress(nameCompany, macAddress) == null) {
-            return true;
-        } else return false;
-    }
-
-    public boolean checkMacAddress1(String nameCompany, String macAddress) {
-        if (equipmentRepository.getEquipmentByMacAddress1(nameCompany, macAddress) == null) {
-            return true;
-        } else return false;
-    }
-
-    public boolean checkMacAddress2(String nameCompany, String macAddress) {
-        if (equipmentRepository.getEquipmentByMacAddress2(nameCompany, macAddress) == null) {
-            return true;
-        } else return false;
-    }
-
-    public boolean checkMacAddress3(String nameCompany, String macAddress) {
-        if (equipmentRepository.getEquipmentByMacAddress3(nameCompany, macAddress) == null) {
-            return true;
-        } else return false;
-    }
-
-    public boolean checkingForANumber(String value) {
-        return value.chars().allMatch(Character::isDigit);
-    }
-
-    public boolean checkEquipmentIpAddress(String nameCompany, String ipAddress) {
-        for (String str : equipmentRepository.getListIpAddressForCompany(nameCompany)) {
-            if (ipAddress.equals(str)) return true;
-        }
-        return false;
-    }
-
-    public boolean checkingFrequency(String nameCompany, String frequency) {
-        for (Equipment equipment : equipmentRepository.getListEquipmentForCompany(nameCompany)) {
-            if (equipment instanceof Microphone microphone
-                    && (frequency.equals(((Microphone) equipment).getFrequency()))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean checkEquipmentIpAddressDante(String nameCompany, String ipAddress) {
-        for (String str : equipmentRepository.getListIpAddressDanteForCompany(nameCompany)) {
-            if (ipAddress.equals(str)) return true;
-        }
-        return false;
-    }
-
-    public boolean checkingTheSwitchPort(NetworkSwitch networkSwitch, int numberPort) {
-        HashMap<Integer, Equipment> hashMap = new HashMap<>();
-        hashMap.put(1, networkSwitch.getPort1());
-        hashMap.put(2, networkSwitch.getPort2());
-        hashMap.put(3, networkSwitch.getPort3());
-        hashMap.put(4, networkSwitch.getPort4());
-        hashMap.put(5, networkSwitch.getPort5());
-        hashMap.put(6, networkSwitch.getPort6());
-        hashMap.put(7, networkSwitch.getPort7());
-        hashMap.put(8, networkSwitch.getPort8());
-        hashMap.put(9, networkSwitch.getPort9());
-        hashMap.put(10, networkSwitch.getPort10());
-        hashMap.put(11, networkSwitch.getPort11());
-        hashMap.put(12, networkSwitch.getPort12());
-        hashMap.put(13, networkSwitch.getPort13());
-        hashMap.put(14, networkSwitch.getPort14());
-        hashMap.put(15, networkSwitch.getPort15());
-        hashMap.put(16, networkSwitch.getPort16());
-        hashMap.put(17, networkSwitch.getPort17());
-        hashMap.put(18, networkSwitch.getPort18());
-        hashMap.put(19, networkSwitch.getPort19());
-        hashMap.put(20, networkSwitch.getPort20());
-        hashMap.put(21, networkSwitch.getPort21());
-        hashMap.put(22, networkSwitch.getPort22());
-        hashMap.put(23, networkSwitch.getPort23());
-        hashMap.put(24, networkSwitch.getPort24());
-        hashMap.put(25, networkSwitch.getPort25());
-        hashMap.put(26, networkSwitch.getPort26());
-        hashMap.put(27, networkSwitch.getPort27());
-        hashMap.put(28, networkSwitch.getPort28());
-        hashMap.put(29, networkSwitch.getPort29());
-        hashMap.put(30, networkSwitch.getPort30());
-        hashMap.put(31, networkSwitch.getPort31());
-        hashMap.put(32, networkSwitch.getPort32());
-        hashMap.put(33, networkSwitch.getPort33());
-        hashMap.put(34, networkSwitch.getPort34());
-        hashMap.put(35, networkSwitch.getPort35());
-        hashMap.put(36, networkSwitch.getPort36());
-        hashMap.put(37, networkSwitch.getPort37());
-        hashMap.put(38, networkSwitch.getPort38());
-        hashMap.put(39, networkSwitch.getPort39());
-        hashMap.put(40, networkSwitch.getPort40());
-        hashMap.put(41, networkSwitch.getPort41());
-        hashMap.put(42, networkSwitch.getPort42());
-        hashMap.put(43, networkSwitch.getPort43());
-        hashMap.put(44, networkSwitch.getPort44());
-        hashMap.put(45, networkSwitch.getPort45());
-        hashMap.put(46, networkSwitch.getPort46());
-        hashMap.put(47, networkSwitch.getPort47());
-        hashMap.put(48, networkSwitch.getPort48());
-
-        Equipment value = hashMap.get(numberPort);
-
-        if (value == null) {
-            return true;
-        } else return false;
     }
 
     public Equipment getEquipment() {
@@ -1171,107 +916,67 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         switch ((String) this.cmbEquipmentType.getValue()) {
             case Language.PROJECTOR_RU -> {
                 Projector equipment = new Projector();
-                loadEquipment(equipment);
-                equipment.setTimeWorkLampProjector(0);
-                equipment.setImage("projector.png");
-                if (!maximumLampOperatingTime.getText().trim().isEmpty()) {
-                    equipment.setMaximumLampOperatingTimeProjector(Integer.valueOf(maximumLampOperatingTime.getText()));
-                } else equipment.setMaximumLampOperatingTimeProjector(null);
-                result = equipment;
+                result = loadEquipment(equipment);
             }
             case Language.MICROPHONE_RU -> {
                 Microphone equipment1 = new Microphone();
-                loadEquipment(equipment1);
-                equipment1.setFrequency(textFieldFrequency1.getText() + "." + textFieldFrequency2.getText());
-                equipment1.setImage("microphone.png");
-                result = equipment1;
+                result = loadEquipment(equipment1);
             }
             case Language.NETWORK_SWITCH_RU -> {
                 NetworkSwitch equipment2 = new NetworkSwitch();
-                loadEquipment(equipment2);
-                equipment2.setImage("network_switch.png");
-                result = equipment2;
+                result = loadEquipment(equipment2);
             }
             case Language.ACOUSTIC_SPEAKER_RU -> {
                 AcousticSpeaker equipment3 = new AcousticSpeaker();
-                loadEquipment(equipment3);
-                equipment3.setImage("acoustic_speaker.png");
-                result = equipment3;
+                result = loadEquipment(equipment3);
             }
             case Language.CONTROL_PROCESSOR_RU -> {
                 ControlProcessor equipment4 = new ControlProcessor();
-                loadEquipment(equipment4);
-                equipment4.setImage("control_processor.png");
-                result = equipment4;
+                result = loadEquipment(equipment4);
             }
             case Language.AUDIO_PROCESSOR_RU -> {
                 AudioProcessor equipment5 = new AudioProcessor();
-                loadEquipment(equipment5);
-                equipment5.setImage("audio_processor.png");
-                result = equipment5;
+                result = loadEquipment(equipment5);
             }
             case Language.AUDIO_AMPLIFIER_RU -> {
                 AudioAmplifier equipment6 = new AudioAmplifier();
-                loadEquipment(equipment6);
-                equipment6.setImage("audio_amplifer.png");
-                result = equipment6;
+                result = loadEquipment(equipment6);
             }
             case Language.AUDIO_INTERFACE_RU -> {
                 AudioInterface equipment7 = new AudioInterface();
-                loadEquipment(equipment7);
-                equipment7.setImage("audio_interface.png");
-                result = equipment7;
+                result = loadEquipment(equipment7);
             }
             case Language.TV_PANEL_RU -> {
                 TvPanel equipment8 = new TvPanel();
-                loadEquipment(equipment8);
-                equipment8.setImage("tv_panel.png");
-                equipment8.setDiagonal(tfDiagonal.getText());
-                result = equipment8;
+                result = loadEquipment(equipment8);
             }
             case Language.TV_TUNER_RU -> {
                 TvTuner equipment9 = new TvTuner();
-                loadEquipment(equipment9);
-                equipment9.setImage("tv_tuner.png");
-                result = equipment9;
+                result = loadEquipment(equipment9);
             }
             case Language.MEDIA_PLAYER_RU -> {
                 MediaPlayer equipment10 = new MediaPlayer();
-                loadEquipment(equipment10);
-                equipment10.setImage("media_player.png");
-                result = equipment10;
+                result = loadEquipment(equipment10);
             }
             case Language.LAPTOP_RU -> {
                 Laptop equipment11 = new Laptop();
-                loadEquipment(equipment11);
-                equipment11.setImage("laptop.png");
-                equipment11.setOs(tfOs.getText());
-                result = equipment11;
+                result = loadEquipment(equipment11);
             }
             case Language.VIDEO_TRANSMITTER_RU -> {
                 VideoTransmitter equipment12 = new VideoTransmitter();
-                loadEquipment(equipment12);
-                equipment12.setImage("tx_rx.jpg");
-                result = equipment12;
+                result = loadEquipment(equipment12);
             }
             case Language.VIDEO_RECEIVER_RU -> {
                 VideoReceiver equipment13 = new VideoReceiver();
-                loadEquipment(equipment13);
-                equipment13.setImage("tx_rx.jpg");
-                result = equipment13;
+                result = loadEquipment(equipment13);
             }
             case Language.MATRIX_SWITCHER_RU -> {
                 MatrixSwitcher equipment14 = new MatrixSwitcher();
-                loadEquipment(equipment14);
-                equipment14.setImage("matrix_switcher.jpg");
-                result = equipment14;
+                result = loadEquipment(equipment14);
             }
             case Language.TOUCH_CONTROL_PANEL_RU -> {
                 TouchControlPanel equipment15 = new TouchControlPanel();
-                loadEquipment(equipment15);
-                equipment15.setImage("control_patch_panel.png");
-                equipment15.setDiagonal(tfDiagonal.getText());
-                result = equipment15;
+                result = loadEquipment(equipment15);
             }
         }
 
@@ -1280,90 +985,123 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public Equipment loadEquipment(Equipment equipment) {
         Equipment returnEquipment = null;
-
         if (equipment instanceof Projector) {
             returnEquipment = new Projector();
+            ((Projector) returnEquipment).setTimeWorkLampProjector(0);
+            returnEquipment.setImage("projector.png");
+            if (!maximumLampOperatingTime.getText().trim().isEmpty()) {
+                ((Projector) returnEquipment).setMaximumLampOperatingTimeProjector(Integer.valueOf(maximumLampOperatingTime.getText()));
+            } else ((Projector) returnEquipment).setMaximumLampOperatingTimeProjector(null);
         }
         if (equipment instanceof Microphone) {
             returnEquipment = new Microphone();
+            ((Microphone) returnEquipment).setFrequency(textFieldFrequency1.getText() + "." + textFieldFrequency2.getText());
+            returnEquipment.setImage("microphone.png");
         }
         if (equipment instanceof NetworkSwitch) {
             returnEquipment = new NetworkSwitch();
+            returnEquipment.setImage("network_switch.png");
         }
         if (equipment instanceof AcousticSpeaker) {
             returnEquipment = new AcousticSpeaker();
+            returnEquipment.setImage("acoustic_speaker.png");
         }
         if (equipment instanceof ControlProcessor) {
             returnEquipment = new ControlProcessor();
+            returnEquipment.setImage("control_processor.png");
         }
         if (equipment instanceof AudioProcessor) {
             returnEquipment = new AudioProcessor();
+            returnEquipment.setImage("audio_processor.png");
         }
         if (equipment instanceof AudioAmplifier) {
             returnEquipment = new AudioAmplifier();
+            returnEquipment.setImage("audio_amplifer.png");
         }
         if (equipment instanceof AudioInterface) {
             returnEquipment = new AudioInterface();
+            returnEquipment.setImage("audio_interface.png");
         }
         if (equipment instanceof TvPanel) {
             returnEquipment = new TvPanel();
+            returnEquipment.setImage("tv_panel.png");
+            ((TvPanel) returnEquipment).setDiagonal(tfDiagonal.getText());
         }
         if (equipment instanceof TvTuner) {
             returnEquipment = new TvTuner();
+            returnEquipment.setImage("tv_tuner.png");
         }
         if (equipment instanceof MediaPlayer) {
             returnEquipment = new MediaPlayer();
+            returnEquipment.setImage("media_player.png");
         }
         if (equipment instanceof Laptop) {
             returnEquipment = new Laptop();
+            returnEquipment.setImage("laptop.png");
+            ((Laptop) returnEquipment).setOs(tfOs.getText());
         }
         if (equipment instanceof VideoTransmitter) {
             returnEquipment = new VideoTransmitter();
+            returnEquipment.setImage("tx_rx.jpg");
         }
         if (equipment instanceof VideoReceiver) {
             returnEquipment = new VideoReceiver();
+            returnEquipment.setImage("tx_rx.jpg");
         }
         if (equipment instanceof MatrixSwitcher) {
             returnEquipment = new MatrixSwitcher();
+            returnEquipment.setImage("matrix_switcher.jpg");
         }
         if (equipment instanceof TouchControlPanel) {
             returnEquipment = new TouchControlPanel();
+            returnEquipment.setImage("control_patch_panel.png");
+            ((TouchControlPanel) returnEquipment).setDiagonal(tfDiagonal.getText());
         }
-        equipment.setName(cmbEquipmentType.getValue().toString());
-        equipment.setModel(textFiledModel.getText());
-        equipment.setManufacturer(textFieldManufacturer.getText());
-        equipment.setSerialNumber(textFieldSerialNumber.getText());
-        equipment.setMacAddress(checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText());
-        equipment.setMacAddress1(checkMac(oui11, oui21, oui31, uaa11, uaa21, uaa31).getText());
-        equipment.setMacAddress2(checkMac(oui12, oui22, oui32, uaa12, uaa22, uaa32).getText());
-        equipment.setMacAddress3(checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText());
-        equipment.setLogin(textFieldLogin.getText());
-        equipment.setPassword(textFieldPassword.getText());
-        equipment.setRoom(textFieldRoom.getText());
-        equipment.setLocation(textFieldLocation.getText());
+        assert returnEquipment != null;
+        returnEquipment.setName(cmbEquipmentType.getValue().toString());
+        returnEquipment.setModel(textFiledModel.getText());
+        returnEquipment.setManufacturer(textFieldManufacturer.getText());
+        returnEquipment.setSerialNumber(textFieldSerialNumber.getText());
+        returnEquipment.setMacAddress(checkEquipment.getMacAddressEquipment(oui1.getText(), oui2.getText(), oui3.getText(), uaa1.getText(), uaa2.getText(), uaa3.getText()));
+        returnEquipment.setMacAddress1(checkEquipment.getMacAddressEquipment(oui11.getText(), oui21.getText(), oui31.getText(), uaa11.getText(), uaa21.getText(), uaa31.getText()));
+        returnEquipment.setMacAddress2(checkEquipment.getMacAddressEquipment(oui12.getText(), oui22.getText(), oui32.getText(), uaa12.getText(), uaa22.getText(), uaa32.getText()));
+        returnEquipment.setMacAddress3(checkEquipment.getMacAddressEquipment(oui13.getText(), oui23.getText(), oui33.getText(), uaa13.getText(), uaa23.getText(), uaa33.getText()));
+        returnEquipment.setLogin(textFieldLogin.getText());
+        returnEquipment.setPassword(textFieldPassword.getText());
+        returnEquipment.setRoom(textFieldRoom.getText());
+        returnEquipment.setLocation(textFieldLocation.getText());
         if (textFieldDateOfCommissioning.getValue() == null) {
-            equipment.setDateWork(LocalDate.now());
+            returnEquipment.setDateWork(LocalDate.now());
             textFieldDateOfCommissioning.setPromptText(language.TODAY_DATE_WILL_BE_SET_RU(lang));
-        } else equipment.setDateWork(textFieldDateOfCommissioning.getValue());
-        if (!checkNet(network1, network2, subnet, device).getText().isEmpty()) {
-            equipment.setIpAddress(checkNet(network1, network2, subnet, device).getText());
-        }
-        equipment.setMasc(checkNet(networkMasc1, networkMasc2, subnetMasc, deviceMasc).getText());
-        equipment.setGateway(checkNet(gateway1, gateway2, subnetGateway, deviceGateway).getText());
-        if (!checkNet(networkMasc1Dante, networkMasc2Dante, subnetMascDante, deviceMascDante).getText().isEmpty()) {
-            equipment.setDanteIpAddress(checkNet(network1Dante, network2Dante, subnetDante, deviceDante).getText());
-        }
-        equipment.setDanteMasc(checkNet(networkMasc1Dante, networkMasc2Dante, subnetMascDante, deviceMascDante).getText());
-        equipment.setDanteGateway(checkNet(gateway1Dante, gateway2Dante, subnetGatewayDante, deviceGatewayDante).getText());
-        equipment.setCondition(comboBoxStatusSelection.getValue().toString());
-        equipment.setCompany(company.getNameCompany());
-        equipment.setManual(nameFileManual);
+        } else returnEquipment.setDateWork(textFieldDateOfCommissioning.getValue());
+
+        if (checkEquipment.getIpAddressEquipment(network1.getText(), network2.getText(), subnet.getText(), device.getText()) != null
+        && !checkEquipment.checkingEquipmentIpAddress(equipment)) {
+            returnEquipment.setIpAddress(checkEquipment.getIpAddressEquipment(network1.getText(), network2.getText(), subnet.getText(), device.getText()));
+        } else returnEquipment.setIpAddress("");
+
+        returnEquipment.setMasc(checkEquipment.getIpAddressEquipment(networkMasc1.getText(), networkMasc2.getText(), subnetMasc.getText(), deviceMasc.getText()));
+        returnEquipment.setGateway(checkEquipment.getIpAddressEquipment(gateway1.getText(), gateway2.getText(), subnetGateway.getText(), deviceGateway.getText()));
+
+        if (checkEquipment.getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()) != null
+                && !checkEquipment.checkingEquipmentIpAddressDante(equipment)) {
+            returnEquipment.setDanteIpAddress(checkEquipment.getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()));
+        } else returnEquipment.setDanteIpAddress("");
+
+        returnEquipment.setDanteMasc(checkEquipment.getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()));
+        returnEquipment.setDanteGateway(checkEquipment.getIpAddressEquipment(gateway1Dante.getText(), gateway2Dante.getText(), subnetGatewayDante.getText(), deviceGatewayDante.getText()));
+        returnEquipment.setCondition(comboBoxStatusSelection.getValue().toString());
+        returnEquipment.setCompany(company.getNameCompany());
+        returnEquipment.setManual(nameFileManual);
         if (choiceBoxNetworkSvitcher.getValue() != null) {
-            equipment.setIdNetworkSwitcher((equipmentRepository.getEquipmentBySerialNumber(company.getNameCompany(), choiceBoxNetworkSvitcher.getValue().toString())).getId());
-            equipment.setPortNumberInTheSwitch(Integer.parseInt(tfPortSwitcher.getText()));
-            equipment.setOutletNumber(tfOutlet.getText());
+            returnEquipment.setIdNetworkSwitcher((equipmentRepository.getEquipmentBySerialNumber(company.getNameCompany(), choiceBoxNetworkSvitcher.getValue().toString())).getId());
+            returnEquipment.setPortNumberInTheSwitch(Integer.parseInt(tfPortSwitcher.getText()));
+            returnEquipment.setOutletNumber(tfOutlet.getText());
         }
-        return equipment;
+
+        if(returnEquipment.getSerialNumber() != null || !returnEquipment.getSerialNumber().isEmpty()){
+            return returnEquipment;
+        } else return null;
     }
 
     public void saveEquipment(MouseEvent mouseEvent) {
@@ -1371,32 +1109,41 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             cmbEquipmentType.setStyle(new ComboBox<String>().getStyle());
             if (comboBoxStatusSelection.getValue() != null) {
                 comboBoxStatusSelection.setStyle(new ComboBox<String>().getStyle());
-                if (getCheckBoxList()) {
                     Equipment equipment = getEquipment();
-                    if (this.cmbEquipmentType.getValue() != null) {
                         if (equipment != null) {
-                            equipmentRepository.setEquipment(equipment);
-                            if (equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()) != null) {
-                                imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
-                                labelOk.setText(language.EQUIPMENT(lang) + " " + language.SERIAL_NUMBER(lang) + " : " + equipment.getSerialNumber() + " " + language.ADDED(lang));
-                                btnSaveEquipment.setDisable(true);
-                                GlobalLinkMainController.getMainController().updateUser();
-                            } else {
-                                imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/warning_min.png"))));
-                                labelOk.setText(equipment.getSerialNumber() + " : " + language.WILL_NOT_BE_ADDED(lang));
-                            }
+                            Task<Void> task = new Task<Void>() {
+                                @Override
+                                protected Void call() throws Exception {
+                                    equipmentRepository.setEquipment(equipment);
+                                    return null;
+                                }
+                            };
+                            ProgressBar progressBar= new ProgressBar(task.getProgress());
+                            progressBar.visibleProperty();
+                            gridPane.add(progressBar, 0, 30);
+                            task.setOnSucceeded((succeededEvent)->{
+                                progressBar.visibleProperty().bind(task.runningProperty());
+                                if (equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()) != null) {
+                                    imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
+                                    labelOk.setText(language.EQUIPMENT(lang) + " " + language.SERIAL_NUMBER(lang) + " : " + equipment.getSerialNumber() + " " + language.ADDED(lang));
+                                    clear();
+                                    GlobalLinkMainController.getMainController().updateUser();
+                                    GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getChildren().remove(
+                                            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getRight()
+                                    );
+                                } else {
+                                    imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/warning_min.png"))));
+                                    labelOk.setText(equipment.getSerialNumber() + " : " + language.WILL_NOT_BE_ADDED(lang));
+                                }
+                            });
+
+                            ExecutorService executorService = Executors.newFixedThreadPool(1);
+                            executorService.execute(task);
+                            executorService.shutdown();
                         } else {
                             imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/warning_min.png"))));
                             labelOk.setText(textFieldSerialNumber.getText() + " : " + language.WILL_NOT_BE_ADDED(lang));
                         }
-                    } else {
-                        imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/warning_min.png"))));
-                        labelOk.setText(language.FILL_IN_THE_FIELDS(lang));
-                    }
-                } else {
-                    imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/warning_min.png"))));
-                    labelOk.setText(language.WILL_NOT_BE_ADDED(lang));
-                }
             } else {
                 comboBoxStatusSelection.setStyle(STYLE_DANGER);
             }
@@ -1404,8 +1151,69 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             cmbEquipmentType.setStyle(STYLE_DANGER);
         }
     }
-
-    public void addNameEquipment(MouseEvent mouseEvent) {
+    public void clear(){
+        textFiledModel.clear();
+        textFieldManufacturer.clear();
+        textFieldSerialNumber.clear();
+        oui1.clear();
+        oui2.clear();
+        oui3.clear();
+        uaa1.clear();
+        uaa2.clear();
+        uaa3.clear();
+        textFieldLogin.clear();
+        textFieldPassword.clear();
+        textFieldRoom.clear();
+        textFieldLocation.clear();
+        network1.clear();
+        network2.clear();
+        subnet.clear();
+        device.clear();
+        networkMasc1.clear();
+        networkMasc2.clear();
+        subnetMasc.clear();
+        deviceMasc.clear();
+        gateway1.clear();
+        gateway2.clear();
+        subnetGateway.clear();
+        deviceGateway.clear();
+        textFieldFrequency1.clear();
+        textFieldFrequency2.clear();
+        maximumLampOperatingTime.clear();
+        network1Dante.clear();
+        network2Dante.clear();
+        subnetDante.clear();
+        deviceDante.clear();
+        networkMasc1Dante.clear();
+        subnetMascDante.clear();
+        deviceMascDante.clear();
+        gateway1Dante.clear();
+        gateway2Dante.clear();
+        subnetGatewayDante.clear();
+        deviceGatewayDante.clear();
+        networkMasc2Dante.clear();
+        tfDiagonal.clear();
+        tfOs.clear();
+        tfPortSwitcher.clear();
+        tfOutlet.clear();
+        oui11.clear();
+        oui21.clear();
+        oui31.clear();
+        uaa11.clear();
+        uaa21.clear();
+        uaa31.clear();
+        oui12.clear();
+        oui22.clear();
+        oui32.clear();
+        uaa12.clear();
+        uaa22.clear();
+        uaa32.clear();
+        oui13.clear();
+        oui23.clear();
+        oui33.clear();
+        uaa13.clear();
+        uaa23.clear();
+        uaa33.clear();
     }
 
     public void closeAddEquipmentController(MouseEvent mouseEvent) {
@@ -1413,64 +1221,6 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                 GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getRight()
         );
     }
-
-    public Boolean getCheckBoxList() {
-
-        if (checkModel.isSelected() && checkManufacturer.isSelected() && checkSerialNumber.isSelected()) {
-
-            if (checkMacAddress.isSelected() || (!checkMacAddress.isSelected() && !checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText().trim().isEmpty())) {
-
-                hBoxMacAddress.setStyle(new HBox().getStyle());
-
-                if (checkMacAddress1.isSelected() || (!checkMacAddress1.isSelected() && !checkMac(oui11, oui21, oui31, uaa11, uaa21, uaa31).getText().trim().isEmpty())) {
-                    hBoxMacAddress1.setStyle(new HBox().getStyle());
-                } else {
-                    hBoxMacAddress1.setStyle(STYLE_WARNING);
-                }
-
-                if (checkMacAddress2.isSelected() || (!checkMacAddress2.isSelected() && !checkMac(oui12, oui22, oui32, uaa12, uaa22, uaa32).getText().trim().isEmpty())) {
-                    hBoxMacAddress2.setStyle(new HBox().getStyle());
-                } else {
-                    hBoxMacAddress2.setStyle(STYLE_WARNING);
-                }
-                if (checkMacAddress3.isSelected() || (!checkMacAddress3.isSelected() && !checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText().trim().isEmpty())) {
-                    hBoxMacAddress3.setStyle(new HBox().getStyle());
-                } else {
-                    hBoxMacAddress3.setStyle(STYLE_WARNING);
-                }
-
-                if (checkIpv4.isSelected() || (!checkIpv4.isSelected() && checkNet(network1, network2, subnet, device).getText().trim().isEmpty())) {
-
-                    hBoxTCP.setStyle(new HBox().getStyle());
-
-                    if (checkIpv4Dante.isSelected() || (!checkIpv4Dante.isSelected() && checkNet(network1Dante, network2Dante, subnetDante, deviceDante).getText().trim().isEmpty())) {
-
-                        hBoxTCPDante.setStyle(new HBox().getStyle());
-
-                        if (checkNumberPortSwitcher.isSelected() || (!checkNumberPortSwitcher.isSelected() && tfPortSwitcher.getText().trim().isEmpty())) {
-                            hBoxNetworkSwitcher.setStyle(new HBox().getStyle());
-                            hBoxPortSwitcher.setStyle(new HBox().getStyle());
-                            return true;
-                        } else {
-                            hBoxNetworkSwitcher.setStyle(STYLE_DANGER);
-                            hBoxPortSwitcher.setStyle(STYLE_DANGER);
-                            return false;
-                        }
-                    } else {
-                        hBoxTCPDante.setStyle(STYLE_DANGER);
-                        return false;
-                    }
-                } else {
-                    hBoxTCP.setStyle(STYLE_DANGER);
-                    return false;
-                }
-            } else {
-                hBoxMacAddress.setStyle(STYLE_DANGER);
-                return false;
-            }
-        } else return false;
-    }
-
 
     public void onActionBtnMacDop(ActionEvent actionEvent) {
         this.hBoxMacAddress1.setVisible(true);
@@ -1484,9 +1234,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui1_1(KeyEvent keyEvent) {
         if (oui11.getText().isEmpty()) {
             oui11.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui11.getText()) || oui11.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui11.getText()) || oui11.getText().length() > 2) {
             oui11.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui11.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui11.getText())) {
             oui11.setStyle(new TextField().getStyle());
         } else oui11.setStyle(new TextField().getStyle());
     }
@@ -1494,9 +1244,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui2_1(KeyEvent keyEvent) {
         if (oui21.getText().isEmpty()) {
             oui21.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui21.getText()) || oui21.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui21.getText()) || oui21.getText().length() > 2) {
             oui21.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui21.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui21.getText())) {
             oui21.setStyle(new TextField().getStyle());
         } else oui21.setStyle(new TextField().getStyle());
     }
@@ -1504,9 +1254,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui3_1(KeyEvent keyEvent) {
         if (oui31.getText().isEmpty()) {
             oui31.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui31.getText()) || oui31.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui31.getText()) || oui31.getText().length() > 2) {
             oui31.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui31.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui31.getText())) {
             oui31.setStyle(new TextField().getStyle());
         } else oui31.setStyle(new TextField().getStyle());
     }
@@ -1514,9 +1264,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyUaa1_1(KeyEvent keyEvent) {
         if (uaa11.getText().isEmpty()) {
             uaa11.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa11.getText()) || uaa11.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa11.getText()) || uaa11.getText().length() > 2) {
             uaa11.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa11.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa11.getText())) {
             uaa11.setStyle(new TextField().getStyle());
         } else uaa11.setStyle(new TextField().getStyle());
     }
@@ -1524,35 +1274,31 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyUaa2_1(KeyEvent keyEvent) {
         if (uaa21.getText().isEmpty()) {
             uaa21.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa21.getText()) || uaa21.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa21.getText()) || uaa21.getText().length() > 2) {
             uaa21.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa21.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa21.getText())) {
             uaa21.setStyle(new TextField().getStyle());
         } else uaa21.setStyle(new TextField().getStyle());
     }
 
     public void onKeyUaa3_1(KeyEvent keyEvent) {
-        checkMacAddress1.setVisible(true);
-        checkMacAddress1.setManaged(true);
         if (uaa31.getText().isEmpty()) {
             uaa31.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa31.getText()) || uaa31.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa31.getText()) || uaa31.getText().length() > 2) {
             uaa31.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa31.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa31.getText())) {
             uaa31.setStyle(new TextField().getStyle());
         } else uaa31.setStyle(new TextField().getStyle());
 
-        if (!checkMac(oui11, oui21, oui31, uaa11, uaa21, uaa31).getText().trim().isEmpty()) {
+        if (checkEquipment.getMacAddressEquipment(oui11.getText(), oui21.getText(), oui31.getText(),uaa11.getText(), uaa21.getText(), uaa31.getText()) != null) {
             hBoxMacAddress1.setStyle(new HBox().getStyle());
-            if (checkMacAddress1(company.getNameCompany(), checkMac(oui11, oui21, oui31, uaa11, uaa21, uaa31).getText())) {
-                checkMacAddress1.setSelected(true);
+            if (!checkEquipment.checkingEquipmentMac1Address(checkEquipment.getMacAddressEquipment(oui11.getText()
+                    , oui21.getText(), oui31.getText(),uaa11.getText(), uaa21.getText(), uaa31.getText()), company.getNameCompany())) {
                 hBoxMacAddress1.setStyle(new HBox().getStyle());
             } else {
-                checkMacAddress1.setSelected(false);
                 hBoxMacAddress1.setStyle(STYLE_DANGER);
             }
         } else {
-            checkMacAddress1.setSelected(false);
             hBoxMacAddress1.setStyle(STYLE_DANGER);
         }
     }
@@ -1560,9 +1306,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui1_2(KeyEvent keyEvent) {
         if (oui12.getText().isEmpty()) {
             oui12.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui12.getText()) || oui12.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui12.getText()) || oui12.getText().length() > 2) {
             oui12.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui12.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui12.getText())) {
             oui12.setStyle(new TextField().getStyle());
         } else oui12.setStyle(new TextField().getStyle());
     }
@@ -1570,9 +1316,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui2_2(KeyEvent keyEvent) {
         if (oui22.getText().isEmpty()) {
             oui22.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui22.getText()) || oui22.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui22.getText()) || oui22.getText().length() > 2) {
             oui22.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui22.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui22.getText())) {
             oui22.setStyle(new TextField().getStyle());
         } else oui22.setStyle(new TextField().getStyle());
     }
@@ -1580,9 +1326,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui3_2(KeyEvent keyEvent) {
         if (oui32.getText().isEmpty()) {
             oui32.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui32.getText()) || oui32.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui32.getText()) || oui32.getText().length() > 2) {
             oui32.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui32.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui32.getText())) {
             oui32.setStyle(new TextField().getStyle());
         } else oui32.setStyle(new TextField().getStyle());
     }
@@ -1590,9 +1336,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyUaa1_2(KeyEvent keyEvent) {
         if (uaa12.getText().isEmpty()) {
             uaa12.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa12.getText()) || uaa12.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa12.getText()) || uaa12.getText().length() > 2) {
             uaa12.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa12.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa12.getText())) {
             uaa12.setStyle(new TextField().getStyle());
         } else uaa12.setStyle(new TextField().getStyle());
     }
@@ -1600,35 +1346,31 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyUaa2_2(KeyEvent keyEvent) {
         if (uaa22.getText().isEmpty()) {
             uaa22.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa22.getText()) || uaa22.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa22.getText()) || uaa22.getText().length() > 2) {
             uaa22.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa22.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa22.getText())) {
             uaa22.setStyle(new TextField().getStyle());
         } else uaa22.setStyle(new TextField().getStyle());
     }
 
     public void onKeyUaa3_2(KeyEvent keyEvent) {
-        checkMacAddress2.setVisible(true);
-        checkMacAddress2.setManaged(true);
         if (uaa32.getText().isEmpty()) {
             uaa32.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa32.getText()) || uaa32.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa32.getText()) || uaa32.getText().length() > 2) {
             uaa32.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa32.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa32.getText())) {
             uaa32.setStyle(new TextField().getStyle());
         } else uaa32.setStyle(new TextField().getStyle());
 
-        if (!checkMac(oui12, oui22, oui32, uaa12, uaa22, uaa32).getText().trim().isEmpty()) {
+        if (checkEquipment.getMacAddressEquipment(oui12.getText(), oui22.getText(), oui32.getText(), uaa12.getText(), uaa22.getText(), uaa32.getText()) != null) {
             hBoxMacAddress2.setStyle(new HBox().getStyle());
-            if (checkMacAddress2(company.getNameCompany(), checkMac(oui12, oui22, oui32, uaa12, uaa22, uaa32).getText())) {
-                checkMacAddress2.setSelected(true);
+            if (!checkEquipment.checkingEquipmentMac2Address(checkEquipment.getMacAddressEquipment(oui12.getText(), oui22.getText()
+                    , oui32.getText(), uaa12.getText(), uaa22.getText(), uaa32.getText()), company.getNameCompany())) {
                 hBoxMacAddress2.setStyle(new HBox().getStyle());
             } else {
-                checkMacAddress2.setSelected(false);
                 hBoxMacAddress2.setStyle(STYLE_DANGER);
             }
         } else {
-            checkMacAddress2.setSelected(false);
             hBoxMacAddress2.setStyle(STYLE_DANGER);
         }
     }
@@ -1636,9 +1378,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui1_3(KeyEvent keyEvent) {
         if (oui13.getText().isEmpty()) {
             oui13.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui13.getText()) || oui13.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui13.getText()) || oui13.getText().length() > 2) {
             oui13.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui13.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui13.getText())) {
             oui13.setStyle(new TextField().getStyle());
         } else oui13.setStyle(new TextField().getStyle());
     }
@@ -1646,9 +1388,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui2_3(KeyEvent keyEvent) {
         if (oui23.getText().isEmpty()) {
             oui23.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui23.getText()) || oui23.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui23.getText()) || oui23.getText().length() > 2) {
             oui23.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui23.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui23.getText())) {
             oui23.setStyle(new TextField().getStyle());
         } else oui23.setStyle(new TextField().getStyle());
     }
@@ -1656,9 +1398,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyOui3_3(KeyEvent keyEvent) {
         if (oui33.getText().isEmpty()) {
             oui33.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(oui33.getText()) || oui33.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(oui33.getText()) || oui33.getText().length() > 2) {
             oui33.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(oui33.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(oui33.getText())) {
             oui33.setStyle(new TextField().getStyle());
         } else oui33.setStyle(new TextField().getStyle());
     }
@@ -1666,9 +1408,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyUaa1_3(KeyEvent keyEvent) {
         if (uaa13.getText().isEmpty()) {
             uaa13.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa13.getText()) || uaa13.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa13.getText()) || uaa13.getText().length() > 2) {
             uaa13.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa13.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa13.getText())) {
             uaa13.setStyle(new TextField().getStyle());
         } else uaa13.setStyle(new TextField().getStyle());
     }
@@ -1676,35 +1418,31 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public void onKeyUaa2_3(KeyEvent keyEvent) {
         if (uaa23.getText().isEmpty()) {
             uaa23.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa23.getText()) || uaa23.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa23.getText()) || uaa23.getText().length() > 2) {
             uaa23.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa23.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa23.getText())) {
             uaa23.setStyle(new TextField().getStyle());
         } else uaa23.setStyle(new TextField().getStyle());
     }
 
     public void onKeyUaa3_3(KeyEvent keyEvent) {
-        checkMacAddress3.setVisible(true);
-        checkMacAddress3.setManaged(true);
         if (uaa33.getText().isEmpty()) {
             uaa33.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition(uaa33.getText()) || uaa33.getText().length() > 2) {
+        } else if (!checkEquipment.checkingStringWithACondition(uaa33.getText()) || uaa33.getText().length() > 2) {
             uaa33.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition(uaa33.getText())) {
+        } else if (checkEquipment.checkingStringWithACondition(uaa33.getText())) {
             uaa33.setStyle(new TextField().getStyle());
         } else uaa33.setStyle(new TextField().getStyle());
 
-        if (!checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText().trim().isEmpty()) {
+        if (checkEquipment.getMacAddressEquipment(oui13.getText(), oui23.getText(), oui33.getText(), uaa13.getText(), uaa23.getText(), uaa33.getText()) != null) {
             hBoxMacAddress3.setStyle(new HBox().getStyle());
-            if (checkMacAddress3(company.getNameCompany(), checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText())) {
-                checkMacAddress3.setSelected(true);
+            if (!checkEquipment.checkingEquipmentMac3Address(checkEquipment.getMacAddressEquipment(oui13.getText(), oui23.getText()
+                    , oui33.getText(), uaa13.getText(), uaa23.getText(), uaa33.getText()), company.getNameCompany())) {
                 hBoxMacAddress3.setStyle(new HBox().getStyle());
             } else {
-                checkMacAddress3.setSelected(false);
                 hBoxMacAddress3.setStyle(STYLE_DANGER);
             }
         } else {
-            checkMacAddress3.setSelected(false);
             hBoxMacAddress3.setStyle(STYLE_DANGER);
         }
     }
