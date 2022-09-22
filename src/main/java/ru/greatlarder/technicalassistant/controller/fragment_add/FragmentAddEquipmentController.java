@@ -1078,7 +1078,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         if (checkEquipment.getIpAddressEquipment(network1.getText(), network2.getText(), subnet.getText(), device.getText()) != null
         && !checkEquipment.checkingEquipmentIpAddress(equipment)) {
             returnEquipment.setIpAddress(checkEquipment.getIpAddressEquipment(network1.getText(), network2.getText(), subnet.getText(), device.getText()));
-        } else returnEquipment.setIpAddress("");
+        } else returnEquipment.setIpAddress(null);
 
         returnEquipment.setMasc(checkEquipment.getIpAddressEquipment(networkMasc1.getText(), networkMasc2.getText(), subnetMasc.getText(), deviceMasc.getText()));
         returnEquipment.setGateway(checkEquipment.getIpAddressEquipment(gateway1.getText(), gateway2.getText(), subnetGateway.getText(), deviceGateway.getText()));
@@ -1086,7 +1086,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         if (checkEquipment.getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()) != null
                 && !checkEquipment.checkingEquipmentIpAddressDante(equipment)) {
             returnEquipment.setDanteIpAddress(checkEquipment.getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()));
-        } else returnEquipment.setDanteIpAddress("");
+        } else returnEquipment.setDanteIpAddress(null);
 
         returnEquipment.setDanteMasc(checkEquipment.getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()));
         returnEquipment.setDanteGateway(checkEquipment.getIpAddressEquipment(gateway1Dante.getText(), gateway2Dante.getText(), subnetGatewayDante.getText(), deviceGatewayDante.getText()));

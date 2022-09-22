@@ -1635,9 +1635,9 @@ public class LanguageImpl implements Language {
             listPost.add("Engineer");
             // listPost.add("Manager");
             // listPost.add("Head of Department");
-            listPost.add("Reception Secretary");
+            //listPost.add("Reception Secretary");
             // listPost.add("Assistant Manager");
-            listPost.add("Installer");
+            //listPost.add("Installer");
             // listPost.add("IT Specialist");
             //listPost.add("Customer's representative");
             //listPost.add("Director");
@@ -1647,9 +1647,9 @@ public class LanguageImpl implements Language {
             listPost.add("Инженер");
             //listPost.add("Менеджер");
             //listPost.add("Начальник отдела");
-            listPost.add("Секретарь приемной");
+            //listPost.add("Секретарь приемной");
             //listPost.add("Помощник руководителя");
-            listPost.add("Монтажник");
+            //listPost.add("Монтажник");
             //listPost.add("Специалист IT");
             //listPost.add("Представитель заказчика");
             //listPost.add("Директор");
