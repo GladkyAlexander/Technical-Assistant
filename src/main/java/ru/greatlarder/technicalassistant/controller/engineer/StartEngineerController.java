@@ -189,6 +189,17 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
                     }
                 }
                 if (user.getCompanyList().size() > 1) {
+                    if(company != null){
+                        for (Company company1 : user.getCompanyList()) {
+                            if(company1.getNameCompany().equals(company.getNameCompany())){
+                                this.company = company1;
+                                MenuItem menuItem = new MenuItem(company.getNameCompany());
+                                menuItem.setOnAction(eventEventHandler);
+                                btnSelectCompanies.getItems().addAll(menuItem);
+                                handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                            }
+                        }
+                    }
                     vBoxNameCompany.setVisible(true);
                     vBoxNameCompany.setManaged(true);
                     imageViewLogo.setFitHeight(50);
@@ -234,7 +245,6 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
             ptEmail.setText(company.getMailCurator());
             imageViewLogo.setImage(new Image(fileManager.folderImage() + "\\" + company.getLogoCompany()));
         }
-
     };
 
     @Override
@@ -247,7 +257,8 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     @Override
     public void updateUser(DataUser dataUser) {
         this.user = dataUser.getUser();
-        loadPage();
+        //loadPage();
+        menuButtonStart();
         handlerUserListener.onNewDataUser(new DataUser(user));
     }
 

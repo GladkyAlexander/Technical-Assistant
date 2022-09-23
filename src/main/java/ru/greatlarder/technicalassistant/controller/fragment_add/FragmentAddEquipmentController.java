@@ -1057,8 +1057,8 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             returnEquipment.setImage("control_patch_panel.png");
             ((TouchControlPanel) returnEquipment).setDiagonal(tfDiagonal.getText());
         }
-        assert returnEquipment != null;
-        returnEquipment.setName(cmbEquipmentType.getValue().toString());
+
+        returnEquipment.setName(cmbEquipmentType.getValue());
         returnEquipment.setModel(textFiledModel.getText());
         returnEquipment.setManufacturer(textFieldManufacturer.getText());
         returnEquipment.setSerialNumber(textFieldSerialNumber.getText());
@@ -1076,7 +1076,8 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         } else returnEquipment.setDateWork(textFieldDateOfCommissioning.getValue());
 
         if (checkEquipment.getIpAddressEquipment(network1.getText(), network2.getText(), subnet.getText(), device.getText()) != null
-        && !checkEquipment.checkingEquipmentIpAddress(equipment)) {
+        && !checkEquipment.checkingForAddressOccupancy(checkEquipment.getIpAddressEquipment(network1.getText(), network2.getText(), subnet.getText(), device.getText()),
+                company.getNameCompany())) {
             returnEquipment.setIpAddress(checkEquipment.getIpAddressEquipment(network1.getText(), network2.getText(), subnet.getText(), device.getText()));
         } else returnEquipment.setIpAddress(null);
 
@@ -1084,7 +1085,8 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         returnEquipment.setGateway(checkEquipment.getIpAddressEquipment(gateway1.getText(), gateway2.getText(), subnetGateway.getText(), deviceGateway.getText()));
 
         if (checkEquipment.getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()) != null
-                && !checkEquipment.checkingEquipmentIpAddressDante(equipment)) {
+                && !checkEquipment.checkingForAddressOccupancyDante(checkEquipment.getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()),
+                company.getNameCompany())) {
             returnEquipment.setDanteIpAddress(checkEquipment.getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()));
         } else returnEquipment.setDanteIpAddress(null);
 
@@ -1093,6 +1095,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         returnEquipment.setCondition(comboBoxStatusSelection.getValue().toString());
         returnEquipment.setCompany(company.getNameCompany());
         returnEquipment.setManual(nameFileManual);
+
         if (choiceBoxNetworkSvitcher.getValue() != null) {
             returnEquipment.setIdNetworkSwitcher((equipmentRepository.getEquipmentBySerialNumber(company.getNameCompany(), choiceBoxNetworkSvitcher.getValue().toString())).getId());
             returnEquipment.setPortNumberInTheSwitch(Integer.parseInt(tfPortSwitcher.getText()));

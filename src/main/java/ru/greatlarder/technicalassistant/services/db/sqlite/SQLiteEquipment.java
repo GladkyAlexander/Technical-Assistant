@@ -79,7 +79,9 @@ public interface SQLiteEquipment {
             "    'port45'             INTEGER," +
             "    'port46'             INTEGER," +
             "    'port47'             INTEGER," +
-            "    'port48'             INTEGER);";
+            "    'port48'             INTEGER," +
+            "    'operating_system'   TEXT," +
+            "    'diagonal'           TEXT);";
 
     String INSERT_TABLE_EQUIPMENT = "INSERT INTO equipment ( " +
             "    name," +
@@ -158,12 +160,14 @@ public interface SQLiteEquipment {
             "    port45," +
             "    port46," +
             "    port47," +
-            "    port48)" +
+            "    port48," +
+            "    operating_system," +
+            "    diagonal)" +
             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?" +
             "   ,?,?,?,?,?,?,?,?,?,?" +
             "   ,?,?,?,?,?,?,?,?,?,?" +
             "   ,?,?,?,?,?,?,?,?,?,?" +
-            "   ,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "   ,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     String READ_TABLE_EQUIPMENT = "SELECT * FROM equipment";
 }
