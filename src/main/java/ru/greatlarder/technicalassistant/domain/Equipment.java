@@ -339,4 +339,6 @@ public class Equipment {
                 ", cl=" + cl +
                 '}';
     }
+
+
 }

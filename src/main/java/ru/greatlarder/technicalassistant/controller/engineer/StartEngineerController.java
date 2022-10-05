@@ -140,9 +140,10 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
             borderPaneEngineerPage.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
             handlerUserListener.registerObserverUser(loader.getController());
+            handlerCompanyListener.registerObserverCompany(loader.getController());
             handlerLang.onNewDataLang(new DataLang(lang));
             handlerUserListener.onNewDataUser(new DataUser(user));
-
+            handlerCompanyListener.onNewDataCompany(new DataCompany(company));
             SettingsEngineerController settingsPageController = loader.getController();
             settingsPageController.loadPage();
 

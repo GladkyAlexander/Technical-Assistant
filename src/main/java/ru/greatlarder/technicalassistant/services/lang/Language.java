@@ -3,6 +3,7 @@ package ru.greatlarder.technicalassistant.services.lang;
 import java.util.List;
 
 public interface Language {
+
     String ADDED(String language);
     String WILL_NOT_BE_ADDED(String language);
     String PROJECTOR(String language);
@@ -160,6 +161,7 @@ public interface Language {
     String MATRIX_SWITCHER_RU = "Матричный коммутатор";
     String NETWORK_SWITCH_RU = "Сетевой коммутатор";
     String TOUCH_CONTROL_PANEL_RU = "Сенсорная панель управления";
+    String CONTROLLER_RU = "Контроллер";
     String PATHS_PANEL_RU = "Патч панель";
     String LOCATION(String lang);
     String NAME(String lang);
@@ -247,4 +249,38 @@ public interface Language {
     String EXIT(String lang);
 
     String RECEPTION_SECRETARY(String lang);
+
+    String EXTERNAL_DATABASE_SETTINGS(String lang);
+
+    String SERVER_HOSTNAME(String lang);
+
+    String PORT(String lang);
+
+    String DATABASE_NAME(String lang);
+
+    String USER(String lang);
+
+    String UPDATE_DATA_IN_AN_EXTERNAL_DATABASE(String lang);
+
+    String GET_DATA_FROM_AN_EXTERNAL_DATABASE(String lang);
+
+    String THE_DATA_IS_UP_TO_DATE(String lang);
+
+    String COMPARE_DATA(String lang);
+
+    String CHANGE_DATA(String lang);
+
+    String LOCAL_STORAGE(String lang);
+
+    String EXTERNAL_STORAGE(String lang);
+
+    String THE_EXTERNAL_DATABASE_IS_EMPTY(String lang);
+
+    String SAVE_THIS_DATA_TO(String lang);
+
+    String DATABASE_USER_NAME(String lange);
+
+    String PASSWORD_DATABASE(String lange);
+
+    String CONTROLLER(String lang);
 }

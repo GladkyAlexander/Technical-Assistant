@@ -12,13 +12,18 @@ public class User {
     private String language;
     private String login;
     private String password;
+    private String server;
+    private String port;
+    private String nameDB;
+    private String userDB;
+    private String passwordDB;
     private List<Company> companyList;
     private List<MailSettings> mailSettings;
 
     public User() {
     }
 
-    public User(String lastName, String firstName, String post, String phone, String mailAddress, String language, String login, String password, List<Company> companyList, List<MailSettings> mailSettings) {
+    public User(String lastName, String firstName, String post, String phone, String mailAddress, String language, String login, String password, String server, String port, String nameDB, String userDB, String passwordDB, List<Company> companyList, List<MailSettings> mailSettings) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.post = post;
@@ -27,6 +32,11 @@ public class User {
         this.language = language;
         this.login = login;
         this.password = password;
+        this.server = server;
+        this.port = port;
+        this.nameDB = nameDB;
+        this.userDB = userDB;
+        this.passwordDB = passwordDB;
         this.companyList = companyList;
         this.mailSettings = mailSettings;
     }
@@ -103,6 +113,46 @@ public class User {
         this.password = password;
     }
 
+    public String getServer() {
+        return server;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getNameDB() {
+        return nameDB;
+    }
+
+    public void setNameDB(String nameDB) {
+        this.nameDB = nameDB;
+    }
+
+    public String getUserDB() {
+        return userDB;
+    }
+
+    public void setUserDB(String userDB) {
+        this.userDB = userDB;
+    }
+
+    public String getPasswordDB() {
+        return passwordDB;
+    }
+
+    public void setPasswordDB(String passwordDB) {
+        this.passwordDB = passwordDB;
+    }
+
     public List<Company> getCompanyList() {
         return companyList;
     }
@@ -131,6 +181,11 @@ public class User {
                 ", language='" + language + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", server='" + server + '\'' +
+                ", port='" + port + '\'' +
+                ", nameDB='" + nameDB + '\'' +
+                ", userDB='" + userDB + '\'' +
+                ", passwordDB='" + passwordDB + '\'' +
                 ", companyList=" + companyList +
                 ", mailSettings=" + mailSettings +
                 '}';

@@ -23,8 +23,10 @@ import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
 import ru.greatlarder.technicalassistant.repository.DefectRepository;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
+import ru.greatlarder.technicalassistant.repository.ExternalDatabase;
 import ru.greatlarder.technicalassistant.repository.impl.DefectRepositoryImpl;
 import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.repository.impl.ExternalDatabaseRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.check.CheckEquipment;
 import ru.greatlarder.technicalassistant.services.check.impl.CheckEquipmentImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
@@ -43,7 +45,6 @@ import java.util.List;
 import java.util.Objects;
 
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.*;
-import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_WARNING;
 
 public class FragmentEquipmentOneController implements ObserverLang {
     @FXML
@@ -231,6 +232,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
     @FXML public Label labelGatewayAddressDante;
     @FXML public Label labelDiagonal;
     @FXML public Label diagonal;
+    @FXML public Label labelStorage;
+    @FXML public Button btnChangeDataStorage;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
     Language language = new LanguageImpl();
     DefectRepository defectRepository = new DefectRepositoryImpl();
@@ -238,6 +241,17 @@ public class FragmentEquipmentOneController implements ObserverLang {
     Equipment equipment;
     String lang;
     CheckEquipment checkEquipment = new CheckEquipmentImpl();
+    SplitPane scrollPaneFragmentIdenticalData;
+
+    public void setLabelStorage(String labelStorage) {
+        this.labelStorage.setText(labelStorage);
+    }
+
+    public void setBtnChangeDataStorage(String btnChangeDataStorage, SplitPane pane) {
+        this.scrollPaneFragmentIdenticalData = pane;
+        this.btnChangeDataStorage.setVisible(true);
+        this.btnChangeDataStorage.setText(btnChangeDataStorage);
+    }
 
     public void setEquip(Equipment equipment){
         this.equipment = equipment;
@@ -1779,7 +1793,6 @@ public class FragmentEquipmentOneController implements ObserverLang {
             ua2.setStyle(STYLE_WARNING);
             ua3.setStyle(STYLE_WARNING);
         }
-
         return textField;
     }
 
@@ -1817,5 +1830,17 @@ public class FragmentEquipmentOneController implements ObserverLang {
         btnSaveNewMac3.setManaged(true);
         Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         stage.sizeToScene();
+    }
+
+    public void changeDataInStorage(MouseEvent mouseEvent) {
+        if (labelStorage.getText().equals("Локальное хранилище") || labelStorage.getText().equals("Local storage")){
+            ExternalDatabase externalDatabase = new ExternalDatabaseRepositoryImpl();
+            externalDatabase.changeDataEquipment(equipment);
+            scrollPaneFragmentIdenticalData.getItems().clear();
+        }
+        if (labelStorage.getText().equals("Внешнее хранилище") || labelStorage.getText().equals("External storage")){
+            equipmentRepository.changeDataEquipmentForId(equipment);
+            scrollPaneFragmentIdenticalData.getItems().clear();
+        }
     }
 }

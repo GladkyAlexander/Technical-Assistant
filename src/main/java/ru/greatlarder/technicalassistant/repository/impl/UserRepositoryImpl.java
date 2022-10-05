@@ -30,6 +30,11 @@ public class UserRepositoryImpl implements UserRepository {
                     user.setLanguage(resultSet.getString("language"));
                     user.setLogin(resultSet.getString("login"));
                     user.setPassword(resultSet.getString("password"));
+                    user.setServer(resultSet.getString("server"));
+                    user.setPort(resultSet.getString("port"));
+                    user.setNameDB(resultSet.getString("nameDB"));
+                    user.setUserDB(resultSet.getString("userDB"));
+                    user.setPasswordDB(resultSet.getString("passwordDB"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,6 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         try {
             PreparedStatement cf = connection.prepareStatement(SQLiteUser.INSERT_TABLE_USER);
+
             cf.setString(1, user.getLastName());
             cf.setString(2, user.getFirstName());
             cf.setString(3, user.getMailAddress());
@@ -50,6 +56,11 @@ public class UserRepositoryImpl implements UserRepository {
             cf.setString(6,user.getLanguage());
             cf.setString(7, user.getLogin());
             cf.setString(8, user.getPassword());
+            cf.setString(9, user.getServer());
+            cf.setString(10, user.getPort());
+            cf.setString(11, user.getNameDB());
+            cf.setString(12, user.getUserDB());
+            cf.setString(13, user.getPasswordDB());
 
             cf.executeUpdate();
             closeDB();
@@ -94,6 +105,25 @@ public class UserRepositoryImpl implements UserRepository {
                return user;
            }
        }
+        return null;
+    }
+
+    @Override
+    public User change(User user, String valueWhatToChange, String valueOnWhat) {
+        String sql = "UPDATE user SET" + valueWhatToChange + "= ? WHERE id = ?";
+
+        try {
+            PreparedStatement cf = connection.prepareStatement(sql);
+
+            cf.setString(1,valueOnWhat);
+            cf.setInt(2, user.getId());
+            cf.executeUpdate();
+            closeDB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            closeDB();
+        }
         return null;
     }
 

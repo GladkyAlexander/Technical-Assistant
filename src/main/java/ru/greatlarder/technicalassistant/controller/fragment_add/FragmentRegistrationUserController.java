@@ -52,6 +52,16 @@ public class FragmentRegistrationUserController implements ObserverLang{
     @FXML public Label labelPassword;
     @FXML public TextField tfLogin;
     @FXML public TextField tfPassword;
+    @FXML public Label labelNameServer;
+    @FXML public Label labelPortServer;
+    @FXML public Label labelNameDbExternal;
+    @FXML public Label labelUserDbExternal;
+    @FXML public Label labelPasswordDbExternal;
+    @FXML public TextField tfNameServer;
+    @FXML public TextField tfPortServerDbExternal;
+    @FXML public TextField tfNameDbExternal;
+    @FXML public TextField tfNameUserDbExternal;
+    @FXML public TextField tfPasswordDbExternal;
     UserRepository userRepository = new UserRepositoryImpl();
     Language lines = new LanguageImpl();
     String lang;
@@ -66,6 +76,11 @@ public class FragmentRegistrationUserController implements ObserverLang{
         user.setLogin(tfLogin.getText());
         user.setPassword(tfPassword.getText());
         user.setPost(comboBoxPost.getValue());
+        user.setServer(tfNameServer.getText());
+        user.setPort(tfPortServerDbExternal.getText());
+        user.setNameDB(tfNameDbExternal.getText());
+        user.setUserDB(tfNameUserDbExternal.getText());
+        user.setPasswordDB(tfPasswordDbExternal.getText());
         if(menuButtonLanguage.getText().equals("Россия")){
             user.setLanguage("Русский");
         }
@@ -111,6 +126,11 @@ public class FragmentRegistrationUserController implements ObserverLang{
         menuButtonLanguage.setText(lines.SELECT_A_COUNTRY(lange));
         btnSave.setText(lines.SAVE(lange));
         comboBoxPost.setItems(FXCollections.observableArrayList(lines.LIST_POST(lange)));
+        labelNameServer.setText(lines.SERVER_HOSTNAME(lange));
+        labelPortServer.setText(lines.PORT(lange));
+        labelNameDbExternal.setText(lines.DATABASE_NAME(lange));
+        labelUserDbExternal.setText(lines.DATABASE_USER_NAME(lange));
+        labelPasswordDbExternal.setText(lines.PASSWORD_DATABASE(lange));
     }
 
     @Override

@@ -1055,6 +1055,193 @@ public class LanguageImpl implements Language {
     }
 
     @Override
+    public String EXTERNAL_DATABASE_SETTINGS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Настройки внешней базы данных";
+        } else if (lang.equals(en)) {
+            ps = "External database settings";
+        }
+        return ps;
+    }
+
+    @Override
+    public String SERVER_HOSTNAME(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Сервер/Имя хоста";
+        } else if (lang.equals(en)) {
+            ps = "Server/Hostname";
+        }
+        return ps;
+    }
+
+    @Override
+    public String PORT(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Порт";
+        } else if (lang.equals(en)) {
+            ps = "Port";
+        }
+        return ps;
+    }
+
+    @Override
+    public String DATABASE_NAME(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Имя базы данных";
+        } else if (lang.equals(en)) {
+            ps = "Database name";
+        }
+        return ps;
+    }
+
+    @Override
+    public String USER(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Пользователь";
+        } else if (lang.equals(en)) {
+            ps = "User";
+        }
+        return ps;
+    }
+
+    @Override
+    public String UPDATE_DATA_IN_AN_EXTERNAL_DATABASE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Обновить данные во внешней базе";
+        } else if (lang.equals(en)) {
+            ps = "Update data in an external database";
+        }
+        return ps;
+    }
+
+    @Override
+    public String GET_DATA_FROM_AN_EXTERNAL_DATABASE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Получить данные из внешней базы данных";
+        } else if (lang.equals(en)) {
+            ps = "Get data from an external database";
+        }
+        return ps;
+    }
+
+    @Override
+    public String THE_DATA_IS_UP_TO_DATE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Данные актуальны";
+        } else if (lang.equals(en)) {
+            ps = "The data is up to date";
+        }
+        return ps;
+    }
+
+    @Override
+    public String COMPARE_DATA(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Сравнить данные";
+        } else if (lang.equals(en)) {
+            ps = "Compare data";
+        }
+        return ps;
+    }
+
+    @Override
+    public String CHANGE_DATA(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Изменить данные";
+        } else if (lang.equals(en)) {
+            ps = "Change Data";
+        }
+        return ps;
+    }
+
+    @Override
+    public String LOCAL_STORAGE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Локальное хранилище";
+        } else if (lang.equals(en)) {
+            ps = "Local storage";
+        }
+        return ps;
+    }
+
+    @Override
+    public String EXTERNAL_STORAGE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Внешнее хранилище";
+        } else if (lang.equals(en)) {
+            ps = "External storage";
+        }
+        return ps;
+    }
+
+    @Override
+    public String THE_EXTERNAL_DATABASE_IS_EMPTY(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Внешняя база данных пуста или не получилось подключиться.";
+        } else if (lang.equals(en)) {
+            ps = "The external database is empty or failed to connect.";
+        }
+        return ps;
+    }
+
+    @Override
+    public String SAVE_THIS_DATA_TO(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Сохранить эти данные в";
+        } else if (lang.equals(en)) {
+            ps = "Save this data to";
+        }
+        return ps;
+    }
+
+    @Override
+    public String DATABASE_USER_NAME(String lange) {
+        String ps = "";
+        if (lange.equals(ru)) {
+            ps = "Имя пользователя базы данных";
+        } else if (lange.equals(en)) {
+            ps = "Database user name";
+        }
+        return ps;
+    }
+
+    @Override
+    public String PASSWORD_DATABASE(String lange) {
+        String ps = "";
+        if (lange.equals(ru)) {
+            ps = "Пароль базы данных";
+        } else if (lange.equals(en)) {
+            ps = "database password";
+        }
+        return ps;
+    }
+
+    @Override
+    public String CONTROLLER(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Контроллер";
+        } else if (lang.equals(en)) {
+            ps = "Controller";
+        }
+        return ps;
+    }
+
+    @Override
     public String EXAMPLE(String language) {
         String example = "";
         if (language.equals(ru)) {

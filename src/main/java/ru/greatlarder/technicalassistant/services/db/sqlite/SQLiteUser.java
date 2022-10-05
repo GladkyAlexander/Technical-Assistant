@@ -10,7 +10,12 @@ public interface SQLiteUser {
             "    'post'                       TEXT," +
             "    'language'                   TEXT," +
             "    'login'                      TEXT  NOT NULL," +
-            "    'password'                   TEXT  NOT NULL);";
+            "    'password'                   TEXT  NOT NULL," +
+            "    'server'                     TEXT," +
+            "    'port'                       TEXT," +
+            "    'nameDB'                     TEXT," +
+            "    'userDB'                     TEXT," +
+            "    'passwordDB'                 TEXT);";
 
     String INSERT_TABLE_USER = "INSERT INTO user ( " +
             "    lastName," +
@@ -20,8 +25,13 @@ public interface SQLiteUser {
             "    post," +
             "    language," +
             "    login," +
-            "    password) " +
-            "VALUES (?,?,?,?,?,?,?,?)";
+            "    password," +
+            "    server," +
+            "    port," +
+            "    nameDB," +
+            "    userDB," +
+            "    passwordDB) " +
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     String READ_TABLE_USER = "SELECT * FROM user";
 }

@@ -57,12 +57,6 @@ public class FragmentAddTaskController implements ObserverLang, ObserverCompany 
 
         taskRepository.setTask(task);
         GlobalLinkMainController.getMainController().updateUser();
-        /*
-        company.setTaskList(taskRepository.getListTask(company.getNameCompany()));
-        handlerCompanyListener.registerObserverCompany(GlobalLinkStartEngineerController.getStartEngineerController());
-        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-
-         */
 
         Window stage = labelInfoRoom.getScene().getWindow();
         stage.hide();

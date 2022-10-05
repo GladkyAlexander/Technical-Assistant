@@ -30,5 +30,9 @@ public interface EquipmentRepository {
 	Equipment getEquipmentByMacAddress2(String nameCompany, String macAddress);
 
 	Equipment getEquipmentByMacAddress3(String nameCompany, String macAddress);
+
+    void changeDataEquipmentForId(Equipment equipment);
+
+
 }
 

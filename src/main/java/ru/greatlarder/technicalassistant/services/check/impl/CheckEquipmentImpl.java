@@ -53,10 +53,12 @@ public class CheckEquipmentImpl implements CheckEquipment {
 
     @Override
     public boolean checkingEquipmentMacAddress(String macAddress, String nameCompany) {
-        List<Equipment> equipmentList = equipmentRepository.getListEquipmentForCompany(nameCompany);
-        for (Equipment equipment : equipmentList){
-            if(equipment.getMacAddress().equals(macAddress)){
-                return true;
+        if (macAddress != null) {
+            List<Equipment> equipmentList = equipmentRepository.getListEquipmentForCompany(nameCompany);
+            for (Equipment equipment : equipmentList) {
+                if (equipment.getMacAddress().equals(macAddress)) {
+                    return true;
+                }
             }
         }
         return false;

@@ -16,6 +16,8 @@ module ru.greatlarder.technicalassistant {
     requires java.mail;
     requires org.xerial.sqlitejdbc;
     requires jdk.jsobject;
+    requires jsch;
+    requires mysql.connector.java;
 
     opens ru.greatlarder.technicalassistant to javafx.fxml;
     exports ru.greatlarder.technicalassistant;

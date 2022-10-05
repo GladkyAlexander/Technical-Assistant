@@ -16,6 +16,11 @@ import org.apache.commons.io.FileUtils;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
+import ru.greatlarder.technicalassistant.domain.spinetix.SpinetixHMP200;
+import ru.greatlarder.technicalassistant.domain.spinetix.SpinetixHMP300;
+import ru.greatlarder.technicalassistant.domain.spinetix.SpinetixHMP400;
+import ru.greatlarder.technicalassistant.domain.wirenboard.WirenBoard6;
+import ru.greatlarder.technicalassistant.domain.wirenboard.WirenBoard7;
 import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
 import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.check.CheckEquipment;
@@ -33,6 +38,7 @@ import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -274,6 +280,17 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public TextField uaa33;
     @FXML
     public Button btnAddMacDop;
+    @FXML public HBox hBoxSelectionByManufacturerMediaplayer;
+    @FXML public ImageView imgSpinetix;
+    @FXML public HBox hBoxSelectionByDeviceMediaPlayer;
+    @FXML public ImageView imjHMP200;
+    @FXML public HBox hBoxSelectionByDeviceController;
+    @FXML public ImageView imgWirenBoardLogo;
+    @FXML public ImageView imgWB7;
+    @FXML public ImageView imgWB6;
+    @FXML public HBox hBoxSelectionByManufacturerController;
+    @FXML public ImageView imgHMP300;
+    @FXML public ImageView imgHMP400;
     private String lang;
     Language language = new LanguageImpl();
     Company company;
@@ -281,6 +298,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     List<Equipment> listNetworkSwitcher;
     FileManager fileManager = new FileManagerImpl();
     String nameFileManual;
+    private String logoImg =null;
     CheckEquipment checkEquipment = new CheckEquipmentImpl();
 
     @Override
@@ -351,6 +369,11 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         this.hBoxMacAddress3.setVisible(false);
         this.hBoxMacAddress3.setManaged(false);
 
+        this.hBoxSelectionByDeviceMediaPlayer.setVisible(false);
+        this.hBoxSelectionByDeviceMediaPlayer.setManaged(false);
+        this.hBoxSelectionByDeviceController.setVisible(false);
+        this.hBoxSelectionByDeviceController.setManaged(false);
+
         this.hBoxMaxLamp.setVisible(value.equals(language.PROJECTOR(lang)));
         this.hBoxMaxLamp.setManaged(value.equals(language.PROJECTOR(lang)));
 
@@ -381,6 +404,12 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         this.hBoxNetworkSwitcher.setVisible(d);
         this.hBoxNetworkSwitcher.setManaged(d);
 
+        boolean r = value.equals(language.MEDIA_PLAYER(lang)) || value.equals(language.CONTROL_PROCESSOR(lang));
+        this.hBoxSelectionByManufacturerMediaplayer.setVisible(r);
+        this.hBoxSelectionByManufacturerMediaplayer.setManaged(r);
+        boolean cont = value.equals(language.CONTROLLER(lang));
+        this.hBoxSelectionByManufacturerController.setVisible(cont);
+        this.hBoxSelectionByManufacturerController.setManaged(cont);
     }
 
     public void onKeyModel() {
@@ -663,20 +692,22 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     }
 
     public void addManual() {
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter(" .Pdf", "*.*");
-        fileChooser.getExtensionFilters().add(extensionFilter);
 
-        File file = fileChooser.showOpenDialog(pdfFile.getScene().getWindow());
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter(" .Pdf", "*.*");
+            fileChooser.getExtensionFilters().add(extensionFilter);
 
-        File file1 = new File(fileManager.folderManual() + "\\" + file.getName());
+            File file = fileChooser.showOpenDialog(pdfFile.getScene().getWindow());
 
-        nameFileManual = file.getName();
-        try {
-            FileUtils.copyFile(file, file1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            File file1 = new File(fileManager.folderManual() + "\\" + file.getName());
+
+            nameFileManual = file.getName();
+            try {
+                FileUtils.copyFile(file, file1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
     }
 
     public void onKeyReleasedFrequency1() {
@@ -978,6 +1009,10 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                 TouchControlPanel equipment15 = new TouchControlPanel();
                 result = loadEquipment(equipment15);
             }
+            case Language.CONTROLLER_RU -> {
+                Controller equipment16 = new Controller();
+                result = loadEquipment(equipment16);
+            }
         }
 
         return result;
@@ -1033,7 +1068,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         }
         if (equipment instanceof MediaPlayer) {
             returnEquipment = new MediaPlayer();
-            returnEquipment.setImage("media_player.png");
+            if(logoImg != null){
+                returnEquipment.setImage(logoImg);
+            }else returnEquipment.setImage("media_player.png");
         }
         if (equipment instanceof Laptop) {
             returnEquipment = new Laptop();
@@ -1056,6 +1093,12 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             returnEquipment = new TouchControlPanel();
             returnEquipment.setImage("control_patch_panel.png");
             ((TouchControlPanel) returnEquipment).setDiagonal(tfDiagonal.getText());
+        }
+        if (equipment instanceof Controller) {
+            returnEquipment = new Controller();
+            if(logoImg != null){
+                returnEquipment.setImage(logoImg);
+            }else returnEquipment.setImage("control_processor.png");
         }
 
         returnEquipment.setName(cmbEquipmentType.getValue());
@@ -1221,7 +1264,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void closeAddEquipmentController(MouseEvent mouseEvent) {
         GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getChildren().remove(
-                GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getRight()
+                GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getCenter()
         );
     }
 
@@ -1451,7 +1494,92 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     }
 
     public void onActionCmbEquipmentType(MouseEvent actionEvent) {
-        List<String> listNameEquipment = new ArrayList<>(equipmentRepository.getListEquipmentName(lang));
-        cmbEquipmentType.setItems(FXCollections.observableArrayList(listNameEquipment));
+        //List<String> listNameEquipment = new ArrayList<>(equipmentRepository.getListEquipmentName(lang));
+        //cmbEquipmentType.setItems(FXCollections.observableArrayList(listNameEquipment));
+    }
+
+    public void openHMP200(MouseEvent mouseEvent) throws URISyntaxException {
+        textFiledModel.setText(SpinetixHMP200.model);
+        textFieldManufacturer.setText(SpinetixHMP200.manufacturer);
+        pdfFile.setDisable(true);
+            File file1 = new File(getClass().getResource(SpinetixHMP200.instruction).toURI());
+            File file = new File(fileManager.folderManual() + "\\" + file1.getName());
+            nameFileManual = file1.getName();
+            try {
+                FileUtils.copyFile(file1, file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            logoImg = SpinetixHMP200.logo;
+    }
+
+    public void openHMP400(MouseEvent mouseEvent) throws URISyntaxException {
+        textFiledModel.setText(SpinetixHMP400.model);
+        textFieldManufacturer.setText(SpinetixHMP400.manufacturer);
+        pdfFile.setDisable(true);
+        File file1 = new File(getClass().getResource(SpinetixHMP400.instruction).toURI());
+        File file = new File(fileManager.folderManual() + "\\" + file1.getName());
+        nameFileManual = file1.getName();
+        try {
+            FileUtils.copyFile(file1, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        logoImg = SpinetixHMP400.logo;
+    }
+
+    public void openWirenboard(MouseEvent mouseEvent) {
+        this.hBoxSelectionByDeviceController.setVisible(true);
+        this.hBoxSelectionByDeviceController.setManaged(true);
+    }
+
+    public void wb7open(MouseEvent mouseEvent) throws URISyntaxException {
+        textFiledModel.setText(WirenBoard7.model);
+        textFieldManufacturer.setText(WirenBoard7.manufacturer);
+        pdfFile.setDisable(true);
+        File file1 = new File(getClass().getResource(WirenBoard7.instruction).toURI());
+        File file = new File(fileManager.folderManual() + "\\" + file1.getName());
+        nameFileManual = file1.getName();
+        try {
+            FileUtils.copyFile(file1, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        logoImg = WirenBoard7.logo;
+    }
+
+    public void openWB6(MouseEvent mouseEvent) throws URISyntaxException {
+        textFiledModel.setText(WirenBoard6.model);
+        textFieldManufacturer.setText(WirenBoard7.manufacturer);
+        pdfFile.setDisable(true);
+        File file1 = new File(getClass().getResource(WirenBoard6.instruction).toURI());
+        File file = new File(fileManager.folderManual() + "\\" + file1.getName());
+        nameFileManual = file1.getName();
+        try {
+            FileUtils.copyFile(file1, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        logoImg = WirenBoard6.logo;
+    }
+
+    public void openSpinetix(MouseEvent mouseEvent) {
+        this.hBoxSelectionByDeviceMediaPlayer.setVisible(true);
+        this.hBoxSelectionByDeviceMediaPlayer.setManaged(true);
+    }
+
+    public void openHMP300(MouseEvent mouseEvent) throws URISyntaxException {
+        textFiledModel.setText(SpinetixHMP300.model);
+        textFieldManufacturer.setText(SpinetixHMP300.manufacturer);
+        pdfFile.setDisable(true);
+        File file1 = new File(getClass().getResource(SpinetixHMP300.instruction).toURI());
+        File file = new File(fileManager.folderManual() + "\\" + file1.getName());
+        nameFileManual = file1.getName();
+        try {
+            FileUtils.copyFile(file1, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        logoImg = SpinetixHMP300.logo;
     }
 }
