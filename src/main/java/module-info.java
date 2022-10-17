@@ -33,5 +33,7 @@ module ru.greatlarder.technicalassistant {
     opens ru.greatlarder.technicalassistant.controller.fragment_item to javafx.fxml;
     exports ru.greatlarder.technicalassistant.controller.reception;
     opens ru.greatlarder.technicalassistant.controller.reception to javafx.fxml;
+    exports ru.greatlarder.technicalassistant.services;
+    opens ru.greatlarder.technicalassistant.services to javafx.fxml;
 
 }

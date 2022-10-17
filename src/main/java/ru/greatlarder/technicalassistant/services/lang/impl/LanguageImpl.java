@@ -1242,6 +1242,17 @@ public class LanguageImpl implements Language {
     }
 
     @Override
+    public String SETTINGS_EXTERNAL_DATABASE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Настройки внешней базы данных";
+        } else if (lang.equals(en)) {
+            ps = "Settings external database";
+        }
+        return ps;
+    }
+
+    @Override
     public String EXAMPLE(String language) {
         String example = "";
         if (language.equals(ru)) {

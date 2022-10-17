@@ -105,14 +105,5 @@ public class DBconnect {
             e.printStackTrace();
         }
     }
-    public static void createExternalDatabaseSettings(){
-        connectionDB();
 
-        try {
-            statement = connection.createStatement();
-            statement.execute(SQLiteSettingsExternalDatabase.CREATE_TABLE_SETTINGS_EXTERNAL_DATABASE);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

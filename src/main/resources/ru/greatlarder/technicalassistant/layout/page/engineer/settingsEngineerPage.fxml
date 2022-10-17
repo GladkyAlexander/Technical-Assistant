@@ -52,6 +52,7 @@
     <left>
         <VBox spacing="4.0" BorderPane.alignment="CENTER">
             <children>
+            <Button fx:id="btnSettingsUser" mnemonicParsing="false" onMouseClicked="#openSettingsUser" text="Button" />
                 <Button fx:id="btnCompanyChoice" mnemonicParsing="false" onAction="#actionBtnCompany" text="Button" />
                 <Button fx:id="btnSettingsMail" mnemonicParsing="false" onAction="#openSettingsMail" text="Button" />
                 <Button fx:id="btnRegistry" mnemonicParsing="false" onAction="#openLayoutSettingsUser" text="Button" />

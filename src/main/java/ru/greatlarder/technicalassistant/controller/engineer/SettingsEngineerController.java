@@ -52,6 +52,7 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
     @FXML public Button btnSendToAnExternalDatabase;
     @FXML public Button btnGetDataFromAnExternalDatabase;
     @FXML public Button btnCompareData;
+    @FXML public Button btnSettingsUser;
     Language language = new LanguageImpl();
     User user;
     Company company;
@@ -109,7 +110,7 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
     }
 
     public void setLanguage(String lang){
-        btnRegistry.setText(language.PROFILE_SETTINGS(lang));
+        btnRegistry.setText(language.REGISTRY(lang));
         btnCompanyChoice.setText(language.ADD_A_COMPANY(lang));
         labelDSL.setText(language.DATE_STORAGE_LOCATION(lang));
         labelReferenceDirectory.setText(language.APPLICATION_FOLDER(lang));
@@ -118,6 +119,7 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
         btnSendToAnExternalDatabase.setText(language.UPDATE_DATA_IN_AN_EXTERNAL_DATABASE(lang));
         btnGetDataFromAnExternalDatabase.setText(language.GET_DATA_FROM_AN_EXTERNAL_DATABASE(lang));
         btnCompareData.setText(language.COMPARE_DATA(lang));
+        btnSettingsUser.setText(language.PROFILE_SETTINGS(lang));
     }
 
     @Override
@@ -142,19 +144,6 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
             btnSettingsMail.setDisable(false);
             btnRegistry.setDisable(true);
             borderPaneSettings.getChildren().remove(borderPaneSettings.getRight());
-        }
-    }
-
-    public void openFragmentSettingsExternalDB(MouseEvent mouseEvent) {
-        borderPaneSettings.getChildren().remove(borderPaneSettings.getCenter());
-        FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_external_database_settings.fxml"));
-        try {
-            borderPaneSettings.setRight(loader.load());
-            handlerLang.registerObserverLang(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -228,5 +217,20 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
                 e.printStackTrace();
             }
         } else borderPaneSettings.setCenter(new Label(language.THE_DATA_IS_UP_TO_DATE(lang)));
+    }
+
+    public void openSettingsUser(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragment_change_settings_user.fxml"));
+        try {
+            borderPaneSettings.setCenter(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+            handlerUserListener.registerObserverUser(loader.getController());
+
+            handlerLang.onNewDataLang(new DataLang(lang));
+            handlerUserListener.onNewDataUser(new DataUser(user));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -283,4 +283,6 @@ public interface Language {
     String PASSWORD_DATABASE(String lange);
 
     String CONTROLLER(String lang);
+
+    String SETTINGS_EXTERNAL_DATABASE(String lang);
 }
