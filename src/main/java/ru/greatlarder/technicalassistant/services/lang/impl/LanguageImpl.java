@@ -1253,6 +1253,28 @@ public class LanguageImpl implements Language {
     }
 
     @Override
+    public String THE_COMPANY_YOU_WORK_FOR(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Компания в которой работаете";
+        } else if (lang.equals(en)) {
+            ps = "The company you work for";
+        }
+        return ps;
+    }
+
+    @Override
+    public String ROOMS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Комнаты";
+        } else if (lang.equals(en)) {
+            ps = "Rooms";
+        }
+        return ps;
+    }
+
+    @Override
     public String EXAMPLE(String language) {
         String example = "";
         if (language.equals(ru)) {
@@ -1833,7 +1855,7 @@ public class LanguageImpl implements Language {
             listPost.add("Engineer");
             // listPost.add("Manager");
             // listPost.add("Head of Department");
-            //listPost.add("Reception Secretary");
+            listPost.add("Reception Secretary");
             // listPost.add("Assistant Manager");
             //listPost.add("Installer");
             // listPost.add("IT Specialist");
@@ -1845,7 +1867,7 @@ public class LanguageImpl implements Language {
             listPost.add("Инженер");
             //listPost.add("Менеджер");
             //listPost.add("Начальник отдела");
-            //listPost.add("Секретарь приемной");
+            listPost.add("Секретарь приемной");
             //listPost.add("Помощник руководителя");
             //listPost.add("Монтажник");
             //listPost.add("Специалист IT");

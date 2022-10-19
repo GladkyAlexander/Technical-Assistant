@@ -27,6 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
                     user.setMailAddress(resultSet.getString("mailAddress"));
                     user.setPhone(resultSet.getString("phone"));
                     user.setPost(resultSet.getString("post"));
+                    user.setCompanyAffiliation(resultSet.getString("companyAffiliation"));
                     user.setLanguage(resultSet.getString("language"));
                     user.setLogin(resultSet.getString("login"));
                     user.setPassword(resultSet.getString("password"));
@@ -53,14 +54,15 @@ public class UserRepositoryImpl implements UserRepository {
             cf.setString(3, user.getMailAddress());
             cf.setString(4, user.getPhone());
             cf.setString(5, user.getPost());
-            cf.setString(6,user.getLanguage());
-            cf.setString(7, user.getLogin());
-            cf.setString(8, user.getPassword());
-            cf.setString(9, user.getServer());
-            cf.setString(10, user.getPort());
-            cf.setString(11, user.getNameDB());
-            cf.setString(12, user.getUserDB());
-            cf.setString(13, user.getPasswordDB());
+            cf.setString(6, user.getCompanyAffiliation());
+            cf.setString(7,user.getLanguage());
+            cf.setString(8, user.getLogin());
+            cf.setString(9, user.getPassword());
+            cf.setString(10, user.getServer());
+            cf.setString(11, user.getPort());
+            cf.setString(12, user.getNameDB());
+            cf.setString(13, user.getUserDB());
+            cf.setString(14, user.getPasswordDB());
 
             cf.executeUpdate();
             closeDB();

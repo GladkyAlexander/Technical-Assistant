@@ -1286,7 +1286,7 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
         List<String> listRoom = new ArrayList<>();
 
         for (Equipment equipment : getListEquipmentForCompany(nameCompany)) {
-            if (equipment.getRoom() != null && listRoom.stream().noneMatch(s -> s.equals(equipment.getRoom()))) { // изменено
+            if (equipment.getRoom() != null && listRoom.stream().noneMatch(s -> s.equals(equipment.getRoom()))) {
                 listRoom.add(equipment.getRoom());
             }
         }

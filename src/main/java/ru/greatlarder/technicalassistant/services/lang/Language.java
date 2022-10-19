@@ -285,4 +285,8 @@ public interface Language {
     String CONTROLLER(String lang);
 
     String SETTINGS_EXTERNAL_DATABASE(String lang);
+
+    String THE_COMPANY_YOU_WORK_FOR(String lange);
+
+    String ROOMS(String lang1);
 }

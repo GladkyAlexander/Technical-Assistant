@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ru.greatlarder.technicalassistant.controller.reception.HomeReceptionController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane fx:id="borderPaneHomePage" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.reception.HomeReceptionController">
+   <top>
+      <VBox fx:id="vbtop" alignment="TOP_CENTER" prefHeight="150.0" spacing="4.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Label fx:id="labelRoomsHRC" text="Rooms">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </VBox>
+   </top>
+</BorderPane>

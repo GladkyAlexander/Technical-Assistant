@@ -919,10 +919,12 @@ public class ExternalDatabaseRepositoryImpl implements ExternalDatabase {
 
     @Override
     public Company getCompanyForNameCompany(String nameCompany) {
-        for (Company company1 : getListCompanyExternal()){
-            if(nameCompany.equals(company1.getNameCompany())){
-                return company1;
-            }
+        List<Company> companies = new ArrayList<Company>(getListCompanyExternal());
+
+        for (Company company1 : companies){
+
+            if(company1.getNameCompany().equals(nameCompany)) return company1;
+
         }
         return null;
     }
@@ -1233,14 +1235,14 @@ public class ExternalDatabaseRepositoryImpl implements ExternalDatabase {
             close();
         }
 
-        List<Equipment> equipmentList1 = new ArrayList<>();
+        List<Equipment> equipments = new ArrayList<>();
         createEquipmentTableExternalDB();
 
         try {
             resultSetExternalDB = statementExternalDB.executeQuery(READ_TABLE_EQUIPMENT);
             while (resultSetExternalDB.next()){
                 Equipment equipment = getEquipment(resultSetExternalDB);
-                equipmentList1.add(equipment);
+                equipments.add(equipment);
             }
             close();
         } catch (SQLException e) {
@@ -1248,16 +1250,8 @@ public class ExternalDatabaseRepositoryImpl implements ExternalDatabase {
         } finally {
             close();
         }
-        List<Equipment> equipmentList = new ArrayList<>();
-        for (Company company1 : companies){
-            for (Equipment equipment : equipmentList1){
-                if(equipment.getCompany().equals(company1.getNameCompany())){
-                    equipmentList.add(equipment);
-                }
-            }
-            company1.setEquipmentList(equipmentList);
-        }
-        return companies;
+
+        return getListCompany(companies, equipments);
     }
     private Projector getProjector(ResultSet resultSet) throws SQLException {
         Projector projector = new Projector();
@@ -1843,5 +1837,20 @@ public class ExternalDatabaseRepositoryImpl implements ExternalDatabase {
         equipment.setIdNetworkSwitcher(resultSet.getInt("idNetworkSwitcher"));
 
         return equipment;
+    }
+
+    private List<Company> getListCompany(List<Company> list, List<Equipment> listE){
+        List<Company> returnList = new ArrayList<Company>();
+        for (Company company1 : list){
+            List<Equipment> e1 = new ArrayList<Equipment>();
+            for (Equipment equipment1 : listE){
+                if(company1.getNameCompany().equals(equipment1.getCompany())){
+                    e1.add(equipment1);
+                }
+            }
+            company1.setEquipmentList(e1);
+            returnList.add(company1);
+        }
+        return returnList;
     }
 }

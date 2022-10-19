@@ -1,5 +1,7 @@
 package ru.greatlarder.technicalassistant.controller.fragment;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -9,9 +11,9 @@ import javafx.scene.image.Image;
 import ru.greatlarder.technicalassistant.controller.fragment_item.ItemEquipmentController;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
-import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkFragmentEquipmentController;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkFragmentEquipmentController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -88,6 +90,14 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
                 }
             }
         });
+
+        equipmentListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Equipment>() {
+            @Override
+            public void changed(ObservableValue<? extends Equipment> observableValue, Equipment equipment, Equipment t1) {
+                openEquipment(t1);
+            }
+        });
+
         return equipmentListView;
     }
 
@@ -110,6 +120,21 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
                 }
             }
             tabPaneEquipment1.getTabs().add(new Tab(name, createTableEquipment(equipmentList1)));
+        }
+    }
+
+    private void openEquipment(Equipment equipment) {
+        FXMLLoader loader = new FXMLLoader(getClass()
+                .getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEquipmentOne.fxml"));
+        try {
+           tabPaneEquipment2.getTabs().add(
+                    new Tab(equipment.getName() + " : " + equipment.getSerialNumber(), loader.load()));
+            handlerLang.registerObserverLang(loader.getController());
+            handlerLang.onNewDataLang(new DataLang(lang));
+            FragmentEquipmentOneController fragmentEquipmentOneItemController = loader.getController();
+            fragmentEquipmentOneItemController.setEquip(equipment);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

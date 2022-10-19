@@ -8,6 +8,7 @@ public interface SQLiteUser {
             "    'mailAddress'                TEXT," +
             "    'phone'                      TEXT," +
             "    'post'                       TEXT," +
+            "    'companyAffiliation'                       TEXT," +
             "    'language'                   TEXT," +
             "    'login'                      TEXT  NOT NULL," +
             "    'password'                   TEXT  NOT NULL," +
@@ -23,6 +24,7 @@ public interface SQLiteUser {
             "    mailAddress," +
             "    phone," +
             "    post," +
+            "    companyAffiliation," +
             "    language," +
             "    login," +
             "    password," +
@@ -31,7 +33,7 @@ public interface SQLiteUser {
             "    nameDB," +
             "    userDB," +
             "    passwordDB) " +
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     String READ_TABLE_USER = "SELECT * FROM user";
 }

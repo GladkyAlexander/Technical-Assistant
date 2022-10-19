@@ -34,6 +34,7 @@
       <RowConstraints />
       <RowConstraints />
         <RowConstraints />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" />
         <RowConstraints />
     </rowConstraints>
@@ -46,8 +47,8 @@
         <TextField fx:id="tfFirstName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <TextField fx:id="tfMailAddress" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <TextField fx:id="tfPhone" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveUser" text="Button" GridPane.rowIndex="15" />
-        <MenuButton fx:id="menuButtonLanguage" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="MenuButton" GridPane.columnSpan="2" GridPane.rowIndex="14">
+        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveUser" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+        <MenuButton fx:id="menuButtonLanguage" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="MenuButton" GridPane.columnSpan="2" GridPane.rowIndex="15">
             <items>
                 <MenuItem fx:id="menuItemRu" mnemonicParsing="false" onAction="#setMenuItemRu" text="Россия">
                     <graphic>
@@ -88,6 +89,8 @@
       <TextField fx:id="tfNameDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="10" />
       <TextField fx:id="tfNameUserDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="11" />
       <TextField fx:id="tfPasswordDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <Label fx:id="labelNameCompany" text="Label" GridPane.rowIndex="14" />
+      <TextField fx:id="tfNameCompanyUser" GridPane.columnIndex="1" GridPane.rowIndex="14" />
     </children>
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

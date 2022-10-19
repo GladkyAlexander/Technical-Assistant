@@ -1,14 +1,18 @@
 package ru.greatlarder.technicalassistant.controller.reception;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.User;
+import ru.greatlarder.technicalassistant.repository.ExternalDatabase;
+import ru.greatlarder.technicalassistant.repository.impl.ExternalDatabaseRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
@@ -24,6 +28,8 @@ import ru.greatlarder.technicalassistant.services.user_listener.HandlerUserListe
 import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class StartReceptionController implements ObserverLang, ObserverUser, ObserverCompany {
 
@@ -47,7 +53,11 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
     public void loadPage() {
         GlobalLinkStartReceptionController.setStartReceptionController(this);
         setLanguage(lang);
-        if(user != null) {
+
+        if(user == null){
+            labelLastName.setText("");
+            labelFirstName.setText("");
+        } else {
             labelLastName.setText(user.getLastName());
             labelFirstName.setText(user.getFirstName());
 
@@ -63,23 +73,20 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
             FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/reception/homeReceptionPage.fxml"));
             try {
                 borderPaneStartReception.setCenter(loaderHomePage.load());
+
                 handlerUserListener.registerObserverUser(loaderHomePage.getController());
+                handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
                 handlerLang.registerObserverLang(loaderHomePage.getController());
 
-                if(user != null){
-                    handlerLang.onNewDataLang(new DataLang(lang));
-                }
-                handlerUserListener.onNewDataUser(new DataUser(user));
+                getCompanyStartReception();
 
                 HomeReceptionController controller = loaderHomePage.getController();
                 controller.loadFragment();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-        } else {
-            labelLastName.setText("");
-            labelFirstName.setText("");
         }
     }
 
@@ -100,16 +107,8 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
     @Override
     public void updateUser(DataUser dataUser) {
         this.user = dataUser.getUser();
-        loadPage();
         handlerUserListener.onNewDataUser(new DataUser(user));
     }
-
-    @Override
-    public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-    }
-
 
     public void openPageSettings(MouseEvent mouseEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/reception/settingsReceptionController.fxml"));
@@ -148,6 +147,7 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
     }
 
     public void openInstructionPageReception(MouseEvent mouseEvent) {
+
         FXMLLoader loaderInstructionPage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/reception/instructionReceptionPage.fxml"));
         try {
             borderPaneStartReception.setCenter(loaderInstructionPage.load());
@@ -164,9 +164,11 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public void openInfoPage(MouseEvent mouseEvent) {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/info_page.fxml"));
         try {
             borderPaneStartReception.setCenter(loader.load());
@@ -176,5 +178,35 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+    public void getCompanyStartReception() {
+        if(company == null) {
+            ExternalDatabase externalDatabase = new ExternalDatabaseRepositoryImpl();
+            if (user.getCompanyAffiliation() != null) {
+                Task<Company> task = new Task<Company>() {
+                    @Override
+                    protected Company call() throws Exception {
+                        return externalDatabase.getCompanyForNameCompany(user.getCompanyAffiliation());
+                    }
+                };
+                ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
+                progressIndicator.visibleProperty();
+
+                task.setOnSucceeded((succeededEvent) -> {
+                    progressIndicator.visibleProperty().bind(task.runningProperty());
+
+                    handlerCompanyListener.onNewDataCompany(new DataCompany(task.getValue()));
+                });
+                ExecutorService executorService = Executors.newFixedThreadPool(1);
+                executorService.execute(task);
+                executorService.shutdown();
+            }
+        }
+    }
+
+    @Override
+    public void updateCompany(DataCompany dataCompany) {
+        this.company = dataCompany.getCompany();
     }
 }

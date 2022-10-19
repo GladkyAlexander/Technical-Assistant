@@ -37,7 +37,7 @@ public class FragmentUserLogin implements ObserverLang{
     public void enter(MouseEvent actionEvent) {
         if(userRepository.getUserLoginPassword(tfLogin.getText(), tfPassword.getText()) != null){
             GlobalLinkMainController.getMainController().loadUser(userRepository.getUserLoginPassword(tfLogin.getText(), tfPassword.getText()));
-        } else gridPaneUserLogin.setStyle(StyleSRC.STYLE_WARNING);
+        } else gridPaneUserLogin.setStyle(StyleSRC.STYLE_DANGER);
     }
 
     @Override

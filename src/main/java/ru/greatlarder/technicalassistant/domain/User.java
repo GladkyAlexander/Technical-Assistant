@@ -7,6 +7,7 @@ public class User {
     private String lastName;
     private String firstName;
     private String post;
+    private String companyAffiliation;
     private String phone;
     private String mailAddress;
     private String language;
@@ -23,10 +24,11 @@ public class User {
     public User() {
     }
 
-    public User(String lastName, String firstName, String post, String phone, String mailAddress, String language, String login, String password, String server, String port, String nameDB, String userDB, String passwordDB, List<Company> companyList, List<MailSettings> mailSettings) {
+    public User(String lastName, String firstName, String post,String companyAffiliation, String phone, String mailAddress, String language, String login, String password, String server, String port, String nameDB, String userDB, String passwordDB, List<Company> companyList, List<MailSettings> mailSettings) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.post = post;
+        this.companyAffiliation = companyAffiliation;
         this.phone = phone;
         this.mailAddress = mailAddress;
         this.language = language;
@@ -71,6 +73,14 @@ public class User {
 
     public void setPost(String post) {
         this.post = post;
+    }
+
+    public String getCompanyAffiliation() {
+        return companyAffiliation;
+    }
+
+    public void setCompanyAffiliation(String companyAffiliation) {
+        this.companyAffiliation = companyAffiliation;
     }
 
     public String getPhone() {
@@ -176,6 +186,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", post='" + post + '\'' +
+                ", companyAffiliation='" + companyAffiliation + '\'' +
                 ", phone='" + phone + '\'' +
                 ", mailAddress='" + mailAddress + '\'' +
                 ", language='" + language + '\'' +

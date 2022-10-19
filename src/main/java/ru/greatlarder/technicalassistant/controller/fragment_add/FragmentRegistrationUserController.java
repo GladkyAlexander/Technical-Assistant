@@ -62,6 +62,8 @@ public class FragmentRegistrationUserController implements ObserverLang{
     @FXML public TextField tfNameDbExternal;
     @FXML public TextField tfNameUserDbExternal;
     @FXML public TextField tfPasswordDbExternal;
+    @FXML public Label labelNameCompany;
+    @FXML public TextField tfNameCompanyUser;
     UserRepository userRepository = new UserRepositoryImpl();
     Language lines = new LanguageImpl();
     String lang;
@@ -131,6 +133,7 @@ public class FragmentRegistrationUserController implements ObserverLang{
         labelNameDbExternal.setText(lines.DATABASE_NAME(lange));
         labelUserDbExternal.setText(lines.DATABASE_USER_NAME(lange));
         labelPasswordDbExternal.setText(lines.PASSWORD_DATABASE(lange));
+        labelNameCompany.setText(lines.THE_COMPANY_YOU_WORK_FOR(lange));
     }
 
     @Override
