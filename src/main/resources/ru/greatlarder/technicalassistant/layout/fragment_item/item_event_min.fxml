@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="gridPaneItemEventMin" alignment="CENTER" hgap="3.0" maxWidth="1.7976931348623157E308" onMouseClicked="#openEvent" vgap="3.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemEventMin">
+  <columnConstraints>
+    <ColumnConstraints halignment="LEFT" />
+      <ColumnConstraints halignment="LEFT" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints />
+    <RowConstraints valignment="CENTER" />
+    <RowConstraints />
+    <RowConstraints />
+  </rowConstraints>
+   <children>
+      <Label fx:id="startEventMin" text="Start event" GridPane.rowIndex="1">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="endEventMin" text="End event" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="lastNameMin" text="Last name customer" GridPane.rowIndex="2">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="firstNameMin" text="First name customer" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="seatingArrangements" text="Seating arrangements" GridPane.rowIndex="3">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="numberOfParticipantsMin" text="Number of participants" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="labelNameEvent" text="Name event" GridPane.columnIndex="1" />
+      <ImageView fx:id="imgLogoNameEvent" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

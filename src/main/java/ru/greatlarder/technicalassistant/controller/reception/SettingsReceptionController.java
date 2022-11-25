@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddDatabaseSettings;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
@@ -71,5 +72,21 @@ public class SettingsReceptionController implements ObserverLang, ObserverCompan
     }
 
     public void openSettingsDB(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_database_settings.fxml"));
+        try {
+            borderPaneSettingsReception.setCenter(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+            handlerLang.onNewDataLang(new DataLang(lang));
+            handlerUserListener.registerObserverUser(loader.getController());
+            handlerUserListener.onNewDataUser(new DataUser(user));
+            FragmentAddDatabaseSettings controller = loader.getController();
+            controller.loadFragment();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public BorderPane getBorderPaneSettingsReception() {
+        return borderPaneSettingsReception;
     }
 }

@@ -289,4 +289,58 @@ public interface Language {
     String THE_COMPANY_YOU_WORK_FOR(String lange);
 
     String ROOMS(String lang1);
+
+    String FILL_IN_THE_DATABASE_INFORMATION_ON_THE_sETTINGS_PAGE(String lang);
+
+    String MONTH(String lang1);
+
+    String DATA_UPDATED(String lang);
+    String COMPANY_DATA_SETTINGS(String lang);
+    String TYPES_OF_EVENTS(String lang);
+
+    String ALL_ROOMS(String lang);
+
+    String ALL_EVENTS(String lang);
+
+    String MEETING(String lang);
+
+    String EVENT_NAME(String lang);
+
+    String EVENT_LOGO(String lang);
+
+    String PRESENTATION(String lang);
+
+    String DATA_UPLOADED(String lang);
+
+    String UPDATE_THE_LIST_OF_ROOMS_IN_THE_EXTERNAL_DATABASE(String lang);
+
+    String COMPANY_DATA(String lang);
+
+    String LIST_OF_ROOMS(String lang);
+
+    String SEATING_LIST(String lang);
+
+    String LIST_OF_EVENTS(String lang);
+
+    String DO_NOT_DISCONNECT_THE_CONNECTION(String lang);
+
+    String START_EVENT(String lang);
+
+    String END_EVENT(String lang);
+
+    String SEATING_ARRANGEMENTS(String lang);
+
+    String NUMBER_OF_PARTICIPANTS(String lang);
+
+    String LAST_NAME_CUSTOMER(String lang);
+
+    String FIRST_NAME_CUSTOMER(String lang);
+
+    String TYPE_NAME(String lang);
+
+    String IMAGE(String lang);
+
+    String TYPES_OF_FURNITURE_ARRANGEMENT(String lang);
+
+    String getDayWeek(String dayOfWeek, String lang);
 }

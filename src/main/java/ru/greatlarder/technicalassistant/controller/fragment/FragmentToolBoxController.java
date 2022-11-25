@@ -9,18 +9,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddDefectController;
-import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddEquipmentController;
-import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddToolController;
-import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddWatchWorkProjectorsController;
+import ru.greatlarder.technicalassistant.controller.fragment_add.*;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.ProblemMonitor;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
@@ -46,12 +44,16 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
     @FXML public ImageView imgEngine;
     @FXML public TextField tfSerNum;
     @FXML public ImageView imgSearch;
+    public ImageView imgRooms;
+    public ImageView imgAllEvent;
+    public ImageView imgAddRoom;
+    public ImageView imgAddEvent;
     private Company company;
     private String lang;
     Language language = new LanguageImpl();
-    HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
-    HandlerLang handlerLang = new HandlerLang();
-    HandlerUserListener handlerUserListener = new HandlerUserListener();
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
     private User user;
 
     public void allEquipment(MouseEvent mouseEvent) {
@@ -60,9 +62,12 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
             handlerCompanyListener.registerObserverCompany(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
+            handlerUserListener.registerObserverUser(loader.getController());
             FragmentEquipmentController controller = loader.getController();
-            controller.loadFragment(company);
+            controller.updateLang(new DataLang(this.lang));
+            controller.updateUser(new DataUser(this.user));
+            controller.updateCompany(new DataCompany(this.company));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,10 +79,11 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
             handlerCompanyListener.registerObserverCompany(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
-            handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+            handlerUserListener.registerObserverUser(loader.getController());
             FragmentToolController controller = loader.getController();
-            controller.loadFragment();
+            controller.updateLang(new DataLang(this.lang));
+            controller.updateUser(new DataUser(this.user));
+            controller.updateCompany(new DataCompany(this.company));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,9 +95,11 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
             handlerCompanyListener.registerObserverCompany(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
+            handlerUserListener.registerObserverUser(loader.getController());
             FragmentIpAddressController controller = loader.getController();
-            controller.loadFragment(company);
+            controller.updateLang(new DataLang(this.lang));
+            controller.updateUser(new DataUser(this.user));
+            controller.updateCompany(new DataCompany(this.company));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,10 +111,11 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
             handlerCompanyListener.registerObserverCompany(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
-            handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+            handlerUserListener.registerObserverUser(loader.getController());
             FragmentDefectController controller = loader.getController();
-            controller.loadFragment();
+            controller.updateLang(new DataLang(this.lang));
+            controller.updateUser(new DataUser(this.user));
+            controller.updateCompany(new DataCompany(this.company));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,11 +128,11 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
                 GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setRight(loader.load());
                 handlerLang.registerObserverLang(loader.getController());
                 handlerCompanyListener.registerObserverCompany(loader.getController());
-                handlerLang.onNewDataLang(new DataLang(lang));
-                handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                handlerUserListener.registerObserverUser(loader.getController());
                 FragmentAddEquipmentController fragmentEquipmentController = loader.getController();
-                fragmentEquipmentController.loadFragment();
-
+                fragmentEquipmentController.updateLang(new DataLang(this.lang));
+                fragmentEquipmentController.updateUser(new DataUser(this.user));
+                fragmentEquipmentController.updateCompany(new DataCompany(this.company));
             } else {
                 GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(new Label(language.FILL_IN_THE_DB(lang)));
             }
@@ -138,11 +147,12 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             if (company != null) {
                 GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setRight(loader.load());
                 handlerLang.registerObserverLang(loader.getController());
-                handlerLang.onNewDataLang(new DataLang(lang));
                 handlerCompanyListener.registerObserverCompany(loader.getController());
-                handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                handlerUserListener.registerObserverUser(loader.getController());
                 FragmentAddToolController controller = loader.getController();
-                controller.loadFragment();
+                controller.updateLang(new DataLang(this.lang));
+                controller.updateUser(new DataUser(this.user));
+                controller.updateCompany(new DataCompany(this.company));
             } else {
                 GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(new Label(language.FILL_IN_THE_DB(lang)));
             }
@@ -157,11 +167,12 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             if (company != null) {
                 GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setRight(loader.load());
                 handlerLang.registerObserverLang(loader.getController());
-                handlerLang.onNewDataLang(new DataLang(lang));
                 handlerCompanyListener.registerObserverCompany(loader.getController());
-                handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                handlerUserListener.registerObserverUser(loader.getController());
                 FragmentAddDefectController controller = loader.getController();
-                controller.loadFragment();
+                controller.updateLang(new DataLang(this.lang));
+                controller.updateUser(new DataUser(this.user));
+                controller.updateCompany(new DataCompany(this.company));
             } else {
                 GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(new Label(language.FILL_IN_THE_DB(lang)));
             }
@@ -176,10 +187,10 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setRight(loader.load());
             handlerLang.registerObserverLang(loader.getController());
             handlerCompanyListener.registerObserverCompany(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
-            handlerCompanyListener.onNewDataCompany(new DataCompany(company));
             FragmentAddWatchWorkProjectorsController controller = loader.getController();
-            controller.loadFragment();
+            controller.updateLang(new DataLang(this.lang));
+            controller.updateUser(new DataUser(this.user));
+            controller.updateCompany(new DataCompany(this.company));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -208,9 +219,13 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
                     Stage stage = new Stage();
 
                     handlerLang.registerObserverLang(loader.getController());
-                    handlerLang.onNewDataLang(new DataLang(lang));
+                    handlerUserListener.registerObserverUser(loader.getController());
+                    handlerCompanyListener.registerObserverCompany(loader.getController());
 
                     equipmentItemController = loader.getController();
+                    equipmentItemController.updateLang(new DataLang(lang));
+                    equipmentItemController.updateUser(new DataUser(user));
+                    equipmentItemController.updateCompany(new DataCompany(company));
                     equipmentItemController.setEquip(equipment);
 
                     stage.setTitle(equipment.getModel() + " : " + equipment.getSerialNumber());
@@ -242,6 +257,11 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             imgAllDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_defect.png"))));
             imgAddDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/defect_add.png"))));
             imgWatchWorkProg.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_time.png"))));
+            imgRooms.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_room_active.png"))));
+            imgAllEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_event_active.png"))));
+            imgAddRoom.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_rooms_active.png"))));
+            imgAddEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_events_active.png"))));
+
             if (new ProblemMonitor().searchProblemMonitor(company.getNameCompany())) {
                 imgEngine.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/brakes_warning_light.png"))));
             } else
@@ -255,19 +275,100 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             imgAllDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_defect_un_active.png"))));
             imgAddDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/defect_add_un_active.png"))));
             imgWatchWorkProg.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_time_un_active.png"))));
+            imgRooms.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_room_unactive.png"))));
+            imgAllEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_events_un_active.png"))));
+            imgAddRoom.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_rooms_un_active.png"))));
+            imgAddEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_events_un_active.png"))));
         }
-        handlerCompanyListener.onNewDataCompany(new DataCompany(dataCompany.getCompany()));
     }
 
     @Override
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
-        handlerLang.onNewDataLang(new DataLang(dataLang.getLanguage()));
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
         this.user = dataUser.getUser();
-        handlerUserListener.onNewDataUser(new DataUser(user));
+    }
+
+    public void allRooms(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentRoom.fxml"));
+        try {
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+            handlerUserListener.registerObserverUser(loader.getController());
+            handlerCompanyListener.registerObserverCompany(loader.getController());
+            FragmentRoom controller = loader.getController();
+
+            controller.updateLang(new DataLang(this.lang));
+            controller.updateUser(new DataUser(this.user));
+            controller.updateCompany(new DataCompany(this.company));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openAllEvent(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEvents.fxml"));
+        try {
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+            handlerUserListener.registerObserverUser(loader.getController());
+            handlerCompanyListener.registerObserverCompany(loader.getController());
+            FragmentEventController controller = loader.getController();
+
+            controller.updateLang(new DataLang(this.lang));
+            controller.updateUser(new DataUser(this.user));
+            controller.updateCompany(new DataCompany(this.company));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addRoom(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_company.fxml"));
+        try {
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+            handlerCompanyListener.registerObserverCompany(loader.getController());
+            handlerUserListener.registerObserverUser(loader.getController());
+
+            if(company != null) {
+                FragmentAddCompanyController fragmentAddCompanyController = loader.getController();
+
+                fragmentAddCompanyController.updateLang(new DataLang(this.lang));
+                fragmentAddCompanyController.updateUser(new DataUser(this.user));
+
+                fragmentAddCompanyController.loadChangeCompanyFragment(this.company);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addEvent(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_company.fxml"));
+        try {
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+            handlerUserListener.registerObserverUser(loader.getController());
+            handlerCompanyListener.registerObserverCompany(loader.getController());
+
+            if(company != null) {
+                FragmentAddCompanyController fragmentAddCompanyController = loader.getController();
+
+                fragmentAddCompanyController.updateLang(new DataLang(this.lang));
+                fragmentAddCompanyController.updateUser(new DataUser(this.user));
+
+                fragmentAddCompanyController.loadChangeCompanyFragment(this.company);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

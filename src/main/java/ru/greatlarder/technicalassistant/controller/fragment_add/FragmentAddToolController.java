@@ -12,22 +12,24 @@ import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Tool;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.repository.ToolsRepository;
-import ru.greatlarder.technicalassistant.repository.impl.ToolsRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.ToolsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.ToolsRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-public class FragmentAddToolController implements ObserverLang, ObserverCompany {
+public class FragmentAddToolController implements ObserverLang, ObserverCompany, ObserverUser {
     @FXML public TextField tfNameTool1;
     @FXML public TextField tfBrandTool1;
     @FXML public DatePicker dpStartOfOperation1;
@@ -47,11 +49,11 @@ public class FragmentAddToolController implements ObserverLang, ObserverCompany 
     @FXML public ImageView close1;
     @FXML public ComboBox<String> comboBoxChooseACompany;
 
-    Company company;
+    private Company company;
     ToolsRepository toolsRepository = new ToolsRepositoryImpl();
-    String lang;
+    private String lang;
     Language language = new LanguageImpl();
-    User user = GlobalLinkMainController.getMainController().user;
+    private User user;
 
     @Override
     public void updateLang(DataLang dataLang) {
@@ -138,12 +140,12 @@ public class FragmentAddToolController implements ObserverLang, ObserverCompany 
     @Override
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
-
+        loadFragment();
     }
     public void loadFragment(){
         setLanguage(lang);
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        List<Company> companies = GlobalLinkMainController.getMainController().user.getCompanyList();
+        List<Company> companies = this.user.getCompanyList();
         for (Company company1 : companies){
             if(companies.size() == 1){
                 comboBoxChooseACompany.setValue(company1.getNameCompany());
@@ -153,4 +155,8 @@ public class FragmentAddToolController implements ObserverLang, ObserverCompany 
         comboBoxChooseACompany.setItems(observableList);
     }
 
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
+    }
 }

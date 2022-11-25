@@ -3,8 +3,8 @@ package ru.greatlarder.technicalassistant.services.check.impl;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.equipment.Microphone;
 import ru.greatlarder.technicalassistant.domain.equipment.NetworkSwitch;
-import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.check.CheckEquipment;
 
 import java.util.HashMap;
@@ -56,7 +56,7 @@ public class CheckEquipmentImpl implements CheckEquipment {
         if (macAddress != null) {
             List<Equipment> equipmentList = equipmentRepository.getListEquipmentForCompany(nameCompany);
             for (Equipment equipment : equipmentList) {
-                if (equipment.getMacAddress().equals(macAddress)) {
+                if (macAddress.equals(equipment.getMacAddress())) {
                     return true;
                 }
             }
@@ -153,11 +153,10 @@ public class CheckEquipmentImpl implements CheckEquipment {
 
     @Override
     public String getFrequency(String frequency1, String frequency2) {
-        String frequency = null;
         if(frequency1 != null && !frequency1.isEmpty() && frequency2 != null && !frequency2.isEmpty()){
-            frequency = frequency1 + "." + frequency2;
+            return frequency1 + "." + frequency2;
         }
-        return frequency;
+        return null;
     }
 
     @Override

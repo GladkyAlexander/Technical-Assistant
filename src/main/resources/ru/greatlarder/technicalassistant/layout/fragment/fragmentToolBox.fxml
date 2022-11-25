@@ -21,6 +21,16 @@
     <ImageView fx:id="imgAllDefect" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allDefect" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../images/tool_box_defect_un_active.png" />
     </ImageView>
+   <ImageView fx:id="imgRooms" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allRooms" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../images/all_room_unactive.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="imgAllEvent" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openAllEvent" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../images/all_events_un_active.png" />
+      </image>
+   </ImageView>
     <ImageView fx:id="imgAddEquipment" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addEquipment" pickOnBounds="true" preserveRatio="true">
         <HBox.margin>
             <Insets left="5.0" />
@@ -36,6 +46,16 @@
     <ImageView fx:id="imgWatchWorkProg" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#watchWorkProjectors" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../images/add_time_un_active.png" />
     </ImageView>
+   <ImageView fx:id="imgAddRoom" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addRoom" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../images/add_rooms_un_active.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="imgAddEvent" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addEvent" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../images/add_events_un_active.png" />
+      </image>
+   </ImageView>
     <ImageView fx:id="imgEngine" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#imgEnginSearch" pickOnBounds="true" preserveRatio="true" />
     <TextField fx:id="tfSerNum" prefHeight="20.0" prefWidth="224.0" promptText="Введите серийный номер устройства" />
     <ImageView fx:id="imgSearch" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#searchSerialNumber" pickOnBounds="true" preserveRatio="true">

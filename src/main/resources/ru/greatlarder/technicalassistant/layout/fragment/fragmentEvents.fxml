@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+
+<SplitPane fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentEventController"
+        fx:id="splitPaneFragmentEvent" dividerPositions="0.5" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <items>
+      <TabPane fx:id="tabPane1fragmentEvent" tabClosingPolicy="UNAVAILABLE" />
+      <TabPane fx:id="tabPane2fragmentEvent" tabClosingPolicy="UNAVAILABLE" />
+   </items>
+</SplitPane>

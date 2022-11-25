@@ -1,15 +1,16 @@
 package ru.greatlarder.technicalassistant.controller.engineer;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import ru.greatlarder.technicalassistant.domain.*;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -19,7 +20,6 @@ import ru.greatlarder.technicalassistant.services.mail.Mail;
 import ru.greatlarder.technicalassistant.services.tables.ListMail;
 import ru.greatlarder.technicalassistant.services.tables.ListTask;
 import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
-import ru.greatlarder.technicalassistant.services.user_listener.HandlerUserListener;
 import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.time.LocalDate;
@@ -45,8 +45,6 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
     @FXML
     public GridPane gridPaneHomeFragment;
     @FXML
-    public ImageView imgMail;
-    @FXML
     public SplitPane splitPaneHF;
     @FXML
     public Label labelNumberOfDevices;
@@ -56,36 +54,30 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
     public Label labelNumberOfDevicesOperatingForMoreThanFiveYears;
     @FXML
     public Label labelNumberOfTools;
-    @FXML
-    public Button btnUpMail;
     @FXML public TabPane tabPaneEngineerHome;
     Language language = new LanguageImpl();
     String lang;
     User user;
     private Company company;
-    HandlerLang handlerLang = new HandlerLang();
-    HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
-    HandlerUserListener handlerUserListener = new HandlerUserListener();
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
         loadFragment();
-        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
     }
 
     @Override
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
         setLanguage(lang);
-        handlerLang.onNewDataLang(new DataLang(lang));
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
         this.user = dataUser.getUser();
         loadFragment();
-        handlerUserListener.onNewDataUser(new DataUser(user));
     }
 
     private void setLanguage(String lang) {
@@ -126,15 +118,7 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
         labelQuantityTheTool.setText(String.valueOf(toolList.size()));
     }
 
-    public void uploadMail(ActionEvent mouseEvent) {
-        if(splitPaneHF.getItems().size() == 2) {
-            splitPaneHF.getItems().remove(1);
-        }
-        loadMail();
-    }
-
     public void loadFragment() {
-        if(user != null) {
             if (company != null) {
                 for (Company company1 : user.getCompanyList()) {
                     if (company.equals(company1)) {
@@ -147,11 +131,11 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
                 tabPaneEngineerHome.getTabs().clear();
                 tabPaneEngineerHome.getTabs().add(new Tab(language.ALL_ACTIVE_APPLICATIONS(lang), loadTasksActive()));
                 tabPaneEngineerHome.getTabs().add(new Tab(language.ALL_APPLICATIONS(lang), loadTasksAll()));
+                if (user.getMailSettings().size() > 0) {
+                    loadMail();
+                }
             }
-            if (user.getMailSettings().size() > 0) {
-                loadMail();
-            }
-        }
+
     }
 
     private ListView<Task> loadTasksActive() {
@@ -164,8 +148,9 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
         ListTask listTask = new ListTask();
         handlerLang.registerObserverLang(listTask);
         handlerCompanyListener.registerObserverCompany(listTask);
-        handlerLang.onNewDataLang(new DataLang(lang));
-        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+
+        listTask.updateLang(new DataLang(lang));
+        listTask.updateCompany(new DataCompany(company));
 
         return listTask.upBox(taskActiveList);
     }
@@ -174,8 +159,6 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
         ListTask listTask = new ListTask();
         handlerLang.registerObserverLang(listTask);
         handlerCompanyListener.registerObserverCompany(listTask);
-        handlerLang.onNewDataLang(new DataLang(lang));
-        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
         return listTask.upBox(company.getTaskList());
     }
 
@@ -186,23 +169,24 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
                 ListMail listMail = new ListMail();
                 handlerLang.registerObserverLang(listMail);
                 handlerCompanyListener.registerObserverCompany(listMail);
-                handlerLang.onNewDataLang(new DataLang(lang));
-                handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                listMail.updateLang(new DataLang(lang));
+                listMail.updateCompany(new DataCompany(company));
                 Mail mail = new Mail(user.getMailSettings().get(0));
-
                 return listMail.upBox(mail.getListOfTasks());
             }
         };
         ProgressBar progressBar = new ProgressBar(task.getProgress());
         progressBar.setMaxWidth(MAX_VALUE);
-        gridPaneHomeFragment.add(progressBar, 0,4, 2,1);
+        progressBar.setMaxHeight(MAX_VALUE);
+        borderPaneHomePage.setTop(progressBar);
         task.setOnSucceeded((succeededEvent)->{
             if(splitPaneHF.getItems().size() == 2){
                 splitPaneHF.getItems().remove(1);
             }
+            progressBar.visibleProperty().bind(task.runningProperty());
             splitPaneHF.setDividerPositions(0.15f, 0,85f);
             splitPaneHF.getItems().add(1, task.getValue());
-            gridPaneHomeFragment.getChildren().remove(progressBar);
+            borderPaneHomePage.setPrefHeight(Region.USE_COMPUTED_SIZE);
         });
 
         ExecutorService executorService = Executors.newFixedThreadPool(1);

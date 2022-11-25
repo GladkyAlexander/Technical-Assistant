@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<ScrollPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddEquipmentController">
+<ScrollPane style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddEquipmentController">
    <content>
-      <GridPane fx:id="gridPane" alignment="TOP_CENTER" cache="true" hgap="4.0" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" vgap="4.0">
+      <GridPane fx:id="gridPane" alignment="TOP_CENTER" cache="true" hgap="4.0" vgap="4.0">
         <columnConstraints>
           <ColumnConstraints />
           <ColumnConstraints />
@@ -64,7 +53,7 @@
         </rowConstraints>
          <ComboBox fx:id="cmbEquipmentType" maxWidth="1.7976931348623157E308" onMouseClicked="#onActionCmbEquipmentType" promptText="Выберите название оборудования" GridPane.columnSpan="2" GridPane.rowIndex="1" />
       
-            <HBox alignment="CENTER_RIGHT" spacing="7.0" GridPane.columnSpan="3">
+            <HBox fx:id="hBoxTopAddEquipment" alignment="CENTER_RIGHT" spacing="7.0" GridPane.columnSpan="3">
       
                   <ImageView fx:id="imgOk" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="labelOk" />
@@ -138,7 +127,6 @@
             </HBox>
             <TextField fx:id="textFieldLogin" onKeyReleased="#onKeyLogin" promptText="Логин" GridPane.columnIndex="1" GridPane.rowIndex="14" />
             <TextField fx:id="textFieldPassword" promptText="Пароль" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-            <TextField fx:id="textFieldRoom" onKeyReleased="#onKeyRoom" promptText="Помещение" GridPane.columnIndex="1" GridPane.rowIndex="16" />
             <TextField fx:id="textFieldLocation" onKeyReleased="#onKeyLocation" promptText="Расположение в комнате" GridPane.columnIndex="1" GridPane.rowIndex="17" />
             <Label fx:id="labelLogin" text="Логин :" GridPane.rowIndex="14">
                <font>
@@ -269,9 +257,6 @@
           </ImageView>
             <Button fx:id="btnSaveEquipment" mnemonicParsing="false" onMouseClicked="#saveEquipment" text="Сохранить" GridPane.columnIndex="1" GridPane.rowIndex="34" />
             <HBox fx:id="hBoxFrequency" alignment="CENTER" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="25">
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
                <Label fx:id="labelFrequency" text="Введите частоту :">
                   <font>
                      <Font name="System Bold" size="12.0" />
@@ -649,6 +634,7 @@
                <Insets right="2.0" top="2.0" />
             </padding>
          </HBox>
+         <ComboBox fx:id="comboBoxRooms" maxWidth="1.7976931348623157E308" promptText="Выберите комнату" GridPane.columnIndex="1" GridPane.rowIndex="16" />
          <padding>
             <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
          </padding>

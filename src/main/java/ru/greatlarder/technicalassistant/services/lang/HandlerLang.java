@@ -1,6 +1,7 @@
 package ru.greatlarder.technicalassistant.services.lang;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class HandlerLang implements SubjectLang {
@@ -33,5 +34,10 @@ public class HandlerLang implements SubjectLang {
         for(ObserverLang observerMain : observerLangs){
             observerMain.updateLang(dataLang);
         }
+    }
+
+    @Override
+    public Set<ObserverLang> getObserverLangList() {
+        return observerLangs;
     }
 }

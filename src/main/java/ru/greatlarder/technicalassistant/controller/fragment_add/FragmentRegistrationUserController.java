@@ -7,14 +7,18 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.repository.UserRepository;
-import ru.greatlarder.technicalassistant.repository.impl.UserRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.UserRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.manager.FileManager;
+import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.HandlerUserListener;
 
 import java.util.List;
 
@@ -65,7 +69,9 @@ public class FragmentRegistrationUserController implements ObserverLang{
     @FXML public Label labelNameCompany;
     @FXML public TextField tfNameCompanyUser;
     UserRepository userRepository = new UserRepositoryImpl();
-    Language lines = new LanguageImpl();
+    Language language = new LanguageImpl();
+    FileManager fileManager = new FileManagerImpl();
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
     String lang;
 
     public void saveUser(ActionEvent actionEvent) {
@@ -78,6 +84,10 @@ public class FragmentRegistrationUserController implements ObserverLang{
         user.setLogin(tfLogin.getText());
         user.setPassword(tfPassword.getText());
         user.setPost(comboBoxPost.getValue());
+        user.setCompanyAffiliation(tfNameCompanyUser.getText());
+        if(comboBoxPost.getValue().equals(language.RECEPTION_SECRETARY(lang))){
+            fileManager.createDirectoryCompany(tfNameCompanyUser.getText());
+        }
         user.setServer(tfNameServer.getText());
         user.setPort(tfPortServerDbExternal.getText());
         user.setNameDB(tfNameDbExternal.getText());
@@ -99,13 +109,13 @@ public class FragmentRegistrationUserController implements ObserverLang{
         if (ut.getLastName().equals(user.getLastName()) && ut.getFirstName().equals(user.getFirstName())
         && ut.getLogin().equals(user.getLogin()) && ut.getPassword().equals(user.getPassword())){
             gridPaneAdd.setStyle(StyleSRC.STYLE_EXCELLENT);
-            GlobalLinkMainController.getMainController().loadUser(ut);
+            handlerUserListener.onNewDataUser(new DataUser(ut));
         } else gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
     }
 
     public void loadPage() {
         gridPaneAdd.setStyle(StyleSRC.STYLE_ORDINARY);
-        comboBoxPost.setItems(FXCollections.observableArrayList(lines.LIST_POST(lang)));
+        comboBoxPost.setItems(FXCollections.observableArrayList(language.LIST_POST(lang)));
     }
 
     public void setMenuItemRu(ActionEvent actionEvent) {
@@ -117,23 +127,23 @@ public class FragmentRegistrationUserController implements ObserverLang{
     }
 
     public void setLanguage(String lange) {
-        labelRegister.setText(lines.REGISTRY(lange));
-        this.labelLastName.setText(lines.LAST_NAME(lange));
-        labelFirstName.setText(lines.FIRST_NAME(lange));
-        labelEmailAddress.setText(lines.EMAIL(lange));
-        labelPhone.setText(lines.PHONE(lange));
-        labelLogin.setText(lines.LOGIN(lange));
-        labelPassword.setText(lines.PASSWORD(lange));
-        comboBoxPost.setPromptText(lines.POST(lange));
-        menuButtonLanguage.setText(lines.SELECT_A_COUNTRY(lange));
-        btnSave.setText(lines.SAVE(lange));
-        comboBoxPost.setItems(FXCollections.observableArrayList(lines.LIST_POST(lange)));
-        labelNameServer.setText(lines.SERVER_HOSTNAME(lange));
-        labelPortServer.setText(lines.PORT(lange));
-        labelNameDbExternal.setText(lines.DATABASE_NAME(lange));
-        labelUserDbExternal.setText(lines.DATABASE_USER_NAME(lange));
-        labelPasswordDbExternal.setText(lines.PASSWORD_DATABASE(lange));
-        labelNameCompany.setText(lines.THE_COMPANY_YOU_WORK_FOR(lange));
+        labelRegister.setText(language.REGISTRY(lange));
+        this.labelLastName.setText(language.LAST_NAME(lange));
+        labelFirstName.setText(language.FIRST_NAME(lange));
+        labelEmailAddress.setText(language.EMAIL(lange));
+        labelPhone.setText(language.PHONE(lange));
+        labelLogin.setText(language.LOGIN(lange));
+        labelPassword.setText(language.PASSWORD(lange));
+        comboBoxPost.setPromptText(language.POST(lange));
+        menuButtonLanguage.setText(language.SELECT_A_COUNTRY(lange));
+        btnSave.setText(language.SAVE(lange));
+        comboBoxPost.setItems(FXCollections.observableArrayList(language.LIST_POST(lange)));
+        labelNameServer.setText(language.SERVER_HOSTNAME(lange));
+        labelPortServer.setText(language.PORT(lange));
+        labelNameDbExternal.setText(language.DATABASE_NAME(lange));
+        labelUserDbExternal.setText(language.DATABASE_USER_NAME(lange));
+        labelPasswordDbExternal.setText(language.PASSWORD_DATABASE(lange));
+        labelNameCompany.setText(language.THE_COMPANY_YOU_WORK_FOR(lange));
     }
 
     @Override

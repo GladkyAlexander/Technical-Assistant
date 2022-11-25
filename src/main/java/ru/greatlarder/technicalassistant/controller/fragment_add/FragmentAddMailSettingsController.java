@@ -8,8 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.MailSettings;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.repository.MailSettingsRepository;
-import ru.greatlarder.technicalassistant.repository.impl.MailSettingsRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.MailSettingsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.MailSettingsRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -33,7 +33,7 @@ public class FragmentAddMailSettingsController implements ObserverLang, Observer
     @FXML public Button btnSave;
     @FXML public GridPane gridPaneAddLetterTemplate;
     Language language = new LanguageImpl();
-    String lang;
+    private String lang;
     private User user;
     MailSettingsRepository mailSettingsRepository = new MailSettingsRepositoryImpl();
 

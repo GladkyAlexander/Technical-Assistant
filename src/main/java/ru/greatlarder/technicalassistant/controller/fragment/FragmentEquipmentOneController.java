@@ -19,16 +19,23 @@ import javafx.scene.layout.HBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
+import ru.greatlarder.technicalassistant.domain.Room;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
-import ru.greatlarder.technicalassistant.repository.DefectRepository;
-import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.repository.ExternalDatabase;
-import ru.greatlarder.technicalassistant.repository.impl.DefectRepositoryImpl;
-import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
-import ru.greatlarder.technicalassistant.repository.impl.ExternalDatabaseRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.check.CheckEquipment;
 import ru.greatlarder.technicalassistant.services.check.impl.CheckEquipmentImpl;
+import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
+import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.EquipmentRepositoryMySQL;
+import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.impl.EquipmentRepositoryMySQLImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.DefectRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.RoomsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.DefectRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.RoomsRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -36,6 +43,8 @@ import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.awt.*;
 import java.io.File;
@@ -46,7 +55,7 @@ import java.util.Objects;
 
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.*;
 
-public class FragmentEquipmentOneController implements ObserverLang {
+public class FragmentEquipmentOneController implements ObserverLang, ObserverCompany, ObserverUser {
     @FXML
     public Label model;
     @FXML public Label manufacturer;
@@ -71,7 +80,6 @@ public class FragmentEquipmentOneController implements ObserverLang {
     @FXML public Button btnSaveNewIp;
     @FXML public TextField tfNewLogin;
     @FXML public TextField tfNewPassword;
-    @FXML public TextField tfNewRoom;
     @FXML public TextField tfNewRoomLocation;
     @FXML public Button btnSaveNewLogin;
     @FXML public Button btnSaveNewPassword;
@@ -234,6 +242,7 @@ public class FragmentEquipmentOneController implements ObserverLang {
     @FXML public Label diagonal;
     @FXML public Label labelStorage;
     @FXML public Button btnChangeDataStorage;
+    @FXML public ComboBox<String> comboBoxNewRooms;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
     Language language = new LanguageImpl();
     DefectRepository defectRepository = new DefectRepositoryImpl();
@@ -242,6 +251,8 @@ public class FragmentEquipmentOneController implements ObserverLang {
     String lang;
     CheckEquipment checkEquipment = new CheckEquipmentImpl();
     SplitPane scrollPaneFragmentIdenticalData;
+    private Company company;
+    private User user;
 
     public void setLabelStorage(String labelStorage) {
         this.labelStorage.setText(labelStorage);
@@ -257,7 +268,7 @@ public class FragmentEquipmentOneController implements ObserverLang {
         this.equipment = equipment;
         setLanguage(lang);
         start();
-        displayLayout(equipment);
+        displayLayout(this.equipment);
     }
 
     public void setLanguage(String lang1){
@@ -358,6 +369,15 @@ public class FragmentEquipmentOneController implements ObserverLang {
     public void changeRoom(MouseEvent mouseEvent) {
         hBoxNewRoom.setVisible(true);
         hBoxNewRoom.setManaged(true);
+        RoomsRepository repository = new RoomsRepositoryImpl();
+
+        List<String> nameRoomList = new ArrayList<>();
+        for(Room room : repository.getListRoomForCompany(equipment.getCompany())){
+            nameRoomList.add(room.getNameRoom());
+        }
+        comboBoxNewRooms.setPromptText(equipment.getRoom());
+        comboBoxNewRooms.setItems(FXCollections.observableArrayList(nameRoomList));
+
         Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         stage.sizeToScene();
     }
@@ -425,10 +445,10 @@ public class FragmentEquipmentOneController implements ObserverLang {
     }
 
     public void SaveNewRoom(ActionEvent actionEvent) {
-        equipmentRepository.change(equipment.getId(), "room", tfNewRoom.getText());
+        equipmentRepository.change(equipment.getId(), "room", comboBoxNewRooms.getValue());
         if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getRoom().equals(
-                tfNewRoom.getText())){
-            room.setText(tfNewRoom.getText());
+                comboBoxNewRooms.getValue())){
+            room.setText(comboBoxNewRooms.getValue());
             GlobalLinkMainController.getMainController().updateUser();
             hBoxNewRoom.setVisible(false);
             hBoxNewRoom.setManaged(false);
@@ -1062,7 +1082,7 @@ public class FragmentEquipmentOneController implements ObserverLang {
                 .equals(tfFrequency1.getText() + "." + tfFrequency2.getText())){
             GlobalLinkMainController.getMainController().updateUser();
             hBoxFrequency.setVisible(false);
-            this.hBoxFrequency.setManaged(false);
+            hBoxFrequency.setManaged(false);
             labelFrequency.setText(tfFrequency1.getText() + "." + tfFrequency2.getText());
         } else {
             tfFrequency1.setStyle(STYLE_DANGER);
@@ -1288,9 +1308,9 @@ public class FragmentEquipmentOneController implements ObserverLang {
                 .getTimeWorkLampProjector().equals(Integer.valueOf(tfNewTimeWorkLampProj.getText()))){
             labelTimeWorkLampProj.setText(((Projector) equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany()
                     , equipment.getSerialNumber())).getTimeWorkLampProjector().toString());
-            GlobalLinkMainController.getMainController().updateUser();
             hBoxChangeTimeWorkLampProj.setVisible(false);
             hBoxChangeTimeWorkLampProj.setManaged(false);
+            GlobalLinkMainController.getMainController().updateUser();
             Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
             stage.sizeToScene();
         } else tfNewTimeWorkLampProj.setStyle(STYLE_DANGER);
@@ -1742,7 +1762,7 @@ public class FragmentEquipmentOneController implements ObserverLang {
             hBoxNewMacAddress.setStyle(new HBox().getStyle());
             equipmentRepository.change(equipment.getId(), "macAddress", checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText());
             if(!checkMacAddress(equipment.getCompany(), checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText())){
-                labelMacAddress.setText(checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText());
+                macAddress.setText(checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText());
                 hBoxNewMacAddress.setVisible(false);
                 hBoxNewMacAddress.setManaged(false);
                 btnSaveNewMac.setVisible(false);
@@ -1834,13 +1854,23 @@ public class FragmentEquipmentOneController implements ObserverLang {
 
     public void changeDataInStorage(MouseEvent mouseEvent) {
         if (labelStorage.getText().equals("Локальное хранилище") || labelStorage.getText().equals("Local storage")){
-            ExternalDatabase externalDatabase = new ExternalDatabaseRepositoryImpl();
-            externalDatabase.changeDataEquipment(equipment);
+            EquipmentRepositoryMySQL equipmentRepositoryMySQL = new EquipmentRepositoryMySQLImpl();
+            equipmentRepositoryMySQL.updateEquipment(GlobalLinkMainController.getMainController().user, equipment.getCompany(), equipment);
             scrollPaneFragmentIdenticalData.getItems().clear();
         }
         if (labelStorage.getText().equals("Внешнее хранилище") || labelStorage.getText().equals("External storage")){
             equipmentRepository.changeDataEquipmentForId(equipment);
             scrollPaneFragmentIdenticalData.getItems().clear();
         }
+    }
+
+    @Override
+    public void updateCompany(DataCompany dataCompany) {
+        this.company = dataCompany.getCompany();
+    }
+
+    @Override
+    public void updateUser(DataUser dataUser) {
+         this.user = dataUser.getUser();
     }
 }

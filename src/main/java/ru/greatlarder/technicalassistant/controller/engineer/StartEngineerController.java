@@ -14,13 +14,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import ru.greatlarder.technicalassistant.controller.InfoPageController;
+import ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxController;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.repository.CompanyRepository;
-import ru.greatlarder.technicalassistant.repository.impl.CompanyRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.CompanyRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.CompanyRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
@@ -74,40 +76,20 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     public BorderPane borderPaneEngineerPage;
     Language language = new LanguageImpl();
     FileManager fileManager = new FileManagerImpl();
-    HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
-    HandlerLang handlerLang = new HandlerLang();
-    HandlerUserListener handlerUserListener = new HandlerUserListener();
+    public HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
     CompanyRepository companyRepository = new CompanyRepositoryImpl();
     User user;
     public Company company;
     String lang;
-
     public void updateTheCompany() {
         this.company = companyRepository.getCompanyName(company.getNameCompany());
         handlerCompanyListener.onNewDataCompany(new DataCompany(company));
     }
 
     public void clickHomePage(MouseEvent mouseEvent) {
-            if (company != null) {
-                FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/engineer/homeEngineerPage.fxml"));
-                try {
-                    borderPaneEngineerPage.setCenter(loaderHomePage.load());
-                    handlerUserListener.registerObserverUser(loaderHomePage.getController());
-                    handlerLang.registerObserverLang(loaderHomePage.getController());
-                    handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
-
-                    if(user != null){
-                        handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
-                    }
-                        handlerUserListener.onNewDataUser(new DataUser(user));
-                        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-
-                    HomeEngineerController controller = loaderHomePage.getController();
-                    controller.loadFragment();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        loadPageHome(this.user, this.company);
     }
 
     public void clickDocumentation(MouseEvent mouseEvent) {
@@ -121,13 +103,10 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
                 handlerUserListener.registerObserverUser(loader.getController());
                 handlerLang.registerObserverLang(loader.getController());
                 handlerCompanyListener.registerObserverCompany(loader.getController());
-                handlerLang.onNewDataLang(new DataLang(lang));
-                handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-                handlerUserListener.onNewDataUser(new DataUser(user));
-
                 DocumentationEngineerController documentationFragmentController = loader.getController();
-                documentationFragmentController.startDocFragment();
-
+                documentationFragmentController.updateLang(new DataLang(this.lang));
+                documentationFragmentController.updateUser(new DataUser(this.user));
+                documentationFragmentController.updateCompany(new DataCompany(this.company));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -141,10 +120,10 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
             handlerLang.registerObserverLang(loader.getController());
             handlerUserListener.registerObserverUser(loader.getController());
             handlerCompanyListener.registerObserverCompany(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
-            handlerUserListener.onNewDataUser(new DataUser(user));
-            handlerCompanyListener.onNewDataCompany(new DataCompany(company));
             SettingsEngineerController settingsPageController = loader.getController();
+            settingsPageController.updateLang(new DataLang(this.lang));
+            settingsPageController.updateUser(new DataUser(this.user));
+            settingsPageController.updateCompany(new DataCompany(this.company));
             settingsPageController.loadPage();
 
         } catch (IOException e) {
@@ -157,8 +136,8 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
         try {
             borderPaneEngineerPage.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
-
+            InfoPageController controller = loader.getController();
+            controller.updateLang(new DataLang(this.lang));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -170,7 +149,6 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     }
 
     public void menuButtonStart() {
-        if (user != null) {
             if (user.getCompanyList() != null) {
                 if (user.getCompanyList().size() == 1) {
                     for (Company company1 : user.getCompanyList()) {
@@ -187,42 +165,30 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
                         imageViewLogo.setFitHeight(50);
                         imageViewLogo.setFitWidth(50);
                         imageViewLogo.setImage(new Image(fileManager.folderImage() + "\\" + company.getLogoCompany()));
+                        loadPageHome(this.user, this.company);
                     }
                 }
                 if (user.getCompanyList().size() > 1) {
-                    if(company != null){
                         for (Company company1 : user.getCompanyList()) {
                             if(company1.getNameCompany().equals(company.getNameCompany())){
                                 this.company = company1;
                                 MenuItem menuItem = new MenuItem(company.getNameCompany());
                                 menuItem.setOnAction(eventEventHandler);
                                 btnSelectCompanies.getItems().addAll(menuItem);
-                                handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                                loadPageHome(this.user, this.company);
                             }
                         }
-                    }
                     vBoxNameCompany.setVisible(true);
                     vBoxNameCompany.setManaged(true);
                     imageViewLogo.setFitHeight(50);
                     imageViewLogo.setFitWidth(50);
                     imageViewLogo.setImage(new Image(Objects.requireNonNull(getClass()
                             .getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
-                    for (Company company : user.getCompanyList()) {
-                        MenuItem menuItem = new MenuItem(company.getNameCompany());
-                        menuItem.setOnAction(eventEventHandler);
-                        btnSelectCompanies.getItems().addAll(menuItem);
-                    }
                 }
                 if (user.getCompanyList().size() == 0) {
-                    vBoxNameCompany.setVisible(false);
-                    vBoxNameCompany.setManaged(false);
-                    imageViewLogo.setFitHeight(131);
-                    imageViewLogo.setFitWidth(220);
-                    imageViewLogo.setImage(new Image(Objects.requireNonNull(getClass()
-                            .getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
+                    clean();
                 }
-            }
-        } else clean();
+            } else clean();
     }
 
     EventHandler<ActionEvent> eventEventHandler = new EventHandler<>() {
@@ -252,15 +218,12 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
         setLanguage(dataLang.getLanguage());
-        handlerLang.onNewDataLang(new DataLang(lang));
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
         this.user = dataUser.getUser();
-        //loadPage();
-        menuButtonStart();
-        handlerUserListener.onNewDataUser(new DataUser(user));
+        loadPage();
     }
 
     public void setLanguage(String lang) {
@@ -280,45 +243,29 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
         loadPage();
-        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
     }
 
     public void loadPage() {
         GlobalLinkStartEngineerController.setStartEngineerController(this);
-        if(user != null) {
+        setLanguage(user.getLanguage());
+        lang = user.getLanguage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentToolBox.fxml"));
             try {
                 GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().clear();
                 GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().add(loader.load());
+
                 handlerLang.registerObserverLang(loader.getController());
                 handlerCompanyListener.registerObserverCompany(loader.getController());
-                handlerLang.onNewDataLang(new DataLang(lang));
-                handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+
+                FragmentToolBoxController fragmentToolBoxController = loader.getController();
+                fragmentToolBoxController.updateLang(new DataLang(this.lang));
+                fragmentToolBoxController.updateUser(new DataUser(this.user));
+                fragmentToolBoxController.updateCompany(new DataCompany(this.company));
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
             menuButtonStart();
-
-            if (company != null) {
-                FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/engineer/homeEngineerPage.fxml"));
-                try {
-                    borderPaneEngineerPage.setCenter(loaderHomePage.load());
-                    handlerUserListener.registerObserverUser(loaderHomePage.getController());
-                    handlerLang.registerObserverLang(loaderHomePage.getController());
-                    handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
-                    handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
-                    handlerUserListener.onNewDataUser(new DataUser(user));
-                    handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-                    HomeEngineerController controller = loaderHomePage.getController();
-                    controller.loadFragment();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().clear();
-            menuButtonStart();
-        }
     }
     private void clean(){
         vBoxNameCompany.setVisible(false);
@@ -327,5 +274,21 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
         imageViewLogo.setFitWidth(220);
         imageViewLogo.setImage(new Image(Objects.requireNonNull(getClass()
                 .getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
+    }
+    private void loadPageHome(User user, Company company){
+        FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/engineer/homeEngineerPage.fxml"));
+        try {
+            borderPaneEngineerPage.setCenter(loaderHomePage.load());
+            handlerLang.registerObserverLang(loaderHomePage.getController());
+            handlerUserListener.registerObserverUser(loaderHomePage.getController());
+            handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
+            HomeEngineerController controller = loaderHomePage.getController();
+            controller.updateLang(new DataLang(lang));
+            controller.updateUser(new DataUser(user));
+            controller.updateCompany(new DataCompany(company));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

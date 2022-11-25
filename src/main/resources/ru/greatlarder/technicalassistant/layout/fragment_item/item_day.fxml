@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemDay">
+   <content>
+      <GridPane fx:id="gridPaneItemDay" alignment="CENTER" hgap="4.0" vgap="4.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" />
+          <ColumnConstraints halignment="CENTER" />
+            <ColumnConstraints halignment="CENTER" />
+            <ColumnConstraints halignment="CENTER" />
+            <ColumnConstraints halignment="CENTER" />
+            <ColumnConstraints halignment="CENTER" />
+            <ColumnConstraints halignment="CENTER" />
+            <ColumnConstraints halignment="CENTER" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints valignment="CENTER" />
+          <RowConstraints valignment="CENTER" />
+          <RowConstraints valignment="CENTER" />
+            <RowConstraints valignment="CENTER" />
+            <RowConstraints valignment="CENTER" />
+            <RowConstraints valignment="CENTER" />
+            <RowConstraints valignment="CENTER" />
+            <RowConstraints valignment="CENTER" />
+            <RowConstraints valignment="CENTER" />
+            <RowConstraints valignment="CENTER" />
+            <RowConstraints valignment="CENTER" />
+            <RowConstraints valignment="CENTER" />
+            <RowConstraints valignment="CENTER" />
+            <RowConstraints />
+        </rowConstraints>
+         <children>
+            <Label text="8:00" />
+            <Label text="8:15" GridPane.rowIndex="1" />
+            <Label text="8:30" GridPane.rowIndex="2" />
+            <Label text="8:45" GridPane.rowIndex="3" />
+            <Label text="9:00" GridPane.rowIndex="4" />
+            <Label text="9:15" GridPane.rowIndex="5" />
+            <Label text="9:30" GridPane.rowIndex="6" />
+            <Label text="9:45" GridPane.rowIndex="7" />
+            <Label text="10:00" GridPane.rowIndex="8" />
+            <Label text="10:15" GridPane.rowIndex="9" />
+            <Label text="10:30" GridPane.rowIndex="10" />
+            <Label text="10:45" GridPane.rowIndex="11" />
+            <Label text="11:00" GridPane.columnIndex="2" />
+            <Label text="11:15" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label text="11:30" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label text="11:45" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label text="12:00" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label text="12:15" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label text="12:30" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label text="12:45" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Label text="13:00" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <Label text="13:15" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+            <Label text="13:30" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+            <Label text="13:45" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+            <Label text="14:00" GridPane.columnIndex="4" />
+            <Label text="14:15" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Label text="14:30" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Label text="14:45" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label text="15:00" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <Label text="15:15" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            <Label text="15:30" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+            <Label text="15:45" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+            <Label text="16:00" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+            <Label text="16:15" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+            <Label text="16:30" GridPane.columnIndex="4" GridPane.rowIndex="10" />
+            <Label text="16:45" GridPane.columnIndex="4" GridPane.rowIndex="11" />
+            <Label text="17:00" GridPane.columnIndex="6" />
+            <Label text="17:15" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Label text="17:30" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+            <Label text="17:45" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <Label text="18:00" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+            <Label text="18:15" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+            <Label text="18:30" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+            <Label text="18:45" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+            <Label text="19:00" GridPane.columnIndex="6" GridPane.rowIndex="8" />
+            <Label text="19:15" GridPane.columnIndex="6" GridPane.rowIndex="9" />
+            <Label text="19:30" GridPane.columnIndex="6" GridPane.rowIndex="10" />
+            <Label text="19:45" GridPane.columnIndex="6" GridPane.rowIndex="11" />
+            <Label text="20:00" GridPane.columnIndex="6" GridPane.rowIndex="12" />
+            <Pane fx:id="p800" GridPane.columnIndex="1" />
+            <Pane fx:id="p815" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Pane fx:id="p830" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Pane fx:id="p845" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Pane fx:id="p900" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Pane fx:id="p915" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Pane fx:id="p930" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Pane fx:id="p945" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Pane fx:id="p1000" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Pane fx:id="p1015" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Pane fx:id="p1030" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Pane fx:id="p1045" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <Pane fx:id="p1100" GridPane.columnIndex="3" />
+            <Pane fx:id="p1115" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Pane fx:id="p1130" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Pane fx:id="p1145" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Pane fx:id="p1200" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Pane fx:id="p1215" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Pane fx:id="p1230" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <Pane fx:id="p1245" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <Pane fx:id="p1300" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+            <Pane fx:id="p1315" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+            <Pane fx:id="p1330" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+            <Pane fx:id="p1345" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+            <Pane fx:id="p1400" GridPane.columnIndex="5" />
+            <Pane fx:id="p1415" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Pane fx:id="p1430" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Pane fx:id="p1445" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Pane fx:id="p1500" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <Pane fx:id="p1515" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+            <Pane fx:id="p1530" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+            <Pane fx:id="p1545" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+            <Pane fx:id="p1600" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+            <Pane fx:id="p1615" GridPane.columnIndex="5" GridPane.rowIndex="9" />
+            <Pane fx:id="p1630" GridPane.columnIndex="5" GridPane.rowIndex="10" />
+            <Pane fx:id="p1645" GridPane.columnIndex="5" GridPane.rowIndex="11" />
+            <Pane fx:id="p1700" GridPane.columnIndex="7" />
+            <Pane fx:id="p1715" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+            <Pane fx:id="p1730" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+            <Pane fx:id="p1745" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <Pane fx:id="p1800" GridPane.columnIndex="7" GridPane.rowIndex="4" />
+            <Pane fx:id="p1815" GridPane.columnIndex="7" GridPane.rowIndex="5" />
+            <Pane fx:id="p1830" GridPane.columnIndex="7" GridPane.rowIndex="6" />
+            <Pane fx:id="p1845" GridPane.columnIndex="7" GridPane.rowIndex="7" />
+            <Pane fx:id="p1900" GridPane.columnIndex="7" GridPane.rowIndex="8" />
+            <Pane fx:id="p1915" GridPane.columnIndex="7" GridPane.rowIndex="9" />
+            <Pane fx:id="p1930" GridPane.columnIndex="7" GridPane.rowIndex="10" />
+            <Pane fx:id="p1945" GridPane.columnIndex="7" GridPane.rowIndex="11" />
+            <Pane fx:id="p2000" GridPane.columnIndex="7" GridPane.rowIndex="12" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </GridPane>
+   </content>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</ScrollPane>

@@ -15,18 +15,22 @@ import javafx.stage.FileChooser;
 import org.apache.commons.io.FileUtils;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
+import ru.greatlarder.technicalassistant.domain.Room;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
 import ru.greatlarder.technicalassistant.domain.spinetix.SpinetixHMP200;
 import ru.greatlarder.technicalassistant.domain.spinetix.SpinetixHMP300;
 import ru.greatlarder.technicalassistant.domain.spinetix.SpinetixHMP400;
 import ru.greatlarder.technicalassistant.domain.wirenboard.WirenBoard6;
 import ru.greatlarder.technicalassistant.domain.wirenboard.WirenBoard7;
-import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.check.CheckEquipment;
 import ru.greatlarder.technicalassistant.services.check.impl.CheckEquipmentImpl;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.RoomsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.RoomsRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
@@ -35,6 +39,8 @@ import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,10 +52,11 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static java.lang.Long.MAX_VALUE;
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_DANGER;
 import static ru.greatlarder.technicalassistant.services.style.StyleSRC.STYLE_WARNING;
 
-public class FragmentAddEquipmentController implements ObserverLang, ObserverCompany {
+public class FragmentAddEquipmentController implements ObserverLang, ObserverCompany, ObserverUser {
     @FXML
     public ImageView imgOk;
     @FXML
@@ -80,8 +87,6 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     public TextField textFieldLogin;
     @FXML
     public TextField textFieldPassword;
-    @FXML
-    public TextField textFieldRoom;
     @FXML
     public TextField textFieldLocation;
     @FXML
@@ -291,15 +296,19 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     @FXML public HBox hBoxSelectionByManufacturerController;
     @FXML public ImageView imgHMP300;
     @FXML public ImageView imgHMP400;
+    @FXML public ComboBox<String> comboBoxRooms;
+    @FXML public HBox hBoxTopAddEquipment;
     private String lang;
     Language language = new LanguageImpl();
-    Company company;
+    private Company company;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
+    RoomsRepository roomsRepository = new RoomsRepositoryImpl();
     List<Equipment> listNetworkSwitcher;
     FileManager fileManager = new FileManagerImpl();
     String nameFileManual;
     private String logoImg =null;
     CheckEquipment checkEquipment = new CheckEquipmentImpl();
+    private User user;
 
     @Override
     public void updateLang(DataLang dataLang) {
@@ -333,11 +342,13 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         cmbEquipmentType.setPromptText(language.SELECT_THE_NAME_OF_THE_EQUIPMENT(lang));
         comboBoxStatusSelection.setPromptText(language.SELECT_THE_DEVICE_STATUS(lang));
         comboBoxStatusSelection.setItems(FXCollections.observableArrayList(language.status_sheet(lang)));
+        comboBoxRooms.setPromptText(language.CHOOSE_A_ROOM(lang));
     }
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
+        loadFragment();
     }
 
     public void loadFragment() {
@@ -347,6 +358,12 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         cmbEquipmentType.setItems(FXCollections.observableArrayList(listNameEquipment));
 
         comboBoxStatusSelection.setItems(FXCollections.observableArrayList(language.status_sheet(lang)));
+
+        List<String> roomName = new ArrayList<>();
+        for (Room r : roomsRepository.getListRoomForCompany(company.getNameCompany())){
+            roomName.add(r.getNameRoom());
+        }
+        comboBoxRooms.setItems(FXCollections.observableArrayList(roomName));
 
         List<String> list1 = new ArrayList<>();
         for (Equipment f : listNetworkSwitcher) {
@@ -404,7 +421,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         this.hBoxNetworkSwitcher.setVisible(d);
         this.hBoxNetworkSwitcher.setManaged(d);
 
-        boolean r = value.equals(language.MEDIA_PLAYER(lang)) || value.equals(language.CONTROL_PROCESSOR(lang));
+        boolean r = value.equals(language.MEDIA_PLAYER(lang));
         this.hBoxSelectionByManufacturerMediaplayer.setVisible(r);
         this.hBoxSelectionByManufacturerMediaplayer.setManaged(r);
         boolean cont = value.equals(language.CONTROLLER(lang));
@@ -517,14 +534,6 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             textFieldLogin.setStyle(STYLE_WARNING);
         } else if (!textFieldLogin.getText().trim().isEmpty() && !checkEquipment.checkingStringWithACondition(textFieldLogin.getText())) {
             textFieldLogin.setStyle(STYLE_DANGER);
-        }
-    }
-
-    public void onKeyRoom() {
-        if (!textFieldRoom.getText().trim().isEmpty()) {
-            textFieldRoom.setStyle(new TextField().getStyle());
-        } else if (textFieldRoom.getText().trim().isEmpty()) {
-            textFieldRoom.setStyle(STYLE_WARNING);
         }
     }
 
@@ -727,18 +736,25 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                     if (!checkEquipment.checkingFrequency(checkEquipment.getFrequency(textFieldFrequency1.getText(), textFieldFrequency2.getText()), company.getNameCompany())) {
                         textFieldFrequency1.setStyle(new TextField().getStyle());
                         textFieldFrequency2.setStyle(new TextField().getStyle());
+                        hBoxFrequency.setStyle(new HBox().getStyle());
                     } else {
                         textFieldFrequency1.setStyle(STYLE_DANGER);
                         textFieldFrequency2.setStyle(STYLE_DANGER);
+                        hBoxFrequency.setStyle(STYLE_DANGER);
                     }
-                } else textFieldFrequency2.setStyle(STYLE_DANGER);
-            } else textFieldFrequency2.setStyle(STYLE_DANGER);
-        } else textFieldFrequency2.setStyle(new TextField().getStyle());
-        if (checkEquipment.checkingFrequency(checkEquipment.getFrequency(textFieldFrequency1.getText(), textFieldFrequency2.getText()), company.getNameCompany())) {
-            hBoxFrequency.setStyle(new HBox().getStyle());
+                } else {
+                    textFieldFrequency2.setStyle(STYLE_DANGER);
+                    hBoxFrequency.setStyle(STYLE_DANGER);
+                }
+            } else {
+                textFieldFrequency2.setStyle(STYLE_DANGER);
+                hBoxFrequency.setStyle(STYLE_DANGER);
+            }
         } else {
-            hBoxFrequency.setStyle(STYLE_DANGER);
+            textFieldFrequency2.setStyle(new TextField().getStyle());
+            hBoxFrequency.setStyle(new HBox().getStyle());
         }
+
     }
 
     public void onKeyPressedMaximumLampOperatingTime() {
@@ -1039,7 +1055,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         }
         if (equipment instanceof AcousticSpeaker) {
             returnEquipment = new AcousticSpeaker();
-            returnEquipment.setImage("acoustic_speaker.png");
+            returnEquipment.setImage("as.png");
         }
         if (equipment instanceof ControlProcessor) {
             returnEquipment = new ControlProcessor();
@@ -1111,7 +1127,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         returnEquipment.setMacAddress3(checkEquipment.getMacAddressEquipment(oui13.getText(), oui23.getText(), oui33.getText(), uaa13.getText(), uaa23.getText(), uaa33.getText()));
         returnEquipment.setLogin(textFieldLogin.getText());
         returnEquipment.setPassword(textFieldPassword.getText());
-        returnEquipment.setRoom(textFieldRoom.getText());
+        if(comboBoxRooms.getValue() != null) {
+            returnEquipment.setRoom(comboBoxRooms.getValue());
+        }
         returnEquipment.setLocation(textFieldLocation.getText());
         if (textFieldDateOfCommissioning.getValue() == null) {
             returnEquipment.setDateWork(LocalDate.now());
@@ -1166,7 +1184,9 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                             };
                             ProgressBar progressBar= new ProgressBar(task.getProgress());
                             progressBar.visibleProperty();
-                            gridPane.add(progressBar, 0, 30);
+                            progressBar.setMaxWidth(MAX_VALUE);
+                            progressBar.setMaxHeight(MAX_VALUE);
+                            GlobalLinkStartEngineerController.getStartEngineerController().vBoxLeftButton.getChildren().add(progressBar);
                             task.setOnSucceeded((succeededEvent)->{
                                 progressBar.visibleProperty().bind(task.runningProperty());
                                 if (equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()) != null) {
@@ -1209,7 +1229,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
         uaa3.clear();
         textFieldLogin.clear();
         textFieldPassword.clear();
-        textFieldRoom.clear();
+        comboBoxRooms.getItems().clear();
         textFieldLocation.clear();
         network1.clear();
         network2.clear();
@@ -1264,7 +1284,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public void closeAddEquipmentController(MouseEvent mouseEvent) {
         GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getChildren().remove(
-                GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getCenter()
+                GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getRight()
         );
     }
 
@@ -1581,5 +1601,10 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
             e.printStackTrace();
         }
         logoImg = SpinetixHMP300.logo;
+    }
+
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
     }
 }

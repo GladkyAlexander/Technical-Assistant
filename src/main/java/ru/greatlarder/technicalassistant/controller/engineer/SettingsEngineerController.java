@@ -10,16 +10,33 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import ru.greatlarder.technicalassistant.controller.fragment.FragmentChangeSettingsUser;
 import ru.greatlarder.technicalassistant.controller.fragment.FragmentIdenticalData;
+import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddCompanyController;
+import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddMailSettingsController;
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentRegistrationUserController;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.repository.ExternalDatabase;
-import ru.greatlarder.technicalassistant.repository.impl.ExternalDatabaseRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.DataVerification;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
+import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.mysql.ConnectMySQL;
+import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.*;
+import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.impl.*;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EventsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.RoomsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.SeatingRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EventsRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.RoomsRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.SeatingRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -27,6 +44,7 @@ import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
+import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
 import ru.greatlarder.technicalassistant.services.user_listener.HandlerUserListener;
 import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
@@ -36,6 +54,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static javafx.geometry.Pos.CENTER;
 
 public class SettingsEngineerController implements ObserverLang, ObserverUser, ObserverCompany {
     @FXML
@@ -53,11 +73,19 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
     @FXML public Button btnGetDataFromAnExternalDatabase;
     @FXML public Button btnCompareData;
     @FXML public Button btnSettingsUser;
+    @FXML public Button buttonCompanyDataSettings;
+    @FXML public GridPane gridPaneUpdateExternalDB;
+    @FXML public Button buttonListOfRooms;
+    @FXML public Button buttonSeatingList;
+    @FXML public Button buttonEquipment;
+    @FXML public Button buttonListOfEvents;
+    @FXML public Button buttonCompanyData;
     Language language = new LanguageImpl();
-    User user;
-    Company company;
-    HandlerLang handlerLang = new HandlerLang();
-    HandlerUserListener handlerUserListener = new HandlerUserListener();
+    private User user;
+    private Company company;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerUserListener handlerUserListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerUserListener;
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
     FragmentRegistrationUserController fragmentRegistrationUserController;
     DataVerification dataVerification = new DataVerification();
     List<Company> companyListExternal;
@@ -65,7 +93,6 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
         setLanguage(dataLang.getLanguage());
-        handlerLang.onNewDataLang(new DataLang(dataLang.getLanguage()));
     }
 
     public void openLayoutSettingsUser(ActionEvent actionEvent) {
@@ -75,8 +102,9 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
         try {
             borderPaneSettings.setRight(loaderRegistration.load());
             handlerLang.registerObserverLang(loaderRegistration.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
+
             fragmentRegistrationUserController = loaderRegistration.getController();
+            fragmentRegistrationUserController.updateLang(new DataLang(lang));
             fragmentRegistrationUserController.loadPage();
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,9 +116,12 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
         try {
             borderPaneSettings.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
             handlerUserListener.registerObserverUser(loader.getController());
-            handlerUserListener.onNewDataUser(new DataUser(user));
+
+            FragmentAddMailSettingsController addSettings = loader.getController();
+            addSettings.updateLang(new DataLang(this.lang));
+            addSettings.updateUser(new DataUser(this.user));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,7 +134,12 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
         try {
             borderPaneSettings.setRight(loader.load());
             handlerLang.registerObserverLang(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
+
+            if(company != null) {
+                FragmentAddCompanyController fragmentAddCompanyController = loader.getController();
+                fragmentAddCompanyController.updateLang(new DataLang(this.lang));
+                fragmentAddCompanyController.loadFragment();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,13 +156,18 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
         btnGetDataFromAnExternalDatabase.setText(language.GET_DATA_FROM_AN_EXTERNAL_DATABASE(lang));
         btnCompareData.setText(language.COMPARE_DATA(lang));
         btnSettingsUser.setText(language.PROFILE_SETTINGS(lang));
+        buttonCompanyDataSettings.setText(language.COMPANY_DATA_SETTINGS(lang));
+        buttonCompanyData.setText(language.COMPANY_DATA(lang));
+        buttonListOfRooms.setText(language.LIST_OF_ROOMS(lang));
+        buttonSeatingList.setText(language.SEATING_LIST(lang));
+        buttonEquipment.setText(language.EQUIPMENT(lang));
+        buttonListOfEvents.setText(language.LIST_OF_EVENTS(lang));
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
         this.user = dataUser.getUser();
         loadPage();
-        handlerUserListener.onNewDataUser(new DataUser(user));
     }
 
     public void loadPage() {
@@ -145,36 +186,25 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
             btnRegistry.setDisable(true);
             borderPaneSettings.getChildren().remove(borderPaneSettings.getRight());
         }
+        visibleGridUpdateExternalDB(false);
     }
 
-    public void sendToAnExternalDatabase(MouseEvent mouseEvent) {
-        ExternalDatabase externalDatabase = new ExternalDatabaseRepositoryImpl();
-        for (Company company : user.getCompanyList()){
-            Task<Void> task = new Task<Void>() {
-                @Override
-                protected Void call() throws Exception {
-                    externalDatabase.sendCompanyDetailis(company);
-                    return null;
-                }
-            };
-            ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
-            progressIndicator.visibleProperty();
-            borderPaneSettings.setCenter(progressIndicator);
-            task.setOnSucceeded((succeededEvent)->{
-                progressIndicator.visibleProperty().bind(task.runningProperty());
-            });
-            ExecutorService executorService = Executors.newFixedThreadPool(1);
-            executorService.execute(task);
-            executorService.shutdown();
-        }
+    private void visibleGridUpdateExternalDB(boolean b) {
+        gridPaneUpdateExternalDB.setVisible(b);
+        gridPaneUpdateExternalDB.setManaged(b);
+
+    }
+
+    public void sendToAnExternalDatabase(ActionEvent mouseEvent) {
+        visibleGridUpdateExternalDB(!gridPaneUpdateExternalDB.isVisible());
     }
 
     public void getDataFromAnExternalDatabase(MouseEvent mouseEvent) {
-        ExternalDatabase externalDatabase = new ExternalDatabaseRepositoryImpl();
+        CompanyRepositoryMySQL companyRepositoryMySQL = new CompanyRepositoryMySQLImpl();
             Task<List<Company>> task = new Task<List<Company>>() {
                 @Override
                 protected List<Company> call() throws Exception {
-                    return externalDatabase.acceptDataFromAllCompanies();
+                    return companyRepositoryMySQL.getListCompany(user);
                 }
             };
             ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
@@ -186,6 +216,7 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
                 if(!companyListExternal.isEmpty()){
                     btnCompareData.setVisible(true);
                     btnCompareData.setManaged(true);
+                    borderPaneSettings.setCenter(new Label(language.DATA_UPLOADED(lang) + ". " + language.COMPARE_DATA(lang)));
                 } else borderPaneSettings.setCenter(new Label(language.THE_EXTERNAL_DATABASE_IS_EMPTY(lang)));
             });
             ExecutorService executorService = Executors.newFixedThreadPool(1);
@@ -210,8 +241,9 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
             try {
                 borderPaneSettings.setCenter(loader.load());
                 handlerLang.registerObserverLang(loader.getController());
-                handlerLang.onNewDataLang(new DataLang(lang));
+
                 FragmentIdenticalData fragmentIdenticalData = loader.getController();
+                fragmentIdenticalData.updateLang(new DataLang(this.lang));
                 fragmentIdenticalData.loadFragment(dataVerification.getEquipmentList(company.getEquipmentList(), equipmentListExternal));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -226,11 +258,188 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
             handlerLang.registerObserverLang(loader.getController());
             handlerUserListener.registerObserverUser(loader.getController());
 
-            handlerLang.onNewDataLang(new DataLang(lang));
-            handlerUserListener.onNewDataUser(new DataUser(user));
+            FragmentChangeSettingsUser fragmentChangeSettingsUser = loader.getController();
+            fragmentChangeSettingsUser.updateLang(new DataLang(this.lang));
+            fragmentChangeSettingsUser.updateUser(new DataUser(this.user));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void openCompanyDataSettings(MouseEvent mouseEvent) {
+        borderPaneSettings.getChildren().remove(borderPaneSettings.getCenter());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_company.fxml"));
+        try {
+            borderPaneSettings.setRight(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+
+            if(company != null) {
+                FragmentAddCompanyController fragmentAddCompanyController = loader.getController();
+                fragmentAddCompanyController.updateLang(new DataLang(this.lang));
+                fragmentAddCompanyController.loadChangeCompanyFragment(company);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void uploadCompanyData(MouseEvent mouseEvent) {
+        CompanyRepositoryMySQL companyRepositoryMySQL = new CompanyRepositoryMySQLImpl();
+        if (companyRepositoryMySQL.getCompanyByName(user, company.getNameCompany()) == null){
+            Task<Void> task = new Task() {
+                @Override
+                protected Object call() throws Exception {
+                    companyRepositoryMySQL.setCompany(user, company);
+                    return null;
+                }
+            };
+            ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
+            progressIndicator.setStyle(StyleSRC.STYLE_PROGRESS_BAR);
+            progressIndicator.visibleProperty();
+            VBox vBox = new VBox();
+            vBox.setAlignment(CENTER);
+            vBox.getChildren().add(progressIndicator);
+            vBox.getChildren().add(new Label(language.DO_NOT_DISCONNECT_THE_CONNECTION(lang)));
+            borderPaneSettings.setCenter(vBox);
+            task.setOnSucceeded((succeededEvent)->{
+                progressIndicator.visibleProperty().bind(task.runningProperty());
+                borderPaneSettings.getChildren().remove(vBox);
+                borderPaneSettings.setCenter(new Label(language.ADDED(lang)));
+            });
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(task);
+            executorService.shutdown();
+        } else {
+            Task<Void> task = new Task() {
+                @Override
+                protected Object call() throws Exception {
+                    companyRepositoryMySQL.updateCompany(user, company);
+                    return null;
+                }
+            };
+            ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
+            progressIndicator.setStyle(StyleSRC.STYLE_PROGRESS_BAR);
+            progressIndicator.visibleProperty();
+            VBox vBox = new VBox();
+            vBox.setAlignment(CENTER);
+            vBox.getChildren().add(progressIndicator);
+            vBox.getChildren().add(new Label(language.DO_NOT_DISCONNECT_THE_CONNECTION(lang)));
+            borderPaneSettings.setCenter(vBox);
+            task.setOnSucceeded((succeededEvent)->{
+                progressIndicator.visibleProperty().bind(task.runningProperty());
+                borderPaneSettings.getChildren().remove(vBox);
+                borderPaneSettings.setCenter(new Label(language.ADDED(lang)));
+            });
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(task);
+            executorService.shutdown();
+        }
+    }
+
+    public void updateListOfRooms(MouseEvent mouseEvent) {
+        RoomsRepository repository = new RoomsRepositoryImpl();
+        Task task = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                ConnectMySQL connectMySQL = new ConnectMySQL(user);
+                connectMySQL.createListRoomNameTableMySQL();
+
+                ListRoomNameRepositoryMySQL listRoomNameRepositoryMySQL = new ListRoomNameRepositoryMySQLImpl();
+                listRoomNameRepositoryMySQL.setRoomNameList(user, repository.getListRoomForCompany(company.getNameCompany()));
+
+                return null;
+            }
+        };
+        ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
+        progressIndicator.visibleProperty();
+        borderPaneSettings.setCenter(progressIndicator);
+        task.setOnSucceeded((succeededEvent)->{
+            progressIndicator.visibleProperty().bind(task.runningProperty());
+            borderPaneSettings.setCenter(new Label(language.ADDED(lang)));
+        });
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(task);
+        executorService.shutdown();
+    }
+
+    public void updateSeatingList(MouseEvent mouseEvent) {
+        SeatingRepository repository = new SeatingRepositoryImpl();
+        Task<Void> task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+                ConnectMySQL connectMySQL = new ConnectMySQL(user);
+                connectMySQL.createListSeatingArrangementsNameTableMySQL();
+
+                ListSeatingArrangementsNameRepositoryMySQL listSeatingArrangementsNameRepositoryMySQL = new ListSeatingArrangementsNameRepositoryMySQLImpl();
+                listSeatingArrangementsNameRepositoryMySQL.setSeatingArrangementsNameList(user, repository.getListSeatingArrangementsForCompany(company.getNameCompany()));
+
+                return null;
+            }
+        };
+        ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
+        progressIndicator.visibleProperty();
+        borderPaneSettings.setCenter(progressIndicator);
+        task.setOnSucceeded((succeededEvent)->{
+            progressIndicator.visibleProperty().bind(task.runningProperty());
+            borderPaneSettings.setCenter(new Label(language.ADDED(lang)));
+        });
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(task);
+        executorService.shutdown();
+    }
+
+    public void updateEquipment(MouseEvent mouseEvent) {
+
+        EquipmentRepository repository = new EquipmentRepositoryImpl();
+        Task<Void> task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+                ConnectMySQL connectMySQL = new ConnectMySQL(user);
+                connectMySQL.createEquipmentTableMySQL();
+                EquipmentRepositoryMySQL repositoryE = new EquipmentRepositoryMySQLImpl();
+                repositoryE.updateEquipmentList(user, company.getNameCompany(), repository.getListEquipmentForCompany(company.getNameCompany()));
+                return null;
+            }
+        };
+        ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
+        progressIndicator.visibleProperty();
+        borderPaneSettings.setCenter(progressIndicator);
+        task.setOnSucceeded((succeededEvent)->{
+            progressIndicator.visibleProperty().bind(task.runningProperty());
+            borderPaneSettings.setCenter(new Label(language.ADDED(lang)));
+        });
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(task);
+        executorService.shutdown();
+    }
+
+    public void updateListOfEvents(MouseEvent mouseEvent) {
+        EventsRepository repository = new EventsRepositoryImpl();
+        Task<Void> task = new Task<Void>(){
+
+            @Override
+            protected Void call() throws Exception {
+                ConnectMySQL connectMySQL = new ConnectMySQL(user);
+                connectMySQL.createListEventNameTableMySQL();
+                ListEventNameRepositoryMySQL listEventNameRepositoryMySQL = new ListEventNameRepositoryMySQLImpl();
+                listEventNameRepositoryMySQL.setEventNameList(user, repository.getListEventsForCompany(company.getNameCompany()), company.getNameCompany());
+
+                return null;
+            }
+        };
+        ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
+        progressIndicator.visibleProperty();
+        borderPaneSettings.setCenter(progressIndicator);
+        task.setOnSucceeded((succeededEvent)->{
+            progressIndicator.visibleProperty().bind(task.runningProperty());
+            borderPaneSettings.setCenter(new Label(language.ADDED(lang)));
+        });
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(task);
+        executorService.shutdown();
     }
 }

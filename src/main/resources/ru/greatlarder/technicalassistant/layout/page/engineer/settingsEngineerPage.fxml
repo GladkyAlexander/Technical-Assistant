@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPaneSettings" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.SettingsEngineerController">
+<BorderPane fx:id="borderPaneSettings" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.SettingsEngineerController">
     <top>
         <VBox spacing="4.0" BorderPane.alignment="TOP_LEFT">
             <children>
@@ -52,13 +59,36 @@
     <left>
         <VBox spacing="4.0" BorderPane.alignment="CENTER">
             <children>
-            <Button fx:id="btnSettingsUser" mnemonicParsing="false" onMouseClicked="#openSettingsUser" text="Button" />
-                <Button fx:id="btnCompanyChoice" mnemonicParsing="false" onAction="#actionBtnCompany" text="Button" />
-                <Button fx:id="btnSettingsMail" mnemonicParsing="false" onAction="#openSettingsMail" text="Button" />
-                <Button fx:id="btnRegistry" mnemonicParsing="false" onAction="#openLayoutSettingsUser" text="Button" />
-            <Button fx:id="btnSendToAnExternalDatabase" mnemonicParsing="false" onMouseClicked="#sendToAnExternalDatabase" text="Button" />
-            <Button fx:id="btnGetDataFromAnExternalDatabase" mnemonicParsing="false" onMouseClicked="#getDataFromAnExternalDatabase" text="Button" />
-            <Button fx:id="btnCompareData" mnemonicParsing="false" onMouseClicked="#compareData" text="Button" />
+            <Button fx:id="btnSettingsUser" mnemonicParsing="false" onMouseClicked="#openSettingsUser" text="Profile Settings" />
+                <Button fx:id="btnCompanyChoice" mnemonicParsing="false" onAction="#actionBtnCompany" text="Add a company" />
+            <Button fx:id="buttonCompanyDataSettings" mnemonicParsing="false" onMouseClicked="#openCompanyDataSettings" text="Company Data Settings" />
+                <Button fx:id="btnSettingsMail" mnemonicParsing="false" onAction="#openSettingsMail" text="Mail Settings" />
+                <Button fx:id="btnRegistry" mnemonicParsing="false" onAction="#openLayoutSettingsUser" text="Register" />
+            <Button fx:id="btnSendToAnExternalDatabase" mnemonicParsing="false" onAction="#sendToAnExternalDatabase" style="-fx-border-color: #e10909;" text="Update data in an external database" />
+            <GridPane fx:id="gridPaneUpdateExternalDB" hgap="4.0" vgap="4.0">
+              <columnConstraints>
+                <ColumnConstraints />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="buttonCompanyData" mnemonicParsing="false" onMouseClicked="#uploadCompanyData" text="Company data" />
+                  <Button fx:id="buttonListOfRooms" mnemonicParsing="false" onMouseClicked="#updateListOfRooms" text="List of rooms" GridPane.rowIndex="1" />
+                  <Button fx:id="buttonSeatingList" mnemonicParsing="false" onMouseClicked="#updateSeatingList" text="Seating list" GridPane.rowIndex="2" />
+                  <Button fx:id="buttonEquipment" mnemonicParsing="false" onMouseClicked="#updateEquipment" text="Equipment" GridPane.rowIndex="3" />
+                  <Button fx:id="buttonListOfEvents" mnemonicParsing="false" onMouseClicked="#updateListOfEvents" text="List of events" GridPane.rowIndex="4" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="20.0" top="5.0" />
+               </VBox.margin>
+            </GridPane>
+            <Button fx:id="btnGetDataFromAnExternalDatabase" mnemonicParsing="false" onMouseClicked="#getDataFromAnExternalDatabase" text="Get data from an external database" />
+            <Button fx:id="btnCompareData" mnemonicParsing="false" onMouseClicked="#compareData" text="Compare data" />
             </children>
             <padding>
                 <Insets left="4.0" top="4.0" />

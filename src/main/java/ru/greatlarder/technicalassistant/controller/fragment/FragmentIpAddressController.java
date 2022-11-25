@@ -12,30 +12,39 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.ListOfIpAddressForTheCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
+import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.tables.TableIpAddress;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.HandlerUserListener;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.io.IOException;
 import java.util.*;
 
-public class FragmentIpAddressController implements ObserverCompany, ObserverLang {
+public class FragmentIpAddressController implements ObserverCompany, ObserverLang, ObserverUser {
     @FXML public SplitPane splitPane;
     @FXML public TabPane tabPaneIp;
     @FXML public TabPane tabPaneDante;
     private Company company;
+    private User user;
     Language language = new LanguageImpl();
-    String lang;
-    HandlerLang handlerLang = new HandlerLang();
+    private String lang;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
 
-    public void loadFragment(Company company) {
-        this.company = company;
+    public void loadFragment() {
 
         Set<String> listIp = new HashSet<>();
         Set<String> listDante = new HashSet<>();
@@ -56,9 +65,9 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
         }
 
         for (Equipment equipment : company.getEquipmentList()){
-            if(equipment.getDanteIpAddress() != null){
-                listDante.add(tr(equipment.getDanteIpAddress()));
-            }
+                if (equipment.getDanteIpAddress() != null) {
+                    listDante.add(tr(equipment.getDanteIpAddress()));
+                }
         }
 
         for (String f : listDante){
@@ -142,8 +151,12 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
                             }
                         }
                         handlerLang.registerObserverLang(loader.getController());
-                        handlerLang.onNewDataLang(new DataLang(lang));
+                        handlerUserListener.registerObserverUser(loader.getController());
+                        handlerCompanyListener.registerObserverCompany(loader.getController());
                         FragmentEquipmentOneController fragmentEquipmentOneItemController = loader.getController();
+                        fragmentEquipmentOneItemController.updateLang(new DataLang(lang));
+                        fragmentEquipmentOneItemController.updateUser(new DataUser(user));
+                        fragmentEquipmentOneItemController.updateCompany(new DataCompany(company));
                         fragmentEquipmentOneItemController.setEquip(equipmentDate);
 
                         stage.setTitle((tableView.getSelectionModel().getSelectedItem().getModel() + " : "
@@ -233,8 +246,10 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
                             }
                         }
                         handlerLang.registerObserverLang(loader.getController());
-                        handlerLang.onNewDataLang(new DataLang(lang));
                         FragmentEquipmentOneController fragmentEquipmentOneItemController = loader.getController();
+                        fragmentEquipmentOneItemController.updateLang(new DataLang(lang));
+                        fragmentEquipmentOneItemController.updateUser(new DataUser(user));
+                        fragmentEquipmentOneItemController.updateCompany(new DataCompany(company));
                         fragmentEquipmentOneItemController.setEquip(equipmentDate);
 
                         stage.setTitle((tableView.getSelectionModel().getSelectedItem().getModel() + " : "
@@ -273,11 +288,16 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
     @Override
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
+        loadFragment();
     }
 
     @Override
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
-        handlerLang.onNewDataLang(new DataLang(lang));
+    }
+
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
     }
 }

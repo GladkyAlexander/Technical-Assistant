@@ -4,14 +4,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Task;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.repository.TaskRepository;
-import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
-import ru.greatlarder.technicalassistant.repository.impl.TaskRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.TaskRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.TaskRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.TheEntireCatalogList;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
@@ -33,6 +34,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static java.lang.Long.MAX_VALUE;
+
 public class DocumentationEngineerController implements ObserverLang, ObserverCompany, ObserverUser {
     @FXML public Button btnCreateTimeShite;
     @FXML public Button btnZip;
@@ -40,8 +43,9 @@ public class DocumentationEngineerController implements ObserverLang, ObserverCo
     @FXML public GridPane gridPaneDocumentation;
     @FXML public SplitPane splitPaneDocumentation;
     @FXML public Label labelAccounting;
-    String lang;
-    Company company;
+    @FXML public BorderPane borderPaneDoc;
+    private String lang;
+    private Company company;
     Language language = new LanguageImpl();
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
     LocalDate localDate = LocalDate.now();
@@ -54,6 +58,7 @@ public class DocumentationEngineerController implements ObserverLang, ObserverCo
     @Override
     public void updateCompany(DataCompany dataCompany) {
     this.company = dataCompany.getCompany();
+    startDocFragment();
     }
 
     @Override
@@ -123,11 +128,14 @@ public class DocumentationEngineerController implements ObserverLang, ObserverCo
                     return listOfDirectory.upVbox(company.getNameCompany());
                 }
             };
-            splitPaneDocumentation.getItems().add(1, new ProgressBar(task.getProgress()));
 
+        ProgressBar progressBar = new ProgressBar(task.getProgress());
+        progressBar.setMaxWidth(MAX_VALUE);
+        progressBar.setMaxHeight(MAX_VALUE);
+        borderPaneDoc.setTop(progressBar);
             task.setOnSucceeded((succeededEvent) -> {
-                splitPaneDocumentation.getItems().remove(1);
-                splitPaneDocumentation.getItems().add(1, task.getValue());
+                progressBar.visibleProperty().bind(task.runningProperty());
+                splitPaneDocumentation.getItems().add(task.getValue());
             });
 
             ExecutorService executorService = Executors.newFixedThreadPool(1);

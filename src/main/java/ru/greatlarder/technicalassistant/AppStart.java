@@ -7,8 +7,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.controller.MainController;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.repository.UserRepository;
-import ru.greatlarder.technicalassistant.repository.impl.UserRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.UserRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 
@@ -36,7 +36,8 @@ public class AppStart extends Application {
         stage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png")))));
         stage.setTitle("Technical Assistant");
         MainController controller = fxmlLoader.getController();
-        controller.loadUser(getUser());
+        //controller.loadUser(getUser());
+        controller.startAccount(getUser());
         stage.setScene(scene);
         stage.show();
     }

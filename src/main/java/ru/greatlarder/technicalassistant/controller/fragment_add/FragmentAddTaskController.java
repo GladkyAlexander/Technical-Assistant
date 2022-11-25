@@ -1,5 +1,6 @@
 package ru.greatlarder.technicalassistant.controller.fragment_add;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -8,39 +9,44 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Task;
-import ru.greatlarder.technicalassistant.repository.TaskRepository;
-import ru.greatlarder.technicalassistant.repository.impl.TaskRepositoryImpl;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.TaskRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.TaskRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
+import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 
-public class FragmentAddTaskController implements ObserverLang, ObserverCompany {
-    public GridPane gridPaneAddTask;
-    public Label labelDate;
-    public Label labelTime;
-    public Label labelRoom;
-    public Label labelCustomer;
-    public TextArea textAreaTask;
-    public Button btnSaveTask;
-    public Label labelInfoDateTime;
-    public Label labelInfoRoom;
-    public Label labelInfoCustomer;
-    public Label labelInfoTArea;
+public class FragmentAddTaskController implements ObserverLang, ObserverCompany, ObserverUser {
+    @FXML public GridPane gridPaneAddTask;
+    @FXML public Label labelDate;
+    @FXML public Label labelTime;
+    @FXML public Label labelRoom;
+    @FXML public Label labelCustomer;
+    @FXML public TextArea textAreaTask;
+    @FXML public Button btnSaveTask;
+    @FXML public Label labelInfoDateTime;
+    @FXML public Label labelInfoRoom;
+    @FXML public Label labelInfoCustomer;
+    @FXML public Label labelInfoTArea;
     Language line = new LanguageImpl();
     TaskRepository taskRepository = new TaskRepositoryImpl();
-    String lang;
-    Company company;
+    private String lang;
+    private Company company;
+    private User user;
 
-    HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
 
     public void saveTask(MouseEvent mouseEvent) {
 
@@ -99,5 +105,10 @@ public class FragmentAddTaskController implements ObserverLang, ObserverCompany 
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
         setLanguage(lang);
+    }
+
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
     }
 }

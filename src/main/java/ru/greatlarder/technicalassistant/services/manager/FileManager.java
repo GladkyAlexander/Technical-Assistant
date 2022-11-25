@@ -13,5 +13,6 @@ public interface FileManager {
     String getUrlFileManual(String nameFile);
     String getUrlFileImage(String nameFile);
     String getUrlFileDocumentations(String nameCompany, String nameFile);
+    String getUrlFileSeatingArrangements(String nameCompany, String nameFile);
     List<String> getListOfFileNamesInTheDirectory(String nameCompany, String nameFolder);
 }

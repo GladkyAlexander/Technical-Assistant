@@ -5,19 +5,25 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import ru.greatlarder.technicalassistant.domain.Company;
-import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.tables.ListProjectors;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.HandlerUserListener;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
-public class FragmentAddWatchWorkProjectorsController implements ObserverLang, ObserverCompany {
+public class FragmentAddWatchWorkProjectorsController implements ObserverLang, ObserverCompany, ObserverUser {
 
 	@FXML public VBox vBoxTime;
 	@FXML public ImageView close;
@@ -25,33 +31,45 @@ public class FragmentAddWatchWorkProjectorsController implements ObserverLang, O
 	ListProjectors listProjectors;
 	private Company company;
 	private String lang;
+	private User user;
 	Language language = new LanguageImpl();
-	HandlerLang handlerLang = new HandlerLang();
-	HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
+	HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+	HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
+	HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
 
 	public void loadFragment(){
 		listProjectors = new ListProjectors(equipmentRepository.getListEquipmentByName(language.PROJECTOR(lang), company.getNameCompany()));
 		handlerLang.registerObserverLang(listProjectors);
 		handlerCompanyListener.registerObserverCompany(listProjectors);
-		handlerLang.onNewDataLang(new DataLang(lang));
-		handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+		handlerUserListener.registerObserverUser(listProjectors);
+
+		listProjectors.updateLang(new DataLang(lang));
+		listProjectors.updateUser(new DataUser(user));
+		listProjectors.updateCompany(new DataCompany(company));
 
 		vBoxTime.getChildren().add(listProjectors.RemTable());
 	}
 
 	public void close(MouseEvent mouseEvent) {
+		handlerLang.unregisterObserverLang(listProjectors);
+		handlerCompanyListener.unregisterObserverCompany(listProjectors);
+		handlerUserListener.unregisterObserverUser(listProjectors);
 		vBoxTime.getChildren().clear();
 	}
 
 	@Override
 	public void updateCompany(DataCompany dataCompany) {
 		this.company = dataCompany.getCompany();
-		handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+		loadFragment();
 	}
 
 	@Override
 	public void updateLang(DataLang dataLang) {
 		this.lang = dataLang.getLanguage();
-		handlerLang.onNewDataLang(new DataLang(lang));
+	}
+
+	@Override
+	public void updateUser(DataUser dataUser) {
+		this.user = dataUser.getUser();
 	}
 }

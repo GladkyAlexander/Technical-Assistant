@@ -9,20 +9,22 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import ru.greatlarder.technicalassistant.domain.Company;
-import ru.greatlarder.technicalassistant.domain.Defect;
-import ru.greatlarder.technicalassistant.domain.Equipment;
-import ru.greatlarder.technicalassistant.repository.DefectRepository;
-import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.repository.impl.DefectRepositoryImpl;
-import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.domain.*;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.DefectRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.RoomsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.DefectRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.RoomsRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FragmentAddDefectController implements ObserverLang, ObserverCompany {
+public class FragmentAddDefectController implements ObserverLang, ObserverCompany, ObserverUser {
     @FXML
     public ImageView imgOk;
     @FXML public Label labelOk;
@@ -46,7 +48,8 @@ public class FragmentAddDefectController implements ObserverLang, ObserverCompan
     private String lang;
     Language language = new LanguageImpl();
     private Company company;
-    Equipment equipment;
+    private User user;
+    private Equipment equipment;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
     DefectRepository defectRepository = new DefectRepositoryImpl();
     List<Equipment> equipmentList = new ArrayList<>();
@@ -65,22 +68,30 @@ public class FragmentAddDefectController implements ObserverLang, ObserverCompan
     }
     public void loadFragment(){
         taDefect.setWrapText(true);
-        comboBoxDefectRoom.setItems(FXCollections.observableArrayList(equipmentRepository.getListRoomForCompany(company.getNameCompany())));
+        RoomsRepository repository = new RoomsRepositoryImpl();
+        List<String> rooms = new ArrayList<>();
+        for (Room room : repository.getListRoomForCompany(company.getNameCompany())){
+            rooms.add(room.getNameRoom());
+        }
+        comboBoxDefectRoom.setItems(FXCollections.observableArrayList(rooms));
     }
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
+        loadFragment();
     }
     public void cbDEChoice() {
         comboBoxDefectEquipment.getItems().clear();
         ObservableList<String> equipmentRep = FXCollections.observableArrayList();
-        if (!comboBoxDefectRoom.getItems().isEmpty()) {
-            equipmentList.addAll(equipmentRepository.getListEquipmentForRoom(company.getNameCompany()
-                    , comboBoxDefectRoom.getValue()));
-        } else {
-            equipmentList.addAll(company.getEquipmentList());
-        }
+            if (!comboBoxDefectRoom.getItems().isEmpty()) {
+                if(comboBoxDefectRoom.getValue() != null) {
+                    equipmentList.addAll(equipmentRepository.getListEquipmentForRoom(company.getNameCompany()
+                            , comboBoxDefectRoom.getValue()));
+                }
+            } else {
+                equipmentList.addAll(company.getEquipmentList());
+            }
         for(Equipment equipment : equipmentList){
             equipmentRep.add(equipment.getSerialNumber());
         }
@@ -118,5 +129,10 @@ public class FragmentAddDefectController implements ObserverLang, ObserverCompan
     public void closeAddDefectController(MouseEvent mouseEvent) {
         gridPanelDefectAdd.getChildren().clear();
         gridPanelDefectAdd.setStyle(new GridPane().getStyle());
+    }
+
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
     }
 }

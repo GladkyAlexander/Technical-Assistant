@@ -12,6 +12,8 @@ import ru.greatlarder.technicalassistant.domain.Task;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
@@ -23,8 +25,8 @@ import java.util.List;
 
 public class ListMail implements ObserverLang, ObserverCompany {
 
-    HandlerLang handlerLang = new HandlerLang();
-    HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
     String lang;
     Company company;
     public ListView<Task> upBox(List<Task> taskListIn){
@@ -35,8 +37,7 @@ public class ListMail implements ObserverLang, ObserverCompany {
                 listToday.add(task);
             }
         }
-        List <Task> taskList = new ArrayList<>(listToday);
-        observableList.addAll(taskList);
+        observableList.addAll(listToday);
 
         ListView<Task> list = new ListView<>(observableList);
         list.setCellFactory(param -> new ListCell<>(){
@@ -46,12 +47,6 @@ public class ListMail implements ObserverLang, ObserverCompany {
             {
                 try {
                     node = loader.load();
-
-                    handlerLang.registerObserverLang(loader.getController());
-                    handlerCompanyListener.registerObserverCompany(loader.getController());
-                    handlerLang.onNewDataLang(new DataLang(lang));
-                    handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-
                     listItemTaskController = loader.getController();
                     setPrefWidth(0);
                 } catch (IOException e) {
@@ -67,6 +62,12 @@ public class ListMail implements ObserverLang, ObserverCompany {
                 } else {
                     Task requestor = new Task();
                     requestor = task;
+
+                    handlerLang.registerObserverLang(listItemTaskController);
+                    handlerCompanyListener.registerObserverCompany(listItemTaskController);
+                    listItemTaskController.updateLang(new DataLang(lang));
+                    listItemTaskController.updateCompany(new DataCompany(company));
+
                     listItemTaskController.setLabelDate(task.getDateOfCreation());
                     listItemTaskController.setLabelTime(task.getTimeOfCreation());
                     listItemTaskController.setLabelCustomer(task.getCreator());
@@ -84,12 +85,10 @@ public class ListMail implements ObserverLang, ObserverCompany {
     @Override
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
-        handlerLang.onNewDataLang(new DataLang(lang));
     }
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
-        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
     }
 }

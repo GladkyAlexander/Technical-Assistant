@@ -3,6 +3,7 @@ package ru.greatlarder.technicalassistant.services.lang.impl;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class LanguageImpl implements Language {
@@ -1275,6 +1276,83 @@ public class LanguageImpl implements Language {
     }
 
     @Override
+    public String FILL_IN_THE_DATABASE_INFORMATION_ON_THE_sETTINGS_PAGE(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Заполните информацию о базе данных на странице настройки.";
+        } else if (lang.equals(en)) {
+            ps = "Fill in the database information on the Settings page.";
+        }
+        return ps;
+    }
+
+    @Override
+    public String MONTH(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Месяц";
+        } else if (lang.equals(en)) {
+            ps = "Month";
+        }
+        return ps;
+    }
+
+    @Override
+    public String DATA_UPDATED(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Данные обновлены";
+        } else if (lang.equals(en)) {
+            ps = "Data updated";
+        }
+        return ps;
+    }
+
+    @Override
+    public String COMPANY_DATA_SETTINGS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Настройки данных компании";
+        } else if (lang.equals(en)) {
+            ps = "Company Data Settings";
+        }
+        return ps;
+    }
+
+    @Override
+    public String TYPES_OF_EVENTS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Виды мероприятий";
+        } else if (lang.equals(en)) {
+            ps = "Types of events";
+        }
+        return ps;
+    }
+
+    @Override
+    public String ALL_ROOMS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Все комнаты";
+        } else if (lang.equals(en)) {
+            ps = "All rooms";
+        }
+        return ps;
+    }
+
+    @Override
+    public String ALL_EVENTS(String lang) {
+        String ps = "";
+        if (lang.equals(ru)) {
+            ps = "Все мероприятия";
+        } else if (lang.equals(en)) {
+            ps = "All events";
+        }
+        return ps;
+    }
+
+    @Override
     public String EXAMPLE(String language) {
         String example = "";
         if (language.equals(ru)) {
@@ -1322,11 +1400,255 @@ public class LanguageImpl implements Language {
     public String MEETINGS(String language) {
         String meeting = "";
         if (language.equals(ru)) {
-            meeting = "встречи";
+            meeting = "Встречи";
         } else if (language.equals(en)) {
-            meeting = "meetings";
+            meeting = "Meetings";
         }
         return meeting;
+    }
+    @Override
+    public String MEETING(String language) {
+        String meeting = "";
+        if (language.equals(ru)) {
+            meeting = "Встреча";
+        } else if (language.equals(en)) {
+            meeting = "Meeting";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String EVENT_NAME(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Название мероприятия";
+        } else if (lang.equals(en)) {
+            meeting = "Event name";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String EVENT_LOGO(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Логотип мероприятия";
+        } else if (lang.equals(en)) {
+            meeting = "Event logo";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String PRESENTATION(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Презентация";
+        } else if (lang.equals(en)) {
+            meeting = "Presentation";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String DATA_UPLOADED(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Данные загружены";
+        } else if (lang.equals(en)) {
+            meeting = "The data is loaded";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String UPDATE_THE_LIST_OF_ROOMS_IN_THE_EXTERNAL_DATABASE(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Обновите список комнат во внешней базе данных";
+        } else if (lang.equals(en)) {
+            meeting = "Update the list of rooms in the external database";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String COMPANY_DATA(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Данные о компании";
+        } else if (lang.equals(en)) {
+            meeting = "Company data";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String LIST_OF_ROOMS(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Лист комнат";
+        } else if (lang.equals(en)) {
+            meeting = "List of rooms";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String SEATING_LIST(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Лист рассадок";
+        } else if (lang.equals(en)) {
+            meeting = "Seating list";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String LIST_OF_EVENTS(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Лист мероприятий";
+        } else if (lang.equals(en)) {
+            meeting = "List of events";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String DO_NOT_DISCONNECT_THE_CONNECTION(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Не отключайте соединение";
+        } else if (lang.equals(en)) {
+            meeting = "Do not disconnect the connection";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String START_EVENT(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Начало мероприятия";
+        } else if (lang.equals(en)) {
+            meeting = "Start the event";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String END_EVENT(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Конец мероприятия";
+        } else if (lang.equals(en)) {
+            meeting = "End the event";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String SEATING_ARRANGEMENTS(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Рассадка";
+        } else if (lang.equals(en)) {
+            meeting = "Seating arrangements";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String NUMBER_OF_PARTICIPANTS(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Количество участников";
+        } else if (lang.equals(en)) {
+            meeting = "Number of participants";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String LAST_NAME_CUSTOMER(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Фамилия клиента";
+        } else if (lang.equals(en)) {
+            meeting = "Last name customer";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String FIRST_NAME_CUSTOMER(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Имя клиента";
+        } else if (lang.equals(en)) {
+            meeting = "First name customer";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String TYPE_NAME(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Название типа";
+        } else if (lang.equals(en)) {
+            meeting = "Type name";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String IMAGE(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Изображение";
+        } else if (lang.equals(en)) {
+            meeting = "Image";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String TYPES_OF_FURNITURE_ARRANGEMENT(String lang) {
+        String meeting = "";
+        if (lang.equals(ru)) {
+            meeting = "Типы расположения мебели";
+        } else if (lang.equals(en)) {
+            meeting = "Types of furniture arrangement";
+        }
+        return meeting;
+    }
+
+    @Override
+    public String getDayWeek(String dayOfWeek, String lang) {
+        HashMap<String, String> hashMapEn = new HashMap<>();
+        hashMapEn.put("MONDAY", "Monday");
+        hashMapEn.put("TUESDAY", "Tuesday");
+        hashMapEn.put("WEDNESDAY", "Wednesday");
+        hashMapEn.put("THURSDAY", "Thursday");
+        hashMapEn.put("FRIDAY", "Friday");
+        hashMapEn.put("SATURDAY", "Saturday");
+        hashMapEn.put("SUNDAY", "Sunday");
+        HashMap<String, String> hashMapRu = new HashMap<>();
+        hashMapRu.put("MONDAY", "Понедельник");
+        hashMapRu.put("TUESDAY", "Вторник");
+        hashMapRu.put("WEDNESDAY", "Среда");
+        hashMapRu.put("THURSDAY", "Четверг");
+        hashMapRu.put("FRIDAY", "Пятница");
+        hashMapRu.put("SATURDAY", "Суббота");
+        hashMapRu.put("SUNDAY", "Воскресенье");
+
+        if(lang.equals(ru)) return hashMapRu.get(dayOfWeek);
+        if(lang.equals(en)) return hashMapRu.get(dayOfWeek);
+
+        return null;
     }
 
     @Override

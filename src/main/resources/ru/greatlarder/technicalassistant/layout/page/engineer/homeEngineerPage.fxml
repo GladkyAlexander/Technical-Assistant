@@ -2,26 +2,10 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <BorderPane fx:id="borderPaneHomePage" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.HomeEngineerController">
-   <top>
-      <HBox prefHeight="25.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="btnUpMail" alignment="CENTER" mnemonicParsing="false" onAction="#uploadMail" textAlignment="CENTER">
-               <graphic>
-                  <ImageView fx:id="imgMail" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../images/upload_mail.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </HBox>
-   </top>
    <right>
       <SplitPane fx:id="splitPaneHF" nodeOrientation="LEFT_TO_RIGHT" orientation="VERTICAL" BorderPane.alignment="TOP_CENTER">
         <items>

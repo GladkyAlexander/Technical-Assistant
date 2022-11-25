@@ -68,6 +68,8 @@ public class FragmentChangeSettingsUser implements ObserverLang, ObserverUser {
     }
 
     public void loadFragment(User user) {
+        labelLastName.setText(user.getLastName());
+        labelFirstName.setText(user.getFirstName());
         tfMail.setPromptText(user.getMailAddress());
         tfPhone.setPromptText(user.getPhone());
         tfServer.setPromptText(user.getServer());

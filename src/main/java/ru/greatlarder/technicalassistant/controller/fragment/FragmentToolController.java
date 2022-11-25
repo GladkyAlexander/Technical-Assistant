@@ -9,10 +9,13 @@ import javafx.scene.control.*;
 import ru.greatlarder.technicalassistant.controller.fragment_item.ItemToolController;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Tool;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,15 +23,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class FragmentToolController implements ObserverLang, ObserverCompany {
+public class FragmentToolController implements ObserverLang, ObserverCompany, ObserverUser {
     @FXML public SplitPane splitPaneTool;
     @FXML public TabPane tabPaneTool;
     private Company company;
+    private User user;
     private String lang;
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
+        loadFragment();
     }
 
     @Override
@@ -93,5 +98,10 @@ public class FragmentToolController implements ObserverLang, ObserverCompany {
             }
         });
         return toolListView;
+    }
+
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
     }
 }

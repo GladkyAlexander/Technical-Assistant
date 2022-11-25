@@ -32,4 +32,14 @@ public class HandlerUserListener implements SubjectUser {
             observerUser.updateUser(dataUser);
         }
     }
+
+    @Override
+    public void clear() {
+        observerUsers.clear();
+    }
+
+    @Override
+    public Set<ObserverUser> getOU() {
+        return observerUsers;
+    }
 }

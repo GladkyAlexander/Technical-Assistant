@@ -7,3 +7,6 @@
 .column-view{
    -fx-padding: 5, 5, 5, 5;
 }
+.jfx-combo-box {
+     -fx-prompt-text-fill: #000000;
+ }

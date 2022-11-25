@@ -1,21 +1,15 @@
 package ru.greatlarder.technicalassistant.controller.reception;
 
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import ru.greatlarder.technicalassistant.domain.Company;
+import ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxReception;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.repository.ExternalDatabase;
-import ru.greatlarder.technicalassistant.repository.impl.ExternalDatabaseRepositoryImpl;
-import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
-import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartReceptionController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
@@ -28,10 +22,8 @@ import ru.greatlarder.technicalassistant.services.user_listener.HandlerUserListe
 import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class StartReceptionController implements ObserverLang, ObserverUser, ObserverCompany {
+public class StartReceptionController implements ObserverLang, ObserverUser {
 
     @FXML public BorderPane borderPaneStartReception;
     @FXML public SplitPane splitPaneStartReception;
@@ -42,13 +34,12 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
     @FXML public ImageView imgLabelCompany;
     @FXML public Label labelInfo;
     @FXML public Label labelSettings;
-    HandlerLang handlerLang = new HandlerLang();
-    HandlerUserListener handlerUserListener = new HandlerUserListener();
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
     HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
     Language language = new LanguageImpl();
     private String lang;
     private User user;
-    private Company company;
 
     public void loadPage() {
         GlobalLinkStartReceptionController.setStartReceptionController(this);
@@ -66,27 +57,17 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
                 GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().clear();
                 GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().add(loader.load());
 
+                FragmentToolBoxReception controller = loader.getController();
+
+                handlerLang.registerObserverLang(loader.getController());
+                handlerUserListener.registerObserverUser(loader.getController());
+
+                controller.updateLang(new DataLang(this.lang));
+                controller.updateUser(new DataUser(this.user));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/reception/homeReceptionPage.fxml"));
-            try {
-                borderPaneStartReception.setCenter(loaderHomePage.load());
-
-                handlerUserListener.registerObserverUser(loaderHomePage.getController());
-                handlerCompanyListener.registerObserverCompany(loaderHomePage.getController());
-                handlerLang.registerObserverLang(loaderHomePage.getController());
-
-                getCompanyStartReception();
-
-                HomeReceptionController controller = loaderHomePage.getController();
-                controller.loadFragment();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+                loadHomePage();
         }
     }
 
@@ -101,13 +82,12 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
         setLanguage(lang);
-        handlerLang.onNewDataLang(new DataLang(lang));
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
         this.user = dataUser.getUser();
-        handlerUserListener.onNewDataUser(new DataUser(user));
+        loadPage();
     }
 
     public void openPageSettings(MouseEvent mouseEvent) {
@@ -128,22 +108,7 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
     }
 
     public void openHomePageReception(MouseEvent mouseEvent) {
-        FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/reception/homeReceptionPage.fxml"));
-        try {
-            borderPaneStartReception.setCenter(loaderHomePage.load());
-            handlerUserListener.registerObserverUser(loaderHomePage.getController());
-            handlerLang.registerObserverLang(loaderHomePage.getController());
-
-            if(user != null){
-                handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
-            }
-            handlerUserListener.onNewDataUser(new DataUser(user));
-
-            HomeReceptionController controller = loaderHomePage.getController();
-            controller.loadFragment();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       loadHomePage();
     }
 
     public void openInstructionPageReception(MouseEvent mouseEvent) {
@@ -180,33 +145,26 @@ public class StartReceptionController implements ObserverLang, ObserverUser, Obs
         }
 
     }
-    public void getCompanyStartReception() {
-        if(company == null) {
-            ExternalDatabase externalDatabase = new ExternalDatabaseRepositoryImpl();
-            if (user.getCompanyAffiliation() != null) {
-                Task<Company> task = new Task<Company>() {
-                    @Override
-                    protected Company call() throws Exception {
-                        return externalDatabase.getCompanyForNameCompany(user.getCompanyAffiliation());
-                    }
-                };
-                ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
-                progressIndicator.visibleProperty();
 
-                task.setOnSucceeded((succeededEvent) -> {
-                    progressIndicator.visibleProperty().bind(task.runningProperty());
+    private void loadHomePage(){
+        FXMLLoader loaderHomePage = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/page/reception/homeReceptionPage.fxml"));
+        try {
+            borderPaneStartReception.setCenter(loaderHomePage.load());
 
-                    handlerCompanyListener.onNewDataCompany(new DataCompany(task.getValue()));
-                });
-                ExecutorService executorService = Executors.newFixedThreadPool(1);
-                executorService.execute(task);
-                executorService.shutdown();
+            handlerUserListener.registerObserverUser(loaderHomePage.getController());
+            handlerLang.registerObserverLang(loaderHomePage.getController());
+
+            if(user.getNameDB() != null && !user.getNameDB().isEmpty()) {
+                HomeReceptionController controller = loaderHomePage.getController();
+                controller.updateLang(new DataLang(this.lang));
+                controller.updateUser(new DataUser(this.user));
+                controller.loadFragment();
+            } else {
+                borderPaneStartReception.setCenter(new Label(language.FILL_IN_THE_DATABASE_INFORMATION_ON_THE_sETTINGS_PAGE(lang)));
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    @Override
-    public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-    }
 }

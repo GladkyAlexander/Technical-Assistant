@@ -11,9 +11,11 @@ import javafx.scene.image.Image;
 import ru.greatlarder.technicalassistant.controller.fragment_item.ItemEquipmentController;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkFragmentEquipmentController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -21,31 +23,33 @@ import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.io.IOException;
 import java.util.*;
 
-public class FragmentEquipmentController implements ObserverLang, ObserverCompany {
+public class FragmentEquipmentController implements ObserverLang, ObserverCompany, ObserverUser {
 
     public SplitPane splitPaneEquipment;
     public TabPane tabPaneEquipment1;
     public TabPane tabPaneEquipment2;
     private String lang;
     private Company company;
-    HandlerLang handlerLang = new HandlerLang();
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
     Language language = new LanguageImpl();
     FileManager fileManager = new FileManagerImpl();
+    private User user;
 
     @Override
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
-        handlerLang.onNewDataLang(new DataLang(lang));
     }
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
-        loadFragment(company);
+        loadFragment();
     }
 
     private ListView<Equipment> createTableEquipment(List<Equipment> equipmentList){
@@ -59,8 +63,6 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
             {
                 try {
                     node = loader.load();
-                    handlerLang.registerObserverLang(loader.getController());
-                    handlerLang.onNewDataLang(new DataLang(lang));
                     controller = loader.getController();
                     setPrefWidth(0);
                 } catch (IOException e) {
@@ -73,7 +75,8 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
                 if(empty){
                     setGraphic(null);
                 } else {
-
+                    handlerLang.registerObserverLang(loader.getController());
+                    controller.updateLang(new DataLang(lang));
                     if(item.getImage() != null){
                         if(fileManager.getUrlFileImage(item.getImage()) != null){
                             controller.setIvPhoto(new Image(fileManager.getUrlFileImage(item.getImage())));
@@ -101,8 +104,7 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
         return equipmentListView;
     }
 
-    public void loadFragment(Company company){
-        this.company = company;
+    public void loadFragment(){
         GlobalLinkFragmentEquipmentController.setFragmentEquipmentController(this);
         tabPaneEquipment1.getTabs().clear();
         List<Equipment> equipmentList = company.getEquipmentList();
@@ -138,4 +140,8 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
         }
     }
 
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
+    }
 }

@@ -23,12 +23,14 @@ public class Company {
     private List<Equipment> equipmentList;
     private List<Tool> toolList;
     private List<Task> taskList;
+    private List<Room> roomList;
+    private List<Events> eventsList;
+    private List<SeatingArrangements> seatingArrangementsList;
 
     public Company() {
     }
 
-    public Company(Integer id, String nameCompany, String address, String curatorLastName, String curatorFirstName, String phoneCurator, String mailCurator, String websiteCompany, String logoCompany, String managerLastName, String managerFirstName, String phoneManager, String mailManager, String engineerLastName, String engineerFirstName, String phoneEngineer, String mailEngineer, List<Equipment> equipmentList, List<Tool> toolList, List<Task> taskList) {
-        this.id = id;
+    public Company(String nameCompany, String address, String curatorLastName, String curatorFirstName, String phoneCurator, String mailCurator, String websiteCompany, String logoCompany, String managerLastName, String managerFirstName, String phoneManager, String mailManager, String engineerLastName, String engineerFirstName, String phoneEngineer, String mailEngineer, List<Equipment> equipmentList, List<Tool> toolList, List<Task> taskList, List<Room> roomList, List<Events> eventsList, List<SeatingArrangements> seatingArrangementsList) {
         this.nameCompany = nameCompany;
         this.address = address;
         this.curatorLastName = curatorLastName;
@@ -48,6 +50,25 @@ public class Company {
         this.equipmentList = equipmentList;
         this.toolList = toolList;
         this.taskList = taskList;
+        this.roomList = roomList;
+        this.eventsList = eventsList;
+        this.seatingArrangementsList = seatingArrangementsList;
+    }
+
+    public List<SeatingArrangements> getSeatingArrangementsList() {
+        return seatingArrangementsList;
+    }
+
+    public void setSeatingArrangementsList(List<SeatingArrangements> seatingArrangementsList) {
+        this.seatingArrangementsList = seatingArrangementsList;
+    }
+
+    public List<Events> getEventsList() {
+        return eventsList;
+    }
+
+    public void setEventsList(List<Events> eventsList) {
+        this.eventsList = eventsList;
     }
 
     public Integer getId() {
@@ -210,6 +231,14 @@ public class Company {
         this.taskList = taskList;
     }
 
+    public List<Room> getRoomList() {
+        return roomList;
+    }
+
+    public void setRoomList(List<Room> roomList) {
+        this.roomList = roomList;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -233,6 +262,9 @@ public class Company {
                 ", equipmentList=" + equipmentList +
                 ", toolList=" + toolList +
                 ", taskList=" + taskList +
+                ", roomList=" + roomList +
+                ", eventsList=" + eventsList +
+                ", seatingArrangementsList=" + seatingArrangementsList +
                 '}';
     }
 }

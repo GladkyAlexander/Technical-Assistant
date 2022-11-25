@@ -11,20 +11,23 @@ import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.domain.equipment.Projector;
-import ru.greatlarder.technicalassistant.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.repository.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.tables.emp.WorkingHours;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.util.List;
 
-public class ListProjectors implements ObserverCompany, ObserverLang {
+public class ListProjectors implements ObserverCompany, ObserverLang, ObserverUser {
     private final List<Equipment> listProjector;
     private final TableView<WorkingHours> tableView = new TableView<>();
     public TableColumn<WorkingHours, String> listProjectors;
@@ -34,6 +37,7 @@ public class ListProjectors implements ObserverCompany, ObserverLang {
     private Company company;
     private String lang;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
+    private User user;
 
     public ListProjectors(List<Equipment> listOfProjector) {
         this.listProjector = listOfProjector;
@@ -108,5 +112,10 @@ public class ListProjectors implements ObserverCompany, ObserverLang {
 
     private void setLanguage(String lang) {
 
+    }
+
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
     }
 }

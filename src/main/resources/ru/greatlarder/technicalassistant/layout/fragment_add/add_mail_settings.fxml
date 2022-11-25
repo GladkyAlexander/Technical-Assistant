@@ -5,7 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="gridPaneAddLetterTemplate" alignment="TOP_CENTER" hgap="4.0" vgap="4.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddMailSettingsController">
+<GridPane fx:id="gridPaneAddLetterTemplate" alignment="TOP_CENTER" hgap="4.0" vgap="4.0"
+          xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddMailSettingsController">
   <columnConstraints>
     <ColumnConstraints />
     <ColumnConstraints />

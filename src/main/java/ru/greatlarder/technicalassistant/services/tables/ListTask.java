@@ -10,8 +10,12 @@ import ru.greatlarder.technicalassistant.controller.fragment_item.ItemTaskContro
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Task;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
+import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
+import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 
 import java.io.IOException;
@@ -19,8 +23,10 @@ import java.util.List;
 
 public class ListTask implements ObserverLang, ObserverCompany {
 
-    String lang;
-    Company company;
+    private String lang;
+    private Company company;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
     public ListView<Task> upBox(List<Task> taskListIn){
         ObservableList<Task> observableList = FXCollections.observableArrayList();
 
@@ -47,8 +53,13 @@ public class ListTask implements ObserverLang, ObserverCompany {
                 if(b){
                     setGraphic(null);
                 } else {
-                    //Task requestor = new Task();
-                    //requestor = task;
+
+                    handlerLang.registerObserverLang(listItemTaskController);
+                    handlerCompanyListener.registerObserverCompany(listItemTaskController);
+
+                    ((ObserverLang) listItemTaskController).updateLang(new DataLang(lang));
+                    ((ObserverCompany) listItemTaskController).updateCompany(new DataCompany(company));
+
                     listItemTaskController.setLabelDate(String.valueOf(task.getDateOfCreation()));
                     listItemTaskController.setLabelTime(String.valueOf(task.getTimeOfCreation()));
                     listItemTaskController.setLabelRoom(task.getRoom());

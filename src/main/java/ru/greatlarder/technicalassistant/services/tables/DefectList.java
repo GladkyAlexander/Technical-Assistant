@@ -9,29 +9,33 @@ import javafx.scene.control.ListView;
 import ru.greatlarder.technicalassistant.controller.fragment_item.ItemDefectController;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Defect;
-import ru.greatlarder.technicalassistant.repository.DefectRepository;
-import ru.greatlarder.technicalassistant.repository.impl.DefectRepositoryImpl;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class DefectList implements ObserverLang, ObserverCompany {
-    DefectRepository defectRepository = new DefectRepositoryImpl();
-    HandlerLang handlerLang = new HandlerLang();
-    HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
-    Company company;
-    String lang;
+public class DefectList implements ObserverLang, ObserverCompany, ObserverUser {
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
+    private Company company;
+    private String lang;
     Language language = new LanguageImpl();
+    private User user;
+
     public ListView<Defect> upBox(List<Defect> defectList){
         ObservableList<Defect> observableList = FXCollections.observableArrayList();
         observableList.addAll(defectList);
@@ -48,9 +52,6 @@ public class DefectList implements ObserverLang, ObserverCompany {
                     handlerLang.registerObserverLang(loader.getController());
                     handlerCompanyListener.registerObserverCompany(loader.getController());
 
-                    handlerLang.onNewDataLang(new DataLang(lang));
-                    handlerCompanyListener.onNewDataCompany(new DataCompany(company));
-
                     itemDefectController = loader.getController();
                     setPrefWidth(0);
                 } catch (IOException e) {
@@ -66,6 +67,9 @@ public class DefectList implements ObserverLang, ObserverCompany {
                 } else {
                     Defect defect = new Defect();
                     defect = item;
+                    itemDefectController.updateLang(new DataLang(lang));
+                    itemDefectController.updateUser(new DataUser(user));
+                    itemDefectController.updateCompany(new DataCompany(company));
                     itemDefectController.setDefect(defect);
                     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy" + " г.");
                     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -91,19 +95,21 @@ public class DefectList implements ObserverLang, ObserverCompany {
                 }
             }
         });
-        //list.setPrefHeight(1000);
         return list;
     }
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
         this.company = dataCompany.getCompany();
-        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
     }
 
     @Override
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
-        handlerLang.onNewDataLang(new DataLang(lang));
+    }
+
+    @Override
+    public void updateUser(DataUser dataUser) {
+        this.user = dataUser.getUser();
     }
 }

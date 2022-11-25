@@ -1,28 +1,24 @@
 package ru.greatlarder.technicalassistant.controller.reception;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.NodeOrientation;
-import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import ru.greatlarder.technicalassistant.controller.fragment_item.ItemEquipmentController;
-import ru.greatlarder.technicalassistant.controller.fragment_item.ItemRoomMin;
-import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.Room;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
-import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.EquipmentRepositoryMySQL;
+import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.ListRoomNameRepositoryMySQL;
+import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.impl.EquipmentRepositoryMySQLImpl;
+import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.impl.ListRoomNameRepositoryMySQLImpl;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkHomeFragmentController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -30,27 +26,25 @@ import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
-import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
+import ru.greatlarder.technicalassistant.services.user_listener.HandlerUserListener;
 import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-public class HomeReceptionController implements ObserverLang, ObserverUser, ObserverCompany {
-    @FXML public BorderPane borderPaneHomePage;
-    @FXML public Label labelRoomsHRC;
-    @FXML public VBox vbtop;
+public class HomeReceptionController implements ObserverLang, ObserverUser {
+    @FXML
+    public BorderPane borderPaneHomePage;
     private User user;
     private String lang;
     Language language = new LanguageImpl();
-    private Company company;
-    HandlerLang handlerLang = new HandlerLang();
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
     FileManager fileManager = new FileManagerImpl();
 
     public void loadFragment() {
+        GlobalLinkHomeFragmentController.setHomeReceptionController(this);
         loadRooms();
     }
 
@@ -61,7 +55,7 @@ public class HomeReceptionController implements ObserverLang, ObserverUser, Obse
     }
 
     private void setLanguage(String lang1) {
-        labelRoomsHRC.setText(language.ROOMS(lang1));
+        //labelRoomsHRC.setText(language.ROOMS(lang1));
     }
 
     @Override
@@ -69,49 +63,72 @@ public class HomeReceptionController implements ObserverLang, ObserverUser, Obse
         this.user = dataUser.getUser();
     }
 
-    @Override
-    public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        loadFragment();
-    }
-    private void loadRooms(){
-        if(company != null){
-            vbtop.getChildren().add(getList());
-        }
-    }
-    private List<Room> getRoomList(){
-        List<String> list = new ArrayList<>();
-        List<Room> roomList1 = new ArrayList<>();
-        if(company != null){
-            if(company.getEquipmentList() != null){
-                for (Equipment equipment : company.getEquipmentList()) {
-                    if (equipment.getRoom() != null && list.stream().noneMatch(s -> s.equals(equipment.getRoom()))) {
-                        list.add(equipment.getRoom());
-                    }
-                }
+    private void loadRooms() {
+        borderPaneHomePage.setRight(new Label(user.getNameDB() + " " + user.getPasswordDB()));
+        ListRoomNameRepositoryMySQL listRoomNameRepositoryMySQL = new ListRoomNameRepositoryMySQLImpl();
+        borderPaneHomePage.setTop(new Label("Start"));
+        String i = String.valueOf(listRoomNameRepositoryMySQL.getRoomsNameList(user, user.getCompanyAffiliation()).size());
+        Label f = new Label(i);
+        borderPaneHomePage.setBottom(new Label("End"));
+        borderPaneHomePage.setCenter(f);
 
-                for (String s : list){
-                    List<Equipment> equipmentList = new ArrayList<>();
-                    for (Equipment equipment2 : company.getEquipmentList()){
-                        if(equipment2.getRoom() != null){
-                            if (equipment2.getRoom().equals(s)) {
-                                equipmentList.add(equipment2);
-                            }
+        /*
+        Task<ListView<Room>> task = new Task<ListView<Room>>() {
+            @Override
+            protected ListView<Room> call() throws Exception {
+                ListRoomNameRepositoryMySQL listRoomNameRepositoryMySQL = new ListRoomNameRepositoryMySQLImpl();
+                ListView<Room> listView = new ListView<>(FXCollections.observableArrayList(listRoomNameRepositoryMySQL
+                        .getRoomsNameList(user, user.getCompanyAffiliation())));
+                listView.setCellFactory(p -> new ListCell<>() {
+                    final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_room_min.fxml"));
+                    Node node;
+                    ItemRoomMin controller;
+
+                    {
+                        try {
+                            node = loader.load();
+                            controller = loader.getController();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
-                    roomList1.add(new Room(s, equipmentList));
-                }
+
+                    @Override
+                    protected void updateItem(Room room, boolean b) {
+                        super.updateItem(room, b);
+                        if (b) {
+                            setGraphic(null);
+                        } else {
+                            controller.setUser(user);
+                            controller.labelNameRoomIRM.setText(room.getNameRoom());
+                            setGraphic(node);
+                        }
+                    }
+                });
+
+                return listView;
             }
-        }
-        return roomList1;
+        };
+        ProgressBar progressBar = new ProgressBar(task.getProgress());
+        progressBar.setMaxWidth(MAX_VALUE);
+        progressBar.setMaxHeight(MAX_VALUE);
+        GlobalLinkStartReceptionController.getStartReceptionController().borderPaneStartReception.setTop(progressBar);
+        task.setOnSucceeded((t) -> {
+            progressBar.visibleProperty().bind(task.runningProperty());
+            borderPaneHomePage.setLeft(task.getValue());
+        });
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(task);
+        executorService.shutdown();
+
+         */
     }
+/*
+    private ListView<Room> loadListRoom() {
 
-    private ListView<Room> getList(){
-        ObservableList<Room> observableList = FXCollections.observableArrayList(getRoomList());
-
-        ListView<Room> listView = new ListView<>(observableList);
-        listView.setCellFactory(param -> new ListCell<>(){
-
+        ListView<Room> listView = new ListView<>(FXCollections.observableArrayList(getRoomList()));
+        System.out.println(getRoomList().size());
+        listView.setCellFactory(p -> new ListCell<>() {
             final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_room_min.fxml"));
             Node node;
             ItemRoomMin controller;
@@ -120,9 +137,6 @@ public class HomeReceptionController implements ObserverLang, ObserverUser, Obse
                 try {
                     node = loader.load();
                     controller = loader.getController();
-                    setPrefHeight(0);
-                    setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-                    setStyle(StyleSRC.STYLE_ORDINARY);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -131,9 +145,10 @@ public class HomeReceptionController implements ObserverLang, ObserverUser, Obse
             @Override
             protected void updateItem(Room room, boolean b) {
                 super.updateItem(room, b);
-                if(b){
+                if (b) {
                     setGraphic(null);
-                } else{
+                } else {
+                    controller.setUser(user);
                     controller.labelNameRoomIRM.setText(room.getNameRoom());
                     setGraphic(node);
                 }
@@ -142,41 +157,87 @@ public class HomeReceptionController implements ObserverLang, ObserverUser, Obse
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Room>() {
             @Override
             public void changed(ObservableValue<? extends Room> observableValue, Room room, Room t1) {
-                borderPaneHomePage.setRight(createTableEquipment(t1.getEquipmentList()));
+
+                final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentRoomWeek.fxml"));
+                Task<Node> task = new Task<Node>() {
+
+                    @Override
+                    protected Node call() throws Exception {
+                        Node node = loader.load();
+                        handlerLang.registerObserverLang(loader.getController());
+                        handlerUserListener.registerObserverUser(loader.getController());
+                        FragmentRoomWeek fragmentRoomWeek = loader.getController();
+                        fragmentRoomWeek.updateLang(new DataLang(lang));
+                        fragmentRoomWeek.updateUser(new DataUser(user));
+
+                        fragmentRoomWeek.loadWeek(user, t1);
+                        return node;
+                    }
+                };
+                ProgressIndicator progressBar = new ProgressIndicator(task.getProgress());
+                borderPaneHomePage.setCenter(progressBar);
+                task.setOnSucceeded((succeededEvent) -> {
+                    progressBar.visibleProperty().bind(task.runningProperty());
+                    borderPaneHomePage.setCenter(task.getValue());
+                });
+                ExecutorService executorService = Executors.newFixedThreadPool(1);
+                executorService.execute(task);
+                executorService.shutdown();
+
+                Task<ListView<Equipment>> taskEquipment = new Task<ListView<Equipment>>() {
+
+                    @Override
+                    protected ListView<Equipment> call() throws Exception {
+                        return createTableEquipment(t1);
+                    }
+                };
+
+                ProgressIndicator progressIndicatorE = new ProgressIndicator(taskEquipment.getProgress());
+                borderPaneHomePage.setRight(progressIndicatorE);
+                taskEquipment.setOnSucceeded((e) -> {
+                    progressIndicatorE.visibleProperty().bind(taskEquipment.runningProperty());
+                    borderPaneHomePage.setRight(taskEquipment.getValue());
+                });
+                ExecutorService executorService1 = Executors.newFixedThreadPool(1);
+                executorService1.execute(taskEquipment);
+                executorService1.shutdown();
             }
         });
-        listView.setOrientation(Orientation.HORIZONTAL);
+
         return listView;
     }
 
-    private ListView<Equipment> createTableEquipment(List<Equipment> equipmentList){
+ */
 
-        ObservableList<Equipment> list = FXCollections.observableArrayList(equipmentList);
-        ListView<Equipment> equipmentListView = new ListView<>(list);
-        equipmentListView.setCellFactory(param -> new ListCell<>(){
+    private ListView<Equipment> createTableEquipment(Room room) {
+        EquipmentRepositoryMySQL equipmentRepositoryMySQL = new EquipmentRepositoryMySQLImpl();
+        ListView<Equipment> equipmentListView = new ListView<>(FXCollections.observableArrayList(equipmentRepositoryMySQL
+                .getEquipmentByRoomName(user, user.getCompanyAffiliation(), room.getNameRoom())));
+        equipmentListView.setCellFactory(param -> new ListCell<>() {
             final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_equipment.fxml"));
             Node node;
             ItemEquipmentController controller;
+
             {
                 try {
                     node = loader.load();
-                    handlerLang.registerObserverLang(loader.getController());
-                    handlerLang.onNewDataLang(new DataLang(lang));
                     controller = loader.getController();
                     setPrefWidth(0);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+
             @Override
             protected void updateItem(Equipment item, boolean empty) {
                 super.updateItem(item, empty);
-                if(empty){
+                if (empty) {
                     setGraphic(null);
                 } else {
-
-                    if(item.getImage() != null){
-                        if(fileManager.getUrlFileImage(item.getImage()) != null){
+                    handlerLang.registerObserverLang(loader.getController());
+                    controller.updateLang(new DataLang(lang));
+                    if (item.getImage() != null) {
+                        if (fileManager.getUrlFileImage(item.getImage()) != null) {
                             controller.setIvPhoto(new Image(fileManager.getUrlFileImage(item.getImage())));
                         } else {
                             controller.setIvPhoto(new Image(Objects.requireNonNull(getClass()
@@ -193,4 +254,5 @@ public class HomeReceptionController implements ObserverLang, ObserverUser, Obse
         });
         return equipmentListView;
     }
+
 }

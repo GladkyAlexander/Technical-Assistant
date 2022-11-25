@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<GridPane fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemProgressIndicator" alignment="CENTER" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <columnConstraints>
+      <ColumnConstraints halignment="CENTER" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" valignment="CENTER" />
+   </rowConstraints>
+   <children>
+      <ProgressIndicator fx:id="progress" style="-fx-background-color: transparent;">
+         <effect>
+            <Blend mode="GREEN" />
+         </effect>
+      </ProgressIndicator>
+      <ImageView fitHeight="20.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/logo_kvadrat.png" />
+         </image>
+      </ImageView>
+   </children>
+</GridPane>

@@ -9,15 +9,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Task;
-import ru.greatlarder.technicalassistant.repository.TaskRepository;
-import ru.greatlarder.technicalassistant.repository.UserRepository;
-import ru.greatlarder.technicalassistant.repository.impl.TaskRepositoryImpl;
-import ru.greatlarder.technicalassistant.repository.impl.UserRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
+import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.TaskRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.TaskRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.lang.DataLang;
+import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 
 import java.util.Objects;
 
-public class ItemTaskController {
+public class ItemTaskController implements ObserverLang, ObserverCompany {
     @FXML
     public GridPane gridPane;
     @FXML public Label labelDate;
@@ -26,10 +28,10 @@ public class ItemTaskController {
     @FXML public Label labelCreator;
     @FXML public ImageView imgCompletion;
     @FXML public Label labelRoom;
-    Company company;
+    private Company company;
     Task task;
     TaskRepository taskRepository = new TaskRepositoryImpl();
-    UserRepository userRepository = new UserRepositoryImpl();
+    private String lang;
 
     public void setLabelDate(String labelDate) {
         this.labelDate.setText(labelDate);
@@ -73,5 +75,15 @@ public class ItemTaskController {
             gridPane.getChildren().clear();
             gridPane.setManaged(false);
         }
+    }
+
+    @Override
+    public void updateCompany(DataCompany dataCompany) {
+        this.company = dataCompany.getCompany();
+    }
+
+    @Override
+    public void updateLang(DataLang dataLang) {
+        this.lang = dataLang.getLanguage();
     }
 }

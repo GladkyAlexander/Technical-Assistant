@@ -16,6 +16,7 @@ public class FileManagerImpl implements FileManager {
     private final String directoryImage = "Image";
     private final String directoryManual = "Manual";
     private final String directoryDocumentations = "Documentations";
+    private final String directorySeatingArrangements = "SeatingArrangements";
 
     @Override
     public void createProjectDirectories() {
@@ -59,6 +60,11 @@ public class FileManagerImpl implements FileManager {
         if(!dirDoc.exists()){
             dirDoc.mkdir();
             //directoryDocumentations = dirDoc.getAbsolutePath();
+        }
+        File dirSettingArg = new File(folderProject() + "\\" + directoryCompany + "\\" + nameCompany + "\\" + directorySeatingArrangements);
+        if(!dirSettingArg.exists()){
+            dirSettingArg.mkdir();
+            //directorySeatingArguments = dirSettingArg.getAbsolutePath();
         }
     }
 
@@ -129,6 +135,20 @@ public class FileManagerImpl implements FileManager {
     }
 
     @Override
+    public String getUrlFileSeatingArrangements(String nameCompany, String nameFile) {
+        File currentFolderAsFile = new File(currentFolder + "\\" + directoryProject + "\\" + directoryCompany + "\\" + nameCompany + "\\" + directorySeatingArrangements);
+        File[] files = currentFolderAsFile.listFiles();
+
+        assert files != null;
+        for (File file : files){
+            if (file.getName().equals(nameFile)){
+                return file.getAbsolutePath();
+            }
+        }
+        return null;
+    }
+
+    @Override
     public List<String> getListOfFileNamesInTheDirectory(String nameCompany, String nameDirectory) {
         List<String> list = new ArrayList<>();
 
@@ -143,5 +163,6 @@ public class FileManagerImpl implements FileManager {
         }
         return list;
     }
+
 
 }
