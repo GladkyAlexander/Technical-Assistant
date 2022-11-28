@@ -48,7 +48,16 @@ public class FragmentRoomWeek implements ObserverLang, ObserverUser {
     public void loadWeek(User user, Room room) {
         this.room = room;
         this.user = user;
-        getSheetWeek(daysRepositoryMySql.getDaysForRoom(user, room.getNameRoom()));
+        List<LocalDate> dates = new ArrayList<>();
+        dates.add(LocalDate.now());
+        for (int i = 0; i < 6; i++) {
+            dates.add(date.plusDays(i));
+        }
+        List<Day> days = new ArrayList<>();
+        for (LocalDate date : dates) {
+                days.add(daysRepositoryMySql.getDaysForRoomByDate(user, date, room.getNameRoom()));
+        }
+        getSheetWeek(days);
     }
 
     private void getSheetWeek(List<Day> days) {

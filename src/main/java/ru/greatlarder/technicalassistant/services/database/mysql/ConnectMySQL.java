@@ -37,8 +37,8 @@ public class ConnectMySQL {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
             connectionMySQL = DriverManager.getConnection("jdbc:mysql://" + server + ":" + port ,  nameDB , password);
-        } catch (SQLException | ClassNotFoundException | InvocationTargetException | InstantiationException |
-                 IllegalAccessException | NoSuchMethodException e) {
+        } catch (SQLException | ClassNotFoundException | InvocationTargetException | IllegalAccessException |
+                 InstantiationException | NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
@@ -51,6 +51,7 @@ public class ConnectMySQL {
             e.printStackTrace();
         }
     }
+
     public void createCompanyTableMySQL(){
         connectionMySQL();
         try {

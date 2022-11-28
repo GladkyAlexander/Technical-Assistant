@@ -290,7 +290,6 @@ public class ItemDay implements ObserverLang {
         paneHashMap.put(p2000, "20:00");
 
     }
-
     private GridPane getGgidPaneEvent(User user, Integer idEvent, String time){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_event_min.fxml"));
         GridPane gridPane = null;

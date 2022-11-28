@@ -1,15 +1,21 @@
 package ru.greatlarder.technicalassistant.controller.reception;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import ru.greatlarder.technicalassistant.controller.fragment.FragmentRoomWeek;
 import ru.greatlarder.technicalassistant.controller.fragment_item.ItemEquipmentController;
+import ru.greatlarder.technicalassistant.controller.fragment_item.ItemRoomMin;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.Room;
 import ru.greatlarder.technicalassistant.domain.User;
@@ -19,6 +25,7 @@ import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysq
 import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.impl.ListRoomNameRepositoryMySQLImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkHomeFragmentController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartReceptionController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -32,6 +39,10 @@ import ru.greatlarder.technicalassistant.services.user_listener.ObserverUser;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static java.lang.Long.MAX_VALUE;
 
 public class HomeReceptionController implements ObserverLang, ObserverUser {
     @FXML
@@ -64,15 +75,7 @@ public class HomeReceptionController implements ObserverLang, ObserverUser {
     }
 
     private void loadRooms() {
-        borderPaneHomePage.setRight(new Label(user.getNameDB() + " " + user.getPasswordDB()));
-        ListRoomNameRepositoryMySQL listRoomNameRepositoryMySQL = new ListRoomNameRepositoryMySQLImpl();
-        borderPaneHomePage.setTop(new Label("Start"));
-        String i = String.valueOf(listRoomNameRepositoryMySQL.getRoomsNameList(user, user.getCompanyAffiliation()).size());
-        Label f = new Label(i);
-        borderPaneHomePage.setBottom(new Label("End"));
-        borderPaneHomePage.setCenter(f);
 
-        /*
         Task<ListView<Room>> task = new Task<ListView<Room>>() {
             @Override
             protected ListView<Room> call() throws Exception {
@@ -106,6 +109,18 @@ public class HomeReceptionController implements ObserverLang, ObserverUser {
                     }
                 });
 
+                listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Room>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Room> observable, Room oldValue, Room newValue) {
+                        try {
+                            getRoomWeek(newValue);
+                            borderPaneHomePage.setRight(createTableEquipment(newValue));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
                 return listView;
             }
         };
@@ -121,93 +136,35 @@ public class HomeReceptionController implements ObserverLang, ObserverUser {
         executorService.execute(task);
         executorService.shutdown();
 
-         */
-    }
-/*
-    private ListView<Room> loadListRoom() {
-
-        ListView<Room> listView = new ListView<>(FXCollections.observableArrayList(getRoomList()));
-        System.out.println(getRoomList().size());
-        listView.setCellFactory(p -> new ListCell<>() {
-            final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_room_min.fxml"));
-            Node node;
-            ItemRoomMin controller;
-
-            {
-                try {
-                    node = loader.load();
-                    controller = loader.getController();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            protected void updateItem(Room room, boolean b) {
-                super.updateItem(room, b);
-                if (b) {
-                    setGraphic(null);
-                } else {
-                    controller.setUser(user);
-                    controller.labelNameRoomIRM.setText(room.getNameRoom());
-                    setGraphic(node);
-                }
-            }
-        });
-        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Room>() {
-            @Override
-            public void changed(ObservableValue<? extends Room> observableValue, Room room, Room t1) {
-
-                final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentRoomWeek.fxml"));
-                Task<Node> task = new Task<Node>() {
-
-                    @Override
-                    protected Node call() throws Exception {
-                        Node node = loader.load();
-                        handlerLang.registerObserverLang(loader.getController());
-                        handlerUserListener.registerObserverUser(loader.getController());
-                        FragmentRoomWeek fragmentRoomWeek = loader.getController();
-                        fragmentRoomWeek.updateLang(new DataLang(lang));
-                        fragmentRoomWeek.updateUser(new DataUser(user));
-
-                        fragmentRoomWeek.loadWeek(user, t1);
-                        return node;
-                    }
-                };
-                ProgressIndicator progressBar = new ProgressIndicator(task.getProgress());
-                borderPaneHomePage.setCenter(progressBar);
-                task.setOnSucceeded((succeededEvent) -> {
-                    progressBar.visibleProperty().bind(task.runningProperty());
-                    borderPaneHomePage.setCenter(task.getValue());
-                });
-                ExecutorService executorService = Executors.newFixedThreadPool(1);
-                executorService.execute(task);
-                executorService.shutdown();
-
-                Task<ListView<Equipment>> taskEquipment = new Task<ListView<Equipment>>() {
-
-                    @Override
-                    protected ListView<Equipment> call() throws Exception {
-                        return createTableEquipment(t1);
-                    }
-                };
-
-                ProgressIndicator progressIndicatorE = new ProgressIndicator(taskEquipment.getProgress());
-                borderPaneHomePage.setRight(progressIndicatorE);
-                taskEquipment.setOnSucceeded((e) -> {
-                    progressIndicatorE.visibleProperty().bind(taskEquipment.runningProperty());
-                    borderPaneHomePage.setRight(taskEquipment.getValue());
-                });
-                ExecutorService executorService1 = Executors.newFixedThreadPool(1);
-                executorService1.execute(taskEquipment);
-                executorService1.shutdown();
-            }
-        });
-
-        return listView;
     }
 
- */
+    private void getRoomWeek(Room room) throws IOException {
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentRoomWeek.fxml"));
+        Task<Node> task = new Task<Node>() {
+
+            @Override
+            protected Node call() throws Exception {
+                Node node = loader.load();
+                handlerLang.registerObserverLang(loader.getController());
+                handlerUserListener.registerObserverUser(loader.getController());
+                FragmentRoomWeek fragmentRoomWeek = loader.getController();
+                fragmentRoomWeek.updateLang(new DataLang(lang));
+                fragmentRoomWeek.updateUser(new DataUser(user));
+
+                fragmentRoomWeek.loadWeek(user, room);
+                return node;
+            }
+        };
+        ProgressIndicator progressBar = new ProgressIndicator(task.getProgress());
+        borderPaneHomePage.setCenter(progressBar);
+        task.setOnSucceeded((succeededEvent) -> {
+            progressBar.visibleProperty().bind(task.runningProperty());
+            borderPaneHomePage.setCenter(task.getValue());
+        });
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(task);
+        executorService.shutdown();
+    }
 
     private ListView<Equipment> createTableEquipment(Room room) {
         EquipmentRepositoryMySQL equipmentRepositoryMySQL = new EquipmentRepositoryMySQLImpl();

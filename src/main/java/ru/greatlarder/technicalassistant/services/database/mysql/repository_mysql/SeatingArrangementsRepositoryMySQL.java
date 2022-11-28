@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface SeatingArrangementsRepositoryMySQL {
     List<SeatingArrangements> getSeatingArrangementsList(User user, String nameCompany);
-    SeatingArrangements getSeatingArrangementsByName(User user, Integer id);
-    void setSeatingArrangements(SeatingArrangements seatingArrangements);
+    SeatingArrangements getSeatingArrangementsById(User user, Integer id);
+    SeatingArrangements getSeatingArrangementsByName(User user, String name);
+    Integer setSeatingArrangements(User user, SeatingArrangements seatingArrangements);
     void changeSeatingArrangements(SeatingArrangements seatingArrangements);
 }

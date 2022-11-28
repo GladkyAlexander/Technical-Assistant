@@ -68,6 +68,7 @@ public class ItemEventMin implements ObserverLang {
         this.lang = dataLang.getLanguage();
     }
     private void loadEvents(){
+
         startEventMin.setText(events.getEventStartTime());
         endEventMin.setText(events.getEndTimeOfTheEvent());
         lastNameMin.setText(events.getLastNameCustomer());
@@ -89,7 +90,7 @@ public class ItemEventMin implements ObserverLang {
            @Override
            protected SeatingArrangements call() throws Exception {
                SeatingArrangementsRepositoryMySQL seatingArrangementsRepositoryMySQL = new SeatingArrangementsRepositoryMySQLImpl();
-               return seatingArrangementsRepositoryMySQL.getSeatingArrangementsByName(user, events.getIdSeatingArrangements());
+               return seatingArrangementsRepositoryMySQL.getSeatingArrangementsById(user, events.getIdSeatingArrangements());
            }
        };
        task.setOnSucceeded((succeededEvent)->{

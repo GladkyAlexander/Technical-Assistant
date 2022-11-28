@@ -9,7 +9,6 @@ module ru.greatlarder.technicalassistant {
     requires java.sql;
     requires javafx.swing;
     requires org.apache.poi.poi;
-    requires org.apache.poi.ooxml;
     requires org.apache.commons.io;
     requires javafx.web;
     requires org.jsoup;
@@ -17,6 +16,7 @@ module ru.greatlarder.technicalassistant {
     requires org.xerial.sqlitejdbc;
     requires jdk.jsobject;
     requires jsch;
+    requires mysql.connector.j;
 
     opens ru.greatlarder.technicalassistant to javafx.fxml;
     exports ru.greatlarder.technicalassistant;

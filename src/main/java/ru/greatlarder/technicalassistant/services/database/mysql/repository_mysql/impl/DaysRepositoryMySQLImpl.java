@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -221,6 +222,29 @@ public class DaysRepositoryMySQLImpl implements DaysRepositoryMySQL {
                 }
             }
             connectMySQL.closeMySQL_DB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectMySQL.closeMySQL_DB();
+        }
+        return null;
+    }
+
+    @Override
+    public Day getDaysForRoomByDate(User user, LocalDate date, String nameRoom) {
+        this.user = user;
+        ConnectMySQL connectMySQL = new ConnectMySQL(this.user);
+        connectMySQL.createDaysTableMySQL();
+        DaysTableMySQL daysTableMySQL = new DaysTableMySQLImpl();
+
+        try {
+            connectMySQL.resultSetMySQL = connectMySQL.statementMySQL.executeQuery(daysTableMySQL.SELECT(this.user.getNameDB()));
+            while (connectMySQL.resultSetMySQL.next()){
+                if(connectMySQL.resultSetMySQL.getString("room").equals(nameRoom)
+                && connectMySQL.resultSetMySQL.getDate("date").toLocalDate().equals(date)){
+                    return getDays(connectMySQL.resultSetMySQL);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

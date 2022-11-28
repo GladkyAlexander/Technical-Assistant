@@ -20,6 +20,7 @@ import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -131,7 +132,7 @@ public class FragmentAddEvent implements ObserverLang {
 
         for (String s : timeDay){
             if(s.equals(time)){
-                timeEnd = timeDay.subList(timeDay.indexOf(s) + 1, timeDay.size());
+                timeEnd = timeDay.subList(timeDay.indexOf(s), timeDay.size());
             }
         }
         return timeEnd;
@@ -140,24 +141,28 @@ public class FragmentAddEvent implements ObserverLang {
     public void saveEvent(MouseEvent mouseEvent) {
         Events events = new Events();
 
-        events.setNameEvent(nameEvent.getText());
+        events.setNameEvent(comboBoxNameEvent.getValue());
+        events.setUrlImageEvent(getNameImg(comboBoxNameEvent.getValue()));
+        events.setEventStartTime(startEvent.getText());
         events.setEndTimeOfTheEvent(comboBoxEndEvent.getValue());
         if(comboBoxSeatingArrangements.getValue() != null) {
+
             SeatingArrangementsRepositoryMySQL seatingArrangementsRepositoryMySQL = new SeatingArrangementsRepositoryMySQLImpl();
+
             SeatingArrangements seatingArrangements = new SeatingArrangements();
             seatingArrangements.setNameCompany(user.getCompanyAffiliation());
             seatingArrangements.setNameSeatingArrangements(comboBoxSeatingArrangements.getValue());
             seatingArrangements.setNumberOfParticipants(Integer.valueOf(textFiledNumberOfParticipants.getText()));
 
-            seatingArrangementsRepositoryMySQL.setSeatingArrangements(seatingArrangements);
-            events.setIdSeatingArrangements(Integer.valueOf(comboBoxSeatingArrangements.getValue()));
+            Integer id = seatingArrangementsRepositoryMySQL.setSeatingArrangements(user, seatingArrangements);
+            if(id != null) {
+                events.setIdSeatingArrangements(id);
+            }
         }
         events.setLastNameCustomer(textFiledLastNameCustomer.getText());
         events.setFirstNameCustomer(textFileFirstNameCustomer.getText());
         events.setIdDay(day.getId());
         events.setNameRoom(day.getRoom());
-        events.setEventStartTime(startEvent.getText());
-        events.setEndTimeOfTheEvent(comboBoxEndEvent.getValue());
         events.setNote(textAreaNote.getText());
 
         EventRepositoryMySQL eventRepositoryMySQL = new EventRepositoryMySQLImpl();
@@ -182,7 +187,7 @@ public class FragmentAddEvent implements ObserverLang {
         btnSaveEvent.setVisible(false);
         btnSaveEvent.setManaged(false);
         if(events.getIdSeatingArrangements() != 0) {
-            SeatingArrangements seatingArrangements = seatingArrangementsRepositoryMySQL.getSeatingArrangementsByName(user
+            SeatingArrangements seatingArrangements = seatingArrangementsRepositoryMySQL.getSeatingArrangementsById(user
                     , events.getIdSeatingArrangements());
             comboBoxSeatingArrangements.setPromptText(seatingArrangements.getNameSeatingArrangements());
             textFiledNumberOfParticipants.setText(seatingArrangements.getNumberOfParticipants().toString());
@@ -276,5 +281,15 @@ public class FragmentAddEvent implements ObserverLang {
         if(s.equals("19:30")){d.setA1930(e.getId());}
         if(s.equals("19:45")){d.setA1945(e.getId());}
         if(s.equals("20:00")){d.setA2000(e.getId());}
+    }
+
+    private String getNameImg(String nameEvent){
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put("Zoom", "zoom.png");
+        hashMap.put("Skype", "skype.png");
+        hashMap.put("VCS", "vcs.png");
+        hashMap.put("Встреча", "meeting.png");
+        hashMap.put("Презентация", "present.png");
+        return hashMap.get(nameEvent);
     }
 }
