@@ -96,10 +96,10 @@ public class StartReceptionController implements ObserverLang, ObserverUser {
             borderPaneStartReception.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
             handlerUserListener.registerObserverUser(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
-            handlerUserListener.onNewDataUser(new DataUser(user));
 
             SettingsReceptionController settingsReceptionController = loader.getController();
+            settingsReceptionController.updateLang(new DataLang(this.lang));
+            settingsReceptionController.updateUser(new DataUser(this.user));
             settingsReceptionController.loadFragment();
 
         } catch (IOException e) {

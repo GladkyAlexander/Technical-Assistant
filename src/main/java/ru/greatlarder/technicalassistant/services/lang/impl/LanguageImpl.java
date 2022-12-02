@@ -1652,6 +1652,50 @@ public class LanguageImpl implements Language {
     }
 
     @Override
+    public String SAVE_AND_SEND(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Сохранить и Отправить";
+        } else if (lang.equals(en)) {
+            office = "Save and Send";
+        }
+        return office;
+    }
+
+    @Override
+    public String TOPIC(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Тема";
+        } else if (lang.equals(en)) {
+            office = "Topic";
+        }
+        return office;
+    }
+
+    @Override
+    public String TO(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "К";
+        } else if (lang.equals(en)) {
+            office = "To";
+        }
+        return office;
+    }
+
+    @Override
+    public String FROM(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "От";
+        } else if (lang.equals(en)) {
+            office = "From";
+        }
+        return office;
+    }
+
+    @Override
     public String OFFICE(String language) {
         String office = "";
         if (language.equals(ru)) {

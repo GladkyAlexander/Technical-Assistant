@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -55,9 +56,24 @@ public class ItemEventMin implements ObserverLang {
         this.idEvents = idEvents;
         if(idEvents != 0) {
             EventRepositoryMySQL eventRepositoryMySQL = new EventRepositoryMySQLImpl();
-            this.events = eventRepositoryMySQL.getEventsForId(user, this.idEvents);
-            gridPaneItemEventMin.setStyle(StyleSRC.STYLE_TRUE);
-            loadEvents();
+            //this.events = eventRepositoryMySQL.getEventsForId(user, idEvents);
+            Task<Events> task = new Task<Events>() {
+                @Override
+                protected Events call() throws Exception {
+                    return eventRepositoryMySQL.getEventsForId(user, idEvents);
+                }
+            };
+            ProgressIndicator progressIndicator = new ProgressIndicator(task.getProgress());
+            progressIndicator.visibleProperty();
+            task.setOnSucceeded((succeededEvent) -> {
+                progressIndicator.visibleProperty().bind(task.runningProperty());
+                this.events = task.getValue();
+                loadEvents(events);
+            });
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(task);
+            executorService.shutdown();
+    
         } else {
             gridPaneItemEventMin.setStyle(StyleSRC.STYLE_FALSE);
         }
@@ -67,8 +83,8 @@ public class ItemEventMin implements ObserverLang {
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
     }
-    private void loadEvents(){
-
+    private void loadEvents(Events events){
+        gridPaneItemEventMin.setStyle(StyleSRC.STYLE_TRUE);
         startEventMin.setText(events.getEventStartTime());
         endEventMin.setText(events.getEndTimeOfTheEvent());
         lastNameMin.setText(events.getLastNameCustomer());
@@ -104,10 +120,9 @@ public class ItemEventMin implements ObserverLang {
 
     public void openEvent(MouseEvent mouseEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_event.fxml"));
-        Scene scene = null;
         try {
             Stage stage = new Stage();
-            scene = new Scene(loader.load());
+            Scene scene = new Scene(loader.load());
             handlerLang.registerObserverLang(loader.getController());
 
             FragmentAddEvent controller = loader.getController();

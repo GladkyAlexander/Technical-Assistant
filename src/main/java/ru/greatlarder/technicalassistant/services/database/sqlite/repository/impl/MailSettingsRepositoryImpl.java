@@ -31,9 +31,9 @@ public class MailSettingsRepositoryImpl implements MailSettingsRepository {
     }
 
     @Override
-    public MailSettings getMailSettingsById(int idUser, int idMailSettings) {
+    public MailSettings getMailSettingsByIdUser(int idUser) {
         for (MailSettings mailSettings : getListMailSettings()){
-            if(mailSettings.getIdUser() == idUser && mailSettings.getId() == idMailSettings) return mailSettings;
+            if(mailSettings.getIdUser() == idUser) return mailSettings;
         }
         return null;
     }

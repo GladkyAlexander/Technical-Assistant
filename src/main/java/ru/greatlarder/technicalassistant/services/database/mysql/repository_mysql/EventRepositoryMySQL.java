@@ -9,6 +9,6 @@ public interface EventRepositoryMySQL {
     Events getEventsForId(User user, Integer id);
     List<Events> getEventsForCompany(User user, String companyName);
     Events getEventsForNameIdDayEventStart(User user, String nameEvent, Integer idDay, String eventStartTime);
-    void setEvent(User user, Events events);
+    Integer setEvent(User user, Events events);
     void updateEvent(User user,Events events);
 }

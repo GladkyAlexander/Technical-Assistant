@@ -10,6 +10,7 @@ import ru.greatlarder.technicalassistant.services.database.mysql.sintax.impl.Eve
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class EventRepositoryMySQLImpl implements EventRepositoryMySQL {
@@ -71,14 +72,14 @@ public class EventRepositoryMySQLImpl implements EventRepositoryMySQL {
     }
 
     @Override
-    public void setEvent(User user, Events events) {
+    public Integer setEvent(User user, Events events) {
         this.user = user;
         ConnectMySQL connection = new ConnectMySQL(this.user);
         connection.createEventTableMySQL();
         EventTableMySQL eventTableMySQL = new EventTableMySQLImpl();
 
         try {
-            PreparedStatement ps = connection.connectionMySQL.prepareStatement(eventTableMySQL.INSERT(this.user.getNameDB()));
+            PreparedStatement ps = connection.connectionMySQL.prepareStatement(eventTableMySQL.INSERT(this.user.getNameDB()),  Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, events.getNameEvent());
             ps.setString(2, events.getUrlImageEvent());
@@ -91,6 +92,13 @@ public class EventRepositoryMySQLImpl implements EventRepositoryMySQL {
             ps.setString(7, events.getEventStartTime());
             ps.setString(8, events.getEndTimeOfTheEvent());
             ps.setString(9, events.getNote());
+            
+            if(ps.executeUpdate() > 0){
+                ResultSet rs = ps.getGeneratedKeys();
+                if(rs.next()){
+                    return rs.getInt(1);
+                }
+            }
 
             ps.executeUpdate();
 
@@ -100,7 +108,7 @@ public class EventRepositoryMySQLImpl implements EventRepositoryMySQL {
         } finally {
             connection.closeMySQL_DB();
         }
-
+return null;
     }
 
     @Override

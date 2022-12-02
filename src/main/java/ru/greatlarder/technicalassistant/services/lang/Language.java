@@ -343,4 +343,12 @@ public interface Language {
     String TYPES_OF_FURNITURE_ARRANGEMENT(String lang);
 
     String getDayWeek(String dayOfWeek, String lang);
+
+    String SAVE_AND_SEND(String lang);
+
+    String TOPIC(String lang);
+
+    String TO(String lang);
+
+    String FROM(String lang);
 }

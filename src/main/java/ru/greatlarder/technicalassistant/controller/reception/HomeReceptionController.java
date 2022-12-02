@@ -10,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import ru.greatlarder.technicalassistant.controller.fragment.FragmentRoomWeek;
@@ -140,6 +139,16 @@ public class HomeReceptionController implements ObserverLang, ObserverUser {
 
     private void getRoomWeek(Room room) throws IOException {
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentRoomWeek.fxml"));
+        borderPaneHomePage.setCenter(loader.load());
+        handlerLang.registerObserverLang(loader.getController());
+        handlerUserListener.registerObserverUser(loader.getController());
+        FragmentRoomWeek fragmentRoomWeek = loader.getController();
+        fragmentRoomWeek.updateLang(new DataLang(lang));
+        fragmentRoomWeek.updateUser(new DataUser(user));
+
+        fragmentRoomWeek.loadWeek(user, room);
+        /*
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentRoomWeek.fxml"));
         Task<Node> task = new Task<Node>() {
 
             @Override
@@ -164,6 +173,8 @@ public class HomeReceptionController implements ObserverLang, ObserverUser {
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         executorService.execute(task);
         executorService.shutdown();
+
+         */
     }
 
     private ListView<Equipment> createTableEquipment(Room room) {

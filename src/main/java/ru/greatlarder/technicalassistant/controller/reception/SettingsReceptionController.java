@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddDatabaseSettings;
+import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddMailSettingsController;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
@@ -38,9 +39,10 @@ public class SettingsReceptionController implements ObserverLang, ObserverCompan
         try {
             borderPaneSettingsReception.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
             handlerUserListener.registerObserverUser(loader.getController());
-            handlerUserListener.onNewDataUser(new DataUser(user));
+            FragmentAddMailSettingsController controller = loader.getController();
+            controller.updateLang(new DataLang(this.lang));
+            controller.updateUser(new DataUser(this.user));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,20 +57,18 @@ public class SettingsReceptionController implements ObserverLang, ObserverCompan
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
         setLanguage(lang);
-        handlerLang.onNewDataLang(new DataLang(lang));
     }
     private void setLanguage(String l){
         btnSettingsMail.setText(language.MAIL_SETTINGS(l));
         btnSettingsDataBase.setText(language.DATABASE_SETTINGS(l));
     }
     public void loadFragment(){
-        setLanguage(lang);
+
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
         this.user = dataUser.getUser();
-        handlerUserListener.onNewDataUser(new DataUser(user));
     }
 
     public void openSettingsDB(MouseEvent mouseEvent) {
@@ -76,10 +76,10 @@ public class SettingsReceptionController implements ObserverLang, ObserverCompan
         try {
             borderPaneSettingsReception.setCenter(loader.load());
             handlerLang.registerObserverLang(loader.getController());
-            handlerLang.onNewDataLang(new DataLang(lang));
             handlerUserListener.registerObserverUser(loader.getController());
-            handlerUserListener.onNewDataUser(new DataUser(user));
             FragmentAddDatabaseSettings controller = loader.getController();
+            controller.updateLang(new DataLang(this.lang));
+            controller.updateUser(new DataUser(this.user));
             controller.loadFragment();
         } catch (IOException e) {
             e.printStackTrace();

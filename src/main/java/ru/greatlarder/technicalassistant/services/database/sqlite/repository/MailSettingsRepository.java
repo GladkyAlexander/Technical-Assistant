@@ -5,7 +5,7 @@ import ru.greatlarder.technicalassistant.domain.MailSettings;
 import java.util.List;
 
 public interface MailSettingsRepository {
-    MailSettings getMailSettingsById(int idUser, int idMailSettings);
+    MailSettings getMailSettingsByIdUser(int idUser);
     MailSettings setMailSettings(MailSettings mailSettings);
     List<MailSettings> getListMailSettingsByUser(int idUser);
 }

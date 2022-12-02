@@ -9,7 +9,7 @@ import java.util.List;
 public interface DaysRepositoryMySQL {
 
     List<Day> getDaysForRoom(User user, String nameRoom);
-    void setDaysForRoom(User user, Day day);
+    Integer setDaysForRoom(User user, Day day);
     Day getDayForName(User user, Day day);
     Day getDaysForRoomByDate(User user, LocalDate date, String nameRoom);
     boolean checkDayByName(User user, Day day);

@@ -102,9 +102,11 @@ public class SeatingArrangementsRepositoryMySQLImpl implements SeatingArrangemen
                     return rs.getInt(1);
                 }
             }
-
+            connectMySQL.closeMySQL_DB();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            connectMySQL.closeMySQL_DB();
         }
         return null;
     }

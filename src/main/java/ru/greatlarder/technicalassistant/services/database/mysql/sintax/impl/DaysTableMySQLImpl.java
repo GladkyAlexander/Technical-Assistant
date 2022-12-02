@@ -124,6 +124,7 @@ public class DaysTableMySQLImpl implements DaysTableMySQL {
     @Override
     public String UPDATE(String nameDB) {
         return "UPDATE `" + nameDB + "`.`days` SET " +
+                "id = ? ," +
                 "room = ? , " +
                 "date = ? , " +
                 "time800 = ?, " +

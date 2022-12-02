@@ -7,16 +7,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import ru.greatlarder.technicalassistant.domain.Day;
-import ru.greatlarder.technicalassistant.domain.Events;
-import ru.greatlarder.technicalassistant.domain.SeatingArrangements;
-import ru.greatlarder.technicalassistant.domain.User;
+import javafx.stage.Stage;
+import ru.greatlarder.technicalassistant.domain.*;
 import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.*;
 import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.impl.*;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.mail.HTMLLetter;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 
 import java.util.ArrayList;
@@ -46,6 +45,12 @@ public class FragmentAddEvent implements ObserverLang {
     @FXML public Label endEvent;
     @FXML public ImageView imgNameEvent;
     @FXML public ComboBox<String> comboBoxNameEvent;
+    @FXML public Label labelTo;
+    @FXML public Label labelTopic;
+    @FXML public TextField textFiledTo;
+    @FXML public TextField textFiledTopic;
+    @FXML public Button btnSaveAndSend;
+    @FXML public Label listEquipment;
 
     Events events;
     private String time;
@@ -166,14 +171,23 @@ public class FragmentAddEvent implements ObserverLang {
         events.setNote(textAreaNote.getText());
 
         EventRepositoryMySQL eventRepositoryMySQL = new EventRepositoryMySQLImpl();
-        eventRepositoryMySQL.setEvent(user, events);
-
+        
+        Integer idEvent = eventRepositoryMySQL.setEvent(user, events);
+        events.setId(idEvent);
+        
+        
         DaysRepositoryMySQL daysRepositoryMySQL = new DaysRepositoryMySQLImpl();
-        daysRepositoryMySQL.updateDay(user, getUpdateDay(eventRepositoryMySQL.getEventsForNameIdDayEventStart(
-                user, events.getNameEvent(), events.getIdDay(), events.getEventStartTime()), day));
+        
+        daysRepositoryMySQL.updateDay(user, getUpdateDay(events, this.day));
 
         gridPaneAddEvent.setStyle(StyleSRC.STYLE_EXCELLENT);
+    
+        Stage stage = (Stage) gridPaneAddEvent.getScene().getWindow();
+        stage.close();
     }
+    
+    
+    
     private void loadingIncomingData(){
         nameEvent.setText(events.getNameEvent());
         startEvent.setText(events.getEventStartTime());
@@ -214,6 +228,9 @@ public class FragmentAddEvent implements ObserverLang {
         labelEquipment.setText(language.EQUIPMENT(lang));
         labelNote.setText(language.NOTE(lang));
         btnSaveEvent.setText(language.SAVE(lang));
+        labelTo.setText(language.TO(lang));
+        labelTopic.setText(language.TOPIC(lang));
+        btnSaveAndSend.setText(language.SAVE_AND_SEND(lang));
     }
 
     private Day getUpdateDay(Events events, Day current){
@@ -232,7 +249,8 @@ public class FragmentAddEvent implements ObserverLang {
         return nDey;
     }
     private void getDayUpdate(Day d, String s, Events e){
-            if(s.equals("8:00")){d.setA800(e.getId());}
+        
+        if(s.equals("8:00")){d.setA800(e.getId());}
         if(s.equals("8:15")){d.setA815(e.getId());}
         if(s.equals("8:30")){d.setA830(e.getId());}
         if(s.equals("8:45")){d.setA845(e.getId());}
@@ -291,5 +309,20 @@ public class FragmentAddEvent implements ObserverLang {
         hashMap.put("Встреча", "meeting.png");
         hashMap.put("Презентация", "present.png");
         return hashMap.get(nameEvent);
+    }
+
+    public void saveEndSendLetter(MouseEvent mouseEvent) {
+        Letter events = new Letter();
+        events.setNameEvent(comboBoxNameEvent.getValue());
+        events.setTo(textFiledTo.getText());
+        events.setTopic(textFiledTopic.getText());
+        events.setDateStart(day.getDate().toString());
+        events.setTimeStart(startEvent.getText());
+        events.setSeatingArrangements(comboBoxSeatingArrangements.getValue());
+        events.setNumberOfParticipants(textFiledNumberOfParticipants.getText());
+        events.setCustomer(textFiledLastNameCustomer.getText() + " " + textFileFirstNameCustomer.getText());
+        events.setNote(textAreaNote.getText());
+        HTMLLetter htmlLetter = new HTMLLetter(user);
+        htmlLetter.sendLetter(events);
     }
 }

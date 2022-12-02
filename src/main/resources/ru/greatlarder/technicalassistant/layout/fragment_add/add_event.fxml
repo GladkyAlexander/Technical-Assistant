@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
 
-<GridPane fx:id="gridPaneAddEvent" alignment="CENTER" hgap="3.0" vgap="3.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddEvent">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<GridPane fx:id="gridPaneAddEvent" alignment="CENTER" cache="true" hgap="3.0" maxHeight="-Infinity"
+          maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="3.0"
+          xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddEvent">
     <Label fx:id="labelStartEvent" text="Start event" GridPane.rowIndex="1" />
     <Label fx:id="labelEndEvent" text="End event" GridPane.rowIndex="2" />
     <Label fx:id="labelSeatingArrangements" text="Seating arrangements" GridPane.rowIndex="3" />
@@ -17,20 +20,30 @@
     <TextArea fx:id="textAreaNote" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" />
     <TextField fx:id="textFileFirstNameCustomer" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
     <TextField fx:id="textFiledLastNameCustomer" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-    <Label fx:id="startEvent" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+    <Label fx:id="startEvent" alignment="TOP_CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
     <ComboBox fx:id="comboBoxEndEvent" maxWidth="1.7976931348623157E308" styleClass="jfx-combo-box" stylesheets="@../../css/table.css" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-    <Button fx:id="btnSaveEvent" mnemonicParsing="false" onMouseClicked="#saveEvent" text="Save" GridPane.columnIndex="3" GridPane.rowIndex="8">
-    </Button>
     <ComboBox fx:id="comboBoxSeatingArrangements" maxWidth="1.7976931348623157E308" styleClass="jfx-combo-box" stylesheets="@../../css/table.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     <TextField fx:id="textFiledNumberOfParticipants" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-    <Label fx:id="endEvent" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-   <HBox alignment="CENTER" spacing="5.0" GridPane.columnSpan="3">
+    <Label fx:id="endEvent" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+   <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnSpan="2">
       <children>
          <ImageView fx:id="imgNameEvent" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
-          <Label fx:id="nameEvent" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Name event" textAlignment="CENTER" />
+          <Label fx:id="nameEvent" alignment="CENTER" contentDisplay="CENTER" text="Name event" textAlignment="CENTER" />
       </children>
    </HBox>
-   <ComboBox fx:id="comboBoxNameEvent" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" />
+   <ComboBox fx:id="comboBoxNameEvent" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.columnSpan="2" />
+   <Label fx:id="labelTo" text="To" GridPane.rowIndex="8" />
+   <Label fx:id="labelTopic" text="Topic" GridPane.rowIndex="9" />
+   <TextField fx:id="textFiledTo" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" />
+   <TextField fx:id="textFiledTopic" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9" />
+   <HBox alignment="CENTER" spacing="10.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="10">
+      <children>
+          <Button fx:id="btnSaveEvent" mnemonicParsing="false" onMouseClicked="#saveEvent" text="Save">
+    </Button>
+         <Button fx:id="btnSaveAndSend" mnemonicParsing="false" onMouseClicked="#saveEndSendLetter" text="Save end Send" />
+      </children>
+   </HBox>
+   <Label fx:id="listEquipment" alignment="TOP_CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -38,7 +51,9 @@
        <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints valignment="CENTER" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
@@ -48,7 +63,10 @@
       <RowConstraints />
       <RowConstraints />
    </rowConstraints>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
    <padding>
-      <Insets bottom="4.0" right="4.0" />
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
    </padding>
 </GridPane>

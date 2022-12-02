@@ -8,29 +8,29 @@
    <content>
       <GridPane fx:id="gridPaneItemDay" alignment="CENTER" hgap="4.0" vgap="4.0">
         <columnConstraints>
-          <ColumnConstraints halignment="CENTER" />
-          <ColumnConstraints halignment="CENTER" />
-            <ColumnConstraints halignment="CENTER" />
-            <ColumnConstraints halignment="CENTER" />
-            <ColumnConstraints halignment="CENTER" />
-            <ColumnConstraints halignment="CENTER" />
-            <ColumnConstraints halignment="CENTER" />
-            <ColumnConstraints halignment="CENTER" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints valignment="CENTER" />
-          <RowConstraints valignment="CENTER" />
-          <RowConstraints valignment="CENTER" />
-            <RowConstraints valignment="CENTER" />
-            <RowConstraints valignment="CENTER" />
-            <RowConstraints valignment="CENTER" />
-            <RowConstraints valignment="CENTER" />
-            <RowConstraints valignment="CENTER" />
-            <RowConstraints valignment="CENTER" />
-            <RowConstraints valignment="CENTER" />
-            <RowConstraints valignment="CENTER" />
-            <RowConstraints valignment="CENTER" />
-            <RowConstraints valignment="CENTER" />
+          <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+          <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+          <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints />
         </rowConstraints>
          <children>
