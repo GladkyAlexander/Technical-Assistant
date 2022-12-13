@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="borderPaneItemPhonePage" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemPagePhoneBook">
+   <center>
+      <ListView fx:id="listIPHBone" maxHeight="1.7976931348623157E308" styleClass="list-phone-book-page" stylesheets="@../../css/table.css" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </ListView>
+   </center>
+   <bottom>
+      <ImageView fx:id="imgAddContact" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#openPaneAddContact" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../../images/plus.png" />
+         </image>
+      </ImageView>
+   </bottom>
+</BorderPane>

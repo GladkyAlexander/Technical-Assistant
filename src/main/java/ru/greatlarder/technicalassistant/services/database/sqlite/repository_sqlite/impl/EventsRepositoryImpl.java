@@ -1,7 +1,7 @@
-package ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl;
+package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl;
 
 import ru.greatlarder.technicalassistant.domain.Events;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EventsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.EventsRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteEvents;
 
 import java.sql.PreparedStatement;

@@ -15,11 +15,12 @@ public class Letter {
     String customer;
     List<Equipment> equipmentList;
     String note;
+    String room;
 
     public Letter() {
     }
-
-    public Letter(String from, String to, String topic, String nameEvent, String seatingArrangements, String numberOfParticipants, String dateStart, String timeStart, String office, String customer, List<Equipment> equipmentList, String note) {
+    
+    public Letter(String from, String to, String topic, String nameEvent, String seatingArrangements, String numberOfParticipants, String dateStart, String timeStart, String office, String customer, List<Equipment> equipmentList, String note, String room) {
         this.from = from;
         this.to = to;
         this.topic = topic;
@@ -32,8 +33,9 @@ public class Letter {
         this.customer = customer;
         this.equipmentList = equipmentList;
         this.note = note;
+        this.room = room;
     }
-
+    
     public String getFrom() {
         return from;
     }
@@ -129,7 +131,15 @@ public class Letter {
     public void setNote(String note) {
         this.note = note;
     }
-
+    
+    public String getRoom() {
+        return room;
+    }
+    
+    public void setRoom(String room) {
+        this.room = room;
+    }
+    
     @Override
     public String toString() {
         return "Letter{" +
@@ -145,6 +155,7 @@ public class Letter {
                 ", customer='" + customer + '\'' +
                 ", equipmentList=" + equipmentList +
                 ", note='" + note + '\'' +
+                ", room='" + room + '\'' +
                 '}';
     }
 }

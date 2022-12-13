@@ -1,4 +1,4 @@
-package ru.greatlarder.technicalassistant.services.database.sqlite.repository;
+package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite;
 
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Day;

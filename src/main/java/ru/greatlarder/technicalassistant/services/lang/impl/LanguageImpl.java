@@ -1694,7 +1694,18 @@ public class LanguageImpl implements Language {
         }
         return office;
     }
-
+    
+    @Override
+    public String EVENT(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Мероприятие";
+        } else if (lang.equals(en)) {
+            office = "Event";
+        }
+        return office;
+    }
+    
     @Override
     public String OFFICE(String language) {
         String office = "";

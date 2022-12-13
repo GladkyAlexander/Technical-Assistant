@@ -1,7 +1,7 @@
-package ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl;
+package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl;
 
 import ru.greatlarder.technicalassistant.domain.Room;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.RoomsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.RoomsRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteRoom;
 
 import java.sql.PreparedStatement;

@@ -1,9 +1,9 @@
-package ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl;
+package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl;
 
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.DefectRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.DefectRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.EquipmentRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteEquipment;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;

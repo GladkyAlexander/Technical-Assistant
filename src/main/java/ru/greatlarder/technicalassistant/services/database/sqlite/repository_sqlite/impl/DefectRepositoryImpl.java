@@ -1,7 +1,7 @@
-package ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl;
+package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl;
 
 import ru.greatlarder.technicalassistant.domain.Defect;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.DefectRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.DefectRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteDefect;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;

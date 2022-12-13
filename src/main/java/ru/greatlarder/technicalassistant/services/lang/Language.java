@@ -351,4 +351,6 @@ public interface Language {
     String TO(String lang);
 
     String FROM(String lang);
+	
+	String EVENT(String lang);
 }

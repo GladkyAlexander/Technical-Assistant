@@ -31,6 +31,11 @@
          <Image url="@../../images/all_events_un_active.png" />
       </image>
    </ImageView>
+   <ImageView fx:id="imgPhoneBook" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openPhoneBook" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../images/phone_book_unactive.png" />
+      </image>
+   </ImageView>
     <ImageView fx:id="imgAddEquipment" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addEquipment" pickOnBounds="true" preserveRatio="true">
         <HBox.margin>
             <Insets left="5.0" />

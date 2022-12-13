@@ -21,8 +21,8 @@ import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.CompanyRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.CompanyRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.CompanyRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.CompanyRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
@@ -154,7 +154,7 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
                     for (Company company1 : user.getCompanyList()) {
                         this.company = company1;
                         btnSelectCompanies.setText(company.getNameCompany());
-                        handlerCompanyListener.onNewDataCompany(new DataCompany(company));
+                        handlerCompanyListener.onNewDataCompany(new DataCompany(this.company));
                         vBoxNameCompany.setVisible(true);
                         vBoxNameCompany.setManaged(true);
                         ptAdr.prefColumnCountProperty().bind(ptAdr.textProperty().length());
@@ -185,7 +185,7 @@ public class StartEngineerController implements ObserverLang, ObserverUser, Obse
                     imageViewLogo.setImage(new Image(Objects.requireNonNull(getClass()
                             .getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
                 }
-                if (user.getCompanyList().size() == 0) {
+                if (user.getCompanyList().isEmpty()) {
                     clean();
                 }
             } else clean();

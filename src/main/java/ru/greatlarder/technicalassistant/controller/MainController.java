@@ -14,8 +14,8 @@ import ru.greatlarder.technicalassistant.controller.engineer.StartEngineerContro
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentUserLogin;
 import ru.greatlarder.technicalassistant.controller.reception.StartReceptionController;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.UserRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.UserRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.UserRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;

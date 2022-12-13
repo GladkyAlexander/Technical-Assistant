@@ -47,8 +47,8 @@ public class Mail {
                         boolean start = stra.startsWith(mailSettings.getSubjectOfTheLetter());
                         if (start) {
                             try {
-                                LoadTask loadTask = new LoadTask(new GetMulti().getText(message));
-                                taskList.add(loadTask.getTask());
+                                LoadTask loadTask = new LoadTask();
+                                taskList.add(loadTask.getTask(new GetMulti().getText(message)));
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

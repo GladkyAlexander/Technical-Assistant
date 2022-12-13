@@ -1,7 +1,7 @@
-package ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl;
+package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl;
 
 import ru.greatlarder.technicalassistant.domain.Tool;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.ToolsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.ToolsRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteTools;
 
 import java.sql.Date;

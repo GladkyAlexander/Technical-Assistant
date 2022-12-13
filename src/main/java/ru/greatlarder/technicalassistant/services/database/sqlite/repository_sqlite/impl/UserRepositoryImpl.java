@@ -1,9 +1,9 @@
-package ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl;
+package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl;
 
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.CompanyRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.MailSettingsRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.UserRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.CompanyRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.MailSettingsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.UserRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteUser;
 
 import java.sql.PreparedStatement;

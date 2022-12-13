@@ -5,8 +5,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import ru.greatlarder.technicalassistant.domain.Letter;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.MailSettingsRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.MailSettingsRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.MailSettingsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.MailSettingsRepositoryImpl;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -32,7 +32,7 @@ public class HTMLLetter {
     }
 
 
-    public void sendLetter(Letter letter){
+    public String sendLetter(Letter letter){
 
         Properties properties = new Properties();
         properties.setProperty("mail.smtp.auth", "true");
@@ -61,7 +61,9 @@ public class HTMLLetter {
 
         } catch (MessagingException e) {
             e.printStackTrace();
+            return null;
         }
+        return "ok";
     }
 
     private String getLetter(MimeMessage mimeMessage, Letter letter) throws MessagingException, IOException, URISyntaxException {
@@ -79,6 +81,14 @@ public class HTMLLetter {
         Element note = document.getElementById("p_note");
 
         date_event.text(letter.getDateStart());
+        time_start.text(letter.getTimeStart());
+        room.text(letter.getRoom());
+        event.text(letter.getNameEvent());
+        customer.text(letter.getCustomer());
+        seating_arrangements.text(letter.getSeatingArrangements());
+        number_of_participants.text(letter.getNumberOfParticipants());
+        equipment.text(letter.getEquipmentList().toString());
+        note.text(letter.getNote());
 
         return document.html();
     }

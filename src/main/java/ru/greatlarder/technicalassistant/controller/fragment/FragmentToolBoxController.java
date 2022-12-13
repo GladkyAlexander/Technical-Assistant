@@ -13,7 +13,7 @@ import ru.greatlarder.technicalassistant.controller.fragment_add.*;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.ProblemMonitor;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
@@ -44,10 +44,11 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
     @FXML public ImageView imgEngine;
     @FXML public TextField tfSerNum;
     @FXML public ImageView imgSearch;
-    public ImageView imgRooms;
-    public ImageView imgAllEvent;
-    public ImageView imgAddRoom;
-    public ImageView imgAddEvent;
+    @FXML public ImageView imgRooms;
+    @FXML public ImageView imgAllEvent;
+    @FXML public ImageView imgAddRoom;
+    @FXML public ImageView imgAddEvent;
+    @FXML public ImageView imgPhoneBook;
     private Company company;
     private String lang;
     Language language = new LanguageImpl();
@@ -261,7 +262,7 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             imgAllEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_event_active.png"))));
             imgAddRoom.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_rooms_active.png"))));
             imgAddEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_events_active.png"))));
-
+            imgPhoneBook.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/phone_book.png"))));
             if (new ProblemMonitor().searchProblemMonitor(company.getNameCompany())) {
                 imgEngine.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/brakes_warning_light.png"))));
             } else
@@ -279,6 +280,7 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
             imgAllEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_events_un_active.png"))));
             imgAddRoom.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_rooms_un_active.png"))));
             imgAddEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_events_un_active.png"))));
+            imgPhoneBook.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/phone_book_unactive.png"))));
         }
     }
 
@@ -367,6 +369,24 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
                 fragmentAddCompanyController.loadChangeCompanyFragment(this.company);
             }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void openPhoneBook(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentPhoneBook.fxml"));
+        try {
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
+            handlerLang.registerObserverLang(loader.getController());
+            handlerCompanyListener.registerObserverCompany(loader.getController());
+            handlerUserListener.registerObserverUser(loader.getController());
+            FragmentPhoneBook controller1 = loader.getController();
+            controller1.updateLang(new DataLang(this.lang));
+            controller1.updateCompany(new DataCompany(company));
+            controller1.updateUser(new DataUser(this.user));
+            
+            controller1.loadFragment();
         } catch (IOException e) {
             e.printStackTrace();
         }

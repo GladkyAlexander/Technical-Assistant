@@ -3,8 +3,8 @@ package ru.greatlarder.technicalassistant.services.check.impl;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.equipment.Microphone;
 import ru.greatlarder.technicalassistant.domain.equipment.NetworkSwitch;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.check.CheckEquipment;
 
 import java.util.HashMap;

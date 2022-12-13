@@ -172,6 +172,7 @@ public class HomeEngineerController implements ObserverLang, ObserverUser, Obser
                 listMail.updateLang(new DataLang(lang));
                 listMail.updateCompany(new DataCompany(company));
                 Mail mail = new Mail(user.getMailSettings().get(0));
+                
                 return listMail.upBox(mail.getListOfTasks());
             }
         };

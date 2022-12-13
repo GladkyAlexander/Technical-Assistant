@@ -1,7 +1,7 @@
-package ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl;
+package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl;
 
 import ru.greatlarder.technicalassistant.domain.SeatingArrangements;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.SeatingRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.SeatingRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteSeatingArrangements;
 
 import java.sql.PreparedStatement;

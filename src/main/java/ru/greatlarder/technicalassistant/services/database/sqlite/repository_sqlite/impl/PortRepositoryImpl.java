@@ -1,8 +1,8 @@
-package ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl;
+package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl;
 
 import ru.greatlarder.technicalassistant.domain.Port;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.PortRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.PortRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLitePort;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 

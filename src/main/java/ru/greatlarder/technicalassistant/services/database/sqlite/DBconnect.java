@@ -132,5 +132,14 @@ public class DBconnect {
             e.printStackTrace();
         }
     }
+    public static void createCartContact(){
+        connectionDB();
+        try {
+            statement = connection.createStatement();
+            statement.execute(SQLiteCartContact.CREATE_CART_CONTACT);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

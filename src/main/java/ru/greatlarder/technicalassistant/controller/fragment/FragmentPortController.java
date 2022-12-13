@@ -8,8 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.equipment.NetworkSwitch;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.EquipmentRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.EquipmentRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.EquipmentRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 
 import java.util.ArrayList;

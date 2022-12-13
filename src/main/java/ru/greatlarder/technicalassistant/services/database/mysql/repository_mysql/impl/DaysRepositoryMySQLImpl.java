@@ -464,7 +464,7 @@ public class DaysRepositoryMySQLImpl implements DaysRepositoryMySQL {
                 cf.setInt(52, day.getA2000());
             } else cf.setInt(52, 0);
 
-            cf.setDate(53, Date.valueOf(day.getDate()));
+            cf.setInt(53, day.getId());
 
             cf.executeUpdate();
             connectMySQL.closeMySQL_DB();

@@ -4,9 +4,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxReception"
-      fx:id="hBoxToolBoxReception"
-        spacing="5.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="hBoxToolBoxReception" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxReception">
    <children>
       <ImageView fx:id="imgAllRoom" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openAllRoom" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -21,6 +20,11 @@
       <ImageView fx:id="imgAddTask" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openAddTask" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/all_task_unactive.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgPhoneBook" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openPhoneBook" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/phone_book.png" />
          </image>
       </ImageView>
    </children>

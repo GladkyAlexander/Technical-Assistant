@@ -8,8 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.UserRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl.UserRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.UserRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
@@ -50,6 +50,7 @@ public class FragmentUserLogin implements ObserverLang{
                 e.printStackTrace();
             }
         }
+        
     }
 
     @Override

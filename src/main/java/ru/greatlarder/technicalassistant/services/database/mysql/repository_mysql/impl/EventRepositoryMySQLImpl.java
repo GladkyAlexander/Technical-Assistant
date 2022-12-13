@@ -99,9 +99,6 @@ public class EventRepositoryMySQLImpl implements EventRepositoryMySQL {
                     return rs.getInt(1);
                 }
             }
-
-            ps.executeUpdate();
-
             connection.closeMySQL_DB();
         } catch (SQLException e) {
             e.printStackTrace();

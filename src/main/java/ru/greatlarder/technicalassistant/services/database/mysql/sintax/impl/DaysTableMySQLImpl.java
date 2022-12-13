@@ -175,7 +175,7 @@ public class DaysTableMySQLImpl implements DaysTableMySQL {
                 "time1915 = ?, " +
                 "time1930 = ?, " +
                 "time1945 = ?, " +
-                "time2000 = ? WHERE date = ?";
+                "time2000 = ? WHERE id = ?";
     }
 
     @Override

@@ -1,7 +1,7 @@
-package ru.greatlarder.technicalassistant.services.database.sqlite.repository.impl;
+package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl;
 
 import ru.greatlarder.technicalassistant.domain.Company;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository.*;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.*;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteCompany;
 
 import java.sql.PreparedStatement;

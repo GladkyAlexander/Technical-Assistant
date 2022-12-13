@@ -1,6 +1,8 @@
 package ru.greatlarder.technicalassistant.controller.fragment_add;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -11,6 +13,8 @@ import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.domain.*;
 import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.*;
 import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.impl.*;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.CartContactRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.CartContactRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
@@ -51,7 +55,8 @@ public class FragmentAddEvent implements ObserverLang {
     @FXML public TextField textFiledTopic;
     @FXML public Button btnSaveAndSend;
     @FXML public Label listEquipment;
-
+    @FXML public ComboBox<String> comboBoxChoiceTo;
+    
     Events events;
     private String time;
     SeatingArrangementsRepositoryMySQL seatingArrangementsRepositoryMySQL = new SeatingArrangementsRepositoryMySQLImpl();
@@ -61,6 +66,8 @@ public class FragmentAddEvent implements ObserverLang {
     Language language = new LanguageImpl();
     List<String> timeEnd;
     private Day day;
+    private List<ContactCart> contactCarts;
+    private HashMap<String, String> hashMap = new HashMap<>();
 
     public void loadFragment(User user, Events events, String time, Day day){
         textAreaNote.setWrapText(true);
@@ -80,6 +87,7 @@ public class FragmentAddEvent implements ObserverLang {
         comboBoxSeatingArrangements.setItems(FXCollections.observableList(listSeatingArrangementsNameRepositoryMySQL
                 .getSeatingArrangementsNameList(user, user.getCompanyAffiliation())));
         comboBoxEndEvent.setItems(FXCollections.observableArrayList(getListTimeEnd()));
+        comboBoxChoiceTo.setItems(getTo());
     }
 
     private List<String> getListTimeEnd() {
@@ -144,21 +152,24 @@ public class FragmentAddEvent implements ObserverLang {
     }
 
     public void saveEvent(MouseEvent mouseEvent) {
+       saveEvents();
+    }
+    private void saveEvents(){
         Events events = new Events();
-
+    
         events.setNameEvent(comboBoxNameEvent.getValue());
         events.setUrlImageEvent(getNameImg(comboBoxNameEvent.getValue()));
         events.setEventStartTime(startEvent.getText());
         events.setEndTimeOfTheEvent(comboBoxEndEvent.getValue());
         if(comboBoxSeatingArrangements.getValue() != null) {
-
+        
             SeatingArrangementsRepositoryMySQL seatingArrangementsRepositoryMySQL = new SeatingArrangementsRepositoryMySQLImpl();
-
+        
             SeatingArrangements seatingArrangements = new SeatingArrangements();
             seatingArrangements.setNameCompany(user.getCompanyAffiliation());
             seatingArrangements.setNameSeatingArrangements(comboBoxSeatingArrangements.getValue());
             seatingArrangements.setNumberOfParticipants(Integer.valueOf(textFiledNumberOfParticipants.getText()));
-
+        
             Integer id = seatingArrangementsRepositoryMySQL.setSeatingArrangements(user, seatingArrangements);
             if(id != null) {
                 events.setIdSeatingArrangements(id);
@@ -169,23 +180,22 @@ public class FragmentAddEvent implements ObserverLang {
         events.setIdDay(day.getId());
         events.setNameRoom(day.getRoom());
         events.setNote(textAreaNote.getText());
-
+    
         EventRepositoryMySQL eventRepositoryMySQL = new EventRepositoryMySQLImpl();
-        
+    
         Integer idEvent = eventRepositoryMySQL.setEvent(user, events);
         events.setId(idEvent);
-        
-        
+    
+    
         DaysRepositoryMySQL daysRepositoryMySQL = new DaysRepositoryMySQLImpl();
-        
+    
         daysRepositoryMySQL.updateDay(user, getUpdateDay(events, this.day));
-
+    
         gridPaneAddEvent.setStyle(StyleSRC.STYLE_EXCELLENT);
     
         Stage stage = (Stage) gridPaneAddEvent.getScene().getWindow();
         stage.close();
     }
-    
     
     
     private void loadingIncomingData(){
@@ -230,6 +240,7 @@ public class FragmentAddEvent implements ObserverLang {
         btnSaveEvent.setText(language.SAVE(lang));
         labelTo.setText(language.TO(lang));
         labelTopic.setText(language.TOPIC(lang));
+        nameEvent.setText(language.EVENT(lang));
         btnSaveAndSend.setText(language.SAVE_AND_SEND(lang));
     }
 
@@ -312,9 +323,12 @@ public class FragmentAddEvent implements ObserverLang {
     }
 
     public void saveEndSendLetter(MouseEvent mouseEvent) {
+        
+        saveEvents();
+        
         Letter events = new Letter();
         events.setNameEvent(comboBoxNameEvent.getValue());
-        events.setTo(textFiledTo.getText());
+        events.setTo(hashMap.get(textFiledTo.getText()));
         events.setTopic(textFiledTopic.getText());
         events.setDateStart(day.getDate().toString());
         events.setTimeStart(startEvent.getText());
@@ -322,7 +336,27 @@ public class FragmentAddEvent implements ObserverLang {
         events.setNumberOfParticipants(textFiledNumberOfParticipants.getText());
         events.setCustomer(textFiledLastNameCustomer.getText() + " " + textFileFirstNameCustomer.getText());
         events.setNote(textAreaNote.getText());
+        events.setRoom(day.getRoom());
+        events.setEquipmentList(new ArrayList<>());
         HTMLLetter htmlLetter = new HTMLLetter(user);
-        htmlLetter.sendLetter(events);
+        if(htmlLetter.sendLetter(events) != null){
+            Stage stage = (Stage) gridPaneAddEvent.getScene().getWindow();
+            stage.close();
+        } else gridPaneAddEvent.setStyle(StyleSRC.STYLE_DANGER);
+        
+    }
+    
+    public void valueInput(ActionEvent actionEvent) {
+        textFiledTo.setText(comboBoxChoiceTo.getValue());
+    }
+    private ObservableList<String> getTo(){
+        CartContactRepository contactRepository = new CartContactRepositoryImpl();
+        this.contactCarts = contactRepository.getContactCardByUser(user.getId());
+        List<String> list = new ArrayList<>();
+        for (ContactCart c : this.contactCarts){
+            list.add(c.getLastName() + " " + c.getFirstName());
+            hashMap.put(c.getLastName() + " " + c.getFirstName(), c.getMail());
+        }
+        return FXCollections.observableList(list);
     }
 }
