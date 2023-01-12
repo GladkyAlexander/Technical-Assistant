@@ -7,19 +7,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import ru.greatlarder.technicalassistant.domain.Company;
-import ru.greatlarder.technicalassistant.domain.Task;
-import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
-import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.domain.Affairs;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.TaskRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.UserRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.TaskRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.lang.DataLang;
-import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
+import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
 
 import java.util.Objects;
 
-public class ItemTaskController implements ObserverLang, ObserverCompany {
+public class ItemTaskController{
     @FXML
     public GridPane gridPane;
     @FXML public Label labelDate;
@@ -28,10 +26,9 @@ public class ItemTaskController implements ObserverLang, ObserverCompany {
     @FXML public Label labelCreator;
     @FXML public ImageView imgCompletion;
     @FXML public Label labelRoom;
-    private Company company;
-    Task task;
+    Affairs task;
     TaskRepository taskRepository = new TaskRepositoryImpl();
-    private String lang;
+    UserRepository userRepository = new UserRepositoryImpl();
 
     public void setLabelDate(String labelDate) {
         this.labelDate.setText(labelDate);
@@ -61,29 +58,19 @@ public class ItemTaskController implements ObserverLang, ObserverCompany {
     public void setLabelRoom(String labelRoom) {
         this.labelRoom.setText(labelRoom);
     }
-    public void setTask(Task task) {
+    public void setTask(Affairs task) {
         this.task = task;
-    }
-    public void setCompany(Company company){
-        this.company = company;
     }
     public void changeStatus(MouseEvent mouseEvent) {
         taskRepository.changeCondition(task.getId(), "status", 0);
         if(taskRepository.getTaskById(task.getId(), task.getNameCompany()).getStatus() == 0){
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(
+                    userRepository.getUserLoginPassword(GlobalLinkMainController.getMainController().user.getLogin()
+                            , GlobalLinkMainController.getMainController().user.getPassword())));
 
             gridPane.getChildren().clear();
             gridPane.setManaged(false);
         }
     }
-
-    @Override
-    public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-    }
-
-    @Override
-    public void updateLang(DataLang dataLang) {
-        this.lang = dataLang.getLanguage();
-    }
+    
 }

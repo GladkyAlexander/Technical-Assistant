@@ -32,8 +32,13 @@ public class FragmentToolController implements ObserverLang, ObserverCompany, Ob
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        loadFragment();
+        if(dataCompany == null){
+            this.company = null;
+        } else {
+            this.company = dataCompany.getCompany();
+            loadFragment();
+        }
+        
     }
 
     @Override
@@ -102,6 +107,8 @@ public class FragmentToolController implements ObserverLang, ObserverCompany, Ob
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

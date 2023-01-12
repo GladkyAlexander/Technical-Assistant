@@ -1,7 +1,7 @@
 package ru.greatlarder.technicalassistant.services.mail;
 
+import ru.greatlarder.technicalassistant.domain.Affairs;
 import ru.greatlarder.technicalassistant.domain.MailSettings;
-import ru.greatlarder.technicalassistant.domain.Task;
 
 import javax.mail.*;
 import java.io.IOException;
@@ -23,8 +23,8 @@ public class Mail {
         this.host = mailSettings.getHostMailMonitoring();
     }
 
-    public List<Task> getListOfTasks(){
-        List<Task> taskList = new ArrayList<>();
+    public List<Affairs> getListOfTasks() {
+        List<Affairs> taskList = new ArrayList<>();
 
         Properties prop = new Properties();
         prop.put("mail.store.protocol", "imaps");
@@ -55,12 +55,8 @@ public class Mail {
                         }
                     }
                 }
-
             } catch (MessagingException e) {
-
-                System.out.println("***************There is no Internet or the host is not specified correctly !*********");
-                e.printStackTrace();
-
+             e.printStackTrace();
             } finally {
                 if (inbox != null) {
                     try {

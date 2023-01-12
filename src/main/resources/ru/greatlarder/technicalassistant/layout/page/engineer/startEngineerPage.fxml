@@ -35,7 +35,7 @@
                     <padding>
                         <Insets left="2.0" />
                     </padding>
-                    <MenuButton fx:id="btnSelectCompanies" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#startMenuButton" text="Выберите Компанию" textAlignment="CENTER" textOverrun="CLIP">
+                    <MenuButton fx:id="btnSelectCompanies" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#choiceCompanyMouseClicked" text="Выберите Компанию" textAlignment="CENTER" textOverrun="CLIP">
                         <VBox.margin>
                             <Insets />
                         </VBox.margin>
@@ -55,7 +55,7 @@
                 <Label fx:id="labelSettings" onMouseClicked="#clickPageSettings" text="Настройки" textAlignment="CENTER" />
                 <HBox fx:id="hBoxInfo" alignment="CENTER" onMouseClicked="#openPageInfo" spacing="5.0">
                     <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../images/info.png"/>
+                        <Image url="@../../../images/info.png" />
                     </ImageView>
                         <Label fx:id="labelInfo" text="Информация" />
                 </HBox>

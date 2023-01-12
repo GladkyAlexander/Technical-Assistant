@@ -6,6 +6,7 @@ import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class SeatingRepositoryImpl implements SeatingRepository {
     public void setSeatingArrangements(SeatingArrangements seatingArrangements) {
         createSettingArrangementTable();
         try {
-            PreparedStatement cf = connection.prepareStatement(SQLiteSeatingArrangements.INSERT_SEATING_ARRANGEMENTS);
+            PreparedStatement cf = connection.prepareStatement(SQLiteSeatingArrangements.INSERT_SEATING_ARRANGEMENTS, Statement.RETURN_GENERATED_KEYS);
 
             cf.setString(1, seatingArrangements.getNameSeatingArrangements());
             cf.setString(2, seatingArrangements.getNameCompany());

@@ -12,7 +12,6 @@ import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompa
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.EquipmentRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -33,9 +32,9 @@ public class FragmentAddWatchWorkProjectorsController implements ObserverLang, O
 	private String lang;
 	private User user;
 	Language language = new LanguageImpl();
-	HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-	HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
-	HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
+	HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
+	HandlerCompanyListener handlerCompanyListener = GlobalLinkMainController.mainController.getHandlerCompanyListener();
+	HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().getHandlerUserListener();
 
 	public void loadFragment(){
 		listProjectors = new ListProjectors(equipmentRepository.getListEquipmentByName(language.PROJECTOR(lang), company.getNameCompany()));
@@ -59,8 +58,12 @@ public class FragmentAddWatchWorkProjectorsController implements ObserverLang, O
 
 	@Override
 	public void updateCompany(DataCompany dataCompany) {
-		this.company = dataCompany.getCompany();
-		loadFragment();
+		if(dataCompany == null){
+			this.company = null;
+		} else {
+			this.company = dataCompany.getCompany();
+			loadFragment();
+		}
 	}
 
 	@Override
@@ -70,6 +73,8 @@ public class FragmentAddWatchWorkProjectorsController implements ObserverLang, O
 
 	@Override
 	public void updateUser(DataUser dataUser) {
-		this.user = dataUser.getUser();
+		if(dataUser == null){
+			this.user = null;
+		} else this.user = dataUser.getUser();
 	}
 }

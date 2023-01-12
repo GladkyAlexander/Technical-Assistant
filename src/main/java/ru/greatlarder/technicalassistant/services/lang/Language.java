@@ -353,4 +353,9 @@ public interface Language {
     String FROM(String lang);
 	
 	String EVENT(String lang);
+    String CHECK_YOUR_INTERNET_CONNECTION(String lang);
+
+    String MORE_DETAILED(String language);
+
+    String START(String lang);
 }

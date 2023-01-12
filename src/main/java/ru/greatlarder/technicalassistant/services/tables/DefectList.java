@@ -14,7 +14,6 @@ import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -29,8 +28,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class DefectList implements ObserverLang, ObserverCompany, ObserverUser {
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkMainController.mainController.getHandlerCompanyListener();
     private Company company;
     private String lang;
     Language language = new LanguageImpl();

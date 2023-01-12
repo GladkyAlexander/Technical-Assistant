@@ -18,7 +18,6 @@ import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -40,9 +39,9 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
     private User user;
     Language language = new LanguageImpl();
     private String lang;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
-    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkMainController.mainController.getHandlerCompanyListener();
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().getHandlerUserListener();
 
     public void loadFragment() {
 
@@ -287,8 +286,12 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        loadFragment();
+        if(dataCompany == null){
+            this.company = null;
+        } else {
+            this.company = dataCompany.getCompany();
+            loadFragment();
+        }
     }
 
     @Override
@@ -298,6 +301,8 @@ public class FragmentIpAddressController implements ObserverCompany, ObserverLan
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if (dataUser == null){
+            this.user = null;
+        } else  this.user = dataUser.getUser();
     }
 }

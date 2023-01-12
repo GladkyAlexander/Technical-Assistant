@@ -63,8 +63,12 @@ public class FragmentChangeSettingsUser implements ObserverLang, ObserverUser {
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
-        loadFragment(user);
+        if(dataUser == null){
+            this.user = null;
+        } else {
+            this.user = dataUser.getUser();
+            loadFragment(this.user);
+        }
     }
 
     public void loadFragment(User user) {

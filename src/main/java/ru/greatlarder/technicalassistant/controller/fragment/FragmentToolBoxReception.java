@@ -27,8 +27,8 @@ public class FragmentToolBoxReception implements ObserverLang, ObserverUser {
     @FXML public ImageView imgPhoneBook;
     private String lang;
     Language language = new LanguageImpl();
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().getHandlerUserListener();
     private User user;
     @Override
     public void updateLang(DataLang dataLang) {
@@ -37,9 +37,19 @@ public class FragmentToolBoxReception implements ObserverLang, ObserverUser {
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            loadUi(false);
+        } else {
+            this.user = dataUser.getUser();
+            loadUi(true);
+        }
     }
-
+    
+    private void loadUi(boolean b) {
+        hBoxToolBoxReception.setVisible(b);
+        hBoxToolBoxReception.setManaged(b);
+    }
+    
     public void openAllRoom(MouseEvent mouseEvent) {
     }
 
@@ -51,7 +61,7 @@ public class FragmentToolBoxReception implements ObserverLang, ObserverUser {
         try {
             GlobalLinkStartReceptionController.getStartReceptionController().borderPaneStartReception.setCenter(loader.load());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
     

@@ -11,7 +11,6 @@ import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.DaysRepositoryMySQL;
 import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.impl.DaysRepositoryMySQLImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartReceptionController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
@@ -85,7 +84,7 @@ public class ItemDay implements ObserverLang {
     private String roomName;
     private LocalDate date;
     private User user;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     String lang;
     DaysRepositoryMySQL daysRepositoryMySql = new DaysRepositoryMySQLImpl();
 
@@ -120,7 +119,7 @@ public class ItemDay implements ObserverLang {
         ProgressBar progressBar = new ProgressBar(task.getProgress());
         progressBar.setMaxWidth(MAX_VALUE);
         progressBar.setMaxHeight(MAX_VALUE);
-        GlobalLinkStartReceptionController.getStartReceptionController().borderPaneStartReception.setTop(progressBar);
+        GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().add(progressBar);
 
         task.setOnSucceeded((succeededEvent) -> {
             progressBar.visibleProperty().bind(task.runningProperty());

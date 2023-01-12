@@ -8,10 +8,12 @@ public interface CompanyRepository {
 
   List<Company> getAllCompany();
   List<String> getNameAllCompany();
+  List<Company> getListCompanyByUserId(Integer idUser);
 
   Company getCompanyName(String nameCompany);
+  Company getCompanyById(Integer idCompany);
 
-  Company setCompany(Company company);
+  Integer setCompany(Integer idUser, Company company);
 
   Company change(Company company, String valueWhatToChange, String valueOnWhat);
 

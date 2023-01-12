@@ -32,7 +32,9 @@ public class FragmentPhoneBook implements ObserverLang, ObserverCompany, Observe
 	
 	@Override
 	public void updateCompany(DataCompany dataCompany) {
-	        this.company = dataCompany.getCompany();
+		if(dataCompany == null){
+			this.company = null;
+		} else this.company = dataCompany.getCompany();
 	}
 	
 	@Override
@@ -43,7 +45,9 @@ public class FragmentPhoneBook implements ObserverLang, ObserverCompany, Observe
 	
 	@Override
 	public void updateUser(DataUser dataUser) {
-	this.user = dataUser.getUser();
+		if(dataUser == null){
+			this.user = null;
+		} else this.user = dataUser.getUser();
 	}
 	
 	public void loadFragment(){

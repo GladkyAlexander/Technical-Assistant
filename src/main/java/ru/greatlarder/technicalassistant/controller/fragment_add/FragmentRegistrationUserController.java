@@ -71,7 +71,7 @@ public class FragmentRegistrationUserController implements ObserverLang{
     UserRepository userRepository = new UserRepositoryImpl();
     Language language = new LanguageImpl();
     FileManager fileManager = new FileManagerImpl();
-    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().getHandlerUserListener();
     String lang;
 
     public void saveUser(ActionEvent actionEvent) {

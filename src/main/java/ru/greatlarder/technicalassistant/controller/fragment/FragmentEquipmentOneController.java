@@ -36,6 +36,7 @@ import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sql
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.DefectRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.RoomsRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -244,6 +245,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
     @FXML public Button btnChangeDataStorage;
     @FXML public ComboBox<String> comboBoxNewRooms;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
+    UserRepositoryImpl userRepository = new UserRepositoryImpl();
     Language language = new LanguageImpl();
     DefectRepository defectRepository = new DefectRepositoryImpl();
     FileManager fileManager = new FileManagerImpl();
@@ -397,7 +399,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
         stage.sizeToScene();
     }
 
-    public void SaveNewIp(ActionEvent actionEvent) {
+    public void saveNewIp(ActionEvent actionEvent) {
         if(!checkEquipment.checkingForAddressOccupancy(tfNet1.getText() + "." + tfNet2.getText() + "."
                 + tfSubNet.getText() + "." + tfDeviceNet.getText(), equipment.getCompany())) {
             equipmentRepository.change(equipment.getId(), "ipAddress",
@@ -406,7 +408,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
                     , equipment.getSerialNumber()).getIpAddress().equals(tfNet1.getText() + "." + tfNet2.getText()
                     + "." + tfSubNet.getText() + "." + tfDeviceNet.getText())) {
                 ipAddress.setText(tfNet1.getText() + "." + tfNet2.getText() + "." + tfSubNet.getText() + "." + tfDeviceNet.getText());
-                GlobalLinkMainController.getMainController().updateUser();
+                GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
                 hBoxNewIp.setVisible(false);
                 hBoxNewIp.setManaged(false);
             } else {
@@ -418,12 +420,12 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
         }
     }
 
-    public void SaveNewLogin(ActionEvent actionEvent) {
+    public void saveNewLogin(ActionEvent actionEvent) {
         equipmentRepository.change(equipment.getId(), "login", tfNewLogin.getText());
         if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getLogin().equals(
                 tfNewLogin.getText())){
             login.setText(tfNewLogin.getText());
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxNewLogin.setVisible(false);
             hBoxNewLogin.setManaged(false);
         } else {
@@ -431,12 +433,12 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
         }
     }
 
-    public void SaveNewPassword(ActionEvent actionEvent) {
+    public void saveNewPassword(ActionEvent actionEvent) {
         equipmentRepository.change(equipment.getId(), "password", tfNewPassword.getText());
         if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getPassword().equals(
                 tfNewPassword.getText())){
             password.setText(tfNewPassword.getText());
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxNewPassword.setVisible(false);
             hBoxNewPassword.setManaged(false);
         } else {
@@ -444,12 +446,12 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
         }
     }
 
-    public void SaveNewRoom(ActionEvent actionEvent) {
+    public void saveNewRoom(ActionEvent actionEvent) {
         equipmentRepository.change(equipment.getId(), "room", comboBoxNewRooms.getValue());
         if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getRoom().equals(
                 comboBoxNewRooms.getValue())){
             room.setText(comboBoxNewRooms.getValue());
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxNewRoom.setVisible(false);
             hBoxNewRoom.setManaged(false);
         } else {
@@ -457,12 +459,12 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
         }
     }
 
-    public void SaveNewLocationToRoom(ActionEvent actionEvent) {
+    public void saveNewLocationToRoom(ActionEvent actionEvent) {
         equipmentRepository.change(equipment.getId(), "location", tfNewRoomLocation.getText());
         if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getLocation().equals(
                 tfNewRoomLocation.getText())){
             indoorLocation.setText(tfNewRoomLocation.getText());
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxNewRoomLocations.setVisible(false);
             hBoxNewRoomLocations.setManaged(false);
         } else {
@@ -470,12 +472,12 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
         }
     }
 
-    public void SaveNewCondition(ActionEvent actionEvent) {
+    public void saveNewCondition(ActionEvent actionEvent) {
         equipmentRepository.change(equipment.getId(), "condition", menuButtonCondition.getValue().toString());
         if(equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getCondition().equals(
                 menuButtonCondition.getValue().toString())){
             condition.setText(menuButtonCondition.getValue().toString());
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxConditions.setVisible(false);
             hBoxConditions.setManaged(false);
         } else {
@@ -599,7 +601,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
                 + "." + tfMascSub.getText() + "." + tfMascDev.getText())){
             labelSubnetMasc.setText(tfMascNet1.getText() + "." + tfMascNet2.getText() + "." + tfMascSub.getText()
                     + "." + tfMascDev.getText());
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxMasc.setVisible(false);
             hBoxMasc.setManaged(false);
         } else {
@@ -667,7 +669,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
                 + tfGatewayNet2.getText() + "." + tfGatewaySub.getText() + "." + tfGatewayDev.getText())){
             labelGateway.setText(tfGatewayNet1.getText() + "." + tfGatewayNet2.getText() + "." + tfGatewaySub.getText()
                     + "." + tfGatewayDev.getText());
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxGateway.setVisible(false);
             hBoxGateway.setManaged(false);
         } else {
@@ -783,7 +785,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
                     , equipment.getSerialNumber()).getDanteIpAddress().equals(tfDanteNet1.getText() + "."
                     + tfDanteNet2.getText() + "." + tfDanteSubIp.getText() + "." + tfDanteDev.getText())) {
                 labelIpDante.setText(tfDanteNet1.getText() + "." + tfDanteNet2.getText() + "." + tfDanteSubIp.getText() + "." + tfDanteDev.getText());
-                GlobalLinkMainController.getMainController().updateUser();
+                GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
                 hBoxIpDanteChange.setVisible(false);
                 hBoxIpDanteChange.setManaged(false);
             } else {
@@ -852,7 +854,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
                 + "." + tfDanteMascSub.getText() + "." + tfDanteMascDev.getText())){
             labelMascDante.setText(tfDanteMascNet1.getText() + "." + tfDanteMascNet2.getText() + "." + tfDanteMascSub.getText()
                     + "." + tfDanteMascDev.getText());
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxDanteMasc.setVisible(false);
             hBoxDanteMasc.setManaged(false);
         } else {
@@ -920,7 +922,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
                 + tfDanteGatewayNet2.getText() + "." + tfDanteGatewaySub.getText() + "." + tfDanteGatewayDev.getText())){
             labelGatewayDante.setText(tfDanteGatewayNet1.getText() + "." + tfDanteGatewayNet2.getText() + "."
                     + tfDanteGatewaySub.getText() + "." + tfDanteGatewayDev.getText());
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxGatewayDante.setVisible(false);
             hBoxGatewayDante.setManaged(false);
         } else {
@@ -1080,7 +1082,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
         if(((Microphone)equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber())).getFrequency() != null
                 && ((Microphone)equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber())).getFrequency()
                 .equals(tfFrequency1.getText() + "." + tfFrequency2.getText())){
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxFrequency.setVisible(false);
             hBoxFrequency.setManaged(false);
             labelFrequency.setText(tfFrequency1.getText() + "." + tfFrequency2.getText());
@@ -1205,14 +1207,14 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
         if(equipment instanceof MatrixSwitcher matrixSwitcher) {
             updateAudio();
         }
-        if(equipment instanceof TvPanel){
+        if(equipment instanceof TvPanel tvPanel){
             labelDiagonal.setVisible(true);
             labelDiagonal.setManaged(true);
             diagonal.setVisible(true);
             diagonal.setManaged(true);
             diagonal.setText(((TvPanel) equipment).getDiagonal());
         }
-        if(equipment instanceof TouchControlPanel){
+        if(equipment instanceof TouchControlPanel touchControlPanel){
             labelDiagonal.setVisible(true);
             labelDiagonal.setManaged(true);
             diagonal.setVisible(true);
@@ -1310,7 +1312,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
                     , equipment.getSerialNumber())).getTimeWorkLampProjector().toString());
             hBoxChangeTimeWorkLampProj.setVisible(false);
             hBoxChangeTimeWorkLampProj.setManaged(false);
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             Stage stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
             stage.sizeToScene();
         } else tfNewTimeWorkLampProj.setStyle(STYLE_DANGER);
@@ -1327,7 +1329,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
         if (tfNewOutletNumber.getText() != null && !tfNewOutletNumber.getText().isEmpty()) {
             equipmentRepository.change(equipment.getId(), "outletNumber", tfNewOutletNumber.getText());
             tfNewOutletNumber.setStyle(STYLE_EXCELLENT);
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
             hBoxNewOutletNumber.setStyle(new HBox().getStyle());
         } else {
             hBoxNewOutletNumber.setStyle(STYLE_DANGER);
@@ -1356,7 +1358,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
     }
 
     public void openHBoxChangePortNumber(MouseEvent mouseEvent) {
-        if(equipmentRepository.getListEquipmentByName(Language.NETWORK_SWITCH_RU, equipment.getCompany()).size() != 0) {
+        if(!equipmentRepository.getListEquipmentByName(Language.NETWORK_SWITCH_RU, equipment.getCompany()).isEmpty()) {
             hBoxPortNumber.setVisible(true);
             hBoxPortNumber.setManaged(true);
             List<String> nameSwitch = new ArrayList<>();
@@ -1384,7 +1386,7 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
             if (networkSwitch.getEquipmentList().get(Integer.parseInt(tfPortNumber.getText())-1) == null) {
                 equipmentRepository.change(equipment.getId(), "portNumberInTheSwitch", tfPortNumber.getText());
                 equipmentRepository.change(equipment.getId(), "idNetworkSwitcher", networkSwitch.getId());
-                GlobalLinkMainController.getMainController().updateUser();
+                GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
                 tfPortNumber.setStyle(STYLE_EXCELLENT);
                 hBoxPortNumber.setStyle(new HBox().getStyle());
             } else {
@@ -1866,11 +1868,15 @@ public class FragmentEquipmentOneController implements ObserverLang, ObserverCom
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
+        if(dataCompany == null){
+            this.company = null;
+        } else this.company = dataCompany.getCompany();
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
-         this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

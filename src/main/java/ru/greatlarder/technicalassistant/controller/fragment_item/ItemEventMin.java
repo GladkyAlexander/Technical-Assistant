@@ -43,7 +43,7 @@ public class ItemEventMin implements ObserverLang {
     @FXML public ImageView imgLogoNameEvent;
     private String lang;
     private User user;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     private Integer idEvents;
     private Events events;
     private String time;

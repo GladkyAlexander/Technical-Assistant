@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane styleClass="grid-pane-check-your-internet-connection" stylesheets="@../../css/table.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.UpsController">
+   <center>
+      <HBox alignment="BOTTOM_CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="labelText" alignment="BOTTOM_CENTER" text="Label" textFill="#f80202">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </center>
+   <left>
+      <VBox alignment="BOTTOM_LEFT" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#update" text="Update">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/change.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <bottom>
+      <HBox alignment="CENTER_LEFT" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnMoreDetailed" mnemonicParsing="false" onAction="#openTextError" text="More detailed &gt;&gt;">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <TextArea fx:id="textAreaError" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

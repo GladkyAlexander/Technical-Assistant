@@ -34,7 +34,6 @@ public class EventTableMySQLImpl implements EventTableMySQL {
     @Override
     public String UPDATE(String nameDB) {
         return "UPDATE `" + nameDB + "`.`events` SET " +
-                " id = ?," +
                 " nameEvent = ?," +
                 " urlImageEvent = ?," +
                 " idSeatingArrangements = ?," +

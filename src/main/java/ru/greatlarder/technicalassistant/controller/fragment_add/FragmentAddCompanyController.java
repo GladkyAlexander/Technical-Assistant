@@ -19,16 +19,9 @@ import ru.greatlarder.technicalassistant.domain.*;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.CompanyRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.EventsRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.RoomsRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.SeatingRepository;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.CompanyRepositoryImpl;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.EventsRepositoryImpl;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.RoomsRepositoryImpl;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.SeatingRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.*;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.*;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -170,10 +163,11 @@ public class FragmentAddCompanyController implements ObserverLang, ObserverCompa
     EventsRepository eventsRepository = new EventsRepositoryImpl();
     RoomsRepository roomsRepository = new RoomsRepositoryImpl();
     SeatingRepository seatingRepository = new SeatingRepositoryImpl();
+    UserRepository userRepository = new UserRepositoryImpl();
     FileManager fileManager = new FileManagerImpl();
-    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
-    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().getHandlerUserListener();
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkMainController.mainController.getHandlerCompanyListener();
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     private Company company;
     private User user;
 
@@ -188,6 +182,7 @@ public class FragmentAddCompanyController implements ObserverLang, ObserverCompa
         btnSaveChange.setManaged(false);
         loadUINewRooms(false);
         loadUINewEvents(false);
+        loadUINewArrangement(false);
     }
 
     public void loadChangeCompanyFragment(Company company){
@@ -347,40 +342,39 @@ public class FragmentAddCompanyController implements ObserverLang, ObserverCompa
     public void sendCompany(MouseEvent mouseEvent) {
 
         convert(imgLogoCompany.getImage(), fileName);
-        Company company = new Company();
-        company.setNameCompany(tfNameCompany.getText());
-        company.setAddress(tfAddress.getText());
-        company.setCuratorLastName(tfCuratorLastName.getText());
-        company.setCuratorFirstName(tfCuratorFirstName.getText());
-        company.setPhoneCurator(tfNumberPhone.getText());
-        company.setMailCurator(tfEmail.getText());
-        company.setWebsiteCompany(tfWeb.getText());
-        company.setLogoCompany(fileName);
-        company.setManagerLastName(tfLastNameManager.getText());
-        company.setManagerFirstName(tfFirstNameManager.getText());
-        company.setPhoneManager(tfManagerPhone.getText());
-        company.setMailManager(tfManagerMail.getText());
-        company.setEngineerLastName(tfLastNameEngineer.getText());
-        company.setEngineerFirstName(tfFirstNameEngineer.getText());
-        company.setPhoneEngineer(tfEngineerPhone.getText());
-        company.setMailEngineer(tfEngineerMail.getText());
+        Company companyS = new Company();
+        companyS.setNameCompany(tfNameCompany.getText());
+        companyS.setAddress(tfAddress.getText());
+        companyS.setCuratorLastName(tfCuratorLastName.getText());
+        companyS.setCuratorFirstName(tfCuratorFirstName.getText());
+        companyS.setPhoneCurator(tfNumberPhone.getText());
+        companyS.setMailCurator(tfEmail.getText());
+        companyS.setWebsiteCompany(tfWeb.getText());
+        companyS.setLogoCompany(fileName);
+        companyS.setManagerLastName(tfLastNameManager.getText());
+        companyS.setManagerFirstName(tfFirstNameManager.getText());
+        companyS.setPhoneManager(tfManagerPhone.getText());
+        companyS.setMailManager(tfManagerMail.getText());
+        companyS.setEngineerLastName(tfLastNameEngineer.getText());
+        companyS.setEngineerFirstName(tfFirstNameEngineer.getText());
+        companyS.setPhoneEngineer(tfEngineerPhone.getText());
+        companyS.setMailEngineer(tfEngineerMail.getText());
 
-        Company company1 = checkCompany(company);
+        Company company1 = checkCompany(companyS);
 
         if (company1 != null) {
             fileManager.createDirectoryCompany(company1.getNameCompany());
-
-            companyRepository.setCompany(company1);
-
-            if (companyRepository.getCompanyName(company1.getNameCompany()).getNameCompany().equals(company1.getNameCompany())) {
+            
+            if(companyRepository.setCompany(user.getId(), company1) != null){
                 labelOk.setText(tfNameCompany.getText() + language.ADDED(lang));
                 imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
-
+    
                 fileManager.createDirectoryCompany(company1.getNameCompany());
-                GlobalLinkMainController.getMainController().updateUser();
+    
+                GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
                 cleanAddCompany();
             }
-
+            
         } else {
             labelOk.setText(language.WILL_NOT_BE_ADDED(lang));
             imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/warning_min.png"))));
@@ -717,25 +711,25 @@ public class FragmentAddCompanyController implements ObserverLang, ObserverCompa
     public void saveChange(MouseEvent mouseEvent) {
 
         convert(imgLogoCompany.getImage(), fileName);
-        Company company = new Company();
-        company.setNameCompany(tfNameCompany.getText());
-        company.setAddress(tfAddress.getText());
-        company.setCuratorLastName(tfCuratorLastName.getText());
-        company.setCuratorFirstName(tfCuratorFirstName.getText());
-        company.setPhoneCurator(tfNumberPhone.getText());
-        company.setMailCurator(tfEmail.getText());
-        company.setWebsiteCompany(tfWeb.getText());
-        company.setLogoCompany(fileName);
-        company.setManagerLastName(tfLastNameManager.getText());
-        company.setManagerFirstName(tfFirstNameManager.getText());
-        company.setPhoneManager(tfManagerPhone.getText());
-        company.setMailManager(tfManagerMail.getText());
-        company.setEngineerLastName(tfLastNameEngineer.getText());
-        company.setEngineerFirstName(tfFirstNameEngineer.getText());
-        company.setPhoneEngineer(tfEngineerPhone.getText());
-        company.setMailEngineer(tfEngineerMail.getText());
+        Company companyN = new Company();
+        companyN.setNameCompany(tfNameCompany.getText());
+        companyN.setAddress(tfAddress.getText());
+        companyN.setCuratorLastName(tfCuratorLastName.getText());
+        companyN.setCuratorFirstName(tfCuratorFirstName.getText());
+        companyN.setPhoneCurator(tfNumberPhone.getText());
+        companyN.setMailCurator(tfEmail.getText());
+        companyN.setWebsiteCompany(tfWeb.getText());
+        companyN.setLogoCompany(fileName);
+        companyN.setManagerLastName(tfLastNameManager.getText());
+        companyN.setManagerFirstName(tfFirstNameManager.getText());
+        companyN.setPhoneManager(tfManagerPhone.getText());
+        companyN.setMailManager(tfManagerMail.getText());
+        companyN.setEngineerLastName(tfLastNameEngineer.getText());
+        companyN.setEngineerFirstName(tfFirstNameEngineer.getText());
+        companyN.setPhoneEngineer(tfEngineerPhone.getText());
+        companyN.setMailEngineer(tfEngineerMail.getText());
 
-        Company company1 = checkCompany(company);
+        Company company1 = checkCompany(companyN);
 
         if (company1 != null) {
             fileManager.createDirectoryCompany(company1.getNameCompany());
@@ -747,7 +741,7 @@ public class FragmentAddCompanyController implements ObserverLang, ObserverCompa
                 imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
 
                 fileManager.createDirectoryCompany(company1.getNameCompany());
-                GlobalLinkMainController.getMainController().updateUser();
+                GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
                 cleanAddCompany();
             }
 
@@ -801,12 +795,16 @@ public class FragmentAddCompanyController implements ObserverLang, ObserverCompa
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
+        if(dataCompany == null){
+            this.company = null;
+        } else this.company = dataCompany.getCompany();
         loadFragment();
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

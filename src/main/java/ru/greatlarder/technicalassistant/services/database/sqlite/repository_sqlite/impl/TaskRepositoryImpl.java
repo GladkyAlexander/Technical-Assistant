@@ -1,6 +1,6 @@
 package ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl;
 
-import ru.greatlarder.technicalassistant.domain.Task;
+import ru.greatlarder.technicalassistant.domain.Affairs;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.TaskRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteTask;
 
@@ -17,8 +17,8 @@ import static ru.greatlarder.technicalassistant.services.database.sqlite.DBconne
 public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
-    public Task getTaskById(int id, String nameCompany) {
-        for (Task task : getListTask(nameCompany)){
+    public Affairs getTaskById(int id, String nameCompany) {
+        for (Affairs task : getListTask(nameCompany)){
             if(task.getId() == id && task.getNameCompany().equals(nameCompany)){
                 return task;
             }
@@ -27,8 +27,8 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public List<Task> getListTask(String nameCompany) {
-        List<Task> listTask = new ArrayList<>();
+    public List<Affairs> getListTask(String nameCompany) {
+        List<Affairs> listTask = new ArrayList<>();
         createTaskTable();
 
         try {
@@ -36,7 +36,7 @@ public class TaskRepositoryImpl implements TaskRepository {
 
             while (resultSet.next()) {
 
-                Task task = new Task();
+                Affairs task = new Affairs();
                 task.setId(resultSet.getInt("id"));
                 task.setDateOfCreation(resultSet.getDate("dateOfCreation").toLocalDate());
                 task.setTimeOfCreation(resultSet.getTime("timeOfCreation").toLocalTime());
@@ -67,10 +67,10 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public List<Task> getListTaskActive(String nameCompany) {
-        List<Task> listTask = new ArrayList<>();
+    public List<Affairs> getListTaskActive(String nameCompany) {
+        List<Affairs> listTask = new ArrayList<>();
 
-        for (Task task : getListTask(nameCompany)){
+        for (Affairs task : getListTask(nameCompany)){
             if (task.getStatus() == 1){
                 listTask.add(task);
             }
@@ -79,7 +79,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public Task setTask(Task task) {
+    public Affairs setTask(Affairs task) {
         createTaskTable();
 
         try {
@@ -112,7 +112,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public Task changeCondition(int idTask, String column, Object value) {
+    public Affairs changeCondition(int idTask, String column, Object value) {
 
        createTaskTable();
 

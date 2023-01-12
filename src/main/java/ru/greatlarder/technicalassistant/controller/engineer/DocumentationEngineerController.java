@@ -7,7 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.Company;
-import ru.greatlarder.technicalassistant.domain.Task;
+import ru.greatlarder.technicalassistant.domain.Affairs;
 import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.EquipmentRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.TaskRepository;
@@ -109,8 +109,8 @@ public class DocumentationEngineerController implements ObserverLang, ObserverCo
     }
 
     public void createTimeShite(MouseEvent mouseEvent) {
-        List<Task> taskList = new ArrayList<>();
-        for(Task task : taskRepository.getListTask(company.getNameCompany())){
+        List<Affairs> taskList = new ArrayList<>();
+        for(Affairs task : taskRepository.getListTask(company.getNameCompany())){
             if (localDate.getYear() == task.getDateOfCreation().getYear() && localDate.getMonth() == task.getDateOfCreation().getMonth()){
                 taskList.add(task);
             }
@@ -145,7 +145,9 @@ public class DocumentationEngineerController implements ObserverLang, ObserverCo
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
         startDocFragment();
     }
 }

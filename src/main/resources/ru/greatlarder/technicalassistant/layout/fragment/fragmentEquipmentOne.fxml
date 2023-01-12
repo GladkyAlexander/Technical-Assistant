@@ -134,27 +134,27 @@
          <Insets />
       </GridPane.margin>
       <ComboBox fx:id="menuButtonCondition" onMouseClicked="#onActionMenuButtonCondition" promptText="Измените состояние" />
-      <Button fx:id="btnSaveNewCondition" mnemonicParsing="false" onAction="#SaveNewCondition" text="Сохранить" />
+      <Button fx:id="btnSaveNewCondition" mnemonicParsing="false" onAction="#saveNewCondition" text="Сохранить" />
    </HBox>
    <HBox fx:id="hBoxNewRoomLocations" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="33">
       <Label fx:id="labelNewLocation" text="Новое расположение :" />
       <TextField fx:id="tfNewRoomLocation" />
-      <Button fx:id="btnSaveNewLocationToRoom" mnemonicParsing="false" onAction="#SaveNewLocationToRoom" text="Сохранить" />
+      <Button fx:id="btnSaveNewLocationToRoom" mnemonicParsing="false" onAction="#saveNewLocationToRoom" text="Сохранить" />
    </HBox>
    <HBox fx:id="hBoxNewRoom" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="31">
       <Label fx:id="labelNewRoom" text="Новое помещение :" />
       <ComboBox fx:id="comboBoxNewRooms" prefWidth="150.0" />
-      <Button fx:id="btnSaveNewRoom" mnemonicParsing="false" onAction="#SaveNewRoom" text="Сохранить" />
+      <Button fx:id="btnSaveNewRoom" mnemonicParsing="false" onAction="#saveNewRoom" text="Сохранить" />
    </HBox>
    <HBox fx:id="hBoxNewPassword" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="29">
       <Label fx:id="labelNewPassword" text="Новый пароль :" />
       <TextField fx:id="tfNewPassword" />
-      <Button fx:id="btnSaveNewPassword" mnemonicParsing="false" onAction="#SaveNewPassword" text="Сохранить" />
+      <Button fx:id="btnSaveNewPassword" mnemonicParsing="false" onAction="#saveNewPassword" text="Сохранить" />
    </HBox>
    <HBox fx:id="hBoxNewLogin" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="27">
       <Label fx:id="labelNewLogin" text="Новый логин :" />
       <TextField fx:id="tfNewLogin" />
-      <Button fx:id="btnSaveNewLogin" mnemonicParsing="false" onAction="#SaveNewLogin" text="Сохранить" />
+      <Button fx:id="btnSaveNewLogin" mnemonicParsing="false" onAction="#saveNewLogin" text="Сохранить" />
    </HBox>
    <HBox fx:id="hBoxNewIp" alignment="BOTTOM_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="15">
       <Label fx:id="labelNewIpAddress" text="Новый адрес :" />
@@ -165,7 +165,7 @@
       <TextField fx:id="tfSubNet" onKeyReleased="#onKeyRelisedSubNet" prefWidth="40.0" />
       <Label text="." />
       <TextField fx:id="tfDeviceNet" onKeyReleased="#onKeyRelisedDeviceNet" prefWidth="40.0" />
-      <Button fx:id="btnSaveNewIp" mnemonicParsing="false" onAction="#SaveNewIp" text="Сохранить" />
+      <Button fx:id="btnSaveNewIp" mnemonicParsing="false" onAction="#saveNewIp" text="Сохранить" />
    </HBox>
    <Label text="Subnet masc :" GridPane.rowIndex="16" />
    <Label text="Gateway :" GridPane.rowIndex="18" />

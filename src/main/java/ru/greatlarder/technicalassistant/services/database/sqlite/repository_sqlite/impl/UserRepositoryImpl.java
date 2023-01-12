@@ -18,7 +18,7 @@ public class UserRepositoryImpl implements UserRepository {
     CompanyRepository companyRepository = new CompanyRepositoryImpl();
     MailSettingsRepository mailSettingsRepository = new MailSettingsRepositoryImpl();
 
-    public User getUser(ResultSet resultSet) {
+    private User getUser(ResultSet resultSet) {
         User user = new User();
         try {
                     user.setId(resultSet.getInt("id"));
@@ -89,27 +89,27 @@ public class UserRepositoryImpl implements UserRepository {
         } finally {
             closeDB();
         }
-
-        List<User> returnUser = new ArrayList<>();
-        for (User user : users){
-            if(user.getPost().equals("Engineer") || user.getPost().equals("Инженер")) {
-                user.setCompanyList(companyRepository.getAllCompany());
-                user.setMailSettings(mailSettingsRepository.getListMailSettingsByUser(user.getId()));
-            }
-            returnUser.add(user);
-        }
-
-        return returnUser;
+        
+        return users;
     }
 
     @Override
     public User getUserLoginPassword(String login, String password) {
-
-       for (User user : getListUser()){
-           if(user.getLogin().equals(login) && user.getPassword().equals(password)){
-               return user;
-           }
-       }
+        createUserTable();
+        try {
+            resultSet = statement.executeQuery(SQLiteUser.READ_TABLE_USER);
+            while (resultSet.next()) {
+                if(resultSet.getString("login").equals(login)
+                        && resultSet.getString("password").equals(password)){
+                    return getUser(resultSet);
+                }
+            }
+            closeDB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDB();
+        }
         return null;
     }
 

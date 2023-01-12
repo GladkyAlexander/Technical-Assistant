@@ -12,7 +12,6 @@ import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompa
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.DefectRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.DefectRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -27,8 +26,8 @@ public class FragmentDefectController implements ObserverLang, ObserverCompany, 
     @FXML public TabPane tabPaneDefect;
     private String lang;
     private Company company;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkMainController.mainController.getHandlerCompanyListener();
     DefectList defectList = new DefectList();
     DefectRepository defectRepository = new DefectRepositoryImpl();
     Language language = new LanguageImpl();
@@ -62,6 +61,8 @@ public class FragmentDefectController implements ObserverLang, ObserverCompany, 
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

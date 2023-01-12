@@ -3,7 +3,7 @@ package ru.greatlarder.technicalassistant.services.mail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import ru.greatlarder.technicalassistant.domain.Task;
+import ru.greatlarder.technicalassistant.domain.Affairs;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -38,11 +38,11 @@ public class LoadTask {
             room = room1[room1.length - 1];
     }
 
-    public Task getTask(String message) {
+    public Affairs getTask(String message) {
         this.message = message;
         if(getLetter(message) == null) {
             task();
-            Task task = new Task();
+            Affairs task = new Affairs();
             if (data != null && time != null) {
                 task.setDateOfCreation(data);
                 task.setTimeOfCreation(time);
@@ -88,7 +88,7 @@ public class LoadTask {
         return localTime;
     }
     
-    private Task getLetter(String m){
+    private Affairs getLetter(String m){
         
         Document message1 = Jsoup.parse(m);
         Element date_event = message1.getElementById("p_date_event");
@@ -110,7 +110,7 @@ public class LoadTask {
         Element note = message1.getElementById("p_note");
         if(note == null)return null;
         
-        Task task = new Task();
+        Affairs task = new Affairs();
         task.setRoom(room.text());
         task.setDateOfCreation(LocalDate.parse(date_event.text()));
         task.setTimeOfCreation(getTime(time_start.text()));

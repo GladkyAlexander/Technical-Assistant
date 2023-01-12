@@ -1,6 +1,7 @@
 package ru.greatlarder.technicalassistant.services.database.sqlite;
 
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.*;
+import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.sintax_sqlite_impl.SQLiteIdCompanySintaxImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 
@@ -137,6 +138,16 @@ public class DBconnect {
         try {
             statement = connection.createStatement();
             statement.execute(SQLiteCartContact.CREATE_CART_CONTACT);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void createIdCompanyByUserTable(String nameTable){
+        SQLiteIdCompany sqLiteIdCompany = new SQLiteIdCompanySintaxImpl();
+        connectionDB();
+        try {
+            statement = connection.createStatement();
+            statement.execute(sqLiteIdCompany.createT(nameTable));
         } catch (SQLException e) {
             e.printStackTrace();
         }

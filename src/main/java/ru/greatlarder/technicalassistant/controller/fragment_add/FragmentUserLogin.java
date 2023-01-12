@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.UserRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
@@ -16,7 +17,6 @@ import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
-import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
 
 import java.io.IOException;
 
@@ -32,11 +32,11 @@ public class FragmentUserLogin implements ObserverLang{
     String lang;
     Language language = new LanguageImpl();
     UserRepository userRepository = new UserRepositoryImpl();
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     public void enter(MouseEvent actionEvent) {
-        if(userRepository.getUserLoginPassword(tfLogin.getText(), tfPassword.getText()) != null) {
-            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(tfLogin.getText(), tfPassword.getText())));
+        User user = userRepository.getUserLoginPassword(tfLogin.getText(), tfPassword.getText());
+        if(user != null) {
+             GlobalLinkMainController.getMainController().startAccount(user);
         } else {
             FXMLLoader loaderRegistration = new FXMLLoader(getClass().
                     getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/fragmentRegisrationUser.fxml"));
@@ -46,6 +46,7 @@ public class FragmentUserLogin implements ObserverLang{
                 FragmentRegistrationUserController fragmentRegistrationUserController = loaderRegistration.getController();
                 fragmentRegistrationUserController.updateLang(new DataLang(lang));
                 fragmentRegistrationUserController.loadPage();
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -80,4 +81,5 @@ public class FragmentUserLogin implements ObserverLang{
             e.printStackTrace();
         }
     }
+    
 }

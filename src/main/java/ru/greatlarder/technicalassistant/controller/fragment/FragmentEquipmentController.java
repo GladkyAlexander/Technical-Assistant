@@ -36,7 +36,7 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
     public TabPane tabPaneEquipment2;
     private String lang;
     private Company company;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     Language language = new LanguageImpl();
     FileManager fileManager = new FileManagerImpl();
     private User user;
@@ -48,8 +48,12 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        loadFragment();
+        if (dataCompany == null){
+            this.company = null;
+        } else {
+            this.company = dataCompany.getCompany();
+            loadFragment();
+        }
     }
 
     private ListView<Equipment> createTableEquipment(List<Equipment> equipmentList){
@@ -108,6 +112,7 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
         GlobalLinkFragmentEquipmentController.setFragmentEquipmentController(this);
         tabPaneEquipment1.getTabs().clear();
         List<Equipment> equipmentList = company.getEquipmentList();
+        
         Set<String> nameEquipmentHashSet = new HashSet<>();
 
         for (Equipment equipment : equipmentList){
@@ -142,6 +147,8 @@ public class FragmentEquipmentController implements ObserverLang, ObserverCompan
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

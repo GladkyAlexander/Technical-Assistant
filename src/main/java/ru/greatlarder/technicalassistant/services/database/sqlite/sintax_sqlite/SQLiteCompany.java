@@ -54,7 +54,7 @@ public interface SQLiteCompany {
             " engineerLastName = ?," +
             " engineerFirstName = ?," +
             " phoneEngineer = ?," +
-            " mailEngineer = ? WHERE id = ?";
+            " mailEngineer WHERE id = ?";
 
     String READE_COMPANY = "SELECT * FROM company";
 }

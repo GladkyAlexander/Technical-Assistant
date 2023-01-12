@@ -28,7 +28,7 @@ public class FragmentRoom implements ObserverLang, ObserverCompany, ObserverUser
     @FXML public TabPane tabPane1Room;
     @FXML public TabPane tabPane2Room;
     private Company company;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     private String lang;
     private User user;
 
@@ -79,12 +79,18 @@ public class FragmentRoom implements ObserverLang, ObserverCompany, ObserverUser
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        loadFragment();
+        if(dataCompany == null){
+            this.company = null;
+        } else {
+            this.company = dataCompany.getCompany();
+            loadFragment();
+        }
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

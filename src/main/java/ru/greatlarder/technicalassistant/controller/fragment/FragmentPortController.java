@@ -150,7 +150,7 @@ public class FragmentPortController {
     public void change(ActionEvent actionEvent) {
         ObservableList<String> observableList = FXCollections.observableArrayList();
         disable(false);
-        for (Equipment equipment : equipmentRepository.getListEquipmentForCompany(GlobalLinkStartEngineerController.getStartEngineerController().company.getNameCompany())){
+        for (Equipment equipment : equipmentRepository.getListEquipmentForCompany(GlobalLinkStartEngineerController.getStartEngineerController().getCompany().getNameCompany())){
             observableList.add(equipment.getSerialNumber());
         }
 

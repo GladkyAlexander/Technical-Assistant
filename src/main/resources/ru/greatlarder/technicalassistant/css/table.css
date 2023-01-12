@@ -36,3 +36,7 @@
  	    -fx-background-radius: 0 8 0 8;
  	    -fx-border-color: transparent;
  }
+ .grid-pane-check-your-internet-connection{
+           -fx-background-image:url("../images/check_your_internet_connection.jpg") no-repeat;
+           -fx-background-size: 100% 100%;
+ }

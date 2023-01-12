@@ -19,7 +19,7 @@ import java.util.Objects;
 public class AppStart extends Application {
     FileManager fileManager = new FileManagerImpl();
     UserRepository userRepository = new UserRepositoryImpl();
-
+    
     private User getUser() {
         List<User> user = userRepository.getListUser();
         if (user.size() == 1){
@@ -29,14 +29,12 @@ public class AppStart extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
         fileManager.createProjectDirectories();
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/ru/greatlarder/technicalassistant/mainPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load() ,1280, 820 );
         stage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png")))));
         stage.setTitle("Technical Assistant");
         MainController controller = fxmlLoader.getController();
-        //controller.loadUser(getUser());
         controller.startAccount(getUser());
         stage.setScene(scene);
         stage.show();
@@ -45,5 +43,4 @@ public class AppStart extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }

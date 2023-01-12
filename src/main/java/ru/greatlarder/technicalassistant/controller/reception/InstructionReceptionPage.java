@@ -23,6 +23,8 @@ public class InstructionReceptionPage implements ObserverLang, ObserverUser {
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

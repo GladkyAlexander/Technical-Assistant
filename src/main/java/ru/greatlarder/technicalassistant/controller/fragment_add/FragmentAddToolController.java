@@ -14,8 +14,12 @@ import ru.greatlarder.technicalassistant.domain.Tool;
 import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.CompanyRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.ToolsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.UserRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.CompanyRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.ToolsRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
@@ -54,6 +58,7 @@ public class FragmentAddToolController implements ObserverLang, ObserverCompany,
     private String lang;
     Language language = new LanguageImpl();
     private User user;
+    UserRepository userRepository = new UserRepositoryImpl();
 
     @Override
     public void updateLang(DataLang dataLang) {
@@ -80,7 +85,7 @@ public class FragmentAddToolController implements ObserverLang, ObserverCompany,
                     imgOk1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
                     labelOk1.setText(language.TOOL_WITH_SN(lang) + tool.getToolSerialNumber() + language.ADDED(lang));
 
-                    GlobalLinkMainController.getMainController().updateUser();
+                    GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
                     GlobalLinkStartEngineerController.getStartEngineerController().updateTheCompany();
 
                     Clean();
@@ -139,24 +144,31 @@ public class FragmentAddToolController implements ObserverLang, ObserverCompany,
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
+        if(dataCompany == null){
+            this.company = null;
+        } else this.company = dataCompany.getCompany();
         loadFragment();
     }
     public void loadFragment(){
         setLanguage(lang);
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        List<Company> companies = this.user.getCompanyList();
-        for (Company company1 : companies){
-            if(companies.size() == 1){
-                comboBoxChooseACompany.setValue(company1.getNameCompany());
-            } else comboBoxChooseACompany.setPromptText(language.CHOOSE_A_COMPANY(lang));
-            observableList.add(company1.getNameCompany());
+        if(user != null) {
+            CompanyRepository companyRepository = new CompanyRepositoryImpl();
+            List<Company> companies = companyRepository.getListCompanyByUserId(user.getId());
+            for (Company company1 : companies) {
+                if (companies.size() == 1) {
+                    comboBoxChooseACompany.setValue(company1.getNameCompany());
+                } else comboBoxChooseACompany.setPromptText(language.CHOOSE_A_COMPANY(lang));
+                observableList.add(company1.getNameCompany());
+            }
         }
         comboBoxChooseACompany.setItems(observableList);
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

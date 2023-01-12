@@ -6,7 +6,7 @@ import java.util.Set;
 public class HandlerUserListener implements SubjectUser {
 
     private DataUser dataUser;
-    private Set<ObserverUser> observerUsers = new HashSet<>();
+    private final Set<ObserverUser> observerUsers = new HashSet<>();
 
     public DataUser getDataUser(){
         return dataUser;
@@ -35,7 +35,7 @@ public class HandlerUserListener implements SubjectUser {
 
     @Override
     public void clear() {
-        observerUsers.clear();
+        this.observerUsers.clear();
     }
 
     @Override

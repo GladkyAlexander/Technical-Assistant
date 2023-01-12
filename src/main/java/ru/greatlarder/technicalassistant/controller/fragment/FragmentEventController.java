@@ -32,7 +32,7 @@ public class FragmentEventController implements ObserverLang, ObserverCompany, O
     @FXML public TabPane tabPane2fragmentEvent;
 
     private Company company;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     private String lang;
     private User user;
 
@@ -84,12 +84,18 @@ public class FragmentEventController implements ObserverLang, ObserverCompany, O
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        loadFragment();
+        if(dataCompany == null){
+            this.company = null;
+        } else {
+            this.company = dataCompany.getCompany();
+            loadFragment();
+        }
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

@@ -110,6 +110,33 @@ return null;
 
     @Override
     public void updateEvent(User user, Events events) {
+        this.user = user;
+        ConnectMySQL connectMySQL = new ConnectMySQL(this.user);
+        connectMySQL.createEventTableMySQL();
+        EventTableMySQL eventTableMySQL = new EventTableMySQLImpl();
+    
+        try {
+            PreparedStatement ps = connectMySQL.connectionMySQL.prepareStatement(eventTableMySQL.UPDATE(this.user.getNameDB()));
+            
+            ps.setString(1, events.getNameEvent());
+            ps.setString(2, events.getUrlImageEvent());
+            if(events.getIdSeatingArrangements() != null) {
+                ps.setInt(3, events.getIdSeatingArrangements());
+            } else {ps.setInt(3, 0);}
+            ps.setString(4, events.getLastNameCustomer());
+            ps.setString(5, events.getFirstNameCustomer());
+            ps.setInt(6, events.getIdDay());
+            ps.setString(7, events.getEventStartTime());
+            ps.setString(8, events.getEndTimeOfTheEvent());
+            ps.setString(9, events.getNote());
+            ps.setInt(10, events.getId());
+            ps.executeUpdate();
+            connectMySQL.closeMySQL_DB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectMySQL.closeMySQL_DB();
+        }
     }
 
     private Events getEvent(ResultSet resultSetMySQL) throws SQLException {

@@ -29,8 +29,10 @@ import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.EquipmentRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.RoomsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.UserRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.RoomsRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
@@ -302,6 +304,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     Language language = new LanguageImpl();
     private Company company;
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
+    UserRepository userRepository = new UserRepositoryImpl();
     RoomsRepository roomsRepository = new RoomsRepositoryImpl();
     List<Equipment> listNetworkSwitcher;
     FileManager fileManager = new FileManagerImpl();
@@ -347,8 +350,12 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        loadFragment();
+        if(dataCompany == null){
+            this.company = null;
+        } else {
+            this.company = dataCompany.getCompany();
+            loadFragment();
+        }
     }
 
     public void loadFragment() {
@@ -960,7 +967,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     public Equipment getEquipment() {
         Equipment result = null;
-        switch ((String) this.cmbEquipmentType.getValue()) {
+        switch (this.cmbEquipmentType.getValue()) {
             case Language.PROJECTOR_RU -> {
                 Projector equipment = new Projector();
                 result = loadEquipment(equipment);
@@ -1193,7 +1200,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
                                     imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
                                     labelOk.setText(language.EQUIPMENT(lang) + " " + language.SERIAL_NUMBER(lang) + " : " + equipment.getSerialNumber() + " " + language.ADDED(lang));
                                     clear();
-                                    GlobalLinkMainController.getMainController().updateUser();
+                                    GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
                                     GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getChildren().remove(
                                             GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getRight()
                                     );
@@ -1514,8 +1521,7 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
     }
 
     public void onActionCmbEquipmentType(MouseEvent actionEvent) {
-        //List<String> listNameEquipment = new ArrayList<>(equipmentRepository.getListEquipmentName(lang));
-        //cmbEquipmentType.setItems(FXCollections.observableArrayList(listNameEquipment));
+    
     }
 
     public void openHMP200(MouseEvent mouseEvent) throws URISyntaxException {
@@ -1605,6 +1611,8 @@ public class FragmentAddEquipmentController implements ObserverLang, ObserverCom
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

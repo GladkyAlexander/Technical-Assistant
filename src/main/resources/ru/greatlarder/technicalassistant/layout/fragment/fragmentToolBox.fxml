@@ -5,65 +5,76 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="3.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxController">
-    <padding>
-        <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
-    </padding>
-    <ImageView fx:id="imgEquipment" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allEquipment" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../images/all_equipment_un_active.png" />
-    </ImageView>
-    <ImageView fx:id="imgTool" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allTool" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../images/tool_button_in_active.png" />
-    </ImageView>
-    <ImageView fx:id="imgIpAddress" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allIpAddress" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../images/tool_box_ip_un_active.png" />
-    </ImageView>
-    <ImageView fx:id="imgAllDefect" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allDefect" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../images/tool_box_defect_un_active.png" />
-    </ImageView>
-   <ImageView fx:id="imgRooms" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allRooms" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../images/all_room_unactive.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="imgAllEvent" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openAllEvent" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../images/all_events_un_active.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="imgPhoneBook" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openPhoneBook" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../images/phone_book_unactive.png" />
-      </image>
-   </ImageView>
-    <ImageView fx:id="imgAddEquipment" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addEquipment" pickOnBounds="true" preserveRatio="true">
-        <HBox.margin>
-            <Insets left="5.0" />
-        </HBox.margin>
-        <Image url="@../../images/add_equipment_un_active.png" />
-    </ImageView>
-    <ImageView fx:id="imgAddTool" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addTool" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../images/tool_add_in_active.png" />
-    </ImageView>
-    <ImageView fx:id="imgAddDefect" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addDefect" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../images/defect_add_un_active.png" />
-    </ImageView>
-    <ImageView fx:id="imgWatchWorkProg" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#watchWorkProjectors" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../images/add_time_un_active.png" />
-    </ImageView>
-   <ImageView fx:id="imgAddRoom" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addRoom" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../images/add_rooms_un_active.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="imgAddEvent" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addEvent" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../images/add_events_un_active.png" />
-      </image>
-   </ImageView>
-    <ImageView fx:id="imgEngine" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#imgEnginSearch" pickOnBounds="true" preserveRatio="true" />
-    <TextField fx:id="tfSerNum" prefHeight="20.0" prefWidth="224.0" promptText="Введите серийный номер устройства" />
-    <ImageView fx:id="imgSearch" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#searchSerialNumber" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../images/scale.png" />
-    </ImageView>
-</HBox>
+<VBox fx:id="vBoxFTB" xmlns="http://javafx.com/javafx/11.0.14-internal"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxController">
+   <children>
+      <HBox fx:id="hBoxToolBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="3.0">
+          <padding>
+              <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
+          </padding>
+          <ImageView fx:id="imgEquipment" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allEquipment" pickOnBounds="true" preserveRatio="true">
+              <Image url="@../../images/all_equipment_un_active.png" />
+          </ImageView>
+          <ImageView fx:id="imgTool" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allTool" pickOnBounds="true" preserveRatio="true">
+              <Image url="@../../images/tool_button_in_active.png" />
+          </ImageView>
+          <ImageView fx:id="imgIpAddress" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allIpAddress" pickOnBounds="true" preserveRatio="true">
+              <Image url="@../../images/tool_box_ip_un_active.png" />
+          </ImageView>
+          <ImageView fx:id="imgAllDefect" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allDefect" pickOnBounds="true" preserveRatio="true">
+              <Image url="@../../images/tool_box_defect_un_active.png" />
+          </ImageView>
+         <ImageView fx:id="imgRooms" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#allRooms" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/all_room_unactive.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgAllEvent" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openAllEvent" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/all_events_un_active.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgPhoneBook" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openPhoneBook" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/phone_book_unactive.png" />
+            </image>
+         </ImageView>
+          <ImageView fx:id="imgAddEquipment" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addEquipment" pickOnBounds="true" preserveRatio="true">
+              <HBox.margin>
+                  <Insets left="5.0" />
+              </HBox.margin>
+              <Image url="@../../images/add_equipment_un_active.png" />
+          </ImageView>
+          <ImageView fx:id="imgAddTool" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addTool" pickOnBounds="true" preserveRatio="true">
+              <Image url="@../../images/tool_add_in_active.png" />
+          </ImageView>
+          <ImageView fx:id="imgAddDefect" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addDefect" pickOnBounds="true" preserveRatio="true">
+              <Image url="@../../images/defect_add_un_active.png" />
+          </ImageView>
+          <ImageView fx:id="imgWatchWorkProg" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#watchWorkProjectors" pickOnBounds="true" preserveRatio="true">
+              <Image url="@../../images/add_time_un_active.png" />
+          </ImageView>
+         <ImageView fx:id="imgAddRoom" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addRoom" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/add_rooms_un_active.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgAddEvent" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addEvent" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/add_events_un_active.png" />
+            </image>
+         </ImageView>
+          <ImageView fx:id="imgEngine" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#imgEnginSearch" pickOnBounds="true" preserveRatio="true" />
+          <TextField fx:id="tfSerNum" prefHeight="20.0" prefWidth="224.0" promptText="Введите серийный номер устройства" />
+          <ImageView fx:id="imgSearch" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#searchSerialNumber" pickOnBounds="true" preserveRatio="true">
+              <Image url="@../../images/scale.png" />
+          </ImageView>
+         <ImageView fx:id="imgSearchIp" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#startSearchIp" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/search_ip.png" />
+            </image>
+         </ImageView>
+      </HBox>
+   </children>
+</VBox>

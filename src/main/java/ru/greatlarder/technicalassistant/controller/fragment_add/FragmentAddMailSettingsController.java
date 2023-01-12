@@ -9,7 +9,9 @@ import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.MailSettings;
 import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.MailSettingsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.UserRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.MailSettingsRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -36,6 +38,7 @@ public class FragmentAddMailSettingsController implements ObserverLang, Observer
     private String lang;
     private User user;
     MailSettingsRepository mailSettingsRepository = new MailSettingsRepositoryImpl();
+    UserRepository userRepository = new UserRepositoryImpl();
 
     @Override
     public void updateLang(DataLang dataLang) {
@@ -65,13 +68,15 @@ public class FragmentAddMailSettingsController implements ObserverLang, Observer
             user.setMailSettings(mailSettingsRepository.getListMailSettingsByUser(mailSettings.getIdUser()));
             gridPaneAddLetterTemplate.getChildren().clear();
             gridPaneAddLetterTemplate.setStyle(new GridPane().getStyle());
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
         } else gridPaneAddLetterTemplate.setStyle(StyleSRC.STYLE_WARNING);
 
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

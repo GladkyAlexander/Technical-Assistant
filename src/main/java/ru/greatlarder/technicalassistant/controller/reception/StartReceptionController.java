@@ -7,9 +7,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxReception;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartReceptionController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
@@ -34,9 +32,8 @@ public class StartReceptionController implements ObserverLang, ObserverUser {
     @FXML public ImageView imgLabelCompany;
     @FXML public Label labelInfo;
     @FXML public Label labelSettings;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
-    HandlerCompanyListener handlerCompanyListener = new HandlerCompanyListener();
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().getHandlerUserListener();
     Language language = new LanguageImpl();
     private String lang;
     private User user;
@@ -51,23 +48,7 @@ public class StartReceptionController implements ObserverLang, ObserverUser {
         } else {
             labelLastName.setText(user.getLastName());
             labelFirstName.setText(user.getFirstName());
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentToolBoxReception.fxml"));
-            try {
-                GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().clear();
-                GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().add(loader.load());
-
-                FragmentToolBoxReception controller = loader.getController();
-
-                handlerLang.registerObserverLang(loader.getController());
-                handlerUserListener.registerObserverUser(loader.getController());
-
-                controller.updateLang(new DataLang(this.lang));
-                controller.updateUser(new DataUser(this.user));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-                loadHomePage();
+            loadHomePage();
         }
     }
 
@@ -86,8 +67,13 @@ public class StartReceptionController implements ObserverLang, ObserverUser {
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
-        loadPage();
+        if(dataUser == null){
+            this.user = null;
+        } else {
+            this.user = dataUser.getUser();
+            loadPage();
+        }
+        
     }
 
     public void openPageSettings(MouseEvent mouseEvent) {
@@ -118,12 +104,7 @@ public class StartReceptionController implements ObserverLang, ObserverUser {
             borderPaneStartReception.setCenter(loaderInstructionPage.load());
             handlerUserListener.registerObserverUser(loaderInstructionPage.getController());
             handlerLang.registerObserverLang(loaderInstructionPage.getController());
-
-            if(user != null){
-                handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
-            }
-            handlerUserListener.onNewDataUser(new DataUser(user));
-
+            
             InstructionReceptionPage controller = loaderInstructionPage.getController();
             controller.loadFragment();
         } catch (IOException e) {

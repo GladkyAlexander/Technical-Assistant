@@ -15,9 +15,11 @@ import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompa
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.DefectRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.EquipmentRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.RoomsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.UserRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.DefectRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.RoomsRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -50,6 +52,7 @@ public class FragmentAddDefectController implements ObserverLang, ObserverCompan
     private Company company;
     private User user;
     private Equipment equipment;
+    UserRepository userRepository = new UserRepositoryImpl();
     EquipmentRepository equipmentRepository = new EquipmentRepositoryImpl();
     DefectRepository defectRepository = new DefectRepositoryImpl();
     List<Equipment> equipmentList = new ArrayList<>();
@@ -78,8 +81,12 @@ public class FragmentAddDefectController implements ObserverLang, ObserverCompan
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        loadFragment();
+        if(dataCompany == null){
+            this.company = null;
+        } else {
+            this.company = dataCompany.getCompany();
+            loadFragment();
+        }
     }
     public void cbDEChoice() {
         comboBoxDefectEquipment.getItems().clear();
@@ -120,7 +127,7 @@ public class FragmentAddDefectController implements ObserverLang, ObserverCompan
                 && equipmentRepository.getEquipmentBySerialNumber(equipment.getCompany(), equipment.getSerialNumber()).getCondition().equals(language.FAULTY(lang))){
             imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
             labelOk.setText(language.ADDED(lang));
-            GlobalLinkMainController.getMainController().updateUser();
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
         } else {
             imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/warning_min.png"))));
             labelOk.setText(language.WILL_NOT_BE_ADDED(lang));
@@ -133,6 +140,8 @@ public class FragmentAddDefectController implements ObserverLang, ObserverCompan
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

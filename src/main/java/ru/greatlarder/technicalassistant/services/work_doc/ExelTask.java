@@ -6,7 +6,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
-import ru.greatlarder.technicalassistant.domain.Task;
+import ru.greatlarder.technicalassistant.domain.Affairs;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 
@@ -21,7 +21,7 @@ public class ExelTask {
     HSSFCellStyle styleCell;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    public ExelTask(List<Task> listTasks, String nameFile, String nameCompany) {
+    public ExelTask(List<Affairs> listTasks, String nameFile, String nameCompany) {
         this.company = nameCompany;
 
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -54,7 +54,7 @@ public class ExelTask {
         row.getCell(5).setCellStyle(style);
         sheet.autoSizeColumn(5);
 
-        for (Task task : listTasks) {
+        for (Affairs task : listTasks) {
             createSheetHeader(sheet, ++rowNum, task);
         }
 
@@ -65,7 +65,7 @@ public class ExelTask {
         }
     }
 
-    private void createSheetHeader(HSSFSheet sheet, int rowNum, Task task) {
+    private void createSheetHeader(HSSFSheet sheet, int rowNum, Affairs task) {
 
         Row row = sheet.createRow(rowNum);
 

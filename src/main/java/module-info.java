@@ -17,7 +17,7 @@ module ru.greatlarder.technicalassistant {
     requires jdk.jsobject;
     requires jsch;
     requires mysql.connector.j;
-
+    
     opens ru.greatlarder.technicalassistant to javafx.fxml;
     exports ru.greatlarder.technicalassistant;
     exports ru.greatlarder.technicalassistant.controller;
@@ -34,5 +34,7 @@ module ru.greatlarder.technicalassistant {
     opens ru.greatlarder.technicalassistant.controller.reception to javafx.fxml;
     exports ru.greatlarder.technicalassistant.services;
     opens ru.greatlarder.technicalassistant.services to javafx.fxml;
-
+	exports ru.greatlarder.technicalassistant.services.net;
+	opens ru.greatlarder.technicalassistant.services.net to javafx.fxml;
+	
 }

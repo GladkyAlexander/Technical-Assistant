@@ -22,10 +22,7 @@ import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.mail.HTMLLetter;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FragmentAddEvent implements ObserverLang {
     @FXML public GridPane gridPaneAddEvent;
@@ -56,6 +53,7 @@ public class FragmentAddEvent implements ObserverLang {
     @FXML public Button btnSaveAndSend;
     @FXML public Label listEquipment;
     @FXML public ComboBox<String> comboBoxChoiceTo;
+    @FXML public Button btnToChange;
     
     Events events;
     private String time;
@@ -68,6 +66,7 @@ public class FragmentAddEvent implements ObserverLang {
     private Day day;
     private List<ContactCart> contactCarts;
     private HashMap<String, String> hashMap = new HashMap<>();
+    private int flag = 0;
 
     public void loadFragment(User user, Events events, String time, Day day){
         textAreaNote.setWrapText(true);
@@ -81,6 +80,14 @@ public class FragmentAddEvent implements ObserverLang {
     }
 
     private void loadNewData() {
+        loadVisibleButton(true);
+        
+        comboBoxEndEvent.setVisible(true);
+        comboBoxEndEvent.setManaged(true);
+        comboBoxNameEvent.setVisible(true);
+        comboBoxNameEvent.setManaged(true);
+        comboBoxSeatingArrangements.setDisable(false);
+        
         ListEventNameRepositoryMySQL listEventNameRepositoryMySQL = new ListEventNameRepositoryMySQLImpl();
         comboBoxNameEvent.setItems(FXCollections.observableArrayList(listEventNameRepositoryMySQL.getEventsNameList(user, user.getCompanyAffiliation())));
         startEvent.setText(time);
@@ -91,70 +98,77 @@ public class FragmentAddEvent implements ObserverLang {
     }
 
     private List<String> getListTimeEnd() {
-        timeEnd = new ArrayList<String>();
-        List<String> timeDay = new ArrayList<String>();
-        timeDay.add("8:00");
-        timeDay.add("8:15");
-        timeDay.add("8:30");
-        timeDay.add("8:45");
-        timeDay.add("9:00");
-        timeDay.add("9:15");
-        timeDay.add("9:30");
-        timeDay.add("9:45");
-        timeDay.add("10:00");
-        timeDay.add("10:15");
-        timeDay.add("10:30");
-        timeDay.add("10:45");
-        timeDay.add("11:00");
-        timeDay.add("11:15");
-        timeDay.add("11:30");
-        timeDay.add("11:45");
-        timeDay.add("12:00");
-        timeDay.add("12:15");
-        timeDay.add("12:30");
-        timeDay.add("12:45");
-        timeDay.add("13:00");
-        timeDay.add("13:15");
-        timeDay.add("13:30");
-        timeDay.add("13:45");
-        timeDay.add("14:00");
-        timeDay.add("14:15");
-        timeDay.add("14:30");
-        timeDay.add("14:45");
-        timeDay.add("15:00");
-        timeDay.add("15:15");
-        timeDay.add("15:30");
-        timeDay.add("15:45");
-        timeDay.add("16:00");
-        timeDay.add("16:15");
-        timeDay.add("16:30");
-        timeDay.add("16:45");
-        timeDay.add("17:00");
-        timeDay.add("17:15");
-        timeDay.add("17:30");
-        timeDay.add("17:45");
-        timeDay.add("18:00");
-        timeDay.add("18:15");
-        timeDay.add("18:30");
-        timeDay.add("18:45");
-        timeDay.add("19:00");
-        timeDay.add("19:15");
-        timeDay.add("19:30");
-        timeDay.add("19:45");
-        timeDay.add("20:00");
-
-        for (String s : timeDay){
-            if(s.equals(time)){
-                timeEnd = timeDay.subList(timeDay.indexOf(s), timeDay.size());
+        timeEnd = new ArrayList<>();
+        
+        TreeMap<String, Integer> treeMap = new TreeMap<>();
+        treeMap.put("8:00", day.getA800());
+        treeMap.put("8:15", day.getA815());
+        treeMap.put("8:30", day.getA830());
+        treeMap.put("8:45", day.getA845());
+        treeMap.put("9:00", day.getA900());
+        treeMap.put("9:15", day.getA915());
+        treeMap.put("9:30", day.getA930());
+        treeMap.put("9:45", day.getA945());
+        treeMap.put("10:00", day.getA1000());
+        treeMap.put("10:15", day.getA1015());
+        treeMap.put("10:30", day.getA1030());
+        treeMap.put("10:45", day.getA1045());
+        treeMap.put("11:00", day.getA1100());
+        treeMap.put("11:15", day.getA1115());
+        treeMap.put("11:30", day.getA1130());
+        treeMap.put("11:45", day.getA1145());
+        treeMap.put("12:00", day.getA1200());
+        treeMap.put("12:15", day.getA1215());
+        treeMap.put("12:30", day.getA1230());
+        treeMap.put("12:45", day.getA1245());
+        treeMap.put("13:00", day.getA1300());
+        treeMap.put("13:15", day.getA1315());
+        treeMap.put("13:30", day.getA1330());
+        treeMap.put("13:45", day.getA1345());
+        treeMap.put("14:00", day.getA1400());
+        treeMap.put("14:15", day.getA1415());
+        treeMap.put("14:30", day.getA1430());
+        treeMap.put("14:45", day.getA1445());
+        treeMap.put("15:00", day.getA1500());
+        treeMap.put("15:15", day.getA1515());
+        treeMap.put("15:30", day.getA1530());
+        treeMap.put("15:45", day.getA1545());
+        treeMap.put("16:00", day.getA1600());
+        treeMap.put("16:15", day.getA1615());
+        treeMap.put("16:30", day.getA1630());
+        treeMap.put("16:45", day.getA1645());
+        treeMap.put("17:00", day.getA1700());
+        treeMap.put("17:15", day.getA1715());
+        treeMap.put("17:30", day.getA1730());
+        treeMap.put("17:45", day.getA1745());
+        treeMap.put("18:00", day.getA1800());
+        treeMap.put("18:15", day.getA1815());
+        treeMap.put("18:30", day.getA1830());
+        treeMap.put("18:45", day.getA1845());
+        treeMap.put("19:00", day.getA1900());
+        treeMap.put("19:15", day.getA1915());
+        treeMap.put("19:30", day.getA1930());
+        treeMap.put("19:45", day.getA1945());
+        treeMap.put("20:00", day.getA2000());
+      
+        String fl = null;
+     
+        for (Map.Entry<String, Integer> entry : treeMap.entrySet()){
+            if (entry.getKey().equals(time)){
+                fl = entry.getKey();
+                timeEnd.add(fl);
+            }
+            if (fl != null){
+                if (entry.getValue() == 0) {
+                    timeEnd.add(entry.getKey());
+                } else break;
             }
         }
+        
         return timeEnd;
     }
 
     public void saveEvent(MouseEvent mouseEvent) {
-       saveEvents();
-    }
-    private void saveEvents(){
         Events events = new Events();
     
         events.setNameEvent(comboBoxNameEvent.getValue());
@@ -162,8 +176,6 @@ public class FragmentAddEvent implements ObserverLang {
         events.setEventStartTime(startEvent.getText());
         events.setEndTimeOfTheEvent(comboBoxEndEvent.getValue());
         if(comboBoxSeatingArrangements.getValue() != null) {
-        
-            SeatingArrangementsRepositoryMySQL seatingArrangementsRepositoryMySQL = new SeatingArrangementsRepositoryMySQLImpl();
         
             SeatingArrangements seatingArrangements = new SeatingArrangements();
             seatingArrangements.setNameCompany(user.getCompanyAffiliation());
@@ -186,19 +198,18 @@ public class FragmentAddEvent implements ObserverLang {
         Integer idEvent = eventRepositoryMySQL.setEvent(user, events);
         events.setId(idEvent);
     
-    
         DaysRepositoryMySQL daysRepositoryMySQL = new DaysRepositoryMySQLImpl();
     
         daysRepositoryMySQL.updateDay(user, getUpdateDay(events, this.day));
     
         gridPaneAddEvent.setStyle(StyleSRC.STYLE_EXCELLENT);
-    
         Stage stage = (Stage) gridPaneAddEvent.getScene().getWindow();
         stage.close();
     }
-    
-    
     private void loadingIncomingData(){
+        
+        loadVisibleButton(false);
+        
         nameEvent.setText(events.getNameEvent());
         startEvent.setText(events.getEventStartTime());
         endEvent.setText(events.getEndTimeOfTheEvent());
@@ -221,7 +232,18 @@ public class FragmentAddEvent implements ObserverLang {
         textAreaNote.setText(events.getNote());
 
     }
-
+    
+    private void loadVisibleButton(boolean b) {
+        btnSaveEvent.setVisible(b);
+        btnSaveEvent.setManaged(b);
+        btnSaveAndSend.setVisible(b);
+        btnSaveAndSend.setManaged(b);
+    
+            btnToChange.setVisible(!b);
+            btnToChange.setManaged(!b);
+       
+    }
+    
     @Override
     public void updateLang(DataLang dataLang) {
         this.lang = dataLang.getLanguage();
@@ -242,6 +264,7 @@ public class FragmentAddEvent implements ObserverLang {
         labelTopic.setText(language.TOPIC(lang));
         nameEvent.setText(language.EVENT(lang));
         btnSaveAndSend.setText(language.SAVE_AND_SEND(lang));
+        btnToChange.setText(language.CHANGE_DATA(lang));
     }
 
     private Day getUpdateDay(Events events, Day current){
@@ -323,27 +346,119 @@ public class FragmentAddEvent implements ObserverLang {
     }
 
     public void saveEndSendLetter(MouseEvent mouseEvent) {
+        if(flag == 0) {
+            save();
+        }
+        if (flag == 1){
+            change();
+        }
+    }
+    
+    private void save(){
+        Events eventNew = new Events();
+    
+        eventNew.setNameEvent(comboBoxNameEvent.getValue());
+        eventNew.setUrlImageEvent(getNameImg(comboBoxNameEvent.getValue()));
+        eventNew.setEventStartTime(startEvent.getText());
+        eventNew.setEndTimeOfTheEvent(comboBoxEndEvent.getValue());
+        if(comboBoxSeatingArrangements.getValue() != null) {
         
-        saveEvents();
+            SeatingArrangements seatingArrangements = new SeatingArrangements();
+            seatingArrangements.setNameCompany(user.getCompanyAffiliation());
+            seatingArrangements.setNameSeatingArrangements(comboBoxSeatingArrangements.getValue());
+            seatingArrangements.setNumberOfParticipants(Integer.valueOf(textFiledNumberOfParticipants.getText()));
         
-        Letter events = new Letter();
-        events.setNameEvent(comboBoxNameEvent.getValue());
-        events.setTo(hashMap.get(textFiledTo.getText()));
-        events.setTopic(textFiledTopic.getText());
-        events.setDateStart(day.getDate().toString());
-        events.setTimeStart(startEvent.getText());
-        events.setSeatingArrangements(comboBoxSeatingArrangements.getValue());
-        events.setNumberOfParticipants(textFiledNumberOfParticipants.getText());
-        events.setCustomer(textFiledLastNameCustomer.getText() + " " + textFileFirstNameCustomer.getText());
-        events.setNote(textAreaNote.getText());
-        events.setRoom(day.getRoom());
-        events.setEquipmentList(new ArrayList<>());
+            Integer id = seatingArrangementsRepositoryMySQL.setSeatingArrangements(user, seatingArrangements);
+            if(id != null) {
+                eventNew.setIdSeatingArrangements(id);
+            }
+        }
+        eventNew.setLastNameCustomer(textFiledLastNameCustomer.getText());
+        eventNew.setFirstNameCustomer(textFileFirstNameCustomer.getText());
+        eventNew.setIdDay(day.getId());
+        eventNew.setNameRoom(day.getRoom());
+        eventNew.setNote(textAreaNote.getText());
+    
+        EventRepositoryMySQL eventRepositoryMySQL = new EventRepositoryMySQLImpl();
+    
+        Integer idEvent = eventRepositoryMySQL.setEvent(user, eventNew);
+        eventNew.setId(idEvent);
+    
+        DaysRepositoryMySQL daysRepositoryMySQL = new DaysRepositoryMySQLImpl();
+    
+        daysRepositoryMySQL.updateDay(user, getUpdateDay(eventNew, this.day));
+    
+        gridPaneAddEvent.setStyle(StyleSRC.STYLE_EXCELLENT);
+    
+        Letter letter = new Letter();
+        letter.setNameEvent(comboBoxNameEvent.getValue());
+        letter.setTo(hashMap.get(textFiledTo.getText()));
+        letter.setTopic(textFiledTopic.getText());
+        letter.setDateStart(day.getDate().toString());
+        letter.setTimeStart(startEvent.getText());
+        letter.setSeatingArrangements(comboBoxSeatingArrangements.getValue());
+        letter.setNumberOfParticipants(textFiledNumberOfParticipants.getText());
+        letter.setCustomer(textFiledLastNameCustomer.getText() + " " + textFileFirstNameCustomer.getText());
+        letter.setNote(textAreaNote.getText());
+        letter.setRoom(day.getRoom());
+        letter.setEquipmentList(new ArrayList<>());
         HTMLLetter htmlLetter = new HTMLLetter(user);
-        if(htmlLetter.sendLetter(events) != null){
+        if (htmlLetter.sendLetter(letter) != null) {
             Stage stage = (Stage) gridPaneAddEvent.getScene().getWindow();
             stage.close();
         } else gridPaneAddEvent.setStyle(StyleSRC.STYLE_DANGER);
+    }
+    private void change(){
+        events.setNameEvent(comboBoxNameEvent.getValue());
+        events.setUrlImageEvent(getNameImg(comboBoxNameEvent.getValue()));
+        events.setEventStartTime(startEvent.getText());
+        events.setEndTimeOfTheEvent(comboBoxEndEvent.getValue());
+        if(comboBoxSeatingArrangements.getValue() != null) {
         
+            SeatingArrangements seatingArrangements = new SeatingArrangements();
+            seatingArrangements.setNameCompany(user.getCompanyAffiliation());
+            seatingArrangements.setNameSeatingArrangements(comboBoxSeatingArrangements.getValue());
+            seatingArrangements.setNumberOfParticipants(Integer.valueOf(textFiledNumberOfParticipants.getText()));
+        
+            Integer id = seatingArrangementsRepositoryMySQL.setSeatingArrangements(user, seatingArrangements);
+            if(id != null) {
+                events.setIdSeatingArrangements(id);
+            }
+        }
+        events.setLastNameCustomer(textFiledLastNameCustomer.getText());
+        events.setFirstNameCustomer(textFileFirstNameCustomer.getText());
+        events.setIdDay(day.getId());
+        events.setNameRoom(day.getRoom());
+        events.setNote(textAreaNote.getText());
+    
+        EventRepositoryMySQL eventRepositoryMySQL = new EventRepositoryMySQLImpl();
+    
+        Integer idEvent = eventRepositoryMySQL.setEvent(user, events);
+        events.setId(idEvent);
+    
+        DaysRepositoryMySQL daysRepositoryMySQL = new DaysRepositoryMySQLImpl();
+    
+        daysRepositoryMySQL.updateDay(user, getUpdateDay(events, this.day));
+    
+        gridPaneAddEvent.setStyle(StyleSRC.STYLE_EXCELLENT);
+    
+        Letter letterChange = new Letter();
+        letterChange.setNameEvent(comboBoxNameEvent.getValue());
+        letterChange.setTo(hashMap.get(textFiledTo.getText()));
+        letterChange.setTopic(textFiledTopic.getText());
+        letterChange.setDateStart(day.getDate().toString());
+        letterChange.setTimeStart(startEvent.getText());
+        letterChange.setSeatingArrangements(comboBoxSeatingArrangements.getValue());
+        letterChange.setNumberOfParticipants(textFiledNumberOfParticipants.getText());
+        letterChange.setCustomer(textFiledLastNameCustomer.getText() + " " + textFileFirstNameCustomer.getText());
+        letterChange.setNote(textAreaNote.getText());
+        letterChange.setRoom(day.getRoom());
+        letterChange.setEquipmentList(new ArrayList<>());
+        HTMLLetter htmlLetter = new HTMLLetter(user);
+        if (htmlLetter.sendLetter(letterChange) != null) {
+            Stage stage = (Stage) gridPaneAddEvent.getScene().getWindow();
+            stage.close();
+        } else gridPaneAddEvent.setStyle(StyleSRC.STYLE_DANGER);
     }
     
     public void valueInput(ActionEvent actionEvent) {
@@ -358,5 +473,10 @@ public class FragmentAddEvent implements ObserverLang {
             hashMap.put(c.getLastName() + " " + c.getFirstName(), c.getMail());
         }
         return FXCollections.observableList(list);
+    }
+    
+    public void openChange(MouseEvent mouseEvent) {
+        this.flag = 1;
+        loadNewData();
     }
 }

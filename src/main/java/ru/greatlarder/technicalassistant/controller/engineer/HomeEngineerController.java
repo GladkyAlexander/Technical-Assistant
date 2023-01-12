@@ -4,11 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import ru.greatlarder.technicalassistant.domain.*;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.MailSettingsRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.MailSettingsRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
@@ -32,167 +33,197 @@ import static java.lang.Long.MAX_VALUE;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class HomeEngineerController implements ObserverLang, ObserverUser, ObserverCompany {
-    @FXML
-    public Label labelQuantityEquipment;
-    @FXML
-    public Label labelQuantityDefectEquipment;
-    @FXML
-    public Label labelQuantityEquipmentWorkFive;
-    @FXML
-    public Label labelQuantityTheTool;
-    @FXML
-    public BorderPane borderPaneHomePage;
-    @FXML
-    public GridPane gridPaneHomeFragment;
-    @FXML
-    public SplitPane splitPaneHF;
-    @FXML
-    public Label labelNumberOfDevices;
-    @FXML
-    public Label labelNumberOfFaultyDevices;
-    @FXML
-    public Label labelNumberOfDevicesOperatingForMoreThanFiveYears;
-    @FXML
-    public Label labelNumberOfTools;
-    @FXML public TabPane tabPaneEngineerHome;
-    Language language = new LanguageImpl();
-    String lang;
-    User user;
-    private Company company;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
+	@FXML
+	public Label labelQuantityEquipment;
+	@FXML
+	public Label labelQuantityDefectEquipment;
+	@FXML
+	public Label labelQuantityEquipmentWorkFive;
+	@FXML
+	public Label labelQuantityTheTool;
+	@FXML
+	public BorderPane borderPaneHomePage;
+	@FXML
+	public GridPane gridPaneHomeFragment;
+	@FXML
+	public SplitPane splitPaneHF;
+	@FXML
+	public Label labelNumberOfDevices;
+	@FXML
+	public Label labelNumberOfFaultyDevices;
+	@FXML
+	public Label labelNumberOfDevicesOperatingForMoreThanFiveYears;
+	@FXML
+	public Label labelNumberOfTools;
+	@FXML
+	public TabPane tabPaneEngineerHome;
+	Language language = new LanguageImpl();
+	String lang;
+	User user;
+	private Company company;
+	HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
+	HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
+	
+	@Override
+	public void updateCompany(DataCompany dataCompany) {
+		if (dataCompany == null) {
+			this.company = null;
+		} else {
+			this.company = dataCompany.getCompany();
+			if (this.company != null) {
+				loadFragment();
+			}
+		}
+		
+	}
+	
+	@Override
+	public void updateLang(DataLang dataLang) {
+		this.lang = dataLang.getLanguage();
+		setLanguage(lang);
+	}
+	
+	@Override
+	public void updateUser(DataUser dataUser) {
+		if (dataUser == null) {
+			this.user = null;
+		} else this.user = dataUser.getUser();
+	}
+	
+	private void setLanguage(String lang) {
+		labelNumberOfDevices.setText(language.NUMBER_OF_DEVICES(lang));
+		labelNumberOfFaultyDevices.setText(language.NUMBER_OF_FAULTY_DEVICES(lang));
+		labelNumberOfDevicesOperatingForMoreThanFiveYears.setText(language.THE_NUMBER_OF_DEVICES_OPERATING_FOR_MORE_THAN_5_YEARS(lang));
+		labelNumberOfTools.setText(language.NUMBER_OF_TOOLS(lang));
+	}
+	
+	private void setNumberOfDevice(List<Equipment> equipmentList) {
+		labelQuantityEquipment.setText(String.valueOf(equipmentList.size()));
+	}
+	
+	private void setNumberOfFaultyDevices(List<Equipment> equipmentList) {
+		List<Equipment> faultyDevicesList = new ArrayList<>();
+		for (Equipment equipment : equipmentList) {
+			if (equipment.getCondition().equals("Faulty") || equipment.getCondition().equals("Неисправно")) {
+				faultyDevicesList.add(equipment);
+			}
+		}
+		labelQuantityDefectEquipment.setText(String.valueOf(faultyDevicesList.size()));
+	}
+	
+	private void setNumberOfDevicesOperatingForMoreThanFiveYears(List<Equipment> equipmentList) {
+		List<Equipment> devicesOperatingForMoreThanFiveYears = new ArrayList<>();
+		for (Equipment equipment : equipmentList) {
+			LocalDate from = LocalDate.now();
+			LocalDate to = LocalDate.parse(String.valueOf(equipment.getDateWork()));
+			long day = DAYS.between(to, from);
+			if (day > 1825) {
+				devicesOperatingForMoreThanFiveYears.add(equipment);
+			}
+		}
+		labelQuantityEquipmentWorkFive.setText(String.valueOf(devicesOperatingForMoreThanFiveYears.size()));
+	}
+	
+	private void setNumberOfTools(List<Tool> toolList) {
+		labelQuantityTheTool.setText(String.valueOf(toolList.size()));
+	}
+	
+	public void loadFragment() {
+			setNumberOfDevice(company.getEquipmentList());
+			setNumberOfFaultyDevices(company.getEquipmentList());
+			setNumberOfDevicesOperatingForMoreThanFiveYears(company.getEquipmentList());
+			setNumberOfTools(company.getToolList());
 
-    @Override
-    public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        loadFragment();
-    }
+			if (user != null) {
+				if(company.getTaskList() != null) {
+					tabPaneEngineerHome.getTabs().add(loadTasksActive(company.getTaskList()));
+					tabPaneEngineerHome.getTabs().add(loadTasksAll(company.getTaskList()));
+				}
+				MailSettingsRepository mailSettingsRepository = new MailSettingsRepositoryImpl();
+				MailSettings ms = mailSettingsRepository.getMailSettingsByIdUser(user.getId());
+				if (ms != null) {
+					loadMail(ms);
+				}
+			}
+	}
+	private Tab loadTasksActive(List<Affairs> affairsList) {
+		Tab t = new Tab(language.ALL_ACTIVE_APPLICATIONS(lang));
+		javafx.concurrent.Task<ListView<Affairs>> ts = new javafx.concurrent.Task<ListView<Affairs>>() {
+			@Override
+			protected ListView<Affairs> call() throws Exception {
+				List<Affairs> taskActiveList = new ArrayList<>();
+				for (Affairs task : affairsList) {
+					if (task.getStatus() == 1) {
+						taskActiveList.add(task);
+					}
+				}
+				return new ListTask().upBox(taskActiveList);
+			}
+		};
+		ProgressBar progressBar = new ProgressBar(ts.getProgress());
+		progressBar.setMaxWidth(MAX_VALUE);
+		t.setContent(progressBar);
+		ts.setOnSucceeded((succeededEvent) -> {
+			progressBar.visibleProperty().bind(ts.runningProperty());
+			t.setContent(ts.getValue());
+		});
+		
+		ExecutorService executorService = Executors.newFixedThreadPool(1);
+		executorService.execute(ts);
+		executorService.shutdown();
+		return t;
+	}
+	private Tab loadTasksAll(List<Affairs> affairsList) {
+		Tab tA = new Tab(language.ALL_ACTIVE_APPLICATIONS(lang));
+		javafx.concurrent.Task<ListView<Affairs>> ts = new javafx.concurrent.Task<ListView<Affairs>>() {
+			@Override
+			protected ListView<Affairs> call() throws Exception {
+				return new ListTask().upBox(affairsList);
+			}
+		};
+		ProgressBar progressBar = new ProgressBar(ts.getProgress());
+		progressBar.setMaxWidth(MAX_VALUE);
+		tA.setContent(progressBar);
+		ts.setOnSucceeded((succeededEvent) -> {
+			progressBar.visibleProperty().bind(ts.runningProperty());
+			tA.setContent(ts.getValue());
+		});
+		
+		ExecutorService executorService = Executors.newFixedThreadPool(1);
+		executorService.execute(ts);
+		executorService.shutdown();
+		return tA;
+	}
+	
+	
+	
+	private void loadMail(MailSettings mailSettings) {
+		synchronized (this) {
+			javafx.concurrent.Task<ListView<Affairs>> task = new javafx.concurrent.Task<ListView<Affairs>>() {
+				@Override
+				protected ListView<Affairs> call() throws Exception {
+					ListMail listMail = new ListMail();
+					handlerLang.registerObserverLang(listMail);
+					handlerCompanyListener.registerObserverCompany(listMail);
+					listMail.updateLang(new DataLang(lang));
+					listMail.updateCompany(new DataCompany(company));
+					Mail mail = new Mail(mailSettings);
+					return listMail.upBox(mail.getListOfTasks());
+				}
+			};
+			ProgressBar progressBar = new ProgressBar(task.getProgress());
+			progressBar.setMaxWidth(MAX_VALUE);
+			progressBar.setMaxHeight(MAX_VALUE);
+			GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().add(progressBar);
+			task.setOnSucceeded((succeededEvent) -> {
+				progressBar.visibleProperty().bind(task.runningProperty());
+				splitPaneHF.setDividerPositions(0.15f, 0, 85f);
+				splitPaneHF.getItems().add(task.getValue());
+			});
+			ExecutorService executorService = Executors.newFixedThreadPool(1);
+			executorService.execute(task);
+			executorService.shutdown();
+		}
+	}
 
-    @Override
-    public void updateLang(DataLang dataLang) {
-        this.lang = dataLang.getLanguage();
-        setLanguage(lang);
-    }
-
-    @Override
-    public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
-        loadFragment();
-    }
-
-    private void setLanguage(String lang) {
-        labelNumberOfDevices.setText(language.NUMBER_OF_DEVICES(lang));
-        labelNumberOfFaultyDevices.setText(language.NUMBER_OF_FAULTY_DEVICES(lang));
-        labelNumberOfDevicesOperatingForMoreThanFiveYears.setText(language.THE_NUMBER_OF_DEVICES_OPERATING_FOR_MORE_THAN_5_YEARS(lang));
-        labelNumberOfTools.setText(language.NUMBER_OF_TOOLS(lang));
-    }
-
-    private void setNumberOfDevice(List<Equipment> equipmentList) {
-        labelQuantityEquipment.setText(String.valueOf(equipmentList.size()));
-    }
-
-    private void setNumberOfFaultyDevices(List<Equipment> equipmentList) {
-        List<Equipment> faultyDevicesList = new ArrayList<>();
-        for (Equipment equipment : equipmentList) {
-            if (equipment.getCondition().equals("Faulty") || equipment.getCondition().equals("Неисправно")) {
-                faultyDevicesList.add(equipment);
-            }
-        }
-        labelQuantityDefectEquipment.setText(String.valueOf(faultyDevicesList.size()));
-    }
-
-    private void setNumberOfDevicesOperatingForMoreThanFiveYears(List<Equipment> equipmentList) {
-        List<Equipment> devicesOperatingForMoreThanFiveYears = new ArrayList<>();
-        for (Equipment equipment : equipmentList) {
-            LocalDate from = LocalDate.now();
-            LocalDate to = LocalDate.parse(String.valueOf(equipment.getDateWork()));
-            long day = DAYS.between(to, from);
-            if (day > 1825) {
-                devicesOperatingForMoreThanFiveYears.add(equipment);
-            }
-        }
-        labelQuantityEquipmentWorkFive.setText(String.valueOf(devicesOperatingForMoreThanFiveYears.size()));
-    }
-
-    private void setNumberOfTools(List<Tool> toolList) {
-        labelQuantityTheTool.setText(String.valueOf(toolList.size()));
-    }
-
-    public void loadFragment() {
-            if (company != null) {
-                for (Company company1 : user.getCompanyList()) {
-                    if (company.equals(company1)) {
-                        setNumberOfDevice(company1.getEquipmentList());
-                        setNumberOfFaultyDevices(company1.getEquipmentList());
-                        setNumberOfDevicesOperatingForMoreThanFiveYears(company1.getEquipmentList());
-                        setNumberOfTools(company1.getToolList());
-                    }
-                }
-                tabPaneEngineerHome.getTabs().clear();
-                tabPaneEngineerHome.getTabs().add(new Tab(language.ALL_ACTIVE_APPLICATIONS(lang), loadTasksActive()));
-                tabPaneEngineerHome.getTabs().add(new Tab(language.ALL_APPLICATIONS(lang), loadTasksAll()));
-                if (user.getMailSettings().size() > 0) {
-                    loadMail();
-                }
-            }
-
-    }
-
-    private ListView<Task> loadTasksActive() {
-        List<Task> taskActiveList = new ArrayList<>();
-        for (Task task : company.getTaskList()) {
-            if (task.getStatus() == 1) {
-                taskActiveList.add(task);
-            }
-        }
-        ListTask listTask = new ListTask();
-        handlerLang.registerObserverLang(listTask);
-        handlerCompanyListener.registerObserverCompany(listTask);
-
-        listTask.updateLang(new DataLang(lang));
-        listTask.updateCompany(new DataCompany(company));
-
-        return listTask.upBox(taskActiveList);
-    }
-
-    private ListView<Task> loadTasksAll() {
-        ListTask listTask = new ListTask();
-        handlerLang.registerObserverLang(listTask);
-        handlerCompanyListener.registerObserverCompany(listTask);
-        return listTask.upBox(company.getTaskList());
-    }
-
-    private void loadMail(){
-        javafx.concurrent.Task<ListView<Task>> task = new javafx.concurrent.Task<ListView<Task>>() {
-            @Override
-            protected ListView<Task> call() throws Exception {
-                ListMail listMail = new ListMail();
-                handlerLang.registerObserverLang(listMail);
-                handlerCompanyListener.registerObserverCompany(listMail);
-                listMail.updateLang(new DataLang(lang));
-                listMail.updateCompany(new DataCompany(company));
-                Mail mail = new Mail(user.getMailSettings().get(0));
-                
-                return listMail.upBox(mail.getListOfTasks());
-            }
-        };
-        ProgressBar progressBar = new ProgressBar(task.getProgress());
-        progressBar.setMaxWidth(MAX_VALUE);
-        progressBar.setMaxHeight(MAX_VALUE);
-        borderPaneHomePage.setTop(progressBar);
-        task.setOnSucceeded((succeededEvent)->{
-            if(splitPaneHF.getItems().size() == 2){
-                splitPaneHF.getItems().remove(1);
-            }
-            progressBar.visibleProperty().bind(task.runningProperty());
-            splitPaneHF.setDividerPositions(0.15f, 0,85f);
-            splitPaneHF.getItems().add(1, task.getValue());
-            borderPaneHomePage.setPrefHeight(Region.USE_COMPUTED_SIZE);
-        });
-
-        ExecutorService executorService = Executors.newFixedThreadPool(1);
-        executorService.execute(task);
-        executorService.shutdown();
-
-    }
 }

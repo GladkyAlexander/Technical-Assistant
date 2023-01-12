@@ -3,7 +3,7 @@ package ru.greatlarder.technicalassistant.domain;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Task {
+public class Affairs {
     private int id;
     private LocalDate dateOfCreation;
     private LocalTime timeOfCreation;
@@ -16,7 +16,7 @@ public class Task {
     private int status;
     private String nameCompany;
 
-    public Task(LocalDate dateOfCreation, LocalTime timeOfCreation, LocalDate closingDate, LocalTime closingTime
+    public Affairs(LocalDate dateOfCreation, LocalTime timeOfCreation, LocalDate closingDate, LocalTime closingTime
             , String creator, String room, String executor, String textTask, int status, String nameCompany) {
         this.dateOfCreation = dateOfCreation;
         this.timeOfCreation = timeOfCreation;
@@ -30,7 +30,7 @@ public class Task {
         this.nameCompany = nameCompany;
     }
 
-    public Task() {
+    public Affairs() {
     }
 
     public int getId() {

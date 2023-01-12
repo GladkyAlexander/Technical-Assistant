@@ -30,7 +30,7 @@ public class ItemPagePhoneBook implements ObserverLang, ObserverUser{
 	List<ContactCart> contactCartList;
 	private String lang;
 	private User user;
-	HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+	HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
 	@Override
 	public void updateLang(DataLang dataLang) {
 		this.lang = dataLang.getLanguage();
@@ -38,7 +38,9 @@ public class ItemPagePhoneBook implements ObserverLang, ObserverUser{
 	
 	@Override
 	public void updateUser(DataUser dataUser) {
-		this.user = dataUser.getUser();
+		if(dataUser == null){
+			this.user = null;
+		} else this.user = dataUser.getUser();
 	}
 	
 	public void fragmentLoad(List<ContactCart> contactCartList){

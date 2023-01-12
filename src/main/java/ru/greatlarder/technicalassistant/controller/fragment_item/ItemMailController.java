@@ -17,7 +17,6 @@ import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -43,9 +42,9 @@ public class ItemMailController implements ObserverLang, ObserverCompany, Observ
     @FXML public GridPane gridPaneTaskItem;
     @FXML public Button btnAdd;
     private String taskHTML;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
-    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkMainController.mainController.getHandlerCompanyListener();
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().getHandlerUserListener();
     private Company company;
     private String lang;
     private User user;
@@ -140,11 +139,15 @@ public class ItemMailController implements ObserverLang, ObserverCompany, Observ
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
+        if(dataCompany == null){
+            this.company = null;
+        } else this.company = dataCompany.getCompany();
     }
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

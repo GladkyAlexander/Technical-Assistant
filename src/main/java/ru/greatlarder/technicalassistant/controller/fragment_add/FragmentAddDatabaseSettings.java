@@ -58,10 +58,11 @@ public class FragmentAddDatabaseSettings implements ObserverLang, ObserverUser {
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
     public void loadFragment(){
-        //this.user = userIn;
         labelFirstName.setText(user.getFirstName());
         labelLastName.setText(user.getLastName());
     }
@@ -74,11 +75,13 @@ public class FragmentAddDatabaseSettings implements ObserverLang, ObserverUser {
             userRepository.change(user, "nameDB", tfNameExternalDB.getText());
             userRepository.change(user, "userDB", tfUserExternalDB.getText());
             userRepository.change(user, "passwordDB", tfPasswordExternalDB.getText());
+    
+            GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
+            gridPaneAddDBExternalSettings.setStyle(StyleSRC.STYLE_EXCELLENT);
+            gridPaneAddDBExternalSettings.setStyle(new GridPane().getStyle());
+            gridPaneAddDBExternalSettings.getChildren().clear();
         }
-        GlobalLinkMainController.getMainController().updateUser();
-        gridPaneAddDBExternalSettings.setStyle(StyleSRC.STYLE_EXCELLENT);
-        gridPaneAddDBExternalSettings.setStyle(new GridPane().getStyle());
-        gridPaneAddDBExternalSettings.getChildren().clear();
+      
     }
 
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="gridPane" maxWidth="1.7976931348623157E308" onMouseClicked="#openEquipment" styleClass="item_equipment" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemScan">
+  <columnConstraints>
+    <ColumnConstraints />
+    <ColumnConstraints />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+    <RowConstraints />
+    <RowConstraints />
+  </rowConstraints>
+   <children>
+      <Label fx:id="ip" text="Label" GridPane.columnIndex="1" />
+      <Label fx:id="mac" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label fx:id="manufacturer" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ImageView fx:id="imgLogo" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowSpan="3" />
+   </children>
+</GridPane>

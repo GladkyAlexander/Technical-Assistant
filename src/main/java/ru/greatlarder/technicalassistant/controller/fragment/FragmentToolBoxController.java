@@ -8,16 +8,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.controller.fragment_add.*;
+import ru.greatlarder.technicalassistant.controller.fragment_item.ItemIpAddress;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.User;
-import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.ProblemMonitor;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.HandlerCompanyListener;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.EquipmentRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
@@ -49,12 +52,15 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
     @FXML public ImageView imgAddRoom;
     @FXML public ImageView imgAddEvent;
     @FXML public ImageView imgPhoneBook;
+    @FXML public ImageView imgSearchIp;
+    @FXML public VBox vBoxFTB;
+    @FXML public HBox hBoxToolBox;
     private Company company;
     private String lang;
     Language language = new LanguageImpl();
-    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkMainController.mainController.getHandlerCompanyListener();
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().getHandlerUserListener();
     private User user;
 
     public void allEquipment(MouseEvent mouseEvent) {
@@ -248,40 +254,62 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
-        if (company != null) {
-            imgEquipment.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_equipment.png"))));
-            imgAddEquipment.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_equipment.png"))));
-            imgTool.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_button.png"))));
-            imgAddTool.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_add.png"))));
-            imgIpAddress.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_ip.png"))));
-            imgAllDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_defect.png"))));
-            imgAddDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/defect_add.png"))));
-            imgWatchWorkProg.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_time.png"))));
-            imgRooms.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_room_active.png"))));
-            imgAllEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_event_active.png"))));
-            imgAddRoom.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_rooms_active.png"))));
-            imgAddEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_events_active.png"))));
-            imgPhoneBook.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/phone_book.png"))));
-            if (new ProblemMonitor().searchProblemMonitor(company.getNameCompany())) {
-                imgEngine.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/brakes_warning_light.png"))));
-            } else
-                imgEngine.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/brakes_ok_light.png"))));
+        if(dataCompany == null){
+            this.company = null;
+            loadUiUnActive();
         } else {
-            imgEquipment.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_equipment_un_active.png"))));
-            imgAddEquipment.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_equipment_un_active.png"))));
-            imgTool.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_button_in_active.png"))));
-            imgAddTool.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_add_in_active.png"))));
-            imgIpAddress.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_ip_un_active.png"))));
-            imgAllDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_defect_un_active.png"))));
-            imgAddDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/defect_add_un_active.png"))));
-            imgWatchWorkProg.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_time_un_active.png"))));
-            imgRooms.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_room_unactive.png"))));
-            imgAllEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_events_un_active.png"))));
-            imgAddRoom.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_rooms_un_active.png"))));
-            imgAddEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_events_un_active.png"))));
-            imgPhoneBook.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/phone_book_unactive.png"))));
+            this.company = dataCompany.getCompany();
+            loadUi();
         }
+       
+    }
+    
+    private void loadUi() {
+        if (company != null) {
+            loadUiActive();
+            if (new ProblemMonitor().searchProblemMonitor(company.getNameCompany())) {
+                imgEngine.setImage(new Image(Objects.requireNonNull(
+                        getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/brakes_warning_light.png"))));
+            } else imgEngine.setImage(new Image(Objects.requireNonNull(
+                    getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/brakes_ok_light.png"))));
+        }
+    }
+    
+    private void loadUiActive(){
+        visible(true);
+        disable(false);
+        imgEquipment.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_equipment.png"))));
+        imgAddEquipment.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_equipment.png"))));
+        imgTool.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_button.png"))));
+        imgAddTool.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_add.png"))));
+        imgIpAddress.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_ip.png"))));
+        imgAllDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_defect.png"))));
+        imgAddDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/defect_add.png"))));
+        imgWatchWorkProg.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_time.png"))));
+        imgRooms.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_room_active.png"))));
+        imgAllEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_event_active.png"))));
+        imgAddRoom.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_rooms_active.png"))));
+        imgAddEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_events_active.png"))));
+        imgPhoneBook.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/phone_book.png"))));
+       
+    }
+    private void loadUiUnActive(){
+        visible(true);
+        disable(true);
+        imgEquipment.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_equipment_un_active.png"))));
+        imgAddEquipment.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_equipment_un_active.png"))));
+        imgTool.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_button_in_active.png"))));
+        imgAddTool.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_add_in_active.png"))));
+        imgIpAddress.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_ip_un_active.png"))));
+        imgAllDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/tool_box_defect_un_active.png"))));
+        imgAddDefect.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/defect_add_un_active.png"))));
+        imgWatchWorkProg.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_time_un_active.png"))));
+        imgRooms.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_room_unactive.png"))));
+        imgAllEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_events_un_active.png"))));
+        imgAddRoom.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_rooms_un_active.png"))));
+        imgAddEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_events_un_active.png"))));
+        imgPhoneBook.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/phone_book_unactive.png"))));
+    
     }
 
     @Override
@@ -291,7 +319,17 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+            hBoxToolBox.setVisible(false);
+            hBoxToolBox.setManaged(false);
+            visible(false);
+        } else {
+            this.user = dataUser.getUser();
+            hBoxToolBox.setVisible(true);
+            hBoxToolBox.setManaged(true);
+            visible(true);
+        }
     }
 
     public void allRooms(MouseEvent mouseEvent) {
@@ -390,5 +428,74 @@ public class FragmentToolBoxController implements ObserverCompany, ObserverLang,
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void startSearchIp(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_ip_address.fxml"));
+        try {
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setRight(loader.load());
+            ItemIpAddress controller = loader.getController();
+            controller.updateLang(new DataLang(lang));
+            controller.updateCompany(new DataCompany(company));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    private void disable(Boolean dis){
+        imgEquipment.setDisable(dis);
+        imgAddEquipment.setDisable(dis);
+        imgTool.setDisable(dis);
+        imgAddTool.setDisable(dis);
+        imgIpAddress.setDisable(dis);
+        imgAllDefect.setDisable(dis);
+        imgAddDefect.setDisable(dis);
+        imgWatchWorkProg.setDisable(dis);
+        imgRooms.setDisable(dis);
+        imgAllEvent.setDisable(dis);
+        imgAddRoom.setDisable(dis);
+        imgAddEvent.setDisable(dis);
+        imgPhoneBook.setDisable(dis);
+        imgEngine.setDisable(dis);
+        tfSerNum.setDisable(dis);
+        imgSearch.setDisable(dis);
+        imgSearchIp.setDisable(dis);
+        
+    }
+    private void visible(Boolean d){
+        imgEquipment.setVisible(d);
+        imgEquipment.setManaged(d);
+        imgAddEquipment.setVisible(d);
+        imgAddEquipment.setManaged(d);
+        imgTool.setVisible(d);
+        imgTool.setManaged(d);
+        imgAddTool.setVisible(d);
+        imgAddTool.setManaged(d);
+        imgIpAddress.setVisible(d);
+        imgIpAddress.setManaged(d);
+        imgAllDefect.setVisible(d);
+        imgAllDefect.setManaged(d);
+        imgAddDefect.setVisible(d);
+        imgAddDefect.setManaged(d);
+        imgWatchWorkProg.setVisible(d);
+        imgWatchWorkProg.setManaged(d);
+        imgRooms.setVisible(d);
+        imgRooms.setManaged(d);
+        imgAllEvent.setVisible(d);
+        imgAllEvent.setManaged(d);
+        imgAddRoom.setVisible(d);
+        imgAddRoom.setManaged(d);
+        imgAddEvent.setVisible(d);
+        imgAddEvent.setManaged(d);
+        imgPhoneBook.setVisible(d);
+        imgPhoneBook.setManaged(d);
+        imgEngine.setVisible(d);
+        imgEngine.setManaged(d);
+        tfSerNum.setVisible(d);
+        tfSerNum.setManaged(d);
+        imgSearch.setVisible(d);
+        imgSearch.setManaged(d);
+        imgSearchIp.setVisible(d);
+        imgSearchIp.setManaged(d);
     }
 }

@@ -1705,7 +1705,40 @@ public class LanguageImpl implements Language {
         }
         return office;
     }
-    
+
+    @Override
+    public String CHECK_YOUR_INTERNET_CONNECTION(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Проверьте соединение с интернетом";
+        } else if (lang.equals(en)) {
+            office = "Check your internet connection";
+        }
+        return office;
+    }
+
+    @Override
+    public String MORE_DETAILED(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Подробнее";
+        } else if (lang.equals(en)) {
+            office = "More detailed";
+        }
+        return office;
+    }
+
+    @Override
+    public String START(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Старт";
+        } else if (lang.equals(en)) {
+            office = "Start";
+        }
+        return office;
+    }
+
     @Override
     public String OFFICE(String language) {
         String office = "";

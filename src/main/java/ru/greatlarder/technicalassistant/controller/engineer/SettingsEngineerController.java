@@ -83,9 +83,9 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
     Language language = new LanguageImpl();
     private User user;
     private Company company;
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     HandlerUserListener handlerUserListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerUserListener;
-    HandlerCompanyListener handlerCompanyListener = GlobalLinkStartEngineerController.getStartEngineerController().handlerCompanyListener;
+    HandlerCompanyListener handlerCompanyListener = GlobalLinkMainController.mainController.getHandlerCompanyListener();
     FragmentRegistrationUserController fragmentRegistrationUserController;
     DataVerification dataVerification = new DataVerification();
     List<Company> companyListExternal;
@@ -134,12 +134,10 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
         try {
             borderPaneSettings.setRight(loader.load());
             handlerLang.registerObserverLang(loader.getController());
-
-            if(company != null) {
                 FragmentAddCompanyController fragmentAddCompanyController = loader.getController();
                 fragmentAddCompanyController.updateLang(new DataLang(this.lang));
+                fragmentAddCompanyController.updateUser(new DataUser(this.user));
                 fragmentAddCompanyController.loadFragment();
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -166,7 +164,9 @@ public class SettingsEngineerController implements ObserverLang, ObserverUser, O
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
         loadPage();
     }
 

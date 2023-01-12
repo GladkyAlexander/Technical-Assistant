@@ -38,6 +38,7 @@
           <Button fx:id="btnSaveEvent" mnemonicParsing="false" onMouseClicked="#saveEvent" text="Save">
     </Button>
          <Button fx:id="btnSaveAndSend" mnemonicParsing="false" onMouseClicked="#saveEndSendLetter" text="Save end Send" />
+         <Button fx:id="btnToChange" mnemonicParsing="false" onMouseClicked="#openChange" text="To change" />
       </children>
    </HBox>
    <Label fx:id="listEquipment" alignment="TOP_CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />

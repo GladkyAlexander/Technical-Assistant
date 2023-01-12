@@ -8,12 +8,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
 import ru.greatlarder.technicalassistant.domain.Company;
-import ru.greatlarder.technicalassistant.domain.Task;
+import ru.greatlarder.technicalassistant.domain.Affairs;
 import ru.greatlarder.technicalassistant.domain.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
 import ru.greatlarder.technicalassistant.services.company_listener.ObserverCompany;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.TaskRepository;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.UserRepository;
 import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.TaskRepositoryImpl;
+import ru.greatlarder.technicalassistant.services.database.sqlite.repository_sqlite.impl.UserRepositoryImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -40,6 +42,7 @@ public class FragmentAddTaskController implements ObserverLang, ObserverCompany,
     @FXML public Label labelInfoTArea;
     Language line = new LanguageImpl();
     TaskRepository taskRepository = new TaskRepositoryImpl();
+    UserRepository userRepository = new UserRepositoryImpl();
     private String lang;
     private Company company;
     private User user;
@@ -47,7 +50,7 @@ public class FragmentAddTaskController implements ObserverLang, ObserverCompany,
 
     public void saveTask(MouseEvent mouseEvent) {
 
-        Task task = new Task();
+        Affairs task = new Affairs();
         task.setDateOfCreation(LocalDate.parse(labelDate.getText()));
         if(labelTime.getText().equals("ASAP")){
             task.setTimeOfCreation(LocalTime.now());
@@ -59,7 +62,7 @@ public class FragmentAddTaskController implements ObserverLang, ObserverCompany,
         task.setStatus(1);
 
         taskRepository.setTask(task);
-        GlobalLinkMainController.getMainController().updateUser();
+        GlobalLinkMainController.getMainController().updateUser(new DataUser(userRepository.getUserLoginPassword(this.user.getLogin(), this.user.getPassword())));
 
         Window stage = labelInfoRoom.getScene().getWindow();
         stage.hide();
@@ -95,7 +98,9 @@ public class FragmentAddTaskController implements ObserverLang, ObserverCompany,
 
     @Override
     public void updateCompany(DataCompany dataCompany) {
-        this.company = dataCompany.getCompany();
+        if(dataCompany == null){
+            this.company = null;
+        } else this.company = dataCompany.getCompany();
     }
 
     @Override
@@ -106,6 +111,8 @@ public class FragmentAddTaskController implements ObserverLang, ObserverCompany,
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

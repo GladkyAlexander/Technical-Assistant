@@ -31,7 +31,7 @@ public class FragmentRoomWeek implements ObserverLang, ObserverUser {
     private User user;
 
     HashMap<Tab, LocalDate> hashMap = new HashMap<>();
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     Language language = new LanguageImpl();
     String lang;
 
@@ -70,7 +70,6 @@ public class FragmentRoomWeek implements ObserverLang, ObserverUser {
         @Override
         public void handle(Event event) {
             ((Tab)event.getSource()).setContent(getCont((Tab)event.getSource(), hashMap.get((Tab)event.getSource())));
-            //getCont((Tab)event.getSource(), hashMap.get((Tab)event.getSource()));
         }
     }
 
@@ -80,6 +79,8 @@ public class FragmentRoomWeek implements ObserverLang, ObserverUser {
     }
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 }

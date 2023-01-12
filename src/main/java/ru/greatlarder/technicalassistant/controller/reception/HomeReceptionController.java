@@ -24,7 +24,6 @@ import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysq
 import ru.greatlarder.technicalassistant.services.database.mysql.repository_mysql.impl.ListRoomNameRepositoryMySQLImpl;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkHomeFragmentController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartReceptionController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -49,8 +48,8 @@ public class HomeReceptionController implements ObserverLang, ObserverUser {
     private User user;
     private String lang;
     Language language = new LanguageImpl();
-    HandlerLang handlerLang = GlobalLinkMainController.getMainController().handlerLang;
-    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().handlerUserListener;
+    HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
+    HandlerUserListener handlerUserListener = GlobalLinkMainController.getMainController().getHandlerUserListener();
     FileManager fileManager = new FileManagerImpl();
 
     public void loadFragment() {
@@ -70,7 +69,9 @@ public class HomeReceptionController implements ObserverLang, ObserverUser {
 
     @Override
     public void updateUser(DataUser dataUser) {
-        this.user = dataUser.getUser();
+        if(dataUser == null){
+            this.user = null;
+        } else this.user = dataUser.getUser();
     }
 
     private void loadRooms() {
@@ -126,7 +127,7 @@ public class HomeReceptionController implements ObserverLang, ObserverUser {
         ProgressBar progressBar = new ProgressBar(task.getProgress());
         progressBar.setMaxWidth(MAX_VALUE);
         progressBar.setMaxHeight(MAX_VALUE);
-        GlobalLinkStartReceptionController.getStartReceptionController().borderPaneStartReception.setTop(progressBar);
+        GlobalLinkMainController.getMainController().hBoxTopToolbar.getChildren().add(progressBar);
         task.setOnSucceeded((t) -> {
             progressBar.visibleProperty().bind(task.runningProperty());
             borderPaneHomePage.setLeft(task.getValue());
@@ -147,34 +148,7 @@ public class HomeReceptionController implements ObserverLang, ObserverUser {
         fragmentRoomWeek.updateUser(new DataUser(user));
 
         fragmentRoomWeek.loadWeek(user, room);
-        /*
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentRoomWeek.fxml"));
-        Task<Node> task = new Task<Node>() {
-
-            @Override
-            protected Node call() throws Exception {
-                Node node = loader.load();
-                handlerLang.registerObserverLang(loader.getController());
-                handlerUserListener.registerObserverUser(loader.getController());
-                FragmentRoomWeek fragmentRoomWeek = loader.getController();
-                fragmentRoomWeek.updateLang(new DataLang(lang));
-                fragmentRoomWeek.updateUser(new DataUser(user));
-
-                fragmentRoomWeek.loadWeek(user, room);
-                return node;
-            }
-        };
-        ProgressIndicator progressBar = new ProgressIndicator(task.getProgress());
-        borderPaneHomePage.setCenter(progressBar);
-        task.setOnSucceeded((succeededEvent) -> {
-            progressBar.visibleProperty().bind(task.runningProperty());
-            borderPaneHomePage.setCenter(task.getValue());
-        });
-        ExecutorService executorService = Executors.newFixedThreadPool(1);
-        executorService.execute(task);
-        executorService.shutdown();
-
-         */
+       
     }
 
     private ListView<Equipment> createTableEquipment(Room room) {
