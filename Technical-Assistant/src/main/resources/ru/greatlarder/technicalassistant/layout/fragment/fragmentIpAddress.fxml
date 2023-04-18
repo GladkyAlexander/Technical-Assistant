@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<SplitPane fx:id="splitPane" dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+           xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentIpAddressController">
+   <items>
+      <TabPane fx:id="tabPaneIp" tabClosingPolicy="UNAVAILABLE" />
+      <TabPane fx:id="tabPaneDante" tabClosingPolicy="UNAVAILABLE" />
+   </items>
+</SplitPane>

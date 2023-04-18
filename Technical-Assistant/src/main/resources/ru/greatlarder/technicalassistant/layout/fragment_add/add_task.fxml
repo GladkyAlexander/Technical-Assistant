@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="gridPaneAddTask" alignment="TOP_CENTER" hgap="15.0" vgap="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddTaskController">
+  <columnConstraints>
+    <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+    <RowConstraints />
+  </rowConstraints>
+   <children>
+      <VBox alignment="CENTER" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Label fx:id="labelDate" text="Date" />
+            <Label fx:id="labelTime" text="Time" />
+         </children>
+      </VBox>
+      <Label fx:id="labelRoom" text="Room" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Label fx:id="labelCustomer" text="Customer" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <TextArea fx:id="textAreaTask" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      <Button fx:id="btnSaveTask" mnemonicParsing="false" onMouseClicked="#saveTask" text="Button" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+      <Label fx:id="labelInfoDateTime" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Date end Time" GridPane.columnIndex="1" />
+      <Label fx:id="labelInfoRoom" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Room" GridPane.columnIndex="2" />
+      <Label fx:id="labelInfoCustomer" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Customer" GridPane.columnIndex="3" />
+      <Label fx:id="labelInfoTArea" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Task" GridPane.columnIndex="4" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

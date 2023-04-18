@@ -1,0 +1,17 @@
+
+.label{
+    -fx-font-weight: bold;
+}
+.grid-pane{
+/*-fx-pref-width:30px;
+  -fx-pref-height:30px;*/
+  -fx-padding: 3;
+}
+.pane{
+  -fx-pref-width:140px;
+  -fx-pref-height:60px;
+  -fx-background-color: #90EE90;
+}
+.Hbox{
+-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #C0C0C0, #87CEFA);
+}

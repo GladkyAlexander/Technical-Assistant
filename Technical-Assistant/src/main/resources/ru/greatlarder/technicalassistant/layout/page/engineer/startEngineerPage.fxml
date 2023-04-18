@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPaneEngineerPage" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.StartEngineerController">
+    <left>
+        <SplitPane dividerPositions="0.19220055710306408" orientation="VERTICAL" stylesheets="@../../../css/main.css" BorderPane.alignment="CENTER">
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <HBox alignment="TOP_CENTER" prefWidth="250.0" spacing="3.0" SplitPane.resizableWithParent="false">
+                <padding>
+                    <Insets left="2.0" />
+                </padding>
+                <ImageView fx:id="imageViewLogo" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                    <HBox.margin>
+                        <Insets left="5.0" top="2.0" />
+                    </HBox.margin>
+                </ImageView>
+                <VBox fx:id="vBoxNameCompany" alignment="TOP_CENTER" spacing="1.0" HBox.hgrow="ALWAYS">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <effect>
+                        <Glow />
+                    </effect>
+                    <HBox.margin>
+                        <Insets right="2.0" top="2.0" />
+                    </HBox.margin>
+                    <TextField fx:id="ptAdr" cache="true" cacheHint="SCALE" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Адрес" />
+                    <TextField fx:id="ptCur" editable="false" promptText="Куратор" />
+                    <TextField fx:id="ptPhone" editable="false" promptText="Телефон куратора" />
+                    <TextField fx:id="ptEmail" editable="false" promptText="Эл.почта" />
+                </VBox>
+            </HBox>
+            <VBox fx:id="vBoxLeftButton" alignment="TOP_CENTER" cache="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" stylesheets="@../../../css/main.css">
+                <Label fx:id="labelHomePage" maxWidth="1.7976931348623157E308" onMouseClicked="#clickHomePage" styleClass="vBox_button" stylesheets="@../../../css/main.css" text="Домашняя страница" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Label>
+                <Label fx:id="labelManuals" maxWidth="1.7976931348623157E308" onMouseClicked="#clickDocumentation" styleClass="vBox_button" stylesheets="@../../../css/main.css" text="Документация" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/documents.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding></Label>
+                <Label fx:id="labelSettings" maxWidth="1.7976931348623157E308" onMouseClicked="#clickPageSettings" styleClass="vBox_button" stylesheets="@../../../css/main.css" text="Настройки" textAlignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding></Label>
+                     <Label fx:id="labelInfo" maxWidth="1.7976931348623157E308" onMouseClicked="#openPageInfo" styleClass="vBox_button" stylesheets="@../../../css/main.css" text="Информация">
+               <graphic>
+                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@../../../images/info.png" />
+                       </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Label>
+            <padding>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+            </VBox>
+        </SplitPane>
+    </left>
+    <opaqueInsets>
+        <Insets />
+    </opaqueInsets>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+    <center>
+        <VBox fx:id="vBoxStartLayout" alignment="CENTER" stylesheets="@../../../css/main.css" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="labelWeAreGlad" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Мы рады Вашему выбору.">
+                    <font>
+                        <Font name="Bell MT Bold" size="36.0" />
+                    </font>
+                </Label>
+                <Label fx:id="labelStartByRegistering" text="Начните с регистрации на странице &quot;Настройки&quot;.">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

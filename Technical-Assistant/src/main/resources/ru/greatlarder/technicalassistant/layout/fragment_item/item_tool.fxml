@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="gridPaneItemTool" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity" styleClass="item_equipment" stylesheets="@../../css/main.css" vgap="5.0"
+          xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemToolController">
+  <columnConstraints>
+    <ColumnConstraints halignment="CENTER" />
+    <ColumnConstraints halignment="CENTER" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints valignment="CENTER" />
+    <RowConstraints valignment="CENTER" />
+    <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+  </rowConstraints>
+   <children>
+      <ImageView fx:id="imgLabelTool" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.rowSpan="5" />
+      <Label fx:id="labelToolName" text="Label" GridPane.columnIndex="1">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="labelBrand" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="labelSerialNumber" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="labelCondition" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="labelStartOfOperation" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   </children>
+   <padding>
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+   </padding>
+</GridPane>

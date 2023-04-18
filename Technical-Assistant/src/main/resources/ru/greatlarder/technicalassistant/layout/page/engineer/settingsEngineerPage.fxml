@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPaneSettings" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.SettingsEngineerController">
+    <top>
+        <VBox spacing="4.0" BorderPane.alignment="TOP_LEFT">
+            <children>
+                <Label fx:id="labelDSL" alignment="CENTER" contentDisplay="CENTER" text="Место хранения данных " textOverrun="CENTER_ELLIPSIS">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                    <padding>
+                        <Insets left="5.0" />
+                    </padding>
+                </Label>
+                <HBox alignment="CENTER_LEFT" spacing="4.0">
+                    <children>
+                        <Label fx:id="labelReferenceDirectory" text="Папка приложения :">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="tfRefDirApp" text="Label" />
+                    </children>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <padding>
+                        <Insets left="5.0" right="5.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="4.0">
+                    <children>
+                        <Label fx:id="labelReferenceDataBase" text="Папка размещения базы данных :">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="tfRefDirDB" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
+                    </children>
+                    <padding>
+                        <Insets left="5.0" right="5.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="10.0" stylesheets="@../../../css/main.css" BorderPane.alignment="CENTER">
+            <children>
+            <Button id=".button" fx:id="btnSettingsUser" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#openSettingsUser" stylesheets="@../../../css/main.css" text="Profile Settings" />
+                <Button fx:id="btnCompanyChoice" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionBtnCompany" stylesheets="@../../../css/main.css" text="Add a company" />
+            <Button fx:id="buttonCompanyDataSettings" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#openCompanyDataSettings" text="Company Data Settings" />
+                <Button fx:id="btnSettingsMail" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openSettingsMail" text="Mail Settings" />
+                <Button fx:id="btnRegistry" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openLayoutSettingsUser" text="Register" />
+            <Button fx:id="btnSendToAnExternalDatabase" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendToAnExternalDatabase" style="-fx-border-color: #e10909;" stylesheets="@../../../css/main.css" text="Update data in an external database" />
+            <GridPane fx:id="gridPaneUpdateExternalDB" alignment="CENTER_LEFT" hgap="5.0" vgap="5.0">
+              <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints valignment="CENTER" />
+                  <RowConstraints valignment="CENTER" />
+                  <RowConstraints valignment="CENTER" />
+                  <RowConstraints valignment="CENTER" />
+                  <RowConstraints valignment="CENTER" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="buttonCompanyData" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#uploadCompanyData" text="Company data" />
+                  <Button fx:id="buttonListOfRooms" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#updateListOfRooms" text="List of rooms" GridPane.rowIndex="1" />
+                  <Button fx:id="buttonSeatingList" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#updateSeatingList" text="Seating list" GridPane.rowIndex="2" />
+                  <Button fx:id="buttonEquipment" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#updateEquipment" text="Equipment" GridPane.rowIndex="3" />
+                  <Button fx:id="buttonListOfEvents" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#updateListOfEvents" text="List of events" GridPane.rowIndex="4" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </GridPane>
+            <Button fx:id="btnGetDataFromAnExternalDatabase" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#getDataFromAnExternalDatabase" text="Get data from an external database" />
+            <Button fx:id="btnShow" mnemonicParsing="false" onAction="#openDetails" text="Show" />
+            </children>
+            <padding>
+                <Insets left="5.0" top="5.0" />
+            </padding>
+        </VBox>
+    </left>
+</BorderPane>

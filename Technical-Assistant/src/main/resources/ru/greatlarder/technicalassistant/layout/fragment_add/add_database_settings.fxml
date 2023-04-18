@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="gridPaneAddDBExternalSettings" alignment="TOP_CENTER" hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddDatabaseSettings">
+  <columnConstraints>
+    <ColumnConstraints />
+    <ColumnConstraints />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+    <RowConstraints valignment="CENTER" />
+    <RowConstraints valignment="CENTER" />
+    <RowConstraints valignment="CENTER" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+  </rowConstraints>
+   <children>
+      <Label fx:id="labelNameServerExternalDB" text="Name server" GridPane.rowIndex="2" />
+      <Label fx:id="labelPortExternalDB" text="Port" GridPane.rowIndex="3" />
+      <Label fx:id="labelNameExternalDB" text="Name database" GridPane.rowIndex="4" />
+      <TextField fx:id="tfNameServerExternalDB" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="tfPortExternalDB" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="tfNameExternalDB" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label fx:id="labelUserExternalDB" text="User database" GridPane.rowIndex="5" />
+      <Label fx:id="labelPasswordExternalDB" text="Password external database" GridPane.rowIndex="6" />
+      <TextField fx:id="tfUserExternalDB" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <TextField fx:id="tfPasswordExternalDB" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Label fx:id="labelFirstName" text="Label" GridPane.rowIndex="1" />
+      <Label fx:id="labelLastName" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label fx:id="labelHeading" alignment="CENTER" contentDisplay="CENTER" text="External Database Settings" GridPane.columnSpan="2" />
+      <Button fx:id="btnSave" mnemonicParsing="false" onMouseClicked="#save" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

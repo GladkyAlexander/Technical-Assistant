@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="vBoxTime" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddWatchWorkProjectorsController">
+  <HBox alignment="CENTER_RIGHT">
+    <ImageView fx:id="close" fitHeight="25.0" fitWidth="400.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../images/closed.png" />
+    </ImageView>
+  </HBox>
+</VBox>

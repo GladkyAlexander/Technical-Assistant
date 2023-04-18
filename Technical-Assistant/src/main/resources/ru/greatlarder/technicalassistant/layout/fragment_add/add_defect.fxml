@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="gridPanelDefectAdd" alignment="CENTER" hgap="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" vgap="4.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddDefectController">
+  <columnConstraints>
+    <ColumnConstraints />
+    <ColumnConstraints />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+    <RowConstraints />
+    <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+  </rowConstraints>
+   <children>
+      <HBox alignment="CENTER_RIGHT" spacing="7.0" GridPane.columnSpan="2">
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
+         <children>
+            <ImageView fx:id="imgOk" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelOk" />
+            <ImageView fx:id="close" fitHeight="25.0" fitWidth="400.0" onMouseClicked="#closeAddDefectController" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/closed.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <Label fx:id="labelMalfunktion" text="Неисправность (опишите проблему) :" GridPane.rowIndex="3">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="taDefect" prefColumnCount="15" prefRowCount="5" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <ComboBox fx:id="comboBoxDefectRoom" maxWidth="1.7976931348623157E308" promptText="Выберите помещение" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+      <Button fx:id="btnAddDefect" mnemonicParsing="false" onAction="#btnActionDefectAdd" text="Отправить" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Label fx:id="labelInitiatorsFullName" text="ФИО инициатора" GridPane.rowIndex="4">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfInitiator" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <ComboBox fx:id="comboBoxDefectEquipment" maxWidth="1.7976931348623157E308" onMouseClicked="#cbDEChoice" promptText="Выберите оборудование по серийному номеру" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+   </children>
+   <padding>
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+   </padding>
+   <opaqueInsets>
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+   </opaqueInsets>
+</GridPane>

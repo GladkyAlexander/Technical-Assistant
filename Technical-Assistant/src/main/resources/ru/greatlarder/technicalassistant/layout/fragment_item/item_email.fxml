@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane id="item_mail_min" fx:id="gridPane" hgap="4.0" stylesheets="@../../css/main.css" vgap="4.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemEmail">
+  <columnConstraints>
+    <ColumnConstraints halignment="LEFT" />
+      <ColumnConstraints halignment="LEFT" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+    <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+  </rowConstraints>
+   <children>
+      <Label fx:id="labelFrom" text="from" textFill="#7e6ef5" GridPane.columnIndex="1">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label fx:id="labelTopic" text="topic" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+      <Label fx:id="labelData" text="data">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+   </children>
+</GridPane>

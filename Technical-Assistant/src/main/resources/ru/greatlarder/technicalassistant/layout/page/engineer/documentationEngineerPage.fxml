@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPaneDoc" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.DocumentationEngineerController">
+   <center>
+      <SplitPane fx:id="splitPaneDocumentation">
+         <VBox>
+            <children>
+               <GridPane fx:id="gridPaneDocumentation" hgap="15.0" styleClass="item_equipment" stylesheets="@../../../css/main.css" vgap="5.0">
+                 <columnConstraints>
+                   <ColumnConstraints />
+                   <ColumnConstraints halignment="CENTER" />
+                 </columnConstraints>
+                 <rowConstraints>
+                   <RowConstraints />
+                   <RowConstraints />
+                   <RowConstraints />
+                 </rowConstraints>
+                  <children>
+                        <Label fx:id="labelAccounting" cache="true" text="Учет :" textAlignment="CENTER" GridPane.rowSpan="3">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="btnZip" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#zip" text="Сформировать документ ЗИП" textAlignment="CENTER" GridPane.columnIndex="1" />
+                        <Button fx:id="btnLampProjector" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createDocLamp" text="Сведения о лампе EXEL" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="btnCreateTimeShite" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#createTimeShite" text="Учет рабочего времени" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  </children>
+                  <padding>
+                     <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                  </padding>
+                  <VBox.margin>
+                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  </VBox.margin>
+               </GridPane>
+            </children>
+         </VBox>
+      </SplitPane>
+   </center>
+</BorderPane>

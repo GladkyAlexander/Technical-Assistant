@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER_LEFT" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentToolBoxController">
+   <children>
+       <ImageView fx:id="imgEquipment" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#allEquipment" pickOnBounds="true" preserveRatio="true" styleClass="BorderPane">
+           <Image url="@../../images/all_equipment.png" />
+       </ImageView>
+       <ImageView fx:id="imgTool" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#allTool" pickOnBounds="true" preserveRatio="true">
+           <Image url="@../../images/tool_button.png" />
+       </ImageView>
+       <ImageView fx:id="imgIpAddress" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#allIpAddress" pickOnBounds="true" preserveRatio="true">
+           <Image url="@../../images/tool_box_ip.png" />
+       </ImageView>
+       <ImageView fx:id="imgAllDefect" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#allDefect" pickOnBounds="true" preserveRatio="true">
+           <Image url="@../../images/tool_box_defect.png" />
+       </ImageView>
+      <ImageView fx:id="imgRooms" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#allRooms" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/all_room_active.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgAllEvent" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#openAllEvent" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/all_event_active.png" />
+         </image>
+      </ImageView>
+       <ImageView fx:id="imgNotes" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#openNotes" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@../../images/all_task_active.png" />
+           </image>
+       </ImageView>
+      <ImageView fx:id="imgPhoneBook" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#openPhoneBook" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/phone_book.png" />
+         </image>
+      </ImageView>
+       <ImageView fx:id="imgAddEquipment" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addEquipment" pickOnBounds="true" preserveRatio="true">
+           <HBox.margin>
+               <Insets left="5.0" />
+           </HBox.margin>
+           <Image url="@../../images/add_equipment.png" />
+       </ImageView>
+       <ImageView fx:id="imgAddTool" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addTool" pickOnBounds="true" preserveRatio="true">
+           <Image url="@../../images/tool_add.png" />
+       </ImageView>
+       <ImageView fx:id="imgAddDefect" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addDefect" pickOnBounds="true" preserveRatio="true">
+           <Image url="@../../images/defect_add.png" />
+       </ImageView>
+       <ImageView fx:id="imgWatchWorkProg" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#watchWorkProjectors" pickOnBounds="true" preserveRatio="true">
+           <Image url="@../../images/add_time.png" />
+       </ImageView>
+      <ImageView fx:id="imgAddRoom" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addRoom" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/add_rooms_active.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgAddEvent" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addEvent" pickOnBounds="true" preserveRatio="true">
+         <image>
+               <Image url="@../../images/add_events_active.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgAddSeatingArrangement" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addSeatingArrangement" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/add_seating_arrangement.png" />
+         </image>
+      </ImageView>
+       <ImageView fx:id="imgEngine" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#imgEnginSearch" pickOnBounds="true" preserveRatio="true" />
+       <TextField fx:id="tfSerNum" maxWidth="1.7976931348623157E308" prefHeight="30.0" promptText="Введите серийный номер устройства" />
+       <ImageView fx:id="imgSearch" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#searchSerialNumber" pickOnBounds="true" preserveRatio="true">
+           <Image url="@../../images/scale.png" />
+       </ImageView>
+      <ImageView fx:id="imgSearchIp" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#startSearchIp" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/search_ip.png" />
+         </image>
+      </ImageView>
+   </children>
+   <padding>
+      <Insets left="5.0" />
+   </padding>
+</HBox>

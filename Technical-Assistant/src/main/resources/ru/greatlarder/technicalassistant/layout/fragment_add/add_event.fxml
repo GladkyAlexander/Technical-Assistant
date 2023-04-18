@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddEvent">
+   <left>
+      <GridPane fx:id="gridPaneAddEvent" alignment="CENTER" hgap="4.0" vgap="4.0" BorderPane.alignment="CENTER">
+          <Label fx:id="labelStartEvent" text="Start event" GridPane.rowIndex="1">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+          <Label fx:id="labelEndEvent" text="End event" GridPane.rowIndex="2">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+          <Label fx:id="labelSeatingArrangements" text="Seating arrangements" GridPane.rowIndex="3">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+          <Label fx:id="labelLastNameCustomer" text="Last name customer" GridPane.rowIndex="4">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+          <Label fx:id="labelFirstNameCustomer" text="First name customer" GridPane.rowIndex="5">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+          <Label fx:id="labelNumberOfParticipants" text="Number of participants" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+          <Label fx:id="labelEquipment" text="Equipment" GridPane.rowIndex="6">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+          <Label fx:id="labelNote" text="Note" GridPane.rowIndex="7">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+          <TextArea fx:id="textAreaNote" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" />
+          <TextField fx:id="textFileFirstNameCustomer" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
+          <TextField fx:id="textFiledLastNameCustomer" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+          <Label fx:id="startEvent" alignment="TOP_CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+          <ComboBox fx:id="comboBoxEndEvent" maxWidth="1.7976931348623157E308" styleClass="jfx-combo-box" stylesheets="@../../css/table.css" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+          <ComboBox fx:id="comboBoxSeatingArrangements" maxWidth="1.7976931348623157E308" styleClass="jfx-combo-box" stylesheets="@../../css/table.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+          <TextField fx:id="textFiledNumberOfParticipants" onKeyReleased="#onKeyRealisedNumberOfParticipants" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+          <Label fx:id="endEvent" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <HBox alignment="CENTER_LEFT" spacing="5.0">
+            <children>
+                <Label fx:id="nameEvent" alignment="CENTER" contentDisplay="CENTER" text="Name event" textAlignment="CENTER">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font></Label>
+               <ImageView fx:id="imgNameEvent" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+         </HBox>
+         <ComboBox fx:id="comboBoxNameEvent" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" />
+         <Label fx:id="labelTo" text="To" GridPane.rowIndex="8">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+         <Label fx:id="labelTopic" text="Topic" GridPane.rowIndex="10">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+         <TextField fx:id="textFiledTo" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" />
+         <TextField fx:id="textFiledTopic" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="10" />
+         <HBox alignment="CENTER" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11">
+            <children>
+               <Button fx:id="btnSaveAndSend" mnemonicParsing="false" onMouseClicked="#saveEndSendLetter" text="Save end Send" />
+               <Button fx:id="btnToChange" mnemonicParsing="false" onMouseClicked="#openChange" text="To change" />
+            </children>
+            <GridPane.margin>
+               <Insets bottom="5.0" top="5.0" />
+            </GridPane.margin>
+         </HBox>
+         <ComboBox fx:id="comboBoxChoiceTo" maxWidth="1.7976931348623157E308" onAction="#valueInput" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9" />
+         <HBox fx:id="hBoxListEquipment" maxWidth="1.7976931348623157E308" spacing="4.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+             <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </GridPane>
+   </left>
+</BorderPane>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPaneHomePage" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.engineer.HomeEngineerController">
+    <right>
+        <SplitPane fx:id="splitPaneHF" maxHeight="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" orientation="VERTICAL" BorderPane.alignment="TOP_CENTER">
+            <items>
+                <GridPane fx:id="gridPaneHomeFragment" alignment="TOP_CENTER" hgap="5.0" vgap="5.0" SplitPane.resizableWithParent="false">
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                  <RowConstraints valignment="CENTER" vgrow="NEVER" />
+                    </rowConstraints>
+                    <Label fx:id="labelNumberOfDevices" text="Количество устройств :">
+                        <opaqueInsets>
+                            <Insets />
+                        </opaqueInsets>
+                    </Label>
+                    <Label fx:id="labelQuantityEquipment" alignment="CENTER" prefWidth="40.0" style="-fx-border-color: #0066cc; -fx-border-radius: 5; -fx-border-width: 1;" textAlignment="CENTER" GridPane.columnIndex="1">
+                        <font>
+                            <Font size="13.0" />
+                        </font>
+                    </Label>
+                    <Label fx:id="labelNumberOfFaultyDevices" text="Количество неисправных устройств :" GridPane.rowIndex="1" />
+
+                    <Label fx:id="labelQuantityDefectEquipment" alignment="CENTER" prefWidth="40.0" style="-fx-border-color: #0066cc; -fx-border-radius: 5; -fx-border-width: 1;" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label fx:id="labelNumberOfDevicesOperatingForMoreThanFiveYears" text="Количество устройств работающих более 5 лет :" GridPane.rowIndex="2" />
+
+                    <Label fx:id="labelQuantityEquipmentWorkFive" alignment="CENTER" prefWidth="40.0" style="-fx-border-color: #0066cc; -fx-border-radius: 5; -fx-border-width: 1;" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                    <Label fx:id="labelNumberOfTools" text="Количество инструментов :" GridPane.rowIndex="3" />
+
+                    <Label fx:id="labelQuantityTheTool" alignment="CENTER" contentDisplay="CENTER" prefWidth="40.0" style="-fx-border-color: #0066cc; -fx-border-radius: 5; -fx-border-width: 1;" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </GridPane>
+            </items>
+        </SplitPane>
+    </right>
+    <center>
+        <TabPane fx:id="tabPaneEngineerHome" BorderPane.alignment="CENTER" />
+    </center>
+</BorderPane>

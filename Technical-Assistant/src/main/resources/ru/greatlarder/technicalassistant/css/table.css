@@ -1,0 +1,42 @@
+.table-view{
+ -fx-text-fill: -fx-selection-bar-text;
+    -fx-font-size: 10;
+    -fx-size: 11 ;
+    -fx-font-family: "Arial";
+}
+.column-view{
+   -fx-padding: 5, 5, 5, 5;
+}
+.jfx-combo-box {
+     -fx-prompt-text-fill: #000000;
+ }
+ .phone-book{
+     -fx-background-image:url("../images/book_page.png") no-repeat;
+    -fx-background-size: 100% 100%;
+ }
+ .list-phone-book-page{
+        -fx-background-image:url("../images/book_page.png") no-repeat;
+        -fx-background-size: 100% 100%;
+        -fx-background-color: transparent;
+ }
+
+ .list-phone-book-page .list-cell: odd{
+     -fx-background-color: transparent;
+ }
+  .list-phone-book-page .list-cell:even {
+      -fx-background-color: transparent;
+  }
+
+ .tab .tab-label {
+  	    -fx-alignment: CENTER;
+ 	    -fx-text-fill: #000000;
+ 	    -fx-font-weight: bold;
+ 	    -fx-padding: 0 15 0 15;
+        -fx-background-color: #99cc00;
+ 	    -fx-background-radius: 0 8 0 8;
+ 	    -fx-border-color: transparent;
+ }
+ .grid-pane-check-your-internet-connection{
+           -fx-background-image:url("../images/check_your_internet_connection.jpg") no-repeat;
+           -fx-background-size: 100% 100%;
+ }

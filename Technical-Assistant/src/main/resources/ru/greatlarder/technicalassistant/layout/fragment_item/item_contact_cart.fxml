@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="gridPaneICC" hgap="5.0" maxHeight="1.7976931348623157E308" styleClass="item_equipment" stylesheets="@../../css/main.css" vgap="5.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemContactCart">
+    <columnConstraints>
+        <ColumnConstraints />
+        <ColumnConstraints />
+        <ColumnConstraints />
+      <ColumnConstraints halignment="CENTER" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+      <RowConstraints />
+    </rowConstraints>
+    <children>
+        <ImageView fx:id="img" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowSpan="4">
+            <image>
+                <Image url="@../../images/login_input.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="labelLastName" text="Last name" GridPane.columnIndex="1" />
+        <Label fx:id="labelFirstName" text="First name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label fx:id="labelPhone" text="Phone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label fx:id="labelMail" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label fx:id="lastName" text="....." GridPane.columnIndex="2" />
+        <Label fx:id="firstName" text="....." GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Label fx:id="phone" text="....." GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <Label fx:id="mail" text="....." GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <TextField fx:id="textFiledNewLastName" GridPane.columnIndex="3" />
+      <TextField fx:id="textFieldFirstName" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <TextField fx:id="textFieldPhone" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <TextField fx:id="textFieldEmail" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <HBox alignment="BOTTOM_RIGHT" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+         <children>
+            <Button fx:id="btnSaveNewContact" mnemonicParsing="false" onMouseClicked="#saveContact" text="Save" />
+            <Button fx:id="btnChange" mnemonicParsing="false" onAction="#changeContact" text="Change" />
+         </children>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </HBox>
+    </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+
+</GridPane>

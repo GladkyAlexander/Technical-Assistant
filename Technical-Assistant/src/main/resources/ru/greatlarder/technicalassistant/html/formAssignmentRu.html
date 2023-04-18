@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration asset assignment form</title>
+    <style>
+
+   </style>
+</head>
+<body>
+<div style="align-items: center;">
+    <H2 style="text-align: center;">Форма назначения административных активов</H2>
+    <h3 style="margin: 0;">Личная информация пользователя:</h3>
+    <div style="display: flex; align-items: center;">
+        <ul style=" display: inline; margin: 0;">
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Имя : &nbsp</b><p id="p_firstName" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Фамилия : &nbsp</b><p id="p_lastName" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Отдел : &nbsp</b><p id="p_department" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Тип события : &nbsp</b><p id="p_type_of_event" style="margin: 0; display: inline;"></p></li>
+        </ul>
+        <ul style=" display: inline; margin: 0; ">
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Позиция : &nbsp</b><p id="p_position" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Номер телефона : &nbsp</b><p id="p_phone" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Местоположение : &nbsp</b><p id="p_location" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Партнер/Менеджер : &nbsp</b><p id="p_manager" style="margin: 0; display: inline;"></p></li>
+        </ul>
+    </div>
+    <div>
+        <p>
+            Я понимаю, что это оборудование было предоставлено мне <b id="nameCompanyP1"></b> исключительно для бизнеса
+            исключительно для целей и остается собственностью <b id="nameCompanyP2"></b> в любое время. Я принимаю на
+            себя личную ответственность
+            для обеспечения безопасности этого оборудования и любых конфиденциальных данных, с которыми я могу
+            столкнуться при его использовании. Я согласен принять все разумные
+            меры по защите данного оборудования от несанкционированного использования и поддержанию его в рабочем
+            состоянии. В случаях, когда утрата или повреждение
+            если это вызвано моей небрежностью, Фирма может потребовать взыскать с меня все или часть расходов на замену
+            или ремонт.
+        </p>
+    </div>
+    <h3 style="margin: 0;"> Выданное оборудование:</h3>
+    <div>
+        <ul>
+            <li ><b >Предмет: &nbsp</b><p id="item" style="margin: 0; display: inline;"></p></li>
+            <li ><b >Модель: &nbsp</b><p id="model" style="margin: 0; display: inline;"></p></li>
+            <li ><b >Серийный номер: &nbsp</b><p id="serial_number" style="margin: 0; display: inline;"></p></li>
+        </ul>
+    </div>
+    <div>
+        <p>Я ознакомился с Политикой и подтверждаю, что принимаю на себя ответственность за хранение вышеуказанного
+            оборудования и что
+            я приму все меры предосторожности, необходимые для обеспечения его безопасности в любое время.</p>
+    </div>
+    <h3 style="margin: 0;">Я обещаю вернуть все оборудование в установленные сроки:</h3>
+    <div>
+        <ul>
+            <li style="display: flex; align-items: center;"><b>Подпись пользователя : &nbsp</b><ins>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</ins></li>
+            <li style="display: flex; align-items: center;"><b>Подпись представителя : &nbsp</b><ins>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</ins></li>
+        </ul>
+        <div style="display: flex; margin: 1,1,5,1;">
+            <ul style=" display: inline; margin: 0,0,5,0;">
+                <li ><b>Дата с : &nbsp</b><p id="p_date_from" style="margin: 0; display: inline;"></p></li>
+                <li ><b>Время от : &nbsp</b><p id="p_time_from" style="margin: 0; display: inline;"></p></li>
+            </ul>
+            <ul style=" display: inline; margin: 0,0,5,0;">
+                <li ><b>Дата до : &nbsp</b><p id="p_date_till" style="margin: 0; display: inline;"></p></li>
+                <li ><b>Время до : &nbsp</b><p id="p_time_till" style="margin: 0; display: inline;"></p></li>
+            </ul>
+        </div>
+    </div>
+    <div id="delete">
+        <h3 style="margin: 0;">Оборудование было возвращено:</h3>
+        <div>
+            <ul >
+                <li style="display: flex; align-items: center;"><b>Подпись пользователя : &nbsp</b><ins>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</ins></li>
+                <li style="display: flex; align-items: center;"><b>Подпись представителя : &nbsp</b><ins>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</ins></li>
+                <li style="display: flex; align-items: center;"><b>Дата : &nbsp</b><ins>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</ins></li>
+            </ul>
+        </div>
+    </div>
+    <div style="text-align: right;">
+        <img id="logo_company" src='cid:image' height="40" width="40">
+        <!--src="/ru/greatlarder/technicalassistant/html/img/logo.png"-->
+    </div>
+</div>
+</body>
+</html>

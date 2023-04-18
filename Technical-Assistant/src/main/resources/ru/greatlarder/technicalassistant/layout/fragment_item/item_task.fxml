@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="gridPane" hgap="4.0" vgap="4.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemTaskController">
+  <columnConstraints>
+    <ColumnConstraints />
+    <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+      <RowConstraints />
+  </rowConstraints>
+   <children>
+      <Label fx:id="labelCreator" text="creator" GridPane.columnIndex="1" GridPane.rowSpan="2" />
+      <TextArea fx:id="textAreaTask" prefHeight="50.0" prefWidth="250.0" GridPane.columnIndex="3" GridPane.rowSpan="2" />
+      <ImageView fx:id="imgCompletion" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#changeStatus" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowSpan="2" />
+      <VBox alignment="CENTER" GridPane.rowSpan="2">
+         <children>
+            <Label fx:id="labelDate" text="date" />
+            <Label fx:id="labelTime" text="time" />
+         </children>
+      </VBox>
+      <Label fx:id="labelRoom" text="Room" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+   </children>
+   <padding>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+   </padding>
+</GridPane>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="borderPaneStartReception" style="-fx-background-color: transparent;" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.reception.StartReceptionController">
+   <left>
+      <SplitPane fx:id="splitPaneStartReception" dividerPositions="0.1" orientation="VERTICAL" stylesheets="@../../../css/main.css" BorderPane.alignment="TOP_CENTER">
+        <items>
+            <GridPane alignment="CENTER" hgap="2.0" vgap="2.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" />
+                <ColumnConstraints hgrow="NEVER" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints vgrow="NEVER" />
+                <RowConstraints vgrow="NEVER" />
+              </rowConstraints>
+                <children>
+                    <ImageView fx:id="imageLogoCompany" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.rowSpan="2" />
+                    <Label fx:id="labelLastName" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Фамилия" textAlignment="CENTER" GridPane.columnIndex="1" />
+                    <Label fx:id="labelFirstName" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Имя" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </GridPane>
+         
+            <VBox fx:id="vBoxStartRecep" alignment="TOP_CENTER" spacing="15.0" stylesheets="@../../../css/main.css">
+               <children>
+                  <Label fx:id="labelHomePage" maxWidth="1.7976931348623157E308" onMouseClicked="#openHomePageReception" styleClass="vBox_button" stylesheets="@../../../css/main.css" text="Домашняя страница" textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/home.png" />
+                           </image></ImageView>
+                     </graphic></Label>
+                  <Label fx:id="labelPortableDevices" maxWidth="1.7976931348623157E308" onMouseClicked="#openPortableDevices" styleClass="vBox_button" stylesheets="@../../../css/main.css" text="Переносные устройства" textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/equip.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Label>
+                  <Label fx:id="labelInstructions" maxWidth="1.7976931348623157E308" onMouseClicked="#openInstructionPageReception" styleClass="vBox_button" stylesheets="@../../../css/main.css" text="Инструкции" textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/instruction.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Label>
+                  <Label fx:id="labelSettings" maxWidth="1.7976931348623157E308" onMouseClicked="#openPageSettings" styleClass="vBox_button" stylesheets="@../../../css/main.css" text="Настройки" textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/settings.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Label>
+                  <Label fx:id="labelInfo" maxWidth="1.7976931348623157E308" onMouseClicked="#openInfoPage" styleClass="vBox_button" stylesheets="@../../../css/main.css" text="Информация">
+                     <graphic>
+                        <ImageView fx:id="imgLabelCompany" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/info.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+        </items>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="3.0" right="3.0" />
+         </padding>
+      </SplitPane>
+   </left>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+
+</BorderPane>

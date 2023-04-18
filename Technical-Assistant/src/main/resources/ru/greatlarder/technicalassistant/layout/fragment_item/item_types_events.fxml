@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" spacing="4.0"
+      xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemTypesEvent">
+   <children>
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="4.0">
+         <children>
+            <ImageView fx:id="img_event" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelEvent" text="Label" />
+         </children>
+      </HBox>
+      <HBox fx:id="hBoxChoose" />
+   </children>
+   <padding>
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+   </padding>
+</VBox>

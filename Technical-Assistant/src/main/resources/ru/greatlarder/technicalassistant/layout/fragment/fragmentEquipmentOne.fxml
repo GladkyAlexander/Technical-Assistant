@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="gridPane" alignment="TOP_CENTER" cache="true" hgap="1.0" vgap="3.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentEquipmentOneController">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints halignment="CENTER" />
+      <ColumnConstraints halignment="RIGHT" />
+      <ColumnConstraints halignment="CENTER" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+   </padding>
+   <Label fx:id="labelModel" text="Модель :" GridPane.rowIndex="1" />
+   <Label fx:id="model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   <Label fx:id="labelManufacturer" text="Производитель :" GridPane.rowIndex="2" />
+   <Label fx:id="manufacturer" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+   <Label fx:id="labelSerialNumber" text="Серийный номер :" GridPane.rowIndex="3" />
+   <Label fx:id="serialNumber" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   <Label fx:id="labelIpAddress" text="IP адрес :" GridPane.rowIndex="14" />
+   <Label fx:id="ipAddress" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+   <Label fx:id="labelMacAddress" text="MAC адрес :" GridPane.rowIndex="4" />
+   <Label fx:id="macAddress" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   <Label fx:id="labelLogin" text="Логин к устройству :" GridPane.rowIndex="26" />
+   <Label fx:id="login" GridPane.columnIndex="1" GridPane.rowIndex="26" />
+   <Label fx:id="labelPassword" text="Пароль к устройству :" GridPane.rowIndex="28" />
+   <Label fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="28" />
+   <Label fx:id="labelRoom" text="Помещение в котором расположено устройство :" GridPane.rowIndex="30" />
+   <Label fx:id="room" GridPane.columnIndex="1" GridPane.rowIndex="30" />
+   <Label fx:id="labelLocation" text="Расположение в помещении :" GridPane.rowIndex="32" />
+   <Label fx:id="indoorLocation" GridPane.columnIndex="1" GridPane.rowIndex="32" />
+   <Label fx:id="labelStartWork" text="Дата введения в эксплуатацию :" GridPane.rowIndex="34" />
+   <Label fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="34" />
+   <Label fx:id="labelCondition" text="Состояние :" GridPane.rowIndex="35" />
+   <Label fx:id="condition" GridPane.columnIndex="1" GridPane.rowIndex="35" />
+   <Label fx:id="labelManual" text="Мануал к оборудованию :" GridPane.rowIndex="40" />
+   <ImageView fitHeight="25.0" fitWidth="35.0" onMouseClicked="#openManual" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="40">
+      <Image url="@../../images/doc.png" />
+   </ImageView>
+   <Label fx:id="labelWebInterface" text="Web интерфейс :" GridPane.rowIndex="41" />
+   <Label fx:id="labelDefect" text="Количество дефектов :" GridPane.rowIndex="43" />
+   <Label fx:id="labelQuantityDefect" GridPane.columnIndex="1" GridPane.rowIndex="43" />
+   <ImageView fx:id="imgChangeIp" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeIp" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="14">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <ImageView fx:id="imgChangeLogin" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeLogin" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="26">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <ImageView fx:id="imgChangePassword" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changePassword" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="28">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <ImageView fx:id="imgChangeRoom" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeRoom" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="30">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <ImageView fx:id="imgChangeLocationToRoom" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeLocationToRoom" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="32">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <ImageView fx:id="imgChangeCondition" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeCondition" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="35">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <ImageView fx:id="imgConnectWebInterface" fitHeight="30.0" fitWidth="70.0" onMouseClicked="#connectWebInterface" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="41">
+      <Image url="@../../images/click.png" />
+   </ImageView>
+   <HBox fx:id="hBoxConditions" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="36">
+      <GridPane.margin>
+         <Insets />
+      </GridPane.margin>
+      <ComboBox fx:id="menuButtonCondition" onMouseClicked="#onActionMenuButtonCondition" promptText="Измените состояние" />
+      <Button fx:id="btnSaveNewCondition" mnemonicParsing="false" onAction="#saveNewCondition" text="Сохранить" />
+   </HBox>
+   <HBox fx:id="hBoxNewRoomLocations" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="33">
+      <Label fx:id="labelNewLocation" text="Новое расположение :" />
+      <TextField fx:id="tfNewRoomLocation" />
+      <Button fx:id="btnSaveNewLocationToRoom" mnemonicParsing="false" onAction="#saveNewLocationToRoom" text="Сохранить" />
+   </HBox>
+   <HBox fx:id="hBoxNewRoom" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="31">
+      <Label fx:id="labelNewRoom" text="Новое помещение :" />
+      <ComboBox fx:id="comboBoxNewRooms" prefWidth="150.0" />
+      <Button fx:id="btnSaveNewRoom" mnemonicParsing="false" onAction="#saveNewRoom" text="Сохранить" />
+   </HBox>
+   <HBox fx:id="hBoxNewPassword" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="29">
+      <Label fx:id="labelNewPassword" text="Новый пароль :" />
+      <TextField fx:id="tfNewPassword" />
+      <Button fx:id="btnSaveNewPassword" mnemonicParsing="false" onAction="#saveNewPassword" text="Сохранить" />
+   </HBox>
+   <HBox fx:id="hBoxNewLogin" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="27">
+      <Label fx:id="labelNewLogin" text="Новый логин :" />
+      <TextField fx:id="tfNewLogin" />
+      <Button fx:id="btnSaveNewLogin" mnemonicParsing="false" onAction="#saveNewLogin" text="Сохранить" />
+   </HBox>
+   <HBox fx:id="hBoxNewIp" alignment="BOTTOM_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="15">
+      <Label fx:id="labelNewIpAddress" text="Новый адрес :" />
+      <TextField fx:id="tfNet1" onKeyReleased="#onKeyRelisedNet1" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfNet2" onKeyReleased="#onKeyRelisedNet2" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfSubNet" onKeyReleased="#onKeyRelisedSubNet" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfDeviceNet" onKeyReleased="#onKeyRelisedDeviceNet" prefWidth="40.0" />
+      <Button fx:id="btnSaveNewIp" mnemonicParsing="false" onAction="#saveNewIp" text="Сохранить" />
+   </HBox>
+   <Label text="Subnet masc :" GridPane.rowIndex="16" />
+   <Label text="Gateway :" GridPane.rowIndex="18" />
+   <Label fx:id="labelSubnetMasc" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+   <Label fx:id="labelGateway" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+   <HBox fx:id="hBoxMasc" alignment="BOTTOM_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="17">
+      <Label fx:id="labelNewMasc" text="Новая masc :" />
+      <TextField fx:id="tfMascNet1" onKeyReleased="#onKeyRelisedMascNet1" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfMascNet2" onKeyReleased="#onKeyRelisedMascNet2" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfMascSub" onKeyReleased="#onKeyRelisedMascSub" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfMascDev" onKeyReleased="#onKeyMascDev" prefWidth="40.0" />
+      <Button fx:id="btnSaveNewMasc" mnemonicParsing="false" onMouseClicked="#saveNewMasc" text="Сохранить" />
+   </HBox>
+   <HBox fx:id="hBoxGateway" alignment="BOTTOM_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="19">
+      <Label fx:id="labelNewGateway" text="Новый gateway :" />
+      <TextField fx:id="tfGatewayNet1" onKeyReleased="#onKeyRelisedGatewayNet1" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfGatewayNet2" onKeyReleased="#onKeyRelisedGatewayNet2" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfGatewaySub" onKeyReleased="#onKeyRelisedGatewaySub" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfGatewayDev" onKeyReleased="#onKeyRelisedGatewayDev" prefWidth="40.0" />
+      <Button fx:id="btnSaveNewGateway" mnemonicParsing="false" onMouseClicked="#saveNewGateway" text="Сохранить" />
+   </HBox>
+   <ImageView fx:id="imgChangeMasc" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeMasc" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="16">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <ImageView fx:id="imgChangeGateway" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeGateway" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="18">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <Label fx:id="labelIpAddressDante" text="IP адрес Dante :" GridPane.rowIndex="20" />
+   <Label fx:id="labelMascAddressDante" text="Masc Dante :" GridPane.rowIndex="22" />
+   <Label fx:id="labelGatewayAddressDante" text="Gateway Dante :" GridPane.rowIndex="24" />
+   <Label fx:id="labelIpDante" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+   <Label fx:id="labelMascDante" GridPane.columnIndex="1" GridPane.rowIndex="22" />
+   <Label fx:id="labelGatewayDante" GridPane.columnIndex="1" GridPane.rowIndex="24" />
+   <ImageView fx:id="imgChangeIpDante" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeDanteIp" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="20">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <ImageView fx:id="imgChangeMascDante" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeMascDante" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="22">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <ImageView fx:id="imgChangeGatewayDante" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeGatewayDante" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="24">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <HBox fx:id="hBoxIpDanteChange" alignment="BOTTOM_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="21">
+      <Label fx:id="labelNewIpAddressDante" text="Новый адрес :" />
+      <TextField fx:id="tfDanteNet1" onKeyReleased="#okrDanteNet1Ip" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfDanteNet2" onKeyReleased="#okrDanteNet2Ip" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfDanteSubIp" onKeyReleased="#okrDanteSubIp" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfDanteDev" onKeyReleased="#okrDanteDevIp" prefWidth="40.0" />
+      <Button fx:id="btnSaveDanteIp" mnemonicParsing="false" onAction="#saveDanteIp" text="Сохранить" />
+   </HBox>
+   <HBox fx:id="hBoxDanteMasc" alignment="BOTTOM_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="23">
+      <Label fx:id="labelNewMascDante" text="Новая masc :" />
+      <TextField fx:id="tfDanteMascNet1" onKeyReleased="#okrDanteMascNet1" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfDanteMascNet2" onKeyReleased="#okrDanteMascNet2" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfDanteMascSub" onKeyReleased="#okrDanteMaskSub" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfDanteMascDev" onKeyPressed="#okrDanteMaskDev" prefWidth="40.0" />
+      <Button fx:id="btnSaveDanteMasc" mnemonicParsing="false" onAction="#saveDanteMasc" text="Сохранить" />
+   </HBox>
+   <HBox fx:id="hBoxGatewayDante" alignment="BOTTOM_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="25">
+      <Label fx:id="labelNewGatewayDante" text="Новый Gateway :" />
+      <TextField fx:id="tfDanteGatewayNet1" onKeyReleased="#okrDanteGatewayNet1" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfDanteGatewayNet2" onKeyReleased="#okrDanteGatewayNet2" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfDanteGatewaySub" onKeyReleased="#okrDanteGatewaySub" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfDanteGatewayDev" onKeyReleased="#okrDanteGatewayDev" prefWidth="40.0" />
+      <Button fx:id="btnSaveDanteGateway" mnemonicParsing="false" onAction="#saveDanteGateway" text="Сохранить" />
+   </HBox>
+   <Label fx:id="labelFrequencyName" text="Частота MHz :" GridPane.rowIndex="12" />
+   <Label fx:id="labelFrequency" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+   <ImageView fx:id="imgFrequencyChange" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeFrequency" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="12">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <HBox fx:id="hBoxFrequency" alignment="BOTTOM_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="13">
+      <Label fx:id="labelChangeFrequency" text="Изменить частоту :" />
+      <TextField fx:id="tfFrequency1" onKeyReleased="#okrFrequency1" prefWidth="40.0" />
+      <Label text="." />
+      <TextField fx:id="tfFrequency2" onKeyReleased="#okrFrequency2" prefWidth="40.0" />
+      <Button fx:id="btnSaveFrequency" mnemonicParsing="false" onAction="#saveFrequency" text="Сохранить" />
+   </HBox>
+   <Label fx:id="labelMaxTimeLampName" text="Максимальное время работы лампы :" GridPane.rowIndex="37" />
+   <Label fx:id="labelTimeWorkLampProjName" text="Текущее время работы лампы :" GridPane.rowIndex="38" />
+   <Label fx:id="labelMaximumLampOperatingTime" GridPane.columnIndex="1" GridPane.rowIndex="37" />
+   <Label fx:id="labelTimeWorkLampProj" GridPane.columnIndex="1" GridPane.rowIndex="38" />
+   <ImageView fx:id="imgChangeLampTimeWork" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#changeTimeWorkLampProj" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="38">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <HBox fx:id="hBoxChangeTimeWorkLampProj" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="39">
+      <Label fx:id="labelNewTime" text="Введите новое время :" />
+      <TextField fx:id="tfNewTimeWorkLampProj" onKeyReleased="#okrNewTimeWorkLampProj" />
+      <Button fx:id="btnNewTimeWorkLampProj" mnemonicParsing="false" onMouseClicked="#saveNewTimeWorkLampProj" text="Сохранить" />
+   </HBox>
+   <SplitPane fx:id="splitPaneOEI" orientation="VERTICAL" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="40" />
+   <Label fx:id="labelOutletNumber" text="Label" GridPane.rowIndex="44" />
+   <Label fx:id="labelPortNumber" text="Label" GridPane.rowIndex="46" />
+   <HBox fx:id="hBoxNewOutletNumber" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="45">
+      <ChoiceBox fx:id="choiceBoxPatchPanel" prefWidth="150.0" />
+      <TextField fx:id="tfNewOutletNumber" onKeyReleased="#onKeyRelisedNewOutletNumber" />
+      <Button fx:id="btnSaveNewOutletNumber" mnemonicParsing="false" onMouseClicked="#saveNewOutletNumber" text="Button" />
+   </HBox>
+   <HBox fx:id="hBoxPortNumber" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="47">
+      <ComboBox fx:id="comboBoxChoiceSwitcher" prefWidth="150.0" />
+      <TextField fx:id="tfPortNumber" onKeyReleased="#onKeyRelisedPortNumber" />
+      <Button fx:id="btnSaveNewPortNumber" mnemonicParsing="false" onMouseClicked="#saveNewPortSwitcher" text="Button" />
+   </HBox>
+   <ImageView fx:id="imgChangePortNumber" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#openHBoxChangePortNumber" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="46">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <Label fx:id="labelTextPortNumber" GridPane.columnIndex="1" GridPane.rowIndex="46" />
+   <Label fx:id="labelTextOutletNumber" GridPane.columnIndex="1" GridPane.rowIndex="44" />
+   <ImageView fx:id="imgOpenHBoxChangeOutletNumber" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#openHBoxOutlet" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="44">
+      <Image url="@../../images/refresh.png" />
+   </ImageView>
+   <Label fx:id="m1" text="MAC 1" GridPane.rowIndex="6" />
+   <Label fx:id="m2" text="MAC 2" GridPane.rowIndex="8" />
+   <Label fx:id="m3" text="MAC 3" GridPane.rowIndex="10" />
+   <Label fx:id="labelMac1" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+   <Label fx:id="labelMac2" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+   <Label fx:id="labelMac3" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+   <ImageView fx:id="imgChangeMac1" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#imgOpenChangeMac1" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
+      <image>
+         <Image url="@../../images/refresh.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="imgChangeMac2" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#imgOpenChangeMac2" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="8">
+      <image>
+         <Image url="@../../images/refresh.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="imgChangeMac3" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#imgOpenChangeMac3" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="10">
+      <image>
+         <Image url="@../../images/refresh.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="imgChangeMac" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#imgOpenChangeMac" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+      <image>
+         <Image url="@../../images/refresh.png" />
+      </image>
+   </ImageView>
+   <HBox fx:id="hBoxNewMacAddress" alignment="CENTER_RIGHT" spacing="2.0" GridPane.columnSpan="3" GridPane.rowIndex="5">
+      <children>
+         <TextField fx:id="oui1" onKeyReleased="#onKeyOui1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui2" onKeyReleased="#onKeyOui2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui3" onKeyReleased="#onKeyOui3" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa1" onKeyReleased="#onKeyUaa1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa2" onKeyReleased="#onKeyUaa2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa3" onKeyReleased="#onKeyUaa3" prefWidth="35.0" />
+         <Button fx:id="btnSaveNewMac" mnemonicParsing="false" onMouseClicked="#saveBtnSaveNewMac" text="Button">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin>
+         </Button>
+      </children>
+   </HBox>
+   <HBox fx:id="hBoxNewMacAddress1" alignment="CENTER_RIGHT" spacing="2.0" GridPane.columnSpan="3" GridPane.rowIndex="7">
+      <children>
+         <TextField fx:id="oui11" onKeyReleased="#onKeyOui1_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui12" onKeyReleased="#onKeyOui1_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui13" onKeyReleased="#onKeyOui1_3" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa11" onKeyReleased="#onKeyUaa1_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa12" onKeyReleased="#onKeyUaa1_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa13" onKeyReleased="#onKeyUaa1_3" prefWidth="35.0" />
+         <Button fx:id="btnSaveNewMac1" mnemonicParsing="false" onMouseClicked="#saveNewMac1" text="Button">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin>
+         </Button>
+      </children>
+   </HBox>
+   <HBox fx:id="hBoxNewMacAddress2" alignment="CENTER_RIGHT" spacing="2.0" GridPane.columnSpan="3" GridPane.rowIndex="9">
+      <children>
+         <TextField fx:id="oui21" onKeyReleased="#onKeyOui2_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui22" onKeyReleased="#onKeyOui2_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui23" onKeyReleased="#onKeyOui2_3" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa21" onKeyReleased="#onKeyUaa2_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa22" onKeyReleased="#onKeyUaa2_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa23" onKeyReleased="#onKeyUaa2_3" prefWidth="35.0" />
+         <Button fx:id="btnSaveNewMac2" mnemonicParsing="false" onMouseClicked="#saveNewMac2" text="Button">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin>
+         </Button>
+      </children>
+   </HBox>
+   <HBox fx:id="hBoxMacAddress3" alignment="CENTER_RIGHT" spacing="2.0" GridPane.columnSpan="3" GridPane.rowIndex="11">
+      <children>
+         <TextField fx:id="oui31" onKeyReleased="#onKeyOui3_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui32" onKeyReleased="#onKeyOui3_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="oui33" onKeyReleased="#onKeyOui3_3" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa31" onKeyReleased="#onKeyUaa3_1" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa32" onKeyReleased="#onKeyUaa3_2" prefWidth="35.0" />
+         <Label text=":">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="uaa33" onKeyReleased="#onKeyUaa3_3" prefWidth="35.0" />
+         <Button fx:id="btnSaveNewMac3" mnemonicParsing="false" onMouseClicked="#saveNewMac3" text="Button">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin>
+         </Button>
+      </children>
+   </HBox>
+   <Label fx:id="labelDiagonal" text="Диагональ" GridPane.rowIndex="42" />
+   <Label fx:id="diagonal" GridPane.columnIndex="1" GridPane.rowIndex="42" />
+   <Label fx:id="labelStorage" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnSpan="3" />
+   <Button fx:id="btnChangeDataStorage" mnemonicParsing="false" onMouseClicked="#changeDataInStorage" text="Button" visible="false" GridPane.rowIndex="48" />
+</GridPane>

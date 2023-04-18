@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="gridPaneAdd" alignment="CENTER" hgap="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="4.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentRegistrationUserController">
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" />
+        <ColumnConstraints halignment="CENTER" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+      <RowConstraints valignment="CENTER" />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+        <RowConstraints />
+      <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <Label fx:id="labelLastName" text="Label" GridPane.rowIndex="2" />
+        <Label fx:id="labelFirstName" text="Label" GridPane.rowIndex="3" />
+        <Label fx:id="labelEmailAddress" text="Label" GridPane.rowIndex="4" />
+        <Label fx:id="labelPhone" text="Label" GridPane.rowIndex="5" />
+        <TextField fx:id="tfLastName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <TextField fx:id="tfFirstName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <TextField fx:id="tfMailAddress" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <TextField fx:id="tfPhone" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveUser" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+        <MenuButton fx:id="menuButtonLanguage" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="MenuButton" GridPane.columnSpan="2" GridPane.rowIndex="19">
+            <items>
+                <MenuItem fx:id="menuItemRu" mnemonicParsing="false" onAction="#setMenuItemRu" text="Россия">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../images/ru.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuItem>
+                <MenuItem fx:id="menuItemEn" mnemonicParsing="false" onAction="#setMenuItemEn" text="England">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../images/ico-en.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuItem>
+            </items>
+        </MenuButton>
+        <ComboBox fx:id="comboBoxPost" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="17" />
+      <Label fx:id="labelRegister" alignment="CENTER" text="Label" GridPane.columnSpan="2" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <Label fx:id="labelLogin" text="Label" GridPane.rowIndex="6" />
+      <Label fx:id="labelPassword" text="Label" GridPane.rowIndex="7" />
+      <TextField fx:id="tfLogin" onKeyReleased="#onKeyRelisedTFLogin" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="tfPassword" onKeyReleased="#onKeyRelisedTFPassword" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <Label fx:id="labelNameServer" text="Label" GridPane.rowIndex="8" />
+      <Label fx:id="labelPortServer" text="Label" GridPane.rowIndex="9" />
+      <Label fx:id="labelNameDbExternal" text="Label" GridPane.rowIndex="10" />
+      <Label fx:id="labelUserDbExternal" text="Label" GridPane.rowIndex="11" />
+      <Label fx:id="labelPasswordDbExternal" text="Label" GridPane.rowIndex="12" />
+      <TextField fx:id="tfNameServer" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <TextField fx:id="tfPortServerDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <TextField fx:id="tfNameDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <TextField fx:id="tfNameUserDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <TextField fx:id="tfPasswordDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <Label fx:id="labelNameCompany" text="Label" GridPane.rowIndex="18" />
+      <TextField fx:id="tfNameCompanyUser" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+      <Button fx:id="buttonIn" mnemonicParsing="false" onMouseClicked="#input" text="Button" GridPane.rowIndex="20" />
+      <Label fx:id="labelServerFTP" text="Server FTP" GridPane.rowIndex="13" />
+      <Label fx:id="labelPortFTP" text="Port FTP" GridPane.rowIndex="14" />
+      <Label fx:id="labelUserFTP" text="User FTP" GridPane.rowIndex="15" />
+      <Label fx:id="labelPasswordFTP" text="Password FTP" GridPane.rowIndex="16" />
+      <TextField fx:id="tfServerFTP" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+      <TextField fx:id="tfPortFTP" onKeyReleased="#onKeyReleasedPortFTP" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+      <TextField fx:id="tfUserFTP" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+      <TextField fx:id="tfPasswordFTP" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</GridPane>

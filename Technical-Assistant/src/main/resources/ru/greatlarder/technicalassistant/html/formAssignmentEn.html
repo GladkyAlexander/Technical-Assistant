@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration asset assignment form</title>
+</head>
+<body>
+<div style="align-items: center;">
+    <H2 style="text-align: center;">Administration Asset Assignment Form</H2>
+    <h3 style="margin: 0;">User personal information:</h3>
+    <div style="display: flex; align-items: center; margin: 0; ">
+        <ul style=" display: inline; margin: 0;">
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">First ame : &nbsp</b> <p id="p_firstName" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Last name : &nbsp</b> <p id="p_lastName" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Department : &nbsp</b> <p id="p_department" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Type of event : &nbsp</b> <p id="p_type_of_event" style="margin: 0; display: inline;"></p></li>
+        </ul>
+        <ul style=" display: inline; margin: 0;">
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Position : &nbsp</b> <p id="p_position" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Phone number : &nbsp</b> <p id="p_phone" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Location : &nbsp</b> <p id="p_location" style="margin: 0; display: inline;"></p></li>
+            <li style="display: flex; align-items: center;">
+                <b style=" display: inline; ">Partner/Manager : &nbsp</b> <p id="p_manager" style="margin: 0; display: inline;"></p></li>
+        </ul>
+    </div>
+    <div>
+        <p>
+            I realize that this equipment has been made available to me by <b id="nameCompanyP1"></b> solely for business
+            purposes only and remains property of <b id="nameCompanyP2"></b> at all times. I accept personal responsibility
+            for the security of this equipment and any proprietary data I may encounter in its use. I agree to take all reasonable
+            measures to protect this equipment from unauthorized use and keep it in working order. In cases where the loss or damage
+            is caused by my negligence, the Firm may seek to recover all or part of the cost of replacement or repair from me.
+        </p>
+    </div>
+    <h3 style="margin: 0;"> Equipment issued:</h3>
+    <div>
+        <ul>
+            <li ><b>Item: &nbsp</b> <p id="item" style="margin: 0; display: inline;"></p></li>
+            <li ><b>Model: &nbsp</b> <p id="model" style="margin: 0; display: inline;"></p></li>
+            <li ><b>Serial number: &nbsp</b> <p id="serial_number" style="margin: 0; display: inline;"></p></li>
+        </ul>
+    </div>
+    <div>
+        <p>I have read Policy and confirm that i accept responsibility for keeping the above equipment and that
+            I will take all precautions necessary to ensure its security at all times.</p>
+    </div>
+    <h3 style="margin: 0;">I promise to return all the equipment within the time limit:</h3>
+    <div >
+        <ul >
+            <li style="display: flex; align-items: center;"><b>User Signature : &nbsp</b> <ins>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</ins></li>
+            <li style="display: flex; align-items: center;"><b>Signature of Representative : &nbsp</b> <ins>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</ins></li>
+        </ul>
+        <div style="display: flex; margin: 1,1,5,1;">
+            <ul style=" display: inline; margin: 0,0,5,0;">
+                <li ><b>Date from : &nbsp</b> <p id="p_date_from" style="margin: 0; display: inline;"></p></li>
+                <li ><b>Time from : &nbsp</b> <p id="p_time_from" style="margin: 0; display: inline;"></p></li>
+            </ul>
+            <ul style=" display: inline; margin: 0,0,5,0;">
+                <li ><b>Date till : &nbsp</b> <p id="p_date_till" style="margin: 0; display: inline;"></p></li>
+                <li ><b>Time till : &nbsp</b> <p id="p_time_till" style="margin: 0; display: inline;"></p></li>
+            </ul>
+        </div>
+
+    </div>
+    <div id="delete">
+    <h3 style="margin: 0;">The equipment was returned:</h3>
+    <div>
+        <ul>
+            <li style="display: flex; align-items: center;"><b>User Signature : &nbsp</b> <ins>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</ins></li>
+            <li style="display: flex; align-items: center;"><b>Signature of Representative : &nbsp</b> <ins>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</ins></li>
+            <li style="display: flex; align-items: center;"><b>Date : &nbsp</b> <ins>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</ins></li>
+        </ul>
+    </div>
+    </div>
+    <div style="text-align: right;" id="div_image">
+        <img src="img/logo.png" id="logo_company" height="40" width="40">
+    </div>
+</div>
+</body>
+</html>

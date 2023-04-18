@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="vBox" alignment="CENTER" onMouseClicked="#loadCompany" spacing="5.0" styleClass="vBox_choice_company_item" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemCompanySelection">
+   <children>
+           <ImageView fx:id="imgLogoCompany" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2">
+               <image>
+                   <Image url="@../../images/select_company.jpg" />
+               </image>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+           </ImageView>
+           <Label fx:id="labelNameCompany" alignment="CENTER" contentDisplay="CENTER" text="name company" textAlignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+           <Label fx:id="labelAddressCompany" alignment="CENTER" contentDisplay="CENTER" text="address" textAlignment="CENTER" GridPane.rowIndex="2">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </padding>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin></Label>
+
+   </children>
+   <opaqueInsets>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </opaqueInsets>
+</VBox>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="gridPane" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="button" stylesheets="@../../css/main.css" vgap="5.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemButtonEquipmentForAddEvent">
+    <userData>
+        <fx:reference source="controller" />
+    </userData>
+    <columnConstraints>
+      <ColumnConstraints />
+    <ColumnConstraints />
+    <ColumnConstraints halignment="RIGHT" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+    <RowConstraints />
+  </rowConstraints>
+   <children>
+      <ImageView fitHeight="20.0" fitWidth="30.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+         <image>
+            <Image url="@../../images/closed.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="labelNameEquipment" text="Name equipment" GridPane.columnIndex="1" />
+      <Label fx:id="labelSerialNumberEquipment" text="Serial number equipment" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ImageView fx:id="imgEquipment" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.rowSpan="2" />
+   </children>
+   <padding>
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+   </padding>
+</GridPane>

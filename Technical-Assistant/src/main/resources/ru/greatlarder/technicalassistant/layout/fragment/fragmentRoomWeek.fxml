@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPane" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentRoomWeek">
+   <center>
+      <TabPane fx:id="tabPaneWeek" stylesheets="@../../css/main.css" tabClosingPolicy="UNAVAILABLE" />
+   </center>
+   <top>
+      <Label fx:id="labelNameRoom" alignment="CENTER" text="Name Room" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </top>
+</BorderPane>

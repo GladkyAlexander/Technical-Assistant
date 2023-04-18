@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="gridPaneFCSU" hgap="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="4.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentChangeSettingsUser">
+  <columnConstraints>
+    <ColumnConstraints halignment="CENTER" />
+    <ColumnConstraints halignment="CENTER" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints valignment="CENTER" />
+    <RowConstraints valignment="CENTER" />
+    <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+      <RowConstraints valignment="CENTER" />
+  </rowConstraints>
+   <children>
+      <HBox alignment="CENTER" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+         <children>
+            <Label fx:id="labelLastName" text="Last Name" />
+            <Label fx:id="labelFirstName" text="First Name" />
+         </children>
+      </HBox>
+      <Label fx:id="labelMail" text="Mail " GridPane.rowIndex="2" />
+      <Label fx:id="labelPhone" text="Phone" GridPane.rowIndex="3" />
+      <Label fx:id="labelSettingsExternalDB" contentDisplay="CENTER" text="Settings External Database" GridPane.columnSpan="2" GridPane.rowIndex="4">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelServer" text="Server" GridPane.rowIndex="5" />
+      <Label fx:id="labelPort" text="Port" GridPane.rowIndex="6" />
+      <Label fx:id="labelNameDB" text="Name database" GridPane.rowIndex="7" />
+      <Label fx:id="labelUserDB" text="User database" GridPane.rowIndex="8" />
+      <Label fx:id="labelPasswordDB" text="Password database" GridPane.rowIndex="9" />
+      <Button fx:id="btnSave" mnemonicParsing="false" onMouseClicked="#save" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+      <TextField fx:id="tfMail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="tfPhone" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="tfServer" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <TextField fx:id="tfPort" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="tfNameDatabase" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <TextField fx:id="tfUserDb" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <TextField fx:id="tfPasswordDB" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <Label fx:id="labelSettings" text="Settings" GridPane.columnSpan="2">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelFTPServerSettings" text="FTP Server Settings" GridPane.columnSpan="2" GridPane.rowIndex="10">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelServerFTP" text="Server FTP" GridPane.rowIndex="11" />
+      <Label fx:id="labelPortFTP" text="Port FTP" GridPane.rowIndex="12" />
+      <Label fx:id="labelUserFTP" text="User FTP" GridPane.rowIndex="13" />
+      <Label fx:id="labelPasswordFTP" text="Password FTP" GridPane.rowIndex="14" />
+      <TextField fx:id="tfPasswordFTP" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+      <TextField fx:id="tfUserFTP" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+      <TextField fx:id="tfPortFTP" onKeyReleased="#onKeyRelisedPortFTP" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <TextField fx:id="tfServerFTP" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

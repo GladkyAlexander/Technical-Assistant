@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="borderPaneMainPage" styleClass="BorderPane"
+            stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/11.0.14-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.MainController">
+    <opaqueInsets>
+        <Insets />
+    </opaqueInsets>
+   <top>
+      <BorderPane maxWidth="1.7976931348623157E308" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+         <right>
+               <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
+                        <MenuButton fx:id="mbtLang" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" styleClass="button" stylesheets="@css/main.css" text="Выберите язык">
+                            <items>
+                                <MenuItem fx:id="menuItemRu" mnemonicParsing="false" onAction="#mBru" text="Русский">
+                                    <graphic>
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                            <Image url="@images/ru.png" />
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                                <MenuItem fx:id="menuItemEn" mnemonicParsing="false" onAction="#mBen" text="English">
+                                    <graphic>
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                            <Image url="@images/ico-en.png" />
+                                        </ImageView>
+                                    </graphic>
+                                </MenuItem>
+                            </items>
+                            <graphic>
+                                <ImageView fx:id="imgLangMenuButton" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                            </graphic>
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  </HBox.margin>
+                        </MenuButton>
+               <MenuButton fx:id="menuButtonUserInOut" mnemonicParsing="false" styleClass="button" stylesheets="@css/main.css">
+                 <items>
+                   <MenuItem fx:id="menuItemOut" mnemonicParsing="false" onAction="#onActionMenuItemOut" text="Out">
+                        <graphic>
+                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@images/log_out.png" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </MenuItem>
+                     <MenuItem fx:id="menuItemChangeCompany" mnemonicParsing="false" onAction="#onActionMenuItemChangeCompany" text="Change company">
+                        <graphic>
+                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@images/change.png" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </MenuItem>
+                     <!--<MenuItem fx:id="menuItemInput" mnemonicParsing="false" onAction="#onActionMenuItemInput" text="In">
+                        <graphic>
+                                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                   <Image url="@images/login_input.png" />
+                                                </image>
+                                             </ImageView>
+                                          </graphic></MenuItem>-->
+                 </items>
+                  <graphic>
+                     <ImageView fx:id="imgUserAct" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@images/login_unactive.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                  </HBox.margin>
+               </MenuButton>
+               </HBox>
+         </right>
+         <left>
+                 <HBox fx:id="hBoxTopToolbar" alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" spacing="5.0" BorderPane.alignment="CENTER">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+                 </HBox>
+         </left>
+      </BorderPane>
+   </top>
+</BorderPane>

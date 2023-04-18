@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="gridPaneAddLetterTemplate" alignment="TOP_CENTER" hgap="4.0" vgap="4.0"
+          xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddMailSettingsController">
+  <columnConstraints>
+    <ColumnConstraints />
+    <ColumnConstraints />
+      <ColumnConstraints />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+  </rowConstraints>
+      <Label fx:id="labelTheme" text="Тема " GridPane.rowIndex="3" />
+      <TextField fx:id="tfTheme" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label fx:id="labelInfoTheme" text="Введите первое слово темы письма по которому будет происходить выборка писем." GridPane.columnIndex="2" GridPane.rowIndex="3">
+         <padding>
+            <Insets left="4.0" right="4.0" />
+         </padding></Label>
+      <Label fx:id="labelMailAddress" text="Почта для мониторинга писем" />
+      <Label fx:id="labelPasswordMail" text="Пароль от почты" GridPane.rowIndex="1" />
+      <Label fx:id="labelHost" text="HOST" GridPane.rowIndex="2" />
+      <TextField fx:id="tfMailAddress" GridPane.columnIndex="1" />
+      <TextField fx:id="tfPasswordMail" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="tfHost" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+   <Label text="IMAP" GridPane.columnIndex="2" GridPane.rowIndex="2">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="8.0" top="5.0" />
+   </padding>
+</GridPane>

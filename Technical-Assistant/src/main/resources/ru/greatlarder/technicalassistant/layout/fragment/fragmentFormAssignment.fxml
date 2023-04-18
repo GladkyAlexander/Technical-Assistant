@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
+<?import jfxtras.scene.control.*?>
+
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentFormAssignment">
+   <left>
+        <VBox fx:id="vBox" spacing="5.0" stylesheets="@../../css/main.css" BorderPane.alignment="CENTER">
+         <HBox alignment="TOP_CENTER" spacing="10.0">
+            <children>
+               <ImageView fx:id="imgEquipment" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../images/all_equipment_un_active.png" />
+                  </image>
+               </ImageView>
+               <VBox>
+                  <children>
+                            <Label fx:id="nameEquipment" text="Name">
+                                <font>
+                                    <Font name="System Bold" size="14.0" />
+                                </font>
+                            </Label>
+                            <Label fx:id="serialNumberEquipment" text="Serial number">
+                                <font>
+                                    <Font name="System Bold" size="14.0" />
+                                </font>
+                            </Label>
+                            <Label fx:id="locationEquipment" text="Location">
+                                <font>
+                                    <Font name="System Bold" size="14.0" />
+                                </font>
+                            </Label>
+                  </children>
+               </VBox>
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_RIGHT" spacing="3.0">
+            <children>
+               <Label fx:id="labelLastName" contentDisplay="CENTER" text="Last name" />
+               <TextField fx:id="textFileLastName" onKeyReleased="#onKeyReleasedLastName" />
+            </children></HBox>
+         <HBox alignment="CENTER_RIGHT" spacing="3.0">
+            <children>
+               <Label fx:id="labelFirstName" text="First name" />
+               <TextField fx:id="textFiledFirstName" onKeyReleased="#keyReleasedFirstName" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_RIGHT" spacing="3.0">
+            <children>
+               <Label fx:id="labelDepartment" text="Department" />
+               <TextField fx:id="textFiledDepartment" onKeyReleased="#keyReleasedDepartment" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_RIGHT" spacing="3.0">
+            <children>
+               <Label fx:id="labelTypeOfEvent" text="Type of event" />
+               <TextField fx:id="texFiledTypeOfEvent" onKeyReleased="#keyReleasedTypeOfEvent" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_RIGHT" spacing="3.0">
+            <children>
+               <Label fx:id="labelPosition" text="Position" />
+               <TextField fx:id="textFiledPosition" onKeyReleased="#keyReleasedPost" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_RIGHT" spacing="3.0">
+            <children>
+               <Label fx:id="labelPhoneNumber" text="Phone number" />
+               <TextField fx:id="textFiledPhoneNumber" onKeyReleased="#keyReleasedPhoneNumber" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_RIGHT" spacing="3.0">
+            <children>
+               <Label fx:id="labelLocation" text="Location" />
+               <TextField fx:id="textFieldLocation" onKeyReleased="#keyReleasedLocation" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_RIGHT" spacing="3.0">
+            <children>
+               <Label fx:id="labelPartner" text="Partner/Manager" />
+               <TextField fx:id="textFieldPartner" onKeyReleased="#keyReleasedPartner" />
+            </children>
+         </HBox>
+         <LocalDateTimeTextField fx:id="dataTimePickerStart" />
+         <LocalDateTimeTextField fx:id="dataTimePickerEnd" />
+         <HBox alignment="CENTER_RIGHT" spacing="3.0">
+            <children>
+               <Label fx:id="labelToWhom" text="To whom" />
+               <TextField fx:id="textFieldToWhom" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_RIGHT" spacing="3.0">
+            <children>
+               <Label fx:id="labelTopic" text="Topic" />
+               <TextField fx:id="textFieldTopic" />
+            </children>
+         </HBox>
+         <Button fx:id="btnSave" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" text="Save" />
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets left="5.0" right="5.0" />
+         </BorderPane.margin>
+        </VBox>
+   </left>
+   <center>
+      <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
