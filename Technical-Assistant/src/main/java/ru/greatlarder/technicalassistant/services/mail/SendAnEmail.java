@@ -1,8 +1,8 @@
 package ru.greatlarder.technicalassistant.services.mail;
 
+import jakarta.mail.MessagingException;
 import ru.greatlarder.technicalassistant.domain.user.User;
 
-import javax.mail.MessagingException;
 import java.util.List;
 
 public interface SendAnEmail {

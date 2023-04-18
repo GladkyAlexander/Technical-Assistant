@@ -1,10 +1,10 @@
 package ru.greatlarder.technicalassistant.controller.fragment;
 
+import jakarta.mail.MessagingException;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebView;
 import ru.greatlarder.technicalassistant.domain.Email;
 
-import javax.mail.MessagingException;
 import java.io.IOException;
 
 public class FragmentWebTaskController {

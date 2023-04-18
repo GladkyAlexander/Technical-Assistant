@@ -1,5 +1,6 @@
 package ru.greatlarder.technicalassistant.controller.fragment_add;
 
+import jakarta.mail.MessagingException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,7 +46,6 @@ import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.mail.impl.SendApplicationLetter;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 
-import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;

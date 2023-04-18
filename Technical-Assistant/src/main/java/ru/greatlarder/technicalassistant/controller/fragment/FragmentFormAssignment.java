@@ -1,21 +1,20 @@
 package ru.greatlarder.technicalassistant.controller.fragment;
 
+import jakarta.mail.MessagingException;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.print.PrinterJob;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import jfxtras.scene.control.LocalDateTimeTextField;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Document;
@@ -25,8 +24,11 @@ import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.database.GetListBookingEquipment;
+import ru.greatlarder.technicalassistant.services.database.SetBookingEquipment;
 import ru.greatlarder.technicalassistant.services.database.mysql.booking_equipment.ListBookingEquipmentByIdEquipmentMySQL;
+import ru.greatlarder.technicalassistant.services.database.mysql.booking_equipment.SetBookingEquipmentMySQL;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartReceptionController;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.mail.SendAnEmail;
@@ -35,7 +37,6 @@ import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 
-import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -46,6 +47,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static java.lang.Long.MAX_VALUE;
 
 public class FragmentFormAssignment implements Initializable {
     @FXML public Label nameEquipment;
@@ -84,6 +87,7 @@ public class FragmentFormAssignment implements Initializable {
     User user;
     Company company;
     FileManager fileManager = new FileManagerImpl();
+    BookingEquipment bookingEquipment;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -101,6 +105,7 @@ public class FragmentFormAssignment implements Initializable {
         locationEquipment.setText(equipment.getLocation());
         imgEquipment.setImage(new Image(Objects.requireNonNull(getClass()
             .getResourceAsStream("/ru/greatlarder/technicalassistant/images/equipment_img/" + equipment.getImage()))));
+        textFieldTopic.setText(equipment.getName());
     }
     private void loadDataTimePicker(){
         
@@ -142,6 +147,8 @@ public class FragmentFormAssignment implements Initializable {
                 
                 p_date_from.setTextContent(String.valueOf(ld));
                 p_time_from.setTextContent(String.valueOf(lt));
+                bookingEquipment = new BookingEquipment();
+                bookingEquipment.setDate(ld);
             });
             
             dataTimePickerEnd.withLocale(Locale.UK);
@@ -181,6 +188,7 @@ public class FragmentFormAssignment implements Initializable {
         labelPartner.setText(language.PARTNER(lang)+"/"+ language.MANAGER(lang));
         labelToWhom.setText(language.TO_WHOM(lang));
         labelTopic.setText(language.TOPIC(lang));
+        btnSave.setText(language.SAVE(lang));
     }
 
     public void fillOutTheForm() {
@@ -226,39 +234,31 @@ public class FragmentFormAssignment implements Initializable {
             logoCompany.getAttributeNode("src").setValue(url);
         }
     }
-    public void save() {
+    public void save() throws MessagingException {
         PrinterJob job = PrinterJob.createPrinterJob();
         webView.getEngine().print(job);
         job.endJob();
         
         if(!textFieldToWhom.getText().isEmpty()) {
+            SetBookingEquipment setBookingEquipment = new SetBookingEquipmentMySQL();
+            bookingEquipment.setIdEquipment(equipment.getId());
+            bookingEquipment.setConditionBooking(1);
+            setBookingEquipment.setBookingEquipment(user
+                , GlobalLinkMainController.getMainController().getCompany().getNameCompany(),  bookingEquipment);
             textFieldToWhom.setStyle(new TextField().getStyle());
             String[] address = textFieldToWhom.getText().split(",");
             SendAnEmail sendAnEmail = new SendEmailEquipmentRental();
-            try {
-                Document document = webView.getEngine().getDocument();
-                Element delete = document.getElementById("delete");
-                delete.getParentNode().removeChild(delete);
-                Element img = document.getElementById("logo_company");
-                String urlImage = img.getAttributeNode("src").getValue();
-                
-                String html = (String) webView.getEngine().executeScript("document.documentElement.outerHTML");
-                sendAnEmail.sendEmail(user, html, new ArrayList<>(Arrays.asList(address)), textFieldTopic.getText(), urlImage);
-            } catch (MessagingException e) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentConnectionError.fxml"));
-                try {
-                    Stage stage = new Stage();
-                    Scene scene = new Scene(loader.load());
-                    stage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png")))));
-                    stage.setTitle("Error");
-                    stage.setScene(scene);
-                    stage.show();
-                    e.printStackTrace();
-                } catch (IOException ex) {
-                    e.printStackTrace();
-                }
-                ((BorderPane) borderPane.getParent()).getChildren().remove(borderPane);
-            }
+            Document document = webView.getEngine().getDocument();
+            Element delete = document.getElementById("delete");
+            delete.getParentNode().removeChild(delete);
+            Element img = document.getElementById("logo_company");
+            String urlImage = img.getAttributeNode("src").getValue();
+            
+            String html = (String) webView.getEngine().executeScript("document.documentElement.outerHTML");
+            sendAnEmail.sendEmail(user, html, new ArrayList<>(Arrays.asList(address)), textFieldTopic.getText(), urlImage);
+            
+            ((BorderPane)borderPane.getParent()).getChildren().remove(borderPane);
+            GlobalLinkStartReceptionController.getStartReceptionController().openPortableDevices();
         } else {
             textFieldToWhom.setStyle(StyleSRC.STYLE_DANGER);
         }

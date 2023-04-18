@@ -1,5 +1,6 @@
 package ru.greatlarder.technicalassistant.controller.fragment_item;
 
+import jakarta.mail.Message;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -7,7 +8,6 @@ import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 
-import javax.mail.Message;
 import java.net.URL;
 import java.util.ResourceBundle;
 

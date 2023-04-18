@@ -14,8 +14,8 @@ module ru.greatlarder.technicalassistant {
     requires jfxtras.controls;
     requires java.sql;
     requires org.apache.commons.net;
-    requires poi;
     requires jakarta.mail;
+    requires org.apache.poi.poi;
     
     opens ru.greatlarder.technicalassistant to javafx.fxml;
     exports ru.greatlarder.technicalassistant;

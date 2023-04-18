@@ -1,8 +1,9 @@
 package ru.greatlarder.technicalassistant.services.mail;
 
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Part;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
+import jakarta.mail.Part;
+
 import java.io.IOException;
 
 public class GetMulti {

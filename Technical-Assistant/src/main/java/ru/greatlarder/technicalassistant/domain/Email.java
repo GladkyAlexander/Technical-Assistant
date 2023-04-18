@@ -1,6 +1,6 @@
 package ru.greatlarder.technicalassistant.domain;
 
-import javax.mail.Message;
+import jakarta.mail.Message;
 
 public class Email {
     String subjectOfTheLetter;

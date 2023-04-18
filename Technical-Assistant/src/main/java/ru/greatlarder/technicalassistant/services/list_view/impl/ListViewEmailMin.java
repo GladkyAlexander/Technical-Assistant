@@ -1,5 +1,7 @@
 package ru.greatlarder.technicalassistant.services.list_view.impl;
 
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +21,6 @@ import ru.greatlarder.technicalassistant.services.lang.impl.GetLanguageDataNameI
 import ru.greatlarder.technicalassistant.services.list_view.GetListViewMail;
 import ru.greatlarder.technicalassistant.services.mail.GetMulti;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -90,7 +90,7 @@ public class ListViewEmailMin implements GetListViewMail {
                 } catch (IOException | MessagingException e) {
                     e.printStackTrace();
                 }
-
+            
         });
 
         return list;
