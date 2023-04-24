@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddEquipmentController">
+<ScrollPane fx:id="scrollPane" maxWidth="-Infinity" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddEquipmentController">
    <content>
       <GridPane fx:id="gridPane" alignment="CENTER" cache="true" hgap="4.0" vgap="4.0">
         <columnConstraints>

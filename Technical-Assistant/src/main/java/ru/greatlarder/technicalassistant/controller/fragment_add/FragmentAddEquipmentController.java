@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
@@ -386,7 +387,7 @@ public class FragmentAddEquipmentController implements Initializable {
         choiceBoxNetworkSvitcher.setItems(FXCollections.observableArrayList(list1));
 
         cmbEquipmentType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            updatePanes((String) newValue);
+            updatePanes(newValue);
         });
         updatePanes("");
     }
@@ -795,7 +796,7 @@ public class FragmentAddEquipmentController implements Initializable {
         }
     }
 
-    public void onKeyReleasedNetDante(KeyEvent keyEvent) {
+    public void onKeyReleasedNetDante() {
         if (!network1Dante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(network1Dante.getText())) {
                 if (network1Dante.getText().length() <= 3) {
@@ -807,7 +808,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else network1Dante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedNet2Dante(KeyEvent keyEvent) {
+    public void onKeyReleasedNet2Dante() {
         if (!network2Dante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(network2Dante.getText())) {
                 if (network2Dante.getText().length() <= 3) {
@@ -819,7 +820,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else network2Dante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedSubnetDante(KeyEvent keyEvent) {
+    public void onKeyReleasedSubnetDante() {
         if (!subnetDante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(subnetDante.getText())) {
                 if (subnetDante.getText().length() <= 3) {
@@ -831,7 +832,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else subnetDante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedDeviceDante(KeyEvent keyEvent) {
+    public void onKeyReleasedDeviceDante() {
         CheckIpAddressDante checkIpAddressDante = new CheckingIpDanteForEmploymentInTheDatabaseSQLite();
         hBoxTCPDante.setVisible(true);
         hBoxTCPDante.setManaged(true);
@@ -859,7 +860,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else deviceDante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedMasc1Dante(KeyEvent keyEvent) {
+    public void onKeyReleasedMasc1Dante() {
         if (!networkMasc1Dante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(networkMasc1Dante.getText())) {
                 if (networkMasc1Dante.getText().length() <= 3) {
@@ -871,7 +872,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else networkMasc1Dante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedMasc2Dante(KeyEvent keyEvent) {
+    public void onKeyReleasedMasc2Dante() {
         if (!networkMasc2Dante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(networkMasc2Dante.getText())) {
                 if (networkMasc2Dante.getText().length() <= 3) {
@@ -883,7 +884,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else networkMasc2Dante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedMascSubnetDante(KeyEvent keyEvent) {
+    public void onKeyReleasedMascSubnetDante() {
         if (!subnetMascDante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(subnetMascDante.getText())) {
                 if (subnetMascDante.getText().length() <= 3) {
@@ -895,7 +896,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else subnetMascDante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedMascDeviceDante(KeyEvent keyEvent) {
+    public void onKeyReleasedMascDeviceDante() {
         if (!deviceMascDante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(deviceMascDante.getText())) {
                 if (deviceMascDante.getText().length() <= 3) {
@@ -909,7 +910,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else deviceMascDante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedGatewayDante(KeyEvent keyEvent) {
+    public void onKeyReleasedGatewayDante() {
         if (!gateway1Dante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(gateway1Dante.getText())) {
                 if (gateway1Dante.getText().length() <= 3) {
@@ -921,7 +922,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else gateway1Dante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedGateway2Dante(KeyEvent keyEvent) {
+    public void onKeyReleasedGateway2Dante() {
         if (!gateway2Dante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(gateway2Dante.getText())) {
                 if (gateway2Dante.getText().length() <= 3) {
@@ -933,7 +934,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else gateway2Dante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedGatewaySubnetDante(KeyEvent keyEvent) {
+    public void onKeyReleasedGatewaySubnetDante() {
         if (!subnetGatewayDante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(subnetGatewayDante.getText())) {
                 if (subnetGatewayDante.getText().length() <= 3) {
@@ -945,7 +946,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else subnetGatewayDante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedGatewayDeviceDante(KeyEvent keyEvent) {
+    public void onKeyReleasedGatewayDeviceDante() {
         if (!deviceGatewayDante.getText().isEmpty()) {
             if (checkForANumber.checkingForANumber(deviceGatewayDante.getText())) {
                 if (deviceGatewayDante.getText().length() <= 3) {
@@ -959,7 +960,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else deviceGatewayDante.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyReleasedPortSwitcher(KeyEvent keyEvent) {
+    public void onKeyReleasedPortSwitcher() {
         if (choiceBoxNetworkSvitcher.getValue() != null) {
             hBoxNetworkSwitcher.setStyle(new HBox().getStyle());
             hBoxPortSwitcher.setStyle(new HBox().getStyle());
@@ -989,7 +990,7 @@ public class FragmentAddEquipmentController implements Initializable {
         }
     }
 
-    public void onKeyReleasedOutlet(KeyEvent keyEvent) {
+    public void onKeyReleasedOutlet() {
         if (tfOutlet.getText().isEmpty()) {
             tfOutlet.setStyle(new TextField().getStyle());
         } else if (checkString.chekingStringWithACondition(tfOutlet.getText())) {
@@ -1073,139 +1074,8 @@ public class FragmentAddEquipmentController implements Initializable {
 
         return result;
     }*/
-    /*  public Equipment loadEquipment(Equipment equipment) {
-        Equipment returnEquipment = null;
-        if (equipment instanceof Projector) {
-            returnEquipment = new Projector();
-            ((Projector) returnEquipment).setTimeWorkLampProjector(0);
-            returnEquipment.setImage("projector.png");
-            if (!maximumLampOperatingTime.getText().trim().isEmpty()) {
-                ((Projector) returnEquipment).setMaximumLampOperatingTimeProjector(Integer.valueOf(maximumLampOperatingTime.getText()));
-            } else ((Projector) returnEquipment).setMaximumLampOperatingTimeProjector(null);
-        }
-        if (equipment instanceof Microphone) {
-            returnEquipment = new Microphone();
-            ((Microphone) returnEquipment).setFrequency(textFieldFrequency1.getText() + "." + textFieldFrequency2.getText());
-            returnEquipment.setImage("microphone.png");
-        }
-        if (equipment instanceof NetworkSwitch) {
-            returnEquipment = new NetworkSwitch();
-            returnEquipment.setImage("network_switch.png");
-        }
-        if (equipment instanceof AcousticSpeaker) {
-            returnEquipment = new AcousticSpeaker();
-            returnEquipment.setImage("as.png");
-        }
-        if (equipment instanceof ControlProcessor) {
-            returnEquipment = new ControlProcessor();
-            returnEquipment.setImage("control_processor.png");
-        }
-        if (equipment instanceof AudioProcessor) {
-            returnEquipment = new AudioProcessor();
-            returnEquipment.setImage("audio_processor.png");
-        }
-        if (equipment instanceof AudioAmplifier) {
-            returnEquipment = new AudioAmplifier();
-            returnEquipment.setImage("audio_amplifer.png");
-        }
-        if (equipment instanceof AudioInterface) {
-            returnEquipment = new AudioInterface();
-            returnEquipment.setImage("audio_interface.png");
-        }
-        if (equipment instanceof TvPanel) {
-            returnEquipment = new TvPanel();
-            returnEquipment.setImage("tv_panel.png");
-            ((TvPanel) returnEquipment).setDiagonal(tfDiagonal.getText());
-        }
-        if (equipment instanceof TvTuner) {
-            returnEquipment = new TvTuner();
-            returnEquipment.setImage("tv_tuner.png");
-        }
-        if (equipment instanceof MediaPlayer) {
-            returnEquipment = new MediaPlayer();
-            if(logoImg != null){
-                returnEquipment.setImage(logoImg);
-            }else returnEquipment.setImage("media_player.png");
-        }
-        if (equipment instanceof Laptop) {
-            returnEquipment = new Laptop();
-            returnEquipment.setImage("laptop.png");
-            ((Laptop) returnEquipment).setOs(tfOs.getText());
-        }
-        if (equipment instanceof VideoTransmitter) {
-            returnEquipment = new VideoTransmitter();
-            returnEquipment.setImage("tx_rx.jpg");
-        }
-        if (equipment instanceof VideoReceiver) {
-            returnEquipment = new VideoReceiver();
-            returnEquipment.setImage("tx_rx.jpg");
-        }
-        if (equipment instanceof MatrixSwitcher) {
-            returnEquipment = new MatrixSwitcher();
-            returnEquipment.setImage("matrix_switcher.jpg");
-        }
-        if (equipment instanceof TouchControlPanel) {
-            returnEquipment = new TouchControlPanel();
-            returnEquipment.setImage("control_patch_panel.png");
-            ((TouchControlPanel) returnEquipment).setDiagonal(tfDiagonal.getText());
-        }
-        if (equipment instanceof Controller) {
-            returnEquipment = new Controller();
-            returnEquipment.setImage(Objects.requireNonNullElse(logoImg, "control_processor.png"));
-        }
-
-        assert returnEquipment != null;
-        returnEquipment.setName(cmbEquipmentType.getValue());
-        returnEquipment.setModel(textFiledModel.getText());
-        returnEquipment.setManufacturer(textFieldManufacturer.getText());
-        returnEquipment.setSerialNumber(textFieldSerialNumber.getText());
-        returnEquipment.setMacAddress(getMacAddressEquipment(oui1.getText(), oui2.getText(), oui3.getText(), uaa1.getText(), uaa2.getText(), uaa3.getText()));
-        returnEquipment.setMacAddress1(getMacAddressEquipment(oui11.getText(), oui21.getText(), oui31.getText(), uaa11.getText(), uaa21.getText(), uaa31.getText()));
-        returnEquipment.setMacAddress2(getMacAddressEquipment(oui12.getText(), oui22.getText(), oui32.getText(), uaa12.getText(), uaa22.getText(), uaa32.getText()));
-        returnEquipment.setMacAddress3(getMacAddressEquipment(oui13.getText(), oui23.getText(), oui33.getText(), uaa13.getText(), uaa23.getText(), uaa33.getText()));
-        returnEquipment.setLogin(textFieldLogin.getText());
-        returnEquipment.setPassword(textFieldPassword.getText());
-        if(comboBoxRooms.getValue() != null) {
-            returnEquipment.setRoom(comboBoxRooms.getValue());
-        }
-        returnEquipment.setLocation(textFieldLocation.getText());
-        if (textFieldDateOfCommissioning.getValue() == null) {
-            returnEquipment.setDateWork(LocalDate.now());
-            textFieldDateOfCommissioning.setPromptText(language.TODAY_DATE_WILL_BE_SET_RU(lang));
-        } else returnEquipment.setDateWork(textFieldDateOfCommissioning.getValue());
-
-        if (getIpAddressEquipment(network1.getText(), network2.getText(), subnet.getText(), device.getText()) != null
-        && !checkIpAddress.checkIpAddress(user, company, getIpAddressEquipment(network1.getText(), network2.getText(), subnet.getText(), device.getText()))) {
-            returnEquipment.setIpAddress(getIpAddressEquipment(network1.getText(), network2.getText(), subnet.getText(), device.getText()));
-        } else returnEquipment.setIpAddress(null);
-
-        returnEquipment.setMasc(getIpAddressEquipment(networkMasc1.getText(), networkMasc2.getText(), subnetMasc.getText(), deviceMasc.getText()));
-        returnEquipment.setGateway(getIpAddressEquipment(gateway1.getText(), gateway2.getText(), subnetGateway.getText(), deviceGateway.getText()));
-        CheckIpAddressDante checkIpAddressDante = new CheckingIpDanteForEmploymentInTheDatabaseSQLite();
-        if (getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()) != null
-                && !checkIpAddressDante.checkIpAddress(user, company, getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()))) {
-            returnEquipment.setDanteIpAddress(getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()));
-        } else returnEquipment.setDanteIpAddress(null);
-
-        returnEquipment.setDanteMasc(getIpAddressEquipment(networkMasc1Dante.getText(), networkMasc2Dante.getText(), subnetMascDante.getText(), deviceMascDante.getText()));
-        returnEquipment.setDanteGateway(getIpAddressEquipment(gateway1Dante.getText(), gateway2Dante.getText(), subnetGatewayDante.getText(), deviceGatewayDante.getText()));
-        returnEquipment.setCondition(comboBoxStatusSelection.getValue().toString());
-        returnEquipment.setCompany(company.getNameCompany());
-        returnEquipment.setManual(nameFileManual);
-
-        GetEquipment getEquipment = new EquipmentBySerialNumberSQLite();
-        if (choiceBoxNetworkSvitcher.getValue() != null) {
-            returnEquipment.setIdNetworkSwitcher((getEquipment.getEquipment(user, company.getNameCompany(), choiceBoxNetworkSvitcher.getValue())).getId());
-            returnEquipment.setPortNumberInTheSwitch(Integer.parseInt(tfPortSwitcher.getText()));
-            returnEquipment.setOutletNumber(tfOutlet.getText());
-        }
-
-        if(returnEquipment.getSerialNumber() != null || !returnEquipment.getSerialNumber().isEmpty()){
-            return returnEquipment;
-        } else return null;
-    }*/
-
-    public void saveEquipment(MouseEvent mouseEvent) {
+   
+    public void saveEquipment() {
         if (cmbEquipmentType.getValue() != null) {
             cmbEquipmentType.setStyle(new ComboBox<String>().getStyle());
             if (comboBoxStatusSelection.getValue() != null) {
@@ -1340,10 +1210,10 @@ public class FragmentAddEquipmentController implements Initializable {
         uaa33.clear();
     }
 
-    public void closeAddEquipmentController(MouseEvent mouseEvent) {
+    public void closeAddEquipmentController() {
         ((BorderPane)scrollPane.getParent()).getChildren().remove(scrollPane);
     }
-    public void onActionBtnMacDop(ActionEvent actionEvent) {
+    public void onActionBtnMacDop() {
         boolean a;
         if(flag == 0){
             flag = 1;
@@ -1360,7 +1230,7 @@ public class FragmentAddEquipmentController implements Initializable {
         this.hBoxMacAddress3.setManaged(a);
     }
 
-    public void onKeyOui1_1(KeyEvent keyEvent) {
+    public void onKeyOui1_1() {
         if (oui11.getText().isEmpty()) {
             oui11.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(oui11.getText()) || oui11.getText().length() > 2) {
@@ -1370,7 +1240,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else oui11.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyOui2_1(KeyEvent keyEvent) {
+    public void onKeyOui2_1() {
         if (oui21.getText().isEmpty()) {
             oui21.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(oui21.getText()) || oui21.getText().length() > 2) {
@@ -1380,7 +1250,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else oui21.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyOui3_1(KeyEvent keyEvent) {
+    public void onKeyOui3_1() {
         if (oui31.getText().isEmpty()) {
             oui31.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(oui31.getText()) || oui31.getText().length() > 2) {
@@ -1390,7 +1260,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else oui31.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyUaa1_1(KeyEvent keyEvent) {
+    public void onKeyUaa1_1() {
         if (uaa11.getText().isEmpty()) {
             uaa11.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(uaa11.getText()) || uaa11.getText().length() > 2) {
@@ -1400,7 +1270,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else uaa11.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyUaa2_1(KeyEvent keyEvent) {
+    public void onKeyUaa2_1() {
         if (uaa21.getText().isEmpty()) {
             uaa21.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(uaa21.getText()) || uaa21.getText().length() > 2) {
@@ -1410,7 +1280,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else uaa21.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyUaa3_1(KeyEvent keyEvent) {
+    public void onKeyUaa3_1() {
         if (uaa31.getText().isEmpty()) {
             uaa31.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(uaa31.getText()) || uaa31.getText().length() > 2) {
@@ -1434,7 +1304,7 @@ public class FragmentAddEquipmentController implements Initializable {
         }
     }
 
-    public void onKeyOui1_2(KeyEvent keyEvent) {
+    public void onKeyOui1_2() {
         if (oui12.getText().isEmpty()) {
             oui12.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(oui12.getText()) || oui12.getText().length() > 2) {
@@ -1444,7 +1314,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else oui12.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyOui2_2(KeyEvent keyEvent) {
+    public void onKeyOui2_2() {
         if (oui22.getText().isEmpty()) {
             oui22.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(oui22.getText()) || oui22.getText().length() > 2) {
@@ -1454,7 +1324,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else oui22.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyOui3_2(KeyEvent keyEvent) {
+    public void onKeyOui3_2() {
         if (oui32.getText().isEmpty()) {
             oui32.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(oui32.getText()) || oui32.getText().length() > 2) {
@@ -1464,7 +1334,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else oui32.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyUaa1_2(KeyEvent keyEvent) {
+    public void onKeyUaa1_2() {
         if (uaa12.getText().isEmpty()) {
             uaa12.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(uaa12.getText()) || uaa12.getText().length() > 2) {
@@ -1474,7 +1344,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else uaa12.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyUaa2_2(KeyEvent keyEvent) {
+    public void onKeyUaa2_2() {
         if (uaa22.getText().isEmpty()) {
             uaa22.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(uaa22.getText()) || uaa22.getText().length() > 2) {
@@ -1484,7 +1354,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else uaa22.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyUaa3_2(KeyEvent keyEvent) {
+    public void onKeyUaa3_2() {
         if (uaa32.getText().isEmpty()) {
             uaa32.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(uaa32.getText()) || uaa32.getText().length() > 2) {
@@ -1508,7 +1378,7 @@ public class FragmentAddEquipmentController implements Initializable {
         }
     }
 
-    public void onKeyOui1_3(KeyEvent keyEvent) {
+    public void onKeyOui1_3() {
         if (oui13.getText().isEmpty()) {
             oui13.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(oui13.getText()) || oui13.getText().length() > 2) {
@@ -1518,7 +1388,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else oui13.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyOui2_3(KeyEvent keyEvent) {
+    public void onKeyOui2_3() {
         if (oui23.getText().isEmpty()) {
             oui23.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(oui23.getText()) || oui23.getText().length() > 2) {
@@ -1528,7 +1398,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else oui23.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyOui3_3(KeyEvent keyEvent) {
+    public void onKeyOui3_3() {
         if (oui33.getText().isEmpty()) {
             oui33.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(oui33.getText()) || oui33.getText().length() > 2) {
@@ -1538,7 +1408,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else oui33.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyUaa1_3(KeyEvent keyEvent) {
+    public void onKeyUaa1_3() {
         if (uaa13.getText().isEmpty()) {
             uaa13.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(uaa13.getText()) || uaa13.getText().length() > 2) {
@@ -1548,7 +1418,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else uaa13.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyUaa2_3(KeyEvent keyEvent) {
+    public void onKeyUaa2_3() {
         if (uaa23.getText().isEmpty()) {
             uaa23.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(uaa23.getText()) || uaa23.getText().length() > 2) {
@@ -1558,7 +1428,7 @@ public class FragmentAddEquipmentController implements Initializable {
         } else uaa23.setStyle(new TextField().getStyle());
     }
 
-    public void onKeyUaa3_3(KeyEvent keyEvent) {
+    public void onKeyUaa3_3() {
         if (uaa33.getText().isEmpty()) {
             uaa33.setStyle(new TextField().getStyle());
         } else if (!checkString.chekingStringWithACondition(uaa33.getText()) || uaa33.getText().length() > 2) {
@@ -1582,17 +1452,17 @@ public class FragmentAddEquipmentController implements Initializable {
         }
     }
 
-    public void onActionCmbEquipmentType(MouseEvent actionEvent) {
+    public void onActionCmbEquipmentType() {
     
     }
 
-    public void openHMP200(MouseEvent mouseEvent) throws URISyntaxException {
+    public void openHMP200() throws URISyntaxException {
         textFiledModel.setText(SpinetixHMP200.model);
         textFieldManufacturer.setText(SpinetixHMP200.manufacturer);
         conservationEquipment.setModel(SpinetixHMP200.model);
         conservationEquipment.setManufacturer(SpinetixHMP200.manufacturer);
         pdfFile.setDisable(true);
-            File file1 = new File(getClass().getResource(SpinetixHMP200.instruction).toURI());
+            File file1 = new File(Objects.requireNonNull(getClass().getResource(SpinetixHMP200.instruction)).toURI());
             File file = new File(fileManager.folderManual() + "\\" + file1.getName());
             conservationEquipment.setManual(file1.getName());
             try {
@@ -1603,13 +1473,13 @@ public class FragmentAddEquipmentController implements Initializable {
             logoImg = SpinetixHMP200.logo;
     }
 
-    public void openHMP400(MouseEvent mouseEvent) throws URISyntaxException {
+    public void openHMP400() throws URISyntaxException {
         textFiledModel.setText(SpinetixHMP400.model);
         textFieldManufacturer.setText(SpinetixHMP400.manufacturer);
         conservationEquipment.setModel(SpinetixHMP400.model);
         conservationEquipment.setManufacturer(SpinetixHMP400.manufacturer);
         pdfFile.setDisable(true);
-        File file1 = new File(getClass().getResource(SpinetixHMP400.instruction).toURI());
+        File file1 = new File(Objects.requireNonNull(getClass().getResource(SpinetixHMP400.instruction)).toURI());
         File file = new File(fileManager.folderManual() + "\\" + file1.getName());
         conservationEquipment.setManual(file1.getName());
         try {
@@ -1620,18 +1490,18 @@ public class FragmentAddEquipmentController implements Initializable {
         logoImg = SpinetixHMP400.logo;
     }
 
-    public void openWirenBoard(MouseEvent mouseEvent) {
+    public void openWirenBoard() {
         this.hBoxSelectionByDeviceController.setVisible(true);
         this.hBoxSelectionByDeviceController.setManaged(true);
     }
 
-    public void wb7open(MouseEvent mouseEvent) throws URISyntaxException {
+    public void wb7open() throws URISyntaxException {
         textFiledModel.setText(WirenBoard7.model);
         textFieldManufacturer.setText(WirenBoard7.manufacturer);
         conservationEquipment.setModel(WirenBoard7.model);
         conservationEquipment.setManufacturer(WirenBoard7.manufacturer);
         pdfFile.setDisable(true);
-        File file1 = new File(getClass().getResource(WirenBoard7.instruction).toURI());
+        File file1 = new File(Objects.requireNonNull(getClass().getResource(WirenBoard7.instruction)).toURI());
         File file = new File(fileManager.folderManual() + "\\" + file1.getName());
         conservationEquipment.setManual(file1.getName());
         try {
@@ -1642,13 +1512,13 @@ public class FragmentAddEquipmentController implements Initializable {
         logoImg = WirenBoard7.logo;
     }
 
-    public void openWB6(MouseEvent mouseEvent) throws URISyntaxException {
+    public void openWB6() throws URISyntaxException {
         textFiledModel.setText(WirenBoard6.model);
         textFieldManufacturer.setText(WirenBoard7.manufacturer);
         conservationEquipment.setModel(WirenBoard6.model);
         conservationEquipment.setManufacturer(WirenBoard7.manufacturer);
         pdfFile.setDisable(true);
-        File file1 = new File(getClass().getResource(WirenBoard6.instruction).toURI());
+        File file1 = new File(Objects.requireNonNull(getClass().getResource(WirenBoard6.instruction)).toURI());
         File file = new File(fileManager.folderManual() + "\\" + file1.getName());
         conservationEquipment.setManual(file1.getName());
         try {
@@ -1659,18 +1529,18 @@ public class FragmentAddEquipmentController implements Initializable {
         logoImg = WirenBoard6.logo;
     }
 
-    public void openSpinetix(MouseEvent mouseEvent) {
+    public void openSpinetix() {
         this.hBoxSelectionByDeviceMediaPlayer.setVisible(true);
         this.hBoxSelectionByDeviceMediaPlayer.setManaged(true);
     }
 
-    public void openHMP300(MouseEvent mouseEvent) throws URISyntaxException {
+    public void openHMP300() throws URISyntaxException {
         textFiledModel.setText(SpinetixHMP300.model);
         textFieldManufacturer.setText(SpinetixHMP300.manufacturer);
         conservationEquipment.setModel(SpinetixHMP300.model);
         conservationEquipment.setManufacturer(SpinetixHMP300.manufacturer);
         pdfFile.setDisable(true);
-        File file1 = new File(getClass().getResource(SpinetixHMP300.instruction).toURI());
+        File file1 = new File(Objects.requireNonNull(getClass().getResource(SpinetixHMP300.instruction)).toURI());
         File file = new File(fileManager.folderManual() + "\\" + file1.getName());
         conservationEquipment.setManual(file1.getName());
         try {
@@ -1718,14 +1588,14 @@ public class FragmentAddEquipmentController implements Initializable {
         return null;
     }
 
-    public void fillType(MouseEvent actionEvent) {
+    public void fillType() {
         List<String> x = new ArrayList<>();
         x.add("Portable");
         x.add("Stationary");
         comboBoxType.getItems().addAll(x);
     }
 
-    public void fillVisible(MouseEvent actionEvent) {
+    public void fillVisible() {
         List<Integer> x = new ArrayList<>();
         x.add(0);
         x.add(1);

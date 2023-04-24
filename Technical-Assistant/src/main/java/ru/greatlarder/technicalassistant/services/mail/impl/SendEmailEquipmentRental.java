@@ -1,5 +1,6 @@
 package ru.greatlarder.technicalassistant.services.mail.impl;
 
+import jakarta.activation.DataHandler;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeBodyPart;
