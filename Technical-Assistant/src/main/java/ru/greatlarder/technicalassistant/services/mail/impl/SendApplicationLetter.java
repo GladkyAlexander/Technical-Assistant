@@ -14,7 +14,7 @@ import java.util.Properties;
 public class SendApplicationLetter implements SendAnEmail {
     
     @Override
-    public void sendEmail(User user, String document, List<String> to, String them, String urlImage) throws MessagingException {
+    public String sendEmail(User user, String document, List<String> to, String them, String urlImage) throws MessagingException {
         GetMailSettings getMailSettings = new GetMailSettingsByIdUserSQLite();
         String username = getMailSettings.getMailSettings(user, String.valueOf(user.getId())).getMailMonitoring();
         String password = getMailSettings.getMailSettings(user, String.valueOf(user.getId())).getPasswordMailMonitoring();
@@ -39,7 +39,6 @@ public class SendApplicationLetter implements SendAnEmail {
             mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(addressTo));
             mimeMessage.setSubject(them);
             mimeMessage.setSentDate(new Date());
-            //mimeMessage.setContent(document, "text/html; charset=UTF-8");
             
             Multipart multi = new MimeMultipart();
             BodyPart html = new MimeBodyPart();
@@ -49,5 +48,6 @@ public class SendApplicationLetter implements SendAnEmail {
             
             Transport.send(mimeMessage);
         }
+        return "ok";
     }
 }

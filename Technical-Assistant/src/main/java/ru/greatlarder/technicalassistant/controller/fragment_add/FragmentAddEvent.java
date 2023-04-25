@@ -46,6 +46,8 @@ import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
 import ru.greatlarder.technicalassistant.services.mail.impl.SendApplicationLetter;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 
+import java.awt.event.ActionEvent;
+import java.beans.EventHandler;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -53,6 +55,8 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static java.lang.Long.MAX_VALUE;
 
 public class FragmentAddEvent implements Initializable {
     @FXML public GridPane gridPaneAddEvent;
@@ -119,7 +123,7 @@ public class FragmentAddEvent implements Initializable {
         GetLocDatTime getLocDatTime = new GetLocDatTime();
 
         comboBoxEndEvent.setItems(FXCollections.observableArrayList(getListTimeToString.getListTimeToString(this.day, getLocDatTime.getLocDatTime(time))));
-
+        comboBoxEndEvent.setOnAction( event -> labelEndEvent.setText(comboBoxEndEvent.getValue()));
         comboBoxChoiceTo.setItems(getTo());
     }
 
@@ -127,7 +131,7 @@ public class FragmentAddEvent implements Initializable {
         GetListNames getListSeating = new ListNamesForSeatingArrangementMySQL();
         Task<List<String>> task = new Task<>() {
             @Override
-            protected List<String> call() throws Exception {
+            protected List<String> call() {
                 List<String> stringsS = new ArrayList<>();
                 for(Names names: getListSeating.getListNames(user, company.getNameCompany(), null)){
                     stringsS.add(names.getNames());
@@ -146,7 +150,7 @@ public class FragmentAddEvent implements Initializable {
 
         Task<List<Names>> taskListEvent = new Task<>() {
             @Override
-            protected List<Names> call() throws Exception {
+            protected List<Names> call() {
                 GetListNames getListEventName = new ListNamesForEventFormatMySQL();
                 return getListEventName.getListNames(user, company.getNameCompany(), null);
             }
@@ -164,7 +168,7 @@ public class FragmentAddEvent implements Initializable {
                     if(names.getNames().equals(comboBoxNameEvent.getValue())){
                         imgNameEvent.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(
                                 "/ru/greatlarder/technicalassistant/images/events_img" + "/" + names.getUrl()))));
-                    };
+                    }
                 }
             });
         });
@@ -243,6 +247,7 @@ public class FragmentAddEvent implements Initializable {
     }
     
     private void save(){
+        borderPane.setStyle(new BorderPane().getStyle());
         
         UpdateDay updateDay = new UpdateDayMySQL();
         GetDayUpdate getDayUpdate = new GetDayUpdate();
@@ -257,33 +262,37 @@ public class FragmentAddEvent implements Initializable {
         for (String s : list){
             listAddress.add(hashMap.get(s));
         }
-        
-        try {
-            htmlLetter.sendEmail(user, getDocument(), listAddress, textFiledTopic.getText(), null );
-        } catch (MessagingException | IOException | URISyntaxException e) {
-            gridPaneAddEvent.setStyle(StyleSRC.STYLE_DANGER);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentConnectionError.fxml"));
-            try {
-            Stage stage = new Stage();
-            Scene scene = new Scene(loader.load());
-            stage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png")))));
-            stage.setTitle("Error");
-            stage.setScene(scene);
-            stage.show();
-            e.printStackTrace();
-            } catch (IOException ex) {
-                e.printStackTrace();
+        ProgressBar progressBar = new ProgressBar();
+        progressBar.setMaxWidth(MAX_VALUE);
+        borderPane.setTop(progressBar);
+        Task<String> task = new Task<>() {
+            @Override
+            protected String call() throws Exception {
+                return htmlLetter.sendEmail(user, getDocument(), listAddress, textFiledTopic.getText(), null );
             }
-        }
-        Stage stage = (Stage) gridPaneAddEvent.getScene().getWindow();
-        stage.close();
+        };
+        task.setOnSucceeded((s)->{
+            borderPane.getChildren().remove(progressBar);
+            if(task.getValue() != null) {
+                Stage stage = (Stage) gridPaneAddEvent.getScene().getWindow();
+                stage.close();
+            } else borderPane.setStyle(StyleSRC.STYLE_DANGER);
+        });
+        Platform.runLater(()->{
+            progressBar.progressProperty().bind(task.progressProperty());
+            progressBar.visibleProperty().bind(task.runningProperty());
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(task);
+            executorService.shutdown();
+        });
+        
     }
     private void change(){
         
         events.setNameEventFormat(comboBoxNameEvent.getValue());
         events.setUrlImageEvent(getNameImg(comboBoxNameEvent.getValue()));
         events.setEventStartTime(startEvent.getText());
-        events.setEndTimeOfTheEvent(comboBoxEndEvent.getValue());
+        events.setEndTimeOfTheEvent(labelEndEvent.getText());
         if (comboBoxSeatingArrangements.getValue() != null) {
             GetSeatingArrangements getSeatingArrangements = new SeatingArrangementsByNameMySQL();
             events.setIdSeatingArrangements(getSeatingArrangements.getSeatingArrangements(user, company.getNameCompany(), comboBoxSeatingArrangements.getValue()).getId());
@@ -303,7 +312,8 @@ public class FragmentAddEvent implements Initializable {
         
         SendApplicationLetter htmlLetter = new SendApplicationLetter();
         String[] address = textFiledTo.getText().split(",");
-        try {
+        
+        /*try {
             htmlLetter.sendEmail(user, getDocument(), new ArrayList<>(Arrays.asList(address)), textFiledTopic.getText(), null );
         } catch (MessagingException | IOException | URISyntaxException e) {
             gridPaneAddEvent.setStyle(StyleSRC.STYLE_DANGER);
@@ -319,9 +329,30 @@ public class FragmentAddEvent implements Initializable {
             } catch (IOException ex) {
                 e.printStackTrace();
             }
-        }
-        Stage stage = (Stage) gridPaneAddEvent.getScene().getWindow();
-        stage.close();
+        }*/
+        ProgressBar progressBar = new ProgressBar();
+        progressBar.setMaxWidth(MAX_VALUE);
+        borderPane.setTop(progressBar);
+        Task<String> task = new Task<>() {
+            @Override
+            protected String call() throws Exception {
+                return htmlLetter.sendEmail(user, getDocument(), new ArrayList<>(Arrays.asList(address)), textFiledTopic.getText(), null );
+            }
+        };
+        task.setOnSucceeded((s)->{
+            borderPane.getChildren().remove(progressBar);
+            if(task.getValue() != null) {
+                Stage stage = (Stage) gridPaneAddEvent.getScene().getWindow();
+                stage.close();
+            } else borderPane.setStyle(StyleSRC.STYLE_DANGER);
+        });
+        Platform.runLater(()->{
+            progressBar.progressProperty().bind(task.progressProperty());
+            progressBar.visibleProperty().bind(task.runningProperty());
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(task);
+            executorService.shutdown();
+        });
     }
     public void valueInput() {
         textFiledTo.setText(comboBoxChoiceTo.getValue());
@@ -411,7 +442,7 @@ public class FragmentAddEvent implements Initializable {
         eventNew.setNameEventFormat(comboBoxNameEvent.getValue());
         eventNew.setUrlImageEvent(getNameImg(comboBoxNameEvent.getValue()));
         eventNew.setEventStartTime(startEvent.getText());
-        eventNew.setEndTimeOfTheEvent(comboBoxEndEvent.getValue());
+        eventNew.setEndTimeOfTheEvent(labelEndEvent.getText());
         if(comboBoxSeatingArrangements.getValue() != null) {
             SeatingArrangements seatingArrangements = new SeatingArrangements(comboBoxSeatingArrangements.getValue()
                     , company.getNameCompany(), null, Integer.valueOf(textFiledNumberOfParticipants.getText()));

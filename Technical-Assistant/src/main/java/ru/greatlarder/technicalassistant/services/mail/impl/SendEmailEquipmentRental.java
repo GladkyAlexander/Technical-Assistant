@@ -18,7 +18,7 @@ import java.util.Properties;
 public class SendEmailEquipmentRental implements SendAnEmail {
   
     @Override
-    public void sendEmail(User user, String document, List<String> to, String them, String urlImage) throws MessagingException {
+    public String sendEmail(User user, String document, List<String> to, String them, String urlImage) throws MessagingException {
         GetMailSettings getMailSettings = new GetMailSettingsByIdUserSQLite();
         String username = getMailSettings.getMailSettings(user, String.valueOf(user.getId())).getMailMonitoring();
         String password = getMailSettings.getMailSettings(user, String.valueOf(user.getId())).getPasswordMailMonitoring();
@@ -53,7 +53,7 @@ public class SendEmailEquipmentRental implements SendAnEmail {
             
             Transport.send(mimeMessage);
         }
-        
+        return "ok";
     }
     
 }
