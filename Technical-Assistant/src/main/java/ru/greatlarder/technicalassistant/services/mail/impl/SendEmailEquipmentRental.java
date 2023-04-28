@@ -1,6 +1,5 @@
 package ru.greatlarder.technicalassistant.services.mail.impl;
 
-import jakarta.activation.DataHandler;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeBodyPart;
@@ -11,9 +10,8 @@ import ru.greatlarder.technicalassistant.services.database.GetMailSettings;
 import ru.greatlarder.technicalassistant.services.database.sqlite.mail_settings.GetMailSettingsByIdUserSQLite;
 import ru.greatlarder.technicalassistant.services.mail.SendAnEmail;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.io.IOException;
+import java.util.*;
 
 public class SendEmailEquipmentRental implements SendAnEmail {
   
@@ -43,13 +41,21 @@ public class SendEmailEquipmentRental implements SendAnEmail {
             mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(addressTo));
             mimeMessage.setSubject(them);
             mimeMessage.setSentDate(new Date());
-            //mimeMessage.setContent(document, "text/html; charset=UTF-8");
             
-            Multipart multi = new MimeMultipart();
-            BodyPart html = new MimeBodyPart();
-            html.setContent(document, "text/html; charset=utf-8");
-            multi.addBodyPart(html);
-            mimeMessage.setContent(multi);
+            Multipart multipart = new MimeMultipart();
+            MimeBodyPart htmlPart = new MimeBodyPart();
+            htmlPart.setText(document, "utf-8", "html");
+            multipart.addBodyPart(htmlPart);
+            MimeBodyPart imgPart = new MimeBodyPart();
+            try {
+                imgPart.attachFile(urlImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imgPart.setContentID("<some-image-cid>");
+            multipart.addBodyPart(imgPart);
+            
+            mimeMessage.setContent(multipart);
             
             Transport.send(mimeMessage);
         }

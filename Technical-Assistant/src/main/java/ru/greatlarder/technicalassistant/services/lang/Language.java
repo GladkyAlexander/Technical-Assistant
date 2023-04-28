@@ -396,4 +396,8 @@ public interface Language {
     String SELECT_THE_END_OF_THE_EVENT(String lang);
     
     String TO_WHOM(String lang);
+    
+    String RECIPIENTS(String lang);
+    
+    String ADD_AS_A_TASK(String lang);
 }

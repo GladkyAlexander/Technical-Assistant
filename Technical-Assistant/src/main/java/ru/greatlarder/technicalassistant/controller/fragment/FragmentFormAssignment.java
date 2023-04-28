@@ -223,7 +223,9 @@ public class FragmentFormAssignment implements Initializable {
         nameCompany2.setTextContent(company.getNameCompany());
         if(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/html/img") != null){
             String url = "/ru/greatlarder/technicalassistant/html/img" + company.getLogoCompany();
+            
             logoCompany.getAttributeNode("src").setValue(url);
+            
         } else if(fileManager.getUrlFileImage(company.getLogoCompany()) != null){
             try {
                 FileUtils.copyFile(new File(fileManager.getUrlFileImage(company.getLogoCompany())), new File("/ru/greatlarder/technicalassistant/html/img" + company.getLogoCompany()));
@@ -251,8 +253,11 @@ public class FragmentFormAssignment implements Initializable {
             Document document = webView.getEngine().getDocument();
             Element delete = document.getElementById("delete");
             delete.getParentNode().removeChild(delete);
+            
             Element img = document.getElementById("logo_company");
             String urlImage = img.getAttributeNode("src").getValue();
+            
+            img.getParentNode().removeChild(img);
             
             String html = (String) webView.getEngine().executeScript("document.documentElement.outerHTML");
             sendAnEmail.sendEmail(user, html, new ArrayList<>(Arrays.asList(address)), textFieldTopic.getText(), urlImage);
@@ -266,7 +271,6 @@ public class FragmentFormAssignment implements Initializable {
     }
     
     public void onKeyReleasedLastName() {
-        //String html = (String) webView.getEngine().executeScript("document.documentElement.outerHTML");
         Document document = webView.getEngine().getDocument();
             Element p_lastName = document.getElementById("p_lastName");
             assert p_lastName != null;

@@ -7,6 +7,7 @@ import ru.greatlarder.technicalassistant.services.database.GetMailSettings;
 import ru.greatlarder.technicalassistant.services.database.sqlite.mail_settings.GetMailSettingsByIdUserSQLite;
 import ru.greatlarder.technicalassistant.services.mail.SendAnEmail;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -40,11 +41,20 @@ public class SendApplicationLetter implements SendAnEmail {
             mimeMessage.setSubject(them);
             mimeMessage.setSentDate(new Date());
             
-            Multipart multi = new MimeMultipart();
-            BodyPart html = new MimeBodyPart();
-            html.setContent(document, "text/html; charset=utf-8");
-            multi.addBodyPart(html);
-            mimeMessage.setContent(multi);
+            Multipart multipart = new MimeMultipart();
+            MimeBodyPart htmlPart = new MimeBodyPart();
+            htmlPart.setText(document, "utf-8", "html");
+            multipart.addBodyPart(htmlPart);
+            MimeBodyPart imgPart = new MimeBodyPart();
+            try {
+                imgPart.attachFile(urlImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imgPart.setContentID("<some-image-cid>");
+            multipart.addBodyPart(imgPart);
+            
+            mimeMessage.setContent(multipart);
             
             Transport.send(mimeMessage);
         }

@@ -1989,6 +1989,28 @@ public class LanguageImpl implements Language {
     }
     
     @Override
+    public String RECIPIENTS(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Получатели";
+        } else if (lang.equals(en)) {
+            office = "Recipients";
+        }
+        return office;
+    }
+    
+    @Override
+    public String ADD_AS_A_TASK(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Добавить как задание";
+        } else if (lang.equals(en)) {
+            office = "Add as a task";
+        }
+        return office;
+    }
+    
+    @Override
     public String OFFICE(String language) {
         String office = "";
         if (language.equals(ru)) {

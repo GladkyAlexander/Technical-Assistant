@@ -113,9 +113,9 @@ public class DocumentationEngineerController implements Initializable {
         loadFoldersList();
     }
     private void loadFoldersList(){
-            Task<ListView<String>> task = new Task<ListView<String>>() {
+            Task<ListView<String>> task = new Task<>() {
                 @Override
-                protected ListView<String> call() throws Exception {
+                protected ListView<String> call() {
                     GetAListOfFilesFromTheDirectory getAlistView = new ListViewDirectoryDocumentation();
                     return getAlistView.getListViewFile(user, company.getNameCompany());
                 }

@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.web.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<WebView fx:id="webView" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0"
-         prefWidth="-1.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentWebTaskController" />
+<BorderPane fx:id="borderPane" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment.FragmentWebTaskController">
+   <bottom>
+      <HBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#addAsATask" text="Button" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </bottom>
+</BorderPane>

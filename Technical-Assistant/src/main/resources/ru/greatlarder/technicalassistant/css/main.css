@@ -21,7 +21,7 @@
 }
 .split-pane-divider{
         -fx-padding: 0 2 0 2 ;
-        -fx-background-color: #808080 ;
+        -fx-background-color: #808080;
         -fx-background-insets: 0;
 }
 .list-cell {

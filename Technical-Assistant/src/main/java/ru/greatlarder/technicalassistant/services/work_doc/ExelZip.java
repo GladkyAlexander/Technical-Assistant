@@ -12,6 +12,7 @@ import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ExelZip {
@@ -80,8 +81,8 @@ public class ExelZip {
         row.createCell(4).setCellValue(equipment.getSerialNumber());
         row.getCell(4).setCellStyle(styleCell);
         sheet.autoSizeColumn(4);
-
-        row.createCell(5).setCellValue(equipment.getDateWork());
+        
+        row.createCell(5).setCellValue(String.valueOf(equipment.getDateWork()));
         row.getCell(5).setCellStyle(styleCell);
         sheet.autoSizeColumn(5);
     }

@@ -62,7 +62,7 @@ public class ItemEquipmentController {
         task.setOnSucceeded((t) ->{
             BookingEquipment b = task.getValue();
             if (b != null) {
-                vBox.setStyle(StyleSRC.STYLE_WARNING);
+                vBox.setStyle(StyleSRC.STYLE_DANGER);
             }
             vBox.getChildren().remove(progressBar);
         });

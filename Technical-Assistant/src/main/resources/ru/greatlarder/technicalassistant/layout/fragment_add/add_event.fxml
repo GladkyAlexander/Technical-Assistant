@@ -44,11 +44,11 @@
           <TextArea fx:id="textAreaNote" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" />
           <TextField fx:id="textFileFirstNameCustomer" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
           <TextField fx:id="textFiledLastNameCustomer" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-          <Label fx:id="startEvent" alignment="TOP_CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+          <Label fx:id="startEvent" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
           <ComboBox fx:id="comboBoxEndEvent" maxWidth="1.7976931348623157E308" styleClass="jfx-combo-box" stylesheets="@../../css/table.css" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
           <ComboBox fx:id="comboBoxSeatingArrangements" maxWidth="1.7976931348623157E308" styleClass="jfx-combo-box" stylesheets="@../../css/table.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
           <TextField fx:id="textFiledNumberOfParticipants" onKeyReleased="#onKeyRealisedNumberOfParticipants" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-          <Label fx:id="endEvent" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+          <Label fx:id="endEvent" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          <HBox alignment="CENTER_LEFT" spacing="5.0">
             <children>
                 <Label fx:id="nameEvent" alignment="CENTER" contentDisplay="CENTER" text="Name event" textAlignment="CENTER">
@@ -78,7 +78,7 @@
                <Insets bottom="5.0" top="5.0" />
             </GridPane.margin>
          </HBox>
-         <ComboBox fx:id="comboBoxChoiceTo" maxWidth="1.7976931348623157E308" onAction="#valueInput" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9" />
+         <ComboBox fx:id="comboBoxChoiceTo" maxWidth="1.7976931348623157E308" onAction="#valueInput" promptText="Recipients" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9" />
          <HBox fx:id="hBoxListEquipment" maxWidth="1.7976931348623157E308" spacing="4.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
          <columnConstraints>
             <ColumnConstraints />

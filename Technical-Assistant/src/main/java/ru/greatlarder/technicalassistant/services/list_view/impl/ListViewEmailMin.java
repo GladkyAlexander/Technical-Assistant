@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.controller.fragment.FragmentWebTaskController;
 import ru.greatlarder.technicalassistant.controller.fragment_item.ItemEmail;
@@ -26,6 +27,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
 public class ListViewEmailMin implements GetListViewMail {
@@ -79,9 +81,11 @@ public class ListViewEmailMin implements GetListViewMail {
 
                 try {
 
-                    Scene scene = new Scene(loader.load(), 500, 300);
+                    Scene scene = new Scene(loader.load(), 600, 400);
                     Stage stage = new Stage();
-
+                    stage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png")))));
+                    stage.setTitle(newValue.getLetter().getSubject());
+                    
                     FragmentWebTaskController webTaskController = loader.getController();
                     webTaskController.load(newValue);
 

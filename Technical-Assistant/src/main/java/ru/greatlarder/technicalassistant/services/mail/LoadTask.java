@@ -72,11 +72,9 @@ public class LoadTask {
             if (list.get(2).length() < 4) {
                 year = 20 + list.get(2);
             } else year = list.get(2);
-    
-            LocalDate localDate = LocalDate.of(Integer.valueOf(year), Integer.valueOf(list.get(1))
-                    , Integer.valueOf(list.get(0)));
             
-        return localDate;
+        return LocalDate.of(Integer.parseInt(year), Integer.parseInt(list.get(1))
+            , Integer.parseInt(list.get(0)));
     }
 
     private LocalTime getTime(String time) {
@@ -84,7 +82,7 @@ public class LoadTask {
             String regex = "[:]";
             String[] parts = time.split(regex);
             List<String> list = new ArrayList<>(Arrays.asList(parts));
-            localTime = LocalTime.of(Integer.valueOf(list.get(0)), Integer.valueOf(list.get(1)));
+            localTime = LocalTime.of(Integer.parseInt(list.get(0)), Integer.parseInt(list.get(1)));
 
         return localTime;
     }
@@ -116,7 +114,7 @@ public class LoadTask {
         task.setDateOfCreation(LocalDate.parse(date_event.text()));
         task.setTimeOfCreation(getTime(time_start.text()));
         task.setCreator(customer.text());
-        task.setStatus(1);
+        task.setStatus(0);
         task.setExecutor(m);
        
         return task;

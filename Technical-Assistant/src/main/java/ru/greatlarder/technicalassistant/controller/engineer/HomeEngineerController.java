@@ -112,16 +112,12 @@ public class HomeEngineerController implements ObserverLang, Initializable{
         if (company != null) {
             GetListEquipment getListEquipment = new ListEquipmentByNameCompanySQLite();
             labelQuantityEquipment.setText(String.valueOf(getListEquipment.getListEquipment(user, company.getNameCompany(), company.getNameCompany()).size()));
-
-            /*setNumberOfFaultyDevices(equipmentRepository.getListEquipmentForCompany(company.getNameCompany()));
-            setNumberOfDevicesOperatingForMoreThanFiveYears(equipmentRepository.getListEquipmentForCompany(company.getNameCompany()));*/
-
+            
             GetListTool getListTool = new GetListToolAllSQLite();
             setNumberOfTools(getListTool.getListTool(user, company.getNameCompany(), null));
 
             tabPaneEngineerHome.getTabs().add(loadTasksActive());
-            //tabPaneEngineerHome.getTabs().add(loadTasksAll());
-
+          
             GetListMailSettings getListMailSettings = new GetListMailSettingsSQLite();
 
             MailSettings ms = null;
@@ -139,9 +135,9 @@ public class HomeEngineerController implements ObserverLang, Initializable{
     private Tab loadTasksActive() {
 
         Tab t = new Tab(language.ALL_ACTIVE_APPLICATIONS(lang));
-        Task<ListView<Affairs>> ts = new Task<ListView<Affairs>>() {
+        Task<ListView<Affairs>> ts = new Task<>() {
             @Override
-            protected ListView<Affairs> call() throws Exception {
+            protected ListView<Affairs> call() {
                 GetListAffairs getListAffairsActive = new GetListAffairsActiveSQLite();
                 return new TableViewTask().upBox(getListAffairsActive.getListAffairs(user, company.getNameCompany(), null));
             }
@@ -194,7 +190,7 @@ public class HomeEngineerController implements ObserverLang, Initializable{
     private void loadMail(MailSettings mailSettings) {
         Task<ListView<Email>> task = new Task<>() {
             @Override
-            protected ListView<Email> call() throws Exception {
+            protected ListView<Email> call() {
                 GetListViewMail getListViewMail = new ListViewEmailMin();
                 return getListViewMail.getListViewEmail(user, mailSettings);
             }
