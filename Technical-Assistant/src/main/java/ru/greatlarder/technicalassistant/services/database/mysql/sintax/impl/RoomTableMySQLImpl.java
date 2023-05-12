@@ -5,16 +5,17 @@ import ru.greatlarder.technicalassistant.services.database.mysql.sintax.RoomTabl
 public class RoomTableMySQLImpl implements RoomTableMySQL {
     @Override
     public String CREATE(String nameDB) {
-        return "CREATE TABLE if not exists`" + nameDB + "`.`room` ( id int" +
+        return "CREATE TABLE if not exists`" + nameDB + "`.`room` ( id int AUTO_INCREMENT primary key NOT NULL" +
                 ", nameRoom text" +
+                ", image mediumblob" +
                 ", nameCompany text) ENGINE = InnoDB";
     }
 
     @Override
     public String INSERT(String nameDB) {
         return "INSERT INTO `" + nameDB + "`.`room` (" +
-                " id," +
                 " nameRoom," +
+                " image," +
                 " nameCompany) VALUES (?,?,?)";
     }
 
@@ -22,6 +23,7 @@ public class RoomTableMySQLImpl implements RoomTableMySQL {
     public String UPDATE(String nameDB) {
         return "UPDATE `" + nameDB + "`.`room` SET " +
                 " nameRoom = ?," +
+                " image = ?," +
                 " nameCompany = ? WHERE id = ?";
     }
 

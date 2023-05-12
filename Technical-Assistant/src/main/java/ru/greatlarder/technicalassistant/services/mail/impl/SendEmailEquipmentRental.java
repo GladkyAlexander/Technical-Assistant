@@ -43,6 +43,7 @@ public class SendEmailEquipmentRental implements SendAnEmail {
             mimeMessage.setSentDate(new Date());
             
             Multipart multipart = new MimeMultipart();
+            
             MimeBodyPart htmlPart = new MimeBodyPart();
             htmlPart.setText(document, "utf-8", "html");
             multipart.addBodyPart(htmlPart);
@@ -55,7 +56,7 @@ public class SendEmailEquipmentRental implements SendAnEmail {
             imgPart.setContentID("<some-image-cid>");
             multipart.addBodyPart(imgPart);
             
-            mimeMessage.setContent(multipart);
+            mimeMessage.setContent(multipart, "multipart/related");
             
             Transport.send(mimeMessage);
         }

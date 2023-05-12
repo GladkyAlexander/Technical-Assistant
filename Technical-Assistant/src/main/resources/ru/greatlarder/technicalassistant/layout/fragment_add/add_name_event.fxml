@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="vBox" alignment="TOP_RIGHT" spacing="5.0" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddNameEvent">
+    <ImageView fx:id="closeAddEvent" fitHeight="25.0" fitWidth="400.0" onMouseClicked="#closeAddCompanyController" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
+        <Image url="@../../images/closed.png" />
+    </ImageView>
+    <HBox fx:id="hBoxEvent" alignment="TOP_CENTER" spacing="9.0">
+                <ImageView fx:id="imgBriefing" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addBriefing" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/briefing.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="imgConference" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addConference" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/conference.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="imgCongress" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addCongress" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/congress.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="imgExhibition" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addExhibition" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/exhibition.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="imgLunch" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addLunch" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/lunch.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="imgMeeting" fitHeight="50.0" fitWidth="50.0" onMouseDragged="#addMeeting" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/meeting.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="imgPresentation" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addPresentation" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/presentation.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="imgRoundTable" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addRoundTable" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/round_table.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="imgSeminar" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addSeminar" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/seminar.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="imgTraining" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addTraining" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/training.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="imgReception" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addReception" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/events_img/reception.png" />
+                    </image>
+                </ImageView>
+        </HBox>
+   <HBox alignment="CENTER_RIGHT" spacing="5.0">
+      <children>
+              <Label fx:id="labelNameEvent" text="Название мероприятия">
+                  <font>
+                      <Font name="System Bold" size="12.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="tfNameEvent" HBox.hgrow="ALWAYS" />
+      </children>
+   </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+            <GridPane.margin>
+                <Insets right="50.0" />
+            </GridPane.margin>
+            <children>
+              <Label fx:id="labelLogoEvent" text="Логотип мероприятия">
+                  <font>
+                      <Font name="System Bold" size="12.0" />
+                  </font>
+              </Label>
+                <ImageView fx:id="imgLogoEvent" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#loadLogoEvent" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/upphoto.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </HBox>
+        <Button fx:id="btnAddEvent" mnemonicParsing="false" onMouseClicked="#addNewEvent" text="Add" GridPane.columnIndex="4" GridPane.rowIndex="6">
+      <VBox.margin>
+         <Insets />
+      </VBox.margin></Button>
+   <HBox fx:id="hBoxLabel" alignment="CENTER" spacing="5.0">
+      <children>
+         <Label fx:id="labelCondition" text="Мерроприятия ">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font></Label>
+         <Label fx:id="labelNameCompany">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font></Label>
+      </children>
+   </HBox>
+    <Pane id="pane" prefHeight="10.0" stylesheets="@../../css/main.css">
+        <padding>
+            <Insets left="5.0" right="5.0" />
+        </padding>
+        <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+        </VBox.margin></Pane>
+   <SplitPane maxHeight="1.7976931348623157E308" orientation="VERTICAL" VBox.vgrow="SOMETIMES">
+      <items>
+              <ListView fx:id="listViewEventForCompany" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+      </items>
+   </SplitPane>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>

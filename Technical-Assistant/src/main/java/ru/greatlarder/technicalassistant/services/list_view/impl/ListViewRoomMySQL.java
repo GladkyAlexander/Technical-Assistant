@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import ru.greatlarder.technicalassistant.controller.fragment_item.ItemRoomMin;
+import ru.greatlarder.technicalassistant.controller.fragment_item.ItemTypesRoom;
 import ru.greatlarder.technicalassistant.domain.Room;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.database.GetListRoom;
@@ -20,9 +20,9 @@ public class ListViewRoomMySQL implements GetListViewRoom {
         GetListRoom getListRoom = new ListRoomByCompanyMySQL();
         ListView<Room> listView = new ListView<>(FXCollections.observableArrayList(getListRoom.getListRoom(user, nameCompany, null)));
         listView.setCellFactory(p -> new ListCell<>() {
-            final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_room_min.fxml"));
+            final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_types_room.fxml"));
             Node node;
-            ItemRoomMin controller;
+            ItemTypesRoom controller;
 
             {
                 try {
@@ -39,8 +39,12 @@ public class ListViewRoomMySQL implements GetListViewRoom {
                 if (b) {
                     setGraphic(null);
                 } else {
-                    controller.setUser(user);
-                    controller.labelNameRoomIRM.setText(room.getNameRoom());
+                    controller.setRoom(room);
+                    controller.setLabelNameRoom(room.getNameRoom());
+                    if(room.getUrlLogoRoom() != null){
+                        controller.setImgLogoRoom(room.getUrlLogoRoom());
+                    }
+                    controller.setFragmentMySQL();
                     setGraphic(node);
                 }
             }

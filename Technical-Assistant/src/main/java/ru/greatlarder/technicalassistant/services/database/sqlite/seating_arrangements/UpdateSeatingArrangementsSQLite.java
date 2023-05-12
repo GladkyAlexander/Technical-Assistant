@@ -20,9 +20,8 @@ public class UpdateSeatingArrangementsSQLite implements UpdateSeatingArrangement
             cf.setString(1, seatingArrangements.getNameSeatingArrangements());
             cf.setString(2, seatingArrangements.getNameCompany());
             cf.setString(3, seatingArrangements.getUrlImageSeatingArrangements());
-            cf.setInt(4, seatingArrangements.getNumberOfParticipants());
 
-            cf.setInt(5, id);
+            cf.setInt(4, id);
 
             cf.executeUpdate();
             closeDB();

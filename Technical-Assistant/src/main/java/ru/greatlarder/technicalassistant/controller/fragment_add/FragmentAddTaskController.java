@@ -41,7 +41,7 @@ public class FragmentAddTaskController implements Initializable {
     User user;
 
 
-    public void saveTask(MouseEvent mouseEvent) {
+    public void saveTask() {
 
         Affairs affairs = new Affairs();
         affairs.setDateOfCreation(LocalDate.parse(labelDate.getText()));

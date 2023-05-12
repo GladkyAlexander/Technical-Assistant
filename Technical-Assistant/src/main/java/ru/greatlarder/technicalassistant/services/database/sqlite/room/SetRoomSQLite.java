@@ -5,6 +5,7 @@ import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.database.SetRoom;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteRoom;
 
+import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +24,8 @@ public class SetRoomSQLite implements SetRoom {
 
             cf.setString(1, room.getNameRoom());
             cf.setString(2, room.getNameCompanyForRoom());
+            cf.setString(3, room.getUrlLogoRoom());
+            
             if(cf.executeUpdate() > 0){
                 ResultSet rs = cf.getGeneratedKeys();
                 if(rs.next()){

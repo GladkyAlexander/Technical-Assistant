@@ -91,9 +91,10 @@
          <HBox alignment="CENTER_RIGHT" spacing="3.0">
             <children>
                <Label fx:id="labelToWhom" text="To whom" />
-               <TextField fx:id="textFieldToWhom" />
+               <TextField fx:id="textFieldToWhom" maxWidth="1.7976931348623157E308" />
             </children>
          </HBox>
+         <ComboBox fx:id="comboBoxToWhom" maxWidth="1.7976931348623157E308" onAction="#valueInput" promptText="Recipents" />
          <HBox alignment="CENTER_RIGHT" spacing="3.0">
             <children>
                <Label fx:id="labelTopic" text="Topic" />

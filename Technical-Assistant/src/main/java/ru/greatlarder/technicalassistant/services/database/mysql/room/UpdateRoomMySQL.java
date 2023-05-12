@@ -7,6 +7,9 @@ import ru.greatlarder.technicalassistant.services.database.mysql.ConnectMySQL;
 import ru.greatlarder.technicalassistant.services.database.mysql.sintax.RoomTableMySQL;
 import ru.greatlarder.technicalassistant.services.database.mysql.sintax.impl.RoomTableMySQLImpl;
 
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -20,9 +23,19 @@ public class UpdateRoomMySQL implements UpdateRoom {
             PreparedStatement cf = connectMySQL.connectionMySQL.prepareStatement(roomTableMySQL.UPDATE(user.getNameDB()));
 
             cf.setString(1, room.getNameRoom());
-            cf.setString(2, room.getNameCompanyForRoom());
+            
+            ByteArrayInputStream bais = null;
+            try {
+                Path path = Paths.get(room.getUrlLogoRoom());
+                File file = path.toFile();
+                bais = new ByteArrayInputStream(getByteArrayFromFile(file));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            cf.setBlob(2, bais);
+            cf.setString(3, room.getNameCompanyForRoom());
 
-            cf.setInt(3, user.getId());
+            cf.setInt(4, id);
 
             cf.executeUpdate();
             connectMySQL.closeMySQLDatabase();
@@ -31,5 +44,18 @@ public class UpdateRoomMySQL implements UpdateRoom {
         } finally {
             connectMySQL.closeMySQLDatabase();
         }
+    }
+    private byte[] getByteArrayFromFile(final File handledDocument) throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final InputStream in = new FileInputStream(handledDocument);
+        final byte[] buffer = new byte[500];
+        
+        int read = -1;
+        while ((read = in.read(buffer)) > 0) {
+            baos.write(buffer, 0, read);
+        }
+        in.close();
+        
+        return baos.toByteArray();
     }
 }

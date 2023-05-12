@@ -93,7 +93,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <HBox fx:id="hBoxMacAddress" alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="2.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+            <HBox fx:id="hBoxMacAddress" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="2.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
       
                   <TextField fx:id="oui1" onKeyReleased="#onKeyOui1" prefWidth="35.0" />
                   <Label text=":">
@@ -157,14 +157,18 @@
                </font>
             </Label>
             <HBox fx:id="hBoxTCP" alignment="CENTER_RIGHT" cache="true" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="23">
-               <Label fx:id="labelIpv4" text="IP адрес (TCP/IPv4) :">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               <padding>
-                  <Insets right="10.0" />
-               </padding>
-               </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                     <Label fx:id="labelIpv4" text="IP адрес (TCP/IPv4) :">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                     </Label>
+               </children>
+            </VBox>
       
                   <TextField fx:id="network1" onKeyReleased="#onKeyReleased" prefWidth="50.0" />
                   <Label text=".">
@@ -191,14 +195,18 @@
       
             </HBox>
             <HBox fx:id="hBoxMasc" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="24">
-               <Label fx:id="labelMasc" text="Subnet masc :">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
-               </Label>
+               <children>
+                     <Label fx:id="labelMasc" text="Subnet masc :">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     </Label>
+               </children>
+            </VBox>
                   <TextField fx:id="networkMasc1" onKeyReleased="#onKeyReleasedMasc" prefWidth="50.0" />
                   <Label text=".">
                      <font>
@@ -221,14 +229,18 @@
       
             </HBox>
             <HBox fx:id="hBoxGateway" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="25">
-               <Label fx:id="labelGateway" text="Default gateway :">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               <padding>
-                  <Insets right="10.0" />
-               </padding>
-               </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                     <Label fx:id="labelGateway" text="Default gateway :">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                     </Label>
+               </children>
+            </VBox>
                   <TextField fx:id="gateway1" onKeyReleased="#onKeyReleasedGateway" prefWidth="50.0" />
                   <Label text=".">
                      <font>
@@ -259,14 +271,18 @@
           </ImageView>
             <Button fx:id="btnSaveEquipment" mnemonicParsing="false" onMouseClicked="#saveEquipment" text="Сохранить" GridPane.columnIndex="1" GridPane.rowIndex="36" />
             <HBox fx:id="hBoxFrequency" alignment="CENTER" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="27">
-               <Label fx:id="labelFrequency" text="Введите частоту :">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               <padding>
-                  <Insets right="25.0" />
-               </padding>
-               </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                     <Label fx:id="labelFrequency" text="Введите частоту :">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     <padding>
+                        <Insets right="25.0" />
+                     </padding>
+                     </Label>
+               </children>
+            </VBox>
                   <TextField fx:id="textFieldFrequency1" onKeyReleased="#onKeyReleasedFrequency1" prefWidth="50.0" />
                   <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" text=".">
                      <font>
@@ -294,18 +310,22 @@
                   <Insets right="10.0" />
                </padding>
               </Label>
-              <TextField fx:id="maximumLampOperatingTime" onKeyReleased="#onKeyPressedMaximumLampOperatingTime" promptText="Максимальное время работы лампы" />
+              <TextField fx:id="maximumLampOperatingTime" onKeyReleased="#onKeyPressedMaximumLampOperatingTime" promptText="Максимальное время работы лампы" HBox.hgrow="ALWAYS" />
           </HBox>
          <ComboBox fx:id="comboBoxStatusSelection" maxWidth="1.7976931348623157E308" promptText="Выберите состояние устройства" GridPane.columnIndex="1" GridPane.rowIndex="20" />
           <HBox fx:id="hBoxTCPDante" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="28">
-              <Label fx:id="labelIpv4Dante" text="IP адрес (TCP/IPv4) Dante:">
-                 <font>
-                     <Font name="System Bold" size="12.0" />
-                 </font>
-               <padding>
-                  <Insets right="10.0" />
-               </padding>
-              </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                    <Label fx:id="labelIpv4Dante" text="IP адрес (TCP/IPv4) Dante:">
+                       <font>
+                           <Font name="System Bold" size="12.0" />
+                       </font>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                    </Label>
+               </children>
+            </VBox>
               <TextField fx:id="network1Dante" onKeyReleased="#onKeyReleasedNetDante" prefWidth="50.0" />
               <Label text=".">
                  <font>
@@ -327,14 +347,18 @@
               <TextField fx:id="deviceDante" onKeyReleased="#onKeyReleasedDeviceDante" prefWidth="50.0" />
           </HBox>
           <HBox fx:id="hBoxMascDante" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="29">
-              <Label fx:id="labelMascDante" text="Subnet masc Dante">
-                 <font>
-                     <Font name="System Bold" size="12.0" />
-                 </font>
-               <padding>
-                  <Insets right="10.0" />
-               </padding>
-              </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                    <Label fx:id="labelMascDante" text="Subnet masc Dante">
+                       <font>
+                           <Font name="System Bold" size="12.0" />
+                       </font>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                    </Label>
+               </children>
+            </VBox>
               <TextField fx:id="networkMasc1Dante" onKeyReleased="#onKeyReleasedMasc1Dante" prefWidth="50.0" />
               <Label text=".">
                  <font>
@@ -359,14 +383,18 @@
             </GridPane.margin>
           </HBox>
           <HBox fx:id="hBoxGatewayDante" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="30">
-              <Label fx:id="labelGatewayDante" text="Default gateway Dante :">
-                 <font>
-                     <Font name="System Bold" size="12.0" />
-                 </font>
-               <padding>
-                  <Insets right="10.0" />
-               </padding>
-              </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                    <Label fx:id="labelGatewayDante" text="Default gateway Dante :">
+                       <font>
+                           <Font name="System Bold" size="12.0" />
+                       </font>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                    </Label>
+               </children>
+            </VBox>
               <TextField fx:id="gateway1Dante" onKeyReleased="#onKeyReleasedGatewayDante" prefWidth="50.0" />
               <Label text=".">
                  <font>
@@ -391,14 +419,18 @@
               <GridPane.margin>
                   <Insets />
               </GridPane.margin>
-              <Label fx:id="labelDiagonal" text="Диагональ :">
-                 <font>
-                     <Font name="System Bold" size="12.0" />
-                 </font>
-               <padding>
-                  <Insets right="10.0" />
-               </padding>
-              </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                    <Label fx:id="labelDiagonal" text="Диагональ :">
+                       <font>
+                           <Font name="System Bold" size="12.0" />
+                       </font>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                    </Label>
+               </children>
+            </VBox>
               <TextField fx:id="tfDiagonal" />
               <Label fx:id="labelDum" text="Дюймов">
                  <font>
@@ -407,35 +439,51 @@
               </Label>
           </HBox>
           <HBox fx:id="hBoxLaptop" alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="35">
-              <Label fx:id="labelOs" text="Введите название Операционной системы :">
-                 <font>
-                     <Font name="System Bold" size="12.0" />
-                 </font>
-              </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                    <Label fx:id="labelOs" text="Введите название Операционной системы :">
+                       <font>
+                           <Font name="System Bold" size="12.0" />
+                       </font>
+                    </Label>
+               </children>
+            </VBox>
               <TextField fx:id="tfOs" />
           </HBox>
           <HBox fx:id="hBoxPortSwitcher" alignment="CENTER_RIGHT" spacing="50.0" GridPane.columnSpan="2" GridPane.rowIndex="32">
-              <Label fx:id="labelPortSwitcher" text="Номер порта в сетевом комутаторе">
-                 <font>
-                     <Font name="System Bold" size="12.0" />
-                 </font>
-              </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                    <Label fx:id="labelPortSwitcher" text="Номер порта в сетевом комутаторе">
+                       <font>
+                           <Font name="System Bold" size="12.0" />
+                       </font>
+                    </Label>
+               </children>
+            </VBox>
               <TextField fx:id="tfPortSwitcher" onKeyReleased="#onKeyReleasedPortSwitcher" />
           </HBox>
           <HBox fx:id="hBoxOutlander" alignment="TOP_RIGHT" spacing="50.0" GridPane.columnSpan="2" GridPane.rowIndex="33">
-              <Label fx:id="labelOutlet" text="Номер розетки (lan)">
-                 <font>
-                     <Font name="System Bold" size="12.0" />
-                 </font>
-              </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                    <Label fx:id="labelOutlet" text="Номер розетки (lan)">
+                       <font>
+                           <Font name="System Bold" size="12.0" />
+                       </font>
+                    </Label>
+               </children>
+            </VBox>
               <TextField fx:id="tfOutlet" onKeyPressed="#onKeyReleasedOutlet" />
           </HBox>
           <HBox fx:id="hBoxNetworkSwitcher" alignment="CENTER_RIGHT" spacing="50.0" GridPane.columnSpan="2" GridPane.rowIndex="31">
-              <Label fx:id="labelChoiseNetworkSwitcher" text="Выберите сетевой коммутатор">
-                 <font>
-                     <Font name="System Bold" size="12.0" />
-                 </font>
-              </Label>
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                    <Label fx:id="labelChoiseNetworkSwitcher" text="Выберите сетевой коммутатор">
+                       <font>
+                           <Font name="System Bold" size="12.0" />
+                       </font>
+                    </Label>
+               </children>
+            </VBox>
               <ChoiceBox fx:id="choiceBoxNetworkSvitcher" prefWidth="150.0" />
           </HBox>
          <HBox fx:id="hBoxMacAddress1" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="2.0" GridPane.columnSpan="2" GridPane.rowIndex="11">

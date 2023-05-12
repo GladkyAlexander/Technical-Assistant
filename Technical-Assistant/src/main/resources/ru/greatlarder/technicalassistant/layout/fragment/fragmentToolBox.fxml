@@ -39,6 +39,11 @@
             <Image url="@../../images/phone_book.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="imgSeatingArrangements" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#allSeatingArrangement" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/activ_seating_arrangement.png" />
+         </image>
+      </ImageView>
        <ImageView fx:id="imgAddEquipment" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addEquipment" pickOnBounds="true" preserveRatio="true">
            <HBox.margin>
                <Insets left="5.0" />

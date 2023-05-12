@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="vBox" alignment="TOP_RIGHT" spacing="5.0" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddSeatingArrangements">
+   <ImageView fx:id="closeAddSeating" fitHeight="25.0" fitWidth="400.0" onMouseClicked="#closeAddCompanyController" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6">
+      <Image url="@../../images/closed.png" />
+   </ImageView>
+   <HBox spacing="4.0">
+      <children>
+         <ImageView fx:id="imgBanquet" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addBanquet" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/banquet.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgBoardRoom" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addBoardRoom" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/boardroom.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgChevron" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addChevron" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/chevron.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgCircle" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addCircle" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/circle.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgClassroom" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addClassroom" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/classroom.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgColumns" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addColumns" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/columns.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgCresecentRound" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addCresecent" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/cresecent_rounds_cabaret.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgEShape" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addEShape" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/e_shape.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgHollow" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addHollow" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/hollow_rectangle.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgHorseshoe" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addHorseshoe" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/horseshoe.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgOctagon" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addOctagon" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/octagon_meeting.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgOvalBoardroom" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addOvalBoardroom" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/oval_boardroom.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgSeminar" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addSeminar" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/seminar.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgTShape" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addTShape" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/t_shape.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgTheatre" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addTheatre" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/theatre_auditorium.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgUShape" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addUShape" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/u_shape.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="imgVShape" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#addVShape" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/arrangements/v_shape.png" />
+            </image>
+         </ImageView>
+      </children>
+   </HBox>
+   <HBox alignment="CENTER_RIGHT" spacing="9.0">
+      <children>
+         <Label fx:id="labelNameTip" text="Название типа">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="textFieldNewNameTip" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+      </children>
+   </HBox>
+   <HBox alignment="CENTER_LEFT" spacing="9.0">
+      <children>
+         <Label fx:id="labelPhotoTip" text="Изображение ">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <ImageView fx:id="imgNewImageSeating" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#addImageSeating" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/upphoto.png" />
+            </image>
+         </ImageView>
+      </children>
+   </HBox>
+   <Button fx:id="btnAddNewSeating" mnemonicParsing="false" onMouseClicked="#addNewSeating" text="add" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+   <HBox alignment="CENTER" spacing="9.0">
+      <children>
+         <Label fx:id="labelArrangement" text="Размещение гостей">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Label>
+         <Label fx:id="labelNameCompany">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Label>
+      </children>
+   </HBox>
+   <Pane id="pane" prefHeight="10.0" stylesheets="@../../css/main.css">
+      <padding>
+         <Insets left="5.0" right="5.0" />
+      </padding>
+      <VBox.margin>
+         <Insets left="5.0" right="5.0" />
+      </VBox.margin></Pane>
+   <SplitPane maxHeight="1.7976931348623157E308" orientation="VERTICAL" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="22" VBox.vgrow="SOMETIMES">
+      <items>
+         <ListView fx:id="listViewSeatingArrangements" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+      </items>
+   </SplitPane>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>

@@ -1,11 +1,11 @@
 package ru.greatlarder.technicalassistant.services.lang.impl;
 
-import ru.greatlarder.technicalassistant.services.lang.GetLanguageDataName;
+import ru.greatlarder.technicalassistant.services.lang.LanguageDataName;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 
-public class GetLanguageDataNameImpl implements GetLanguageDataName {
+public class LanguageDataNameImpl implements LanguageDataName {
     String en = "English";
     String ru = "Русский";
     @Override

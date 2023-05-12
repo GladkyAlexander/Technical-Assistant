@@ -2,14 +2,14 @@ package ru.greatlarder.technicalassistant.controller.fragment;
 
 import jakarta.mail.MessagingException;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.print.PrinterJob;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -22,11 +22,14 @@ import org.w3c.dom.Element;
 import ru.greatlarder.technicalassistant.domain.BookingEquipment;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
+import ru.greatlarder.technicalassistant.domain.PhoneBook;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.database.GetListBookingEquipment;
+import ru.greatlarder.technicalassistant.services.database.GetListPhoneBook;
 import ru.greatlarder.technicalassistant.services.database.SetBookingEquipment;
 import ru.greatlarder.technicalassistant.services.database.mysql.booking_equipment.ListBookingEquipmentByIdEquipmentMySQL;
 import ru.greatlarder.technicalassistant.services.database.mysql.booking_equipment.SetBookingEquipmentMySQL;
+import ru.greatlarder.technicalassistant.services.database.sqlite.phone_book.GetListPhoneBookByUserSQLite;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartReceptionController;
 import ru.greatlarder.technicalassistant.services.lang.Language;
@@ -81,6 +84,7 @@ public class FragmentFormAssignment implements Initializable {
     @FXML public TextField textFieldToWhom;
     @FXML public Label labelTopic;
     @FXML public TextField textFieldTopic;
+    @FXML public ComboBox<String> comboBoxToWhom;
     Equipment equipment;
     Language language = new LanguageImpl();
     String lang;
@@ -88,6 +92,8 @@ public class FragmentFormAssignment implements Initializable {
     Company company;
     FileManager fileManager = new FileManagerImpl();
     BookingEquipment bookingEquipment;
+    List<PhoneBook> contactCarts;
+    HashMap<String, String> hashMap = new HashMap<>();
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -106,6 +112,7 @@ public class FragmentFormAssignment implements Initializable {
         imgEquipment.setImage(new Image(Objects.requireNonNull(getClass()
             .getResourceAsStream("/ru/greatlarder/technicalassistant/images/equipment_img/" + equipment.getImage()))));
         textFieldTopic.setText(equipment.getName());
+        comboBoxToWhom.setItems(getTo());
     }
     private void loadDataTimePicker(){
         
@@ -189,6 +196,7 @@ public class FragmentFormAssignment implements Initializable {
         labelToWhom.setText(language.TO_WHOM(lang));
         labelTopic.setText(language.TOPIC(lang));
         btnSave.setText(language.SAVE(lang));
+        comboBoxToWhom.setPromptText(language.RECIPIENTS(lang));
     }
 
     public void fillOutTheForm() {
@@ -248,7 +256,15 @@ public class FragmentFormAssignment implements Initializable {
             setBookingEquipment.setBookingEquipment(user
                 , GlobalLinkMainController.getMainController().getCompany().getNameCompany(),  bookingEquipment);
             textFieldToWhom.setStyle(new TextField().getStyle());
+            
             String[] address = textFieldToWhom.getText().split(",");
+            List<String> list = new ArrayList<>(Arrays.asList(address));
+            List<String> listAddress = new ArrayList<>();
+            
+            for (String s : list){
+                listAddress.add(hashMap.get(s));
+            }
+            
             SendAnEmail sendAnEmail = new SendEmailEquipmentRental();
             Document document = webView.getEngine().getDocument();
             Element delete = document.getElementById("delete");
@@ -260,7 +276,7 @@ public class FragmentFormAssignment implements Initializable {
             img.getParentNode().removeChild(img);
             
             String html = (String) webView.getEngine().executeScript("document.documentElement.outerHTML");
-            sendAnEmail.sendEmail(user, html, new ArrayList<>(Arrays.asList(address)), textFieldTopic.getText(), urlImage);
+            sendAnEmail.sendEmail(user, html, listAddress, textFieldTopic.getText(), urlImage);
             
             ((BorderPane)borderPane.getParent()).getChildren().remove(borderPane);
             GlobalLinkStartReceptionController.getStartReceptionController().openPortableDevices();
@@ -326,4 +342,17 @@ public class FragmentFormAssignment implements Initializable {
         p_manager.setTextContent(textFieldPartner.getText());
     }
     
+    public void valueInput() {
+        textFieldToWhom.setText(comboBoxToWhom.getValue());
+    }
+    private ObservableList<String> getTo(){
+        GetListPhoneBook getListPhoneBook = new GetListPhoneBookByUserSQLite();
+        this.contactCarts = getListPhoneBook.getListPhoneBook(user, company.getNameCompany(), String.valueOf(user.getId()));
+        List<String> list = new ArrayList<>();
+        for (PhoneBook c : this.contactCarts){
+            list.add(c.getLastName() + " " + c.getFirstName());
+            hashMap.put(c.getLastName() + " " + c.getFirstName(), c.getMail());
+        }
+        return FXCollections.observableList(list);
+    }
 }

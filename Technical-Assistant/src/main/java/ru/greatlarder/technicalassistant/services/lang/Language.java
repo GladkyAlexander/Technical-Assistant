@@ -400,4 +400,6 @@ public interface Language {
     String RECIPIENTS(String lang);
     
     String ADD_AS_A_TASK(String lang);
+    
+    String EVENTS(String lang);
 }

@@ -1,6 +1,6 @@
 package ru.greatlarder.technicalassistant.services.lang;
 
-public interface GetLanguageName {
+public interface LanguageNameEquipment {
     String getProjector(String language);
 
     String getMicrophone(String language);

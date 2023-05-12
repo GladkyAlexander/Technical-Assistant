@@ -8,7 +8,7 @@ public class SeatingArrangementsTableMySQLImpl implements SeatingArrangementsTab
         return "CREATE TABLE if not exists`" + nameDB + "`.`seating_arrangements` ( id int AUTO_INCREMENT primary key NOT NULL " +
                 ", nameSeatingArrangements text" +
                 ", nameCompany text" +
-                ", urlImageSeatingArrangements text" +
+                ", urlImageSeatingArrangements mediumblob" +
                 ", numberOfParticipants int) ENGINE = InnoDB";
     }
 

@@ -24,7 +24,6 @@ public class SetSeatingArrangementsSQLite implements SetSeatingArrangements {
             cf.setString(1, seatingArrangements.getNameSeatingArrangements());
             cf.setString(2, seatingArrangements.getNameCompany());
             cf.setString(3, seatingArrangements.getUrlImageSeatingArrangements());
-            cf.setInt(4, seatingArrangements.getNumberOfParticipants());
 
             if(cf.executeUpdate() > 0){
                 ResultSet rs = cf.getGeneratedKeys();

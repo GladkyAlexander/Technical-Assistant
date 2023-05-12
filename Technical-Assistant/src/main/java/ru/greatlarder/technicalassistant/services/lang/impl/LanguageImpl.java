@@ -2011,6 +2011,17 @@ public class LanguageImpl implements Language {
     }
     
     @Override
+    public String EVENTS(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Мероприятия";
+        } else if (lang.equals(en)) {
+            office = "Events";
+        }
+        return office;
+    }
+    
+    @Override
     public String OFFICE(String language) {
         String office = "";
         if (language.equals(ru)) {

@@ -1,14 +1,20 @@
 package ru.greatlarder.technicalassistant.controller;
 
+import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.print.Printer;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import ru.greatlarder.technicalassistant.App;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
@@ -89,21 +95,21 @@ public class MainController implements ObserverLang, ObserverUser, ObserverCompa
         menuItemChangeCompany.setText(language.CHANGE_COMPANY(lan));
     }
 
-    public void mBru(ActionEvent actionEvent) {
+    public void mBru() {
         mbtLang.setText(menuItemRu.getText());
         imgLangMenuButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ru.png"))));
         handlerLang.registerObserverLang(this);
         handlerLang.onNewDataLang(new DataLang("Русский"));
     }
 
-    public void mBen(ActionEvent actionEvent) {
+    public void mBen() {
         mbtLang.setText(menuItemEn.getText());
         imgLangMenuButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ico-en.png"))));
         handlerLang.registerObserverLang(this);
         handlerLang.onNewDataLang(new DataLang("English"));
     }
 
-    public void onActionMenuItemOut(ActionEvent actionEvent) {
+    public void onActionMenuItemOut() {
         setCompany(null);
         handlerUserListener.onNewDataUser(new DataUser(null));
     }
@@ -207,7 +213,7 @@ public class MainController implements ObserverLang, ObserverUser, ObserverCompa
         borderPaneMainPage.getChildren().remove(borderPaneMainPage.getCenter());
     }
 
-    public void onActionMenuItemChangeCompany(ActionEvent actionEvent) {
+    public void onActionMenuItemChangeCompany() {
         updateCompany(new DataCompany(null));
     }
 

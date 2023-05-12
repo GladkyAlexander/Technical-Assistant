@@ -8,7 +8,7 @@ public class NamesTableMySQLImpl implements NamesTableMySQL {
         return "CREATE TABLE if not exists`" + nameDB + "`.`names` ( id int AUTO_INCREMENT primary key NOT NULL " +
                 ", names text" +
                 ", nameCompany text" +
-                ", url text" +
+                ", url mediumblob" +
                 ", domain text) ENGINE = InnoDB";
     }
 
@@ -22,14 +22,23 @@ public class NamesTableMySQLImpl implements NamesTableMySQL {
     }
 
     @Override
-    public String UPDATE(String nameDB) {
+    public String UPDATE_BY_NAME(String nameDB) {
         return "UPDATE `" + nameDB + "`.`names` SET " +
                 " names = ?," +
                 " nameCompany = ?," +
                 " url = ?," +
                 " domain = ? WHERE names = ? ";
     }
-
+    
+    @Override
+    public String UPDATE_BY_ID(String nameDB) {
+        return "UPDATE `" + nameDB + "`.`names` SET " +
+            " names = ?," +
+            " nameCompany = ?," +
+            " url = ?," +
+            " domain = ? WHERE id = ? ";
+    }
+    
     @Override
     public String SELECT(String nameDB) {
         return "SELECT * FROM `" + nameDB + "`.`names`";

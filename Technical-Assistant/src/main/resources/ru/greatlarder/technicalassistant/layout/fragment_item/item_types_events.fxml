@@ -5,17 +5,43 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="TOP_CENTER" spacing="4.0"
-      xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemTypesEvent">
+<VBox alignment="TOP_CENTER" spacing="4.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemTypesEvent">
    <children>
-      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="4.0">
+      <HBox alignment="CENTER" spacing="9.0">
          <children>
-            <ImageView fx:id="img_event" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="img_event" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="labelEvent" text="Label" />
+            <VBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <children>
+                  <ImageView fx:id="imgChange" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#openChangePane" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/change.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
          </children>
       </HBox>
-      <HBox fx:id="hBoxChoose" />
+      <HBox fx:id="hBoxNewName" alignment="CENTER" spacing="5.0">
+         <children>
+            <Label fx:id="labelNewName" text="New name" />
+            <TextField fx:id="textFieldNewName" />
+            <ImageView fx:id="imgNewImage" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#selectANewImage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/upphoto.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#save" text="Button" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding></HBox>
    </children>
    <padding>
       <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />

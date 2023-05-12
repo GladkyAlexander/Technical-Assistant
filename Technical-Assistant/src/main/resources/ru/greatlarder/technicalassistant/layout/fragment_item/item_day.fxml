@@ -165,4 +165,11 @@
       
       </GridPane>
    </center>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnToPrint" mnemonicParsing="false" onAction="#toPrint" text="To print" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

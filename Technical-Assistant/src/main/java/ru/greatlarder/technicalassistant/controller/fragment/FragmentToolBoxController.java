@@ -4,13 +4,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddCompanyController;
-import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddEquipmentController;
+import ru.greatlarder.technicalassistant.controller.fragment_add.*;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.user.Engineer;
@@ -26,7 +28,11 @@ import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainCont
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartReceptionController;
 import ru.greatlarder.technicalassistant.services.lang.Language;
+import ru.greatlarder.technicalassistant.services.lang.LanguageToolBox;
+import ru.greatlarder.technicalassistant.services.lang.LanguageWarnings;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageToolBoxImpl;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageWarningsImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -71,8 +77,10 @@ public class FragmentToolBoxController implements ObserverCompany, Initializable
     @FXML
     public ImageView imgNotes;
     @FXML public ImageView imgAddSeatingArrangement;
-    private User user;
-    private Company company;
+    @FXML public ImageView imgSeatingArrangements;
+    User user;
+    Company company;
+    String lang;
     HandlerCompanyListener handlerCompanyListener = GlobalLinkMainController.mainController.getHandlerCompanyListener();
     Language language = new LanguageImpl();
 
@@ -80,9 +88,49 @@ public class FragmentToolBoxController implements ObserverCompany, Initializable
     public void initialize(URL location, ResourceBundle resources) {
         this.user = GlobalLinkMainController.getMainController().getUser();
         this.company = GlobalLinkMainController.getMainController().getCompany();
+        this.lang = GlobalLinkMainController.getMainController().getLang();
         loadPage();
+        loadTooltip();
     }
-
+    
+    private void loadTooltip() {
+        LanguageToolBox languageToolBox = new LanguageToolBoxImpl();
+        Tooltip equipment = new Tooltip(languageToolBox.Equipment_list(lang));
+        Tooltip.install(imgEquipment, equipment);
+        Tooltip tool = new Tooltip(languageToolBox.List_of_tools(lang));
+        Tooltip.install(imgTool, tool);
+        Tooltip ipAddress = new Tooltip(languageToolBox.IP_ADDRESS_POOL(lang));
+        Tooltip.install(imgIpAddress, ipAddress);
+        Tooltip defect = new Tooltip(languageToolBox.LIST_OF_DEFECT(lang));
+        Tooltip.install(imgAllDefect, defect);
+        Tooltip rooms = new Tooltip(languageToolBox.List_of_rooms(lang));
+        Tooltip.install(imgRooms, rooms);
+        Tooltip events = new Tooltip(languageToolBox.List_of_events(lang));
+        Tooltip.install(imgAllEvent, events);
+        Tooltip notes = new Tooltip(languageToolBox.Notes(lang));
+        Tooltip.install(imgNotes, notes);
+        Tooltip phonebook = new Tooltip(languageToolBox.Phonebook(lang));
+        Tooltip.install(imgNotes, phonebook);
+        Tooltip addEquipment = new Tooltip(languageToolBox.add_equipment(lang));
+        Tooltip.install(imgAddEquipment, addEquipment);
+        Tooltip addTool = new Tooltip(languageToolBox.add_tools(lang));
+        Tooltip.install(imgAddTool, addTool);
+        Tooltip addDefect = new Tooltip(languageToolBox.add_defects(lang));
+        Tooltip.install(imgAddDefect, addDefect);
+        Tooltip addWatchWorkProjectors = new Tooltip(languageToolBox.Change_the_operating_time_of_the_projector_lamps(lang));
+        Tooltip.install(imgWatchWorkProg, addWatchWorkProjectors);
+        Tooltip addRooms = new Tooltip(languageToolBox.Add_a_room(lang));
+        Tooltip.install(imgAddRoom, addRooms);
+        Tooltip addEvents = new Tooltip(languageToolBox.Add_a_events(lang));
+        Tooltip.install(imgAddEvent, addEvents);
+        Tooltip addSeatingArrangement = new Tooltip(languageToolBox.Add_seating_arrangement(lang));
+        Tooltip.install(imgAddSeatingArrangement, addSeatingArrangement);
+        Tooltip ipScanner = new Tooltip(languageToolBox.ipScanner(lang));
+        Tooltip.install(imgSearchIp, ipScanner);
+        Tooltip seatingArrangement = new Tooltip(languageToolBox.seating_arrangement(lang));
+        Tooltip.install(imgSeatingArrangements, seatingArrangement);
+    }
+    
     private void loadPage() {
         handlerCompanyListener.registerObserverCompany(this);
         setStartVisible(false);
@@ -144,17 +192,14 @@ public class FragmentToolBoxController implements ObserverCompany, Initializable
         imgAddSeatingArrangement.setVisible(a);
         imgAddSeatingArrangement.setManaged(a);
     }
-
-    private void clearUi() {
-        loadUiEngineer(false);
-        loadUiReception(false);
-    }
-
+    
     private void loadUiReception(boolean b) {
-       /* imgRooms.setVisible(b);
+        imgSeatingArrangements.setVisible(b);
+        imgSeatingArrangements.setManaged(b);
+        imgRooms.setVisible(b);
         imgRooms.setManaged(b);
         imgAllEvent.setVisible(b);
-        imgAllEvent.setManaged(b);*/
+        imgAllEvent.setManaged(b);
         imgPhoneBook.setVisible(b);
         imgPhoneBook.setManaged(b);
         imgNotes.setVisible(b);
@@ -181,6 +226,7 @@ public class FragmentToolBoxController implements ObserverCompany, Initializable
         imgPhoneBook.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/phone_book.png"))));
         imgNotes.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_task_active.png"))));
         imgAddSeatingArrangement.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/add_seating_arrangement.png"))));
+        imgSeatingArrangements.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/activ_seating_arrangement.png"))));
 
         setActive(d);
     }
@@ -202,7 +248,8 @@ public class FragmentToolBoxController implements ObserverCompany, Initializable
         imgPhoneBook.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/phone_book_unactive.png"))));
         imgNotes.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/all_task_unactive.png"))));
         imgAddSeatingArrangement.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/un_activ_seating_arrangement.png"))));
-
+        imgSeatingArrangements.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/unactiv_seating_arrangement.png"))));
+        
         imgSearch.setDisable(true);
         imgSearchIp.setDisable(true);
 
@@ -229,6 +276,7 @@ public class FragmentToolBoxController implements ObserverCompany, Initializable
         tfSerNum.setDisable(w);
         imgSearchIp.setDisable(w);
         imgAddSeatingArrangement.setDisable(w);
+        imgSeatingArrangements.setDisable(w);
     }
 
     @Override
@@ -375,7 +423,12 @@ public class FragmentToolBoxController implements ObserverCompany, Initializable
     public void allRooms() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentRoom.fxml"));
         try {
-            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
+            if(user instanceof Engineer) {
+                GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
+            }
+            if (user instanceof Reception){
+                GlobalLinkStartReceptionController.getStartReceptionController().borderPaneStartReception.setCenter(loader.load());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -384,31 +437,44 @@ public class FragmentToolBoxController implements ObserverCompany, Initializable
     public void openAllEvent() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentEvents.fxml"));
         try {
-            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
-        } catch (IOException e) {
+            if (user instanceof Engineer) {
+                GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
+            }
+            if (user instanceof Reception) {
+                GlobalLinkStartReceptionController.getStartReceptionController().borderPaneStartReception.setCenter(loader.load());
+            }
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void addRoom() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_company.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_room.fxml"));
         try {
             GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
             if (company != null) {
-                FragmentAddCompanyController fragmentAddCompanyController = loader.getController();
-                fragmentAddCompanyController.loadChangeCompanyFragmentAddRoom(this.company);
+                FragmentAddRoom fragmentAddRoom = loader.getController();
+                fragmentAddRoom.loadFragment(this.company);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void addEvent() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_company.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_name_event.fxml"));
         try {
             GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
             if (company != null) {
-                FragmentAddCompanyController fragmentAddCompanyController = loader.getController();
-                fragmentAddCompanyController.loadChangeCompanyFragmentAddEvent(this.company);
+                FragmentAddNameEvent fragmentAddNameEvent = loader.getController();
+                fragmentAddNameEvent.loadFragment(this.company);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                LanguageWarnings languageWarnings = new LanguageWarningsImpl();
+                alert.setTitle(languageWarnings.CHOOSE_A_COMPANY(lang));
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
+                alert.setContentText(languageWarnings.CHOOSE_A_COMPANY(lang));
+                alert.showAndWait();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -443,12 +509,34 @@ public class FragmentToolBoxController implements ObserverCompany, Initializable
    public void openNotes() {
     }
     public void addSeatingArrangement() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_company.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_seating_arrangements.fxml"));
         try {
             GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
             if (company != null) {
-                FragmentAddCompanyController fragmentAddCompanyController = loader.getController();
-                fragmentAddCompanyController.loadChangeCompanyFragmentAddSeating(this.company);
+                FragmentAddSeatingArrangements fragmentAddSeatingArrangements = loader.getController();
+                fragmentAddSeatingArrangements.loadFragment(this.company);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                LanguageWarnings languageWarnings = new LanguageWarningsImpl();
+                alert.setTitle(languageWarnings.CHOOSE_A_COMPANY(lang));
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
+                alert.setContentText(languageWarnings.CHOOSE_A_COMPANY(lang));
+                alert.showAndWait();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void allSeatingArrangement() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentSeatingArrangement.fxml"));
+        try {
+            if(user instanceof Engineer) {
+                GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
+            }
+            if(user instanceof Reception){
+                GlobalLinkStartReceptionController.getStartReceptionController().borderPaneStartReception.setCenter(loader.load());
             }
         } catch (IOException e) {
             e.printStackTrace();

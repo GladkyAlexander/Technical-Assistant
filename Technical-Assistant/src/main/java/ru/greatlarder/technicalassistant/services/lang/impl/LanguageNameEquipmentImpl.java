@@ -1,8 +1,8 @@
 package ru.greatlarder.technicalassistant.services.lang.impl;
 
-import ru.greatlarder.technicalassistant.services.lang.GetLanguageName;
+import ru.greatlarder.technicalassistant.services.lang.LanguageNameEquipment;
 
-public class GetLanguageNameEquipment implements GetLanguageName {
+public class LanguageNameEquipmentImpl implements LanguageNameEquipment {
     String en = "English";
     String ru = "Русский";
     @Override

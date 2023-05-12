@@ -6,21 +6,18 @@ public interface SQLiteSeatingArrangements {
             " 'id' INTEGER PRIMARY KEY AUTOINCREMENT," +
             " 'nameSeatingArrangements' text," +
             " 'nameCompany' text," +
-            " 'urlImageSeatingArrangements' text, " +
-            " 'numberOfParticipants' int);";
+            " 'urlImageSeatingArrangements' text);";
 
     String INSERT_SEATING_ARRANGEMENTS = "INSERT INTO seating_arrangements (" +
             " nameSeatingArrangements," +
             " nameCompany," +
-            " urlImageSeatingArrangements" +
-            " numberOfParticipants)" +
-            " VALUES (?,?,?,?)";
+            " urlImageSeatingArrangements)" +
+            " VALUES (?,?,?)";
 
     String UPDATE_SEATING_ARRANGEMENTS = "UPDATE 'seating_arrangements' SET " +
             "            nameSeatingArrangements = ?," +
             "            nameCompany = ?," +
-            "            urlImageSeatingArrangements = ?, " +
-            "            numberOfParticipants WHERE id = ?;";
+            "            urlImageSeatingArrangements = ? WHERE id = ?;";
     String READ_SEATING_ARRANGEMENTS = "SELECT * FROM seating_arrangements";
 
 }

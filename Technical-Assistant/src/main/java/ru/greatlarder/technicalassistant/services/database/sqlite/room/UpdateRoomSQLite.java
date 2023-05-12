@@ -21,8 +21,9 @@ public class UpdateRoomSQLite implements UpdateRoom {
 
             cf.setString(1, room.getNameRoom());
             cf.setString(2, room.getNameCompanyForRoom());
+            cf.setString(3, room.getUrlLogoRoom());
 
-            cf.setInt(3, id);
+            cf.setInt(4, id);
 
             cf.executeUpdate();
            closeDB();

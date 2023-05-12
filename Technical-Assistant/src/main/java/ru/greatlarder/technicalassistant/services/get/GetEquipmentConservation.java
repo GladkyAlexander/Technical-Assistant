@@ -10,14 +10,14 @@ import ru.greatlarder.technicalassistant.services.check.check_equipment.check_eq
 import ru.greatlarder.technicalassistant.services.check.check_equipment.check_equipment_sqlite.CheckingIpForEmploymentInTheDatabaseSQLite;
 import ru.greatlarder.technicalassistant.services.database.GetEquipment;
 import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.EquipmentBySerialNumberSQLite;
-import ru.greatlarder.technicalassistant.services.lang.GetLanguageName;
+import ru.greatlarder.technicalassistant.services.lang.LanguageNameEquipment;
 import ru.greatlarder.technicalassistant.services.lang.Language;
-import ru.greatlarder.technicalassistant.services.lang.impl.GetLanguageNameEquipment;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageNameEquipmentImpl;
 
 import java.time.LocalDate;
 
 public class GetEquipmentConservation {
-    GetLanguageName language = new GetLanguageNameEquipment();
+    LanguageNameEquipment language = new LanguageNameEquipmentImpl();
 
     public Equipment getEquipment(User user, String value){
 

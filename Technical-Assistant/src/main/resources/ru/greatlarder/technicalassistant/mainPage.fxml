@@ -5,9 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="borderPaneMainPage" styleClass="BorderPane"
-            stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/11.0.14-internal"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.MainController">
+<BorderPane fx:id="borderPaneMainPage" styleClass="BorderPane" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.MainController">
     <opaqueInsets>
         <Insets />
     </opaqueInsets>

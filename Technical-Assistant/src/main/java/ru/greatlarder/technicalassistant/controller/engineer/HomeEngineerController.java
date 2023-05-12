@@ -111,12 +111,17 @@ public class HomeEngineerController implements ObserverLang, Initializable{
         GlobalLinkMainController.getMainController().getHandlerLang().registerObserverLang(this);
         if (company != null) {
             GetListEquipment getListEquipment = new ListEquipmentByNameCompanySQLite();
-            labelQuantityEquipment.setText(String.valueOf(getListEquipment.getListEquipment(user, company.getNameCompany(), company.getNameCompany()).size()));
+            List<Equipment> equipmentList = getListEquipment.getListEquipment(user, company.getNameCompany(), company.getNameCompany());
+            labelQuantityEquipment.setText(String.valueOf(equipmentList.size()));
+            
+            setNumberOfFaultyDevices(equipmentList);
+            setNumberOfDevicesOperatingForMoreThanFiveYears(equipmentList);
             
             GetListTool getListTool = new GetListToolAllSQLite();
             setNumberOfTools(getListTool.getListTool(user, company.getNameCompany(), null));
 
             tabPaneEngineerHome.getTabs().add(loadTasksActive());
+           //tabPaneEngineerHome.getTabs().add(loadTasksAll());
           
             GetListMailSettings getListMailSettings = new GetListMailSettingsSQLite();
 
@@ -159,7 +164,7 @@ public class HomeEngineerController implements ObserverLang, Initializable{
         return t;
     }
 
-    private Tab loadTasksAll() {
+   /* private Tab loadTasksAll() {
         Tab tA = new Tab(language.ALL_APPLICATIONS(lang));
         Task<ListView<Affairs>> ts = new Task<ListView<Affairs>>() {
             @Override
@@ -184,7 +189,7 @@ public class HomeEngineerController implements ObserverLang, Initializable{
         );
 
         return tA;
-    }
+    }*/
 
 
     private void loadMail(MailSettings mailSettings) {

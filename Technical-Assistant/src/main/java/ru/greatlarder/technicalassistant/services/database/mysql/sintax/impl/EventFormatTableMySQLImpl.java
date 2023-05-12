@@ -7,7 +7,7 @@ public class EventFormatTableMySQLImpl implements EventTableMySQL {
     public String CREATE(String nameDB) {
         return "CREATE TABLE if not exists`" + nameDB + "`.`events` ( id int AUTO_INCREMENT primary key NOT NULL " +
                 ", nameEvent text" +
-                ", urlImageEvent text" +
+                ", urlImageEvent mediumblob" +
                 ", idSeatingArrangements int" +
                 ", lastNameCustomer text" +
                 ", firstNameCustomer text" +

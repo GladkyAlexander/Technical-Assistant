@@ -7,8 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import org.apache.commons.io.FileUtils;
 import ru.greatlarder.technicalassistant.controller.fragment.FragmentIdenticalData;
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddCompanyController;
 import ru.greatlarder.technicalassistant.controller.fragment_add.FragmentRegistrationUserController;
@@ -24,23 +27,28 @@ import ru.greatlarder.technicalassistant.services.database.mysql.equipment.ListE
 import ru.greatlarder.technicalassistant.services.database.mysql.equipment.SetEquipmentMySQL;
 import ru.greatlarder.technicalassistant.services.database.mysql.equipment.UpdateEquipmentMySQL;
 import ru.greatlarder.technicalassistant.services.database.mysql.names.*;
-import ru.greatlarder.technicalassistant.services.database.mysql.room.ListRoomByCompanyMySQL;
-import ru.greatlarder.technicalassistant.services.database.mysql.room.RoomByIdMySQL;
-import ru.greatlarder.technicalassistant.services.database.mysql.room.SetRoomMySQL;
-import ru.greatlarder.technicalassistant.services.database.mysql.room.UpdateRoomMySQL;
+import ru.greatlarder.technicalassistant.services.database.mysql.room.*;
 import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.ListEquipmentByNameCompanySQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.event_format.GetListEventFormatSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.room.ListRoomByCompanySQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.seating_arrangements.GetListSeatingArrangementsSQLite;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.lang.DataLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
+import ru.greatlarder.technicalassistant.services.lang.LanguageWarnings;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageWarningsImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 
+import javax.sound.midi.Patch;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -111,7 +119,7 @@ public class SettingsEngineerController implements Initializable {
         }
     }
 
-    public void openSettingsMail(ActionEvent actionEvent) {
+    public void openSettingsMail() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_mail_settings.fxml"));
         try {
             borderPaneSettings.setCenter(loader.load());
@@ -121,11 +129,12 @@ public class SettingsEngineerController implements Initializable {
 
     }
 
-    public void actionBtnCompany(ActionEvent actionEvent) {
-        borderPaneSettings.getChildren().remove(borderPaneSettings.getCenter());
+    public void actionBtnCompany() {
+        GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getChildren().remove(GlobalLinkStartEngineerController
+            .getStartEngineerController().borderPaneEngineerPage.getCenter());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_company.fxml"));
         try {
-            borderPaneSettings.setRight(loader.load());
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
             FragmentAddCompanyController fragmentAddCompanyController = loader.getController();
             fragmentAddCompanyController.loadFragment();
         } catch (IOException e) {
@@ -177,7 +186,7 @@ public class SettingsEngineerController implements Initializable {
         gridPaneUpdateExternalDB.setManaged(b);
     }
 
-    public void sendToAnExternalDatabase(ActionEvent mouseEvent) {
+    public void sendToAnExternalDatabase() {
         visibleGridUpdateExternalDB(!gridPaneUpdateExternalDB.isVisible());
         GetCompany getCompanyByName = new CompanyByNameMySQL();
         btnDisable(true);
@@ -185,9 +194,9 @@ public class SettingsEngineerController implements Initializable {
         ProgressBar progressIndicator = new ProgressBar();
         gridPaneUpdateExternalDB.add(progressIndicator, 1, 0);
 
-        Task<Boolean> task = new Task<Boolean>() {
+        Task<Boolean> task = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
+            protected Boolean call() {
                 return getCompanyByName.getCompany(user, company.getNameCompany()) == null;
             }
         };
@@ -205,7 +214,7 @@ public class SettingsEngineerController implements Initializable {
 
     }
 
-    public void getDataFromAnExternalDatabase(ActionEvent mouseEvent) {
+    public void getDataFromAnExternalDatabase() {
         GetListEquipment listEquipmentSqlite = new ListEquipmentByNameCompanySQLite();
         GetListEquipment listEquipmentMysql = new ListEquipmentByNameCompanyMySQL();
 
@@ -238,16 +247,25 @@ public class SettingsEngineerController implements Initializable {
     }
 
     public void openCompanyDataSettings() {
-        borderPaneSettings.getChildren().remove(borderPaneSettings.getCenter());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_company.fxml"));
-        try {
-            borderPaneSettings.setRight(loader.load());
-            if (company != null) {
+        if(company != null) {
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getChildren().remove(GlobalLinkStartEngineerController
+                .getStartEngineerController().borderPaneEngineerPage.getCenter());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_company.fxml"));
+            try {
+                GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.setCenter(loader.load());
                 FragmentAddCompanyController fragmentAddCompanyController = loader.getController();
                 fragmentAddCompanyController.loadChangeCompanyFragment(company);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            LanguageWarnings languageWarnings = new LanguageWarningsImpl();
+            alert.setTitle(languageWarnings.CHOOSE_A_COMPANY(lang));
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
+            alert.setContentText(languageWarnings.CHOOSE_A_COMPANY(lang));
+            alert.showAndWait();
         }
     }
 
@@ -258,9 +276,9 @@ public class SettingsEngineerController implements Initializable {
         UpdateCompany updateCompany = new UpdateCompanyMySQL();
 
         if (getCompany.getCompany(user, company.getNameCompany()) == null) {
-            Task<String> task = new Task<String>() {
+            Task<String> task = new Task<>() {
                 @Override
-                protected String call() throws Exception {
+                protected String call(){
                     setCompanyMySQL.setCompany(user, company);
                     if (getCompany.getCompany(user, company.getNameCompany()) == null) {
                         return language.NOT_ADDED(lang);
@@ -318,7 +336,7 @@ public class SettingsEngineerController implements Initializable {
         btnDisable(true);
         gridPaneUpdateExternalDB.getChildren().removeIf(node -> node instanceof ProgressIndicator);
         GetListRoom getListRoom = new ListRoomByCompanySQLite();
-        GetRoom getRoomMySQL = new RoomByIdMySQL();
+        GetRoom getRoomMySQL = new RoomByNameMySQL();
         UpdateRoom updateRoom = new UpdateRoomMySQL();
         SetRoom setRoom = new SetRoomMySQL();
 
@@ -338,13 +356,11 @@ public class SettingsEngineerController implements Initializable {
                 Platform.runLater(() -> {
                     progressIndicator.setProgress(reportedProgress);
                 });
-                Room room1 = getRoomMySQL.getRoom(user, company.getNameCompany(), String.valueOf(room.getId()));
+                Room room1 = getRoomMySQL.getRoom(user, company.getNameCompany(), room.getNameRoom());
                 if (room1 == null) {
                     setRoom.setRoom(user, company.getNameCompany(), room);
                 } else {
-                    if (Objects.equals(room1.getId(), room.getId())) {
-                        updateRoom.updateRoom(user, room, room.getId());
-                    } else setRoom.setRoom(user, company.getNameCompany(), room);
+                    updateRoom.updateRoom(user, room, room.getId());
                 }
             }
             btnDisable(false);
@@ -380,18 +396,24 @@ public class SettingsEngineerController implements Initializable {
                 Platform.runLater(() -> {
                     progressIndicator.setProgress(reportedProgress);
                 });
+                
                 Names names = getNames.getNames(user, company.getNameCompany(), seatingArrangements.getNameSeatingArrangements());
+                
+                Path path = Paths.get(seatingArrangements.getUrlImageSeatingArrangements());
+                File file = path.toFile();
+                
                 if (names == null) {
                     setNames.setNames(user, company.getNameCompany(), new Names(seatingArrangements.getNameSeatingArrangements()
-                    , seatingArrangements.getNameCompany(), seatingArrangements.getUrlImageSeatingArrangements(), ""));
+                    , seatingArrangements.getNameCompany(), file, ""));
                 } else {
                     if (seatingArrangements.getNameSeatingArrangements().equals(names.getNames())) {
-                        updateIds.updateNames(user, new Names(seatingArrangements.getNameSeatingArrangements()
-                                , seatingArrangements.getNameCompany(), seatingArrangements.getUrlImageSeatingArrangements()
-                                , names.getDomain()));
+                        Names n = new Names(seatingArrangements.getNameSeatingArrangements()
+                            , seatingArrangements.getNameCompany(), file
+                            , names.getDomain());
+                        updateIds.updateNames(user, n, n.getNames());
                     } else {
                         setNames.setNames(user, company.getNameCompany(), new Names(seatingArrangements.getNameSeatingArrangements()
-                                , seatingArrangements.getNameCompany(), seatingArrangements.getUrlImageSeatingArrangements(), ""));
+                                , seatingArrangements.getNameCompany(), file, ""));
                     }
                 }
             }
@@ -462,16 +484,20 @@ public class SettingsEngineerController implements Initializable {
                     }
 
                     Names names = getNames.getNames(user, eventFormat.getNameCompany(), eventFormat.getNameEventFormat());
+                    Path path = Paths.get(eventFormat.getUrlImageEvent());
+                    File file = path.toFile();
+                   
                     if (names == null) {
                         setNames.setNames(user, company.getNameCompany(), new Names(eventFormat.getNameEventFormat()
-                                , eventFormat.getNameCompany(), eventFormat.getUrlImageEvent(), ""));
+                                , eventFormat.getNameCompany(), file, ""));
                     } else{
                         if(eventFormat.getNameEventFormat().equals(names.getNames())){
-                            updateNames.updateNames(user, new Names(eventFormat.getNameEventFormat(), eventFormat.getNameCompany()
-                                    , eventFormat.getUrlImageEvent(), names.getDomain()));
+                            Names n = new Names(eventFormat.getNameEventFormat(), eventFormat.getNameCompany()
+                                , file, names.getDomain());
+                            updateNames.updateNames(user, n, n.getNames());
                         } else {
                             setNames.setNames(user, company.getNameCompany(), new Names(eventFormat.getNameEventFormat()
-                                    , eventFormat.getNameCompany(), eventFormat.getUrlImageEvent(), ""));
+                                    , eventFormat.getNameCompany(), file, ""));
                         }
                     }
 
@@ -488,7 +514,7 @@ public class SettingsEngineerController implements Initializable {
     }
 
     private void btnDisable(Boolean dis) {
-        buttonCompanyData.setDisable(dis);
+        buttonCompanyData.setDisable(!dis);
         buttonListOfRooms.setDisable(dis);
         buttonSeatingList.setDisable(dis);
         buttonEquipment.setDisable(dis);
@@ -505,7 +531,7 @@ public class SettingsEngineerController implements Initializable {
         loadPage();
     }
 
-    public void openDetails(ActionEvent actionEvent) {
+    public void openDetails() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment/fragmentIdenticalData.fxml"));
         try {
             borderPaneSettings.setCenter(loader.load());

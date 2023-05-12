@@ -2,9 +2,11 @@ package ru.greatlarder.technicalassistant.controller.fragment_item;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
@@ -24,6 +26,8 @@ import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainCont
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartReceptionController;
 import ru.greatlarder.technicalassistant.services.list_view.GetListViewRoom;
 import ru.greatlarder.technicalassistant.services.list_view.impl.ListViewRoomWorkloadMySQL;
+import ru.greatlarder.technicalassistant.services.print.PrintDoc;
+import ru.greatlarder.technicalassistant.services.print.PrintDocImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -90,9 +94,10 @@ public class ItemDay implements Initializable {
     @FXML public Pane p1945;
     @FXML public Pane p2000;
     @FXML public BorderPane borderPane;
-    HashMap<Pane, Integer> hashMap = new HashMap<Pane, Integer>();
+    @FXML public Button btnToPrint;
+   /* HashMap<Pane, Integer> hashMap = new HashMap<Pane, Integer>();
     HashMap<Pane, String> paneHashMap = new HashMap<Pane, String>();
-    List<Pane> panes = new ArrayList<>();
+    List<Pane> panes = new ArrayList<>();*/
     Day day;
     String roomName;
     LocalDate date;
@@ -305,5 +310,9 @@ public class ItemDay implements Initializable {
             executorService.shutdown();
         });
     }
-
+    
+    public void toPrint() {
+        PrintDoc printDoc = new PrintDocImpl();
+        printDoc.print(gridPaneItemDay);
+    }
 }

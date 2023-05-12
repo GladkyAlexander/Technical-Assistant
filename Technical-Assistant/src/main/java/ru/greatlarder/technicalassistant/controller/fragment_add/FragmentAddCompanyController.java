@@ -1,21 +1,18 @@
 package ru.greatlarder.technicalassistant.controller.fragment_add;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
-import ru.greatlarder.technicalassistant.controller.fragment_item.ItemTypesEvent;
+import javafx.stage.Stage;
+import org.apache.commons.io.FileUtils;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.EventFormat;
 import ru.greatlarder.technicalassistant.domain.Room;
@@ -26,27 +23,19 @@ import ru.greatlarder.technicalassistant.services.database.sqlite.company.Compan
 import ru.greatlarder.technicalassistant.services.database.sqlite.company.SetCompanySQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.company.UpdateCompanySQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.event_format.GetListEventFormatSQLite;
-import ru.greatlarder.technicalassistant.services.database.sqlite.event_format.ListEventFormatByCompanyNameSQLite;
-import ru.greatlarder.technicalassistant.services.database.sqlite.event_format.SetEventFormatSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.room.ListRoomByCompanySQLite;
-import ru.greatlarder.technicalassistant.services.database.sqlite.room.SetRoomSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.seating_arrangements.GetListSeatingArrangementsSQLite;
-import ru.greatlarder.technicalassistant.services.database.sqlite.seating_arrangements.SetSeatingArrangementsSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.user.GetUserSQLite;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.lang.DataLang;
-import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
-import ru.greatlarder.technicalassistant.services.lang.Language;
-import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
+import ru.greatlarder.technicalassistant.services.lang.*;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageWarningsImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
 
-import javax.imageio.ImageIO;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -137,50 +126,25 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
     public Label labelFirstNameEngineer;
     @FXML public Label labelRooms;
     @FXML public ImageView imgRoomAdd;
-    @FXML public Button btnAddRoom;
-    @FXML public TextField tfNewRoom;
     @FXML public Label labelTypesOfEvents;
     @FXML public ComboBox<String> comboBoxRooms;
     @FXML public ComboBox<String> comboBoxEvent;
     @FXML public ImageView imgAddEvent;
-    @FXML public ImageView imgMeeting;
-    @FXML public ImageView imgPresent;
-    @FXML public ImageView imgSkype;
-    @FXML public ImageView imgVCS;
-    @FXML public ImageView imgZoom;
-    @FXML public ListView<EventFormat> listViewEventForCompany;
-    @FXML public Label labelNameEvent;
-    @FXML public TextField tfNameEvent;
-    @FXML public ImageView imgLogoEvent;
-    @FXML public Label labelLogoEvent;
-    @FXML public Button btnAddEvent;
-    @FXML public HBox hBoxEvent;
     @FXML public Button btnSaveChange;
     @FXML public Label labelSeatingArrangements;
     @FXML public HBox hBoxArrangement;
     @FXML public ComboBox<String> comboBoxSeatingArrangement;
     @FXML public ImageView imgAddPaneSeating;
-    @FXML public Label labelNameTip;
-    @FXML public Label labelPhotoTip;
-    @FXML public ImageView imgNewImageSeating;
-    @FXML public Button btnAddNewSeating;
-    @FXML public ListView<String> listViewSeatingArrangements;
-    @FXML public TextField textFieldNewNameTip;
-    @FXML public ImageView closeAdRoom;
-    @FXML public ImageView closeAddEvent;
-    @FXML public ImageView closeAddSeating;
-    @FXML public ListView<String> listViewRooms;
+    @FXML public ScrollPane scrollPane;
+    @FXML public BorderPane borderPane;
+    @FXML public HBox hBoxRoom;
+    @FXML public HBox hBoxEvents;
     Language language = new LanguageImpl();
-    String fileName;
     String lang;
     FileManager fileManager = new FileManagerImpl();
     HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     Company company;
     User user;
-    private void loadClose(boolean b){
-        close1.setManaged(b);
-        close1.setVisible(b);
-    }
 
     @Override
     public void updateLang(DataLang dataLang) {
@@ -191,68 +155,27 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
     public void loadFragment(){
         btnSaveChange.setVisible(false);
         btnSaveChange.setManaged(false);
-        loadUINewRooms(false);
-        loadUINewEvents(false);
-        loadUINewArrangement(false);
+        labelRooms.setVisible(false);
+        labelRooms.setManaged(false);
+        labelTypesOfEvents.setVisible(false);
+        labelTypesOfEvents.setManaged(false);
+        labelSeatingArrangements.setVisible(false);
+        labelSeatingArrangements.setManaged(false);
+        hBoxRoom.setVisible(false);
+        hBoxRoom.setManaged(false);
+        hBoxEvents.setVisible(false);
+        hBoxEvents.setManaged(false);
+        hBoxArrangement.setVisible(false);
+        hBoxArrangement.setManaged(false);
     }
 
     public void loadChangeCompanyFragment(Company company){
-        this.company = company;
         btnSendCompany.setVisible(false);
         btnSendCompany.setManaged(false);
-        loadUINewRooms(false);
-        loadUINewEvents(false);
-        loadUINewArrangement(false);
+        this.company = company;
         loadDataFragment();
     }
-    private void loadUINewArrangement(Boolean enabled){
-        labelNameTip.setVisible(enabled);
-        labelNameTip.setManaged(enabled);
-        textFieldNewNameTip.setVisible(enabled);
-        textFieldNewNameTip.setManaged(enabled);
-        labelPhotoTip.setVisible(enabled);
-        labelPhotoTip.setManaged(enabled);
-        imgNewImageSeating.setVisible(enabled);
-        imgNewImageSeating.setManaged(enabled);
-        btnAddNewSeating.setVisible(enabled);
-        btnAddNewSeating.setManaged(enabled);
-        listViewSeatingArrangements.setVisible(enabled);
-        listViewSeatingArrangements.setManaged(enabled);
-        closeAddSeating.setVisible(enabled);
-        closeAddSeating.setManaged(enabled);
-        loadClose(!enabled);
-    }
-
-    private void loadUINewRooms(Boolean enabled) {
-        tfNewRoom.setVisible(enabled);
-        tfNewRoom.setManaged(enabled);
-        btnAddRoom.setVisible(enabled);
-        btnAddRoom.setManaged(enabled);
-        listViewRooms.setVisible(enabled);
-        listViewRooms.setManaged(enabled);
-        closeAdRoom.setVisible(enabled);
-        closeAdRoom.setManaged(enabled);
-        loadClose(!enabled);
-    }
-    private void loadUINewEvents(Boolean enabled){
-        hBoxEvent.setVisible(enabled);
-        hBoxEvent.setManaged(enabled);
-        labelNameEvent.setVisible(enabled);
-        labelNameEvent.setManaged(enabled);
-        labelLogoEvent.setVisible(enabled);
-        labelLogoEvent.setManaged(enabled);
-        tfNameEvent.setVisible(enabled);
-        tfNameEvent.setManaged(enabled);
-        imgLogoEvent.setVisible(enabled);
-        imgLogoEvent.setManaged(enabled);
-        btnAddEvent.setVisible(enabled);
-        btnAddEvent.setManaged(enabled);
-        listViewEventForCompany.setVisible(enabled);
-        listViewEventForCompany.setManaged(enabled);
-        closeAddEvent.setVisible(enabled);
-        closeAddEvent.setManaged(enabled);
-        loadClose(!enabled);
-    }
+    
     private void loadDataFragment(){
         tfNameCompany.setText(company.getNameCompany());
         tfAddress.setText(company.getAddress());
@@ -270,28 +193,24 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
         tfLastNameEngineer.setText(company.getEngineerLastName());
         tfFirstNameEngineer.setText(company.getEngineerFirstName());
         imgLogoCompany.setImage(new Image(fileManager.folderImage() + "\\" + company.getLogoCompany()));
-
         List<String> roomsList = new ArrayList<>();
         GetListRoom getListRoom = new ListRoomByCompanySQLite();
         for(Room room : getListRoom.getListRoom(user, company.getNameCompany(), null)){
             roomsList.add(room.getNameRoom());
         }
         comboBoxRooms.setItems(FXCollections.observableArrayList(roomsList));
-
         List<String> eventsList = new ArrayList<>();
         GetListEventFormat getListEventFormat = new GetListEventFormatSQLite();
         for (EventFormat event : getListEventFormat.getListEventFormat(user, company.getNameCompany(), null)) {
            eventsList.add(event.getNameEventFormat());
         }
         comboBoxEvent.setItems(FXCollections.observableArrayList(eventsList));
-
         List<String> arrangements = new ArrayList<>();
         GetListSeatingArrangements getListSeatingArrangements = new GetListSeatingArrangementsSQLite();
         for (SeatingArrangements arrangements1 : getListSeatingArrangements.getListSeatingArrangements(user, company.getNameCompany(), null)){
             arrangements.add(arrangements1.getNameSeatingArrangements());
         }
         comboBoxSeatingArrangement.setItems(FXCollections.observableArrayList(arrangements));
-
     }
 
     private void setLanguage(String lang) {
@@ -321,22 +240,15 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
         labelFirstNameEngineer.setText(language.FIRST_NAME(lang));
         btnSendCompany.setText(language.SAVE(lang));
         labelRooms.setText(language.ROOMS(lang));
-        btnAddRoom.setText(language.ADD(lang));
         labelTypesOfEvents.setText(language.TYPES_OF_EVENTS(lang));
         comboBoxRooms.setPromptText(language.ALL_ROOMS(lang));
         comboBoxEvent.setPromptText(language.ALL_EVENTS(lang));
-        labelNameEvent.setText(language.EVENT_NAME(lang));
-        labelLogoEvent.setText(language.EVENT_LOGO(lang));
-        btnAddEvent.setText(language.ADD(lang));
-        labelNameTip.setText(language.TYPE_NAME(lang));
-        labelPhotoTip.setText(language.IMAGE(lang));
-        btnAddNewSeating.setText(language.ADD(lang));
         labelSeatingArrangements.setText(language.TYPES_OF_FURNITURE_ARRANGEMENT(lang));
     }
 
     public void closeAddCompanyController() {
         handlerLang.unregisterObserverLang(this);
-        ((BorderPane) gridPaneAddCompany.getParent()).getChildren().remove(gridPaneAddCompany);
+        ((BorderPane) borderPane.getParent()).getChildren().remove(borderPane);
     }
 
     public void imagePicker() {
@@ -346,19 +258,29 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
         fileChooser.getExtensionFilters().addAll(extFilterPNG, extensionFilter);
 
         File chooserFile = fileChooser.showOpenDialog(imgLogoCompany.getScene().getWindow());
-
-        if (chooserFile != null) {
+        if (chooserFile != null && chooserFile.length() < 494592) {
             Image image = new Image(chooserFile.toURI().toString());
-
-            fileName = image.getUrl().substring(image.getUrl().lastIndexOf('/') + 1);
-
+            
             imgLogoCompany.setImage(image);
+            
+            File file1 = new File(fileManager.folderImage() + "\\" + image.getUrl().substring(image.getUrl().lastIndexOf('/') + 1));
+            try {
+                FileUtils.copyFile(chooserFile, file1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            LanguageWarnings languageWarnings = new LanguageWarningsImpl();
+            alert.setTitle(languageWarnings.INCORRECT_IMAGE(lang));
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
+            alert.setContentText(languageWarnings.THE_PICTURE_SHOULD_BE_NO_MORE_THAN_483_KB(lang));
+            alert.showAndWait();
         }
     }
 
-    public void sendCompany(MouseEvent mouseEvent) {
-
-        convert(imgLogoCompany.getImage(), fileName);
+    public void sendCompany() {
         Company companyS = new Company();
         companyS.setNameCompany(tfNameCompany.getText());
         companyS.setAddress(tfAddress.getText());
@@ -367,7 +289,7 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
         companyS.setPhoneCurator(tfNumberPhone.getText());
         companyS.setMailCurator(tfEmail.getText());
         companyS.setWebsiteCompany(tfWeb.getText());
-        companyS.setLogoCompany(fileName);
+        companyS.setLogoCompany(imgLogoCompany.getImage().getUrl());
         companyS.setManagerLastName(tfLastNameManager.getText());
         companyS.setManagerFirstName(tfFirstNameManager.getText());
         companyS.setPhoneManager(tfManagerPhone.getText());
@@ -396,18 +318,6 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
         }
 
     }
-
-    public void convert(Image wim, String fileName) {
-
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png",
-                    new FileOutputStream(fileManager.folderImage() + "\\" + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public void cleanAddCompany() {
         tfNameCompany.clear();
         tfNameCompany.setStyle(new TextField().getStyle());
@@ -442,7 +352,7 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
         tfEngineerMail.setStyle(new TextField().getStyle());
     }
 
-   public Company checkCompany(Company company) {
+    public Company checkCompany(Company company) {
         Company returnCompany = new Company();
         GetCompany getCompany = new CompanyByNameSQLite();
         if (company.getNameCompany() == null) {
@@ -571,167 +481,8 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
             return returnCompany;
         } else return null;
     }
-
-    public void addNewRoom() {
-        if(company != null) {
-            if(!tfNewRoom.getText().isEmpty()) {
-                SetRoom setRoom = new SetRoomSQLite();
-
-                Room room = new Room();
-                room.setNameRoom(tfNewRoom.getText());
-                room.setNameCompanyForRoom(company.getNameCompany());
-                setRoom.setRoom(user, company.getNameCompany(), room);
-                tfNewRoom.clear();
-            } else tfNewRoom.setStyle(StyleSRC.STYLE_WARNING);
-        }
-        imgOpenAddRooms();
-    }
-
-    public void imgOpenAddRooms() {
-        loadUINewRooms(true);
-        listViewRooms.getItems().clear();
-        ObservableList<String> list = FXCollections.observableArrayList();
-        for (Room name : getRoom()){
-            list.add(name.getNameRoom());
-        }
-        listViewRooms.setItems(list);
-    }
-    private List<Room> getRoom() {
-        List<Room> result = new ArrayList<Room>();
-        if(company != null) {
-            GetListRoom getListRoom = new ListRoomByCompanySQLite();
-            result = getListRoom.getListRoom(user, company.getNameCompany(), null);
-        }
-        return result;
-    }
-
-    public void openAddEvent() {
-        loadUINewEvents(true);
-        loadEvents();
-    }
-
-    public void addMeeting() {
-        tfNameEvent.setText(language.MEETING(lang));
-        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/events_img/meeting.png")));
-        saveLogoEvent(img, "meeting.png");
-        imgLogoEvent.setImage(new Image(fileManager.folderImage() + '/' + "meeting.png"));
-    }
-
-    public void addPresent() {
-        tfNameEvent.setText(language.PRESENTATION(lang));
-        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/events_img/present.png")));
-        saveLogoEvent(img, "present.png");
-        imgLogoEvent.setImage(new Image(fileManager.folderImage() + '/' + "present.png"));
-    }
-
-    public void addSkype() {
-        tfNameEvent.setText("Skype");
-        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/events_img/skype.png")));
-        saveLogoEvent(img, "skype.png");
-        imgLogoEvent.setImage(new Image(fileManager.folderImage() + '/' + "skype.png"));
-    }
-
-    public void addVCS() {
-        tfNameEvent.setText("VCS");
-        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/events_img/vcs.png")));
-        saveLogoEvent(img, "vcs.png");
-        imgLogoEvent.setImage(new Image(fileManager.folderImage() + '/' + "vcs.png"));
-    }
-
-    public void addZoom() {
-        tfNameEvent.setText("Zoom");
-        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/events_img/zoom.png")));
-        saveLogoEvent(img, "zoom.png");
-        imgLogoEvent.setImage(new Image(fileManager.folderImage() + '/' + "zoom.png"));
-    }
-
-    public void loadLogoEvent() {
-            FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
-            FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
-            fileChooser.getExtensionFilters().addAll(extFilterPNG, extensionFilter);
-
-            File chooserFile = fileChooser.showOpenDialog(imgLogoCompany.getScene().getWindow());
-
-            if (chooserFile != null) {
-                Image image = new Image(chooserFile.toURI().toString());
-
-                String nameLogoFile = image.getUrl().substring(image.getUrl().lastIndexOf('/') + 1);
-
-                saveLogoEvent(image, nameLogoFile);
-
-                imgLogoEvent.setImage(new Image(fileManager.folderImage() + '/' + nameLogoFile));
-            }
-    }
-
-    public void addNewEvent() {
-
-        EventFormat events = new EventFormat();
-        events.setNameEventFormat(tfNameEvent.getText());
-        events.setUrlImageEvent(imgLogoEvent.getImage().getUrl().substring(imgLogoEvent.getImage().getUrl().lastIndexOf('/') + 1));
-        events.setNameCompany(company.getNameCompany());
-
-        SetEventFormat setEventFormat = new SetEventFormatSQLite();
-        setEventFormat.setEventFormat(user, events);
-
-        tfNameEvent.clear();
-        imgLogoEvent.setImage(new Image(Objects.requireNonNull(getClass()
-                .getResourceAsStream("/ru/greatlarder/technicalassistant/images/events_img/event.png"))));
-        loadEvents();
-
-    }
-
-    private void loadEvents(){
-
-        listViewEventForCompany.getItems().clear();
-
-        GetListEventFormat getListEventFormat = new ListEventFormatByCompanyNameSQLite();
-        ObservableList<EventFormat> eventsObservableList = FXCollections.observableArrayList(getListEventFormat.getListEventFormat(user, company.getNameCompany(), null));
-
-        listViewEventForCompany.setItems(eventsObservableList);
-        listViewEventForCompany.setCellFactory(param-> new ListCell<>(){
-            final FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_types_events.fxml"));
-            Node node;
-            ItemTypesEvent controller;
-            {
-                try {
-                    node = loader.load();
-                    controller = loader.getController();
-                    setPrefWidth(0);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            protected void updateItem(EventFormat events, boolean b) {
-                super.updateItem(events, b);
-                if(b){
-                    setGraphic(null);
-                } else {
-
-                    controller.updateLang(new DataLang(lang));
-
-                    controller.setEvents(events);
-                    controller.setLabelEvent(events.getNameEventFormat());
-                    controller.setImg_event(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/events_img/" + events.getUrlImageEvent()))));
-                    setGraphic(node);
-                }
-            }
-        });
-    }
-
-    private void saveLogoEvent(Image file, String name){
-            try {
-                ImageIO.write(SwingFXUtils.fromFXImage(file, null), "png",
-                        new FileOutputStream(fileManager.folderImage() + '/' + name));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-    }
-
+    
     public void saveChange() {
-
-        convert(imgLogoCompany.getImage(), fileName);
         Company companyN = new Company();
         companyN.setNameCompany(tfNameCompany.getText());
         companyN.setAddress(tfAddress.getText());
@@ -740,7 +491,9 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
         companyN.setPhoneCurator(tfNumberPhone.getText());
         companyN.setMailCurator(tfEmail.getText());
         companyN.setWebsiteCompany(tfWeb.getText());
-        companyN.setLogoCompany(fileName);
+        
+        companyN.setLogoCompany(imgLogoCompany.getImage().getUrl());
+        
         companyN.setManagerLastName(tfLastNameManager.getText());
         companyN.setManagerFirstName(tfFirstNameManager.getText());
         companyN.setPhoneManager(tfManagerPhone.getText());
@@ -775,69 +528,47 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
         }
 
     }
-
+    public void openAddRooms() {
+        if(company != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_room.fxml"));
+            try {
+                borderPane.setRight(loader.load());
+                FragmentAddRoom controller = loader.getController();
+                controller.loadFragment(company);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public void openAddEvent() {
+        if(company != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_name_event.fxml"));
+            try {
+                borderPane.setRight(loader.load());
+                FragmentAddNameEvent controller = loader.getController();
+                controller.loadFragment(company);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public void openPaneSeating() {
-        loadUINewArrangement(true);
-        GetListSeatingArrangements getListSeatingArrangements = new GetListSeatingArrangementsSQLite();
-        ObservableList<String> seating = FXCollections.observableArrayList();
-        for (SeatingArrangements s : getListSeatingArrangements.getListSeatingArrangements(user, company.getNameCompany(), null)){
-            seating.add(s.getNameSeatingArrangements());
-        }
-        listViewSeatingArrangements.setItems(seating);
-    }
-
-    public void addImageSeating() {
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
-        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
-        fileChooser.getExtensionFilters().addAll(extFilterPNG, extensionFilter);
-
-        File chooserFile = fileChooser.showOpenDialog(imgNewImageSeating.getScene().getWindow());
-
-        if (chooserFile != null) {
-            Image image = new Image(chooserFile.toURI().toString());
-
-            String nameLogoFile = image.getUrl().substring(image.getUrl().lastIndexOf('/') + 1);
-
-            saveLogoEvent(image, nameLogoFile);
-
-            imgNewImageSeating.setImage(new Image(fileManager.folderImage() + '/' + nameLogoFile));
+        if(company != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_seating_arrangements.fxml"));
+            try {
+                borderPane.setRight(loader.load());
+                FragmentAddSeatingArrangements controller = loader.getController();
+                controller.loadFragment(company);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-
-    public void addNewSeating() {
-
-        SeatingArrangements arrangements = new SeatingArrangements();
-        if(imgNewImageSeating.getImage() != null) {
-            arrangements.setUrlImageSeatingArrangements(imgNewImageSeating.getImage().getUrl().substring(imgLogoEvent.getImage().getUrl().lastIndexOf('/') + 1));
-        }
-        arrangements.setNameCompany(company.getNameCompany());
-        arrangements.setNameSeatingArrangements(textFieldNewNameTip.getText());
-        SetSeatingArrangements setSeatingArrangements = new SetSeatingArrangementsSQLite();
-        setSeatingArrangements.setSeatingArrangements(user, company.getNameCompany(), arrangements);
-
-        openPaneSeating();
-    }
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.user = GlobalLinkMainController.getMainController().getUser();
         this.company = GlobalLinkMainController.getMainController().getCompany();
         this.lang = GlobalLinkMainController.getMainController().getLang();
-    }
-
-    public void loadChangeCompanyFragmentAddRoom(Company company) {
-        loadChangeCompanyFragment(company);
-        imgOpenAddRooms();
-    }
-
-    public void loadChangeCompanyFragmentAddEvent(Company company) {
-        loadChangeCompanyFragment(company);
-        openAddEvent();
-    }
-
-    public void loadChangeCompanyFragmentAddSeating(Company company) {
-        loadChangeCompanyFragment(company);
-        openPaneSeating();
     }
 }

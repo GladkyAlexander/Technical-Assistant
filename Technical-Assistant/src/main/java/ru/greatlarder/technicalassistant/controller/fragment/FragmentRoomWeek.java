@@ -12,8 +12,8 @@ import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Room;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.lang.GetLanguageDataName;
-import ru.greatlarder.technicalassistant.services.lang.impl.GetLanguageDataNameImpl;
+import ru.greatlarder.technicalassistant.services.lang.LanguageDataName;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageDataNameImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +32,7 @@ public class FragmentRoomWeek implements Initializable {
     LocalDate date = LocalDate.now();
     User user;
     HashMap<Tab, LocalDate> hashMap = new HashMap<>();
-    GetLanguageDataName languageDataName = new GetLanguageDataNameImpl();
+    LanguageDataName languageDataName = new LanguageDataNameImpl();
     String lang;
     Company company;
 

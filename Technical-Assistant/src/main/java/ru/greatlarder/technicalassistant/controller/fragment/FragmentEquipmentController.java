@@ -1,12 +1,12 @@
 package ru.greatlarder.technicalassistant.controller.fragment;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.user.User;
@@ -16,15 +16,21 @@ import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.Equi
 import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.ListEquipmentByNameCompanySQLite;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkFragmentEquipmentController;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
+import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkStartEngineerController;
 import ru.greatlarder.technicalassistant.services.list_view.GetListViewEquipmentByListEquipment;
 import ru.greatlarder.technicalassistant.services.list_view.impl.equipment.ListViewEquipmentByListEquipment;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static java.lang.Long.MAX_VALUE;
 
 public class FragmentEquipmentController implements Initializable {
-
+    
+    @FXML public BorderPane borderPane;
     @FXML
     SplitPane splitPaneEquipment;
     @FXML TabPane tabPaneEquipment1;
@@ -35,29 +41,49 @@ public class FragmentEquipmentController implements Initializable {
     public void loadFragment(){
         GlobalLinkFragmentEquipmentController.setFragmentEquipmentController(this);
         tabPaneEquipment1.getTabs().clear();
-
-        GetListEquipment equipments = new ListEquipmentByNameCompanySQLite();
-        List<Equipment> equipmentList = equipments.getListEquipment(user, company.getNameCompany(), null);
-
-        GetListViewEquipmentByListEquipment getListViewEquipmentByName = new ListViewEquipmentByListEquipment();
         
-        Set<String> nameEquipmentHashSet = new HashSet<>();
-
-        for (Equipment equipment : equipmentList){
-            nameEquipmentHashSet.add(equipment.getName());
-        }
-
-        for (String name : nameEquipmentHashSet){
-            List<Equipment> equipmentList1 = new ArrayList<>();
-            for(Equipment equipment : equipmentList){
-                if(name.equals(equipment.getName())){
-                    equipmentList1.add(equipment);
-                }
+        Task<List<Equipment>> task = new Task<>() {
+            @Override
+            protected List<Equipment> call() {
+                GetListEquipment equipments = new ListEquipmentByNameCompanySQLite();
+                return equipments.getListEquipment(user, company.getNameCompany(), null);
             }
-            ListView<Equipment> listView = getListViewEquipmentByName.getListView(equipmentList1);
-            listView.getSelectionModel().selectedItemProperty().addListener((observableValue, equipment, t1) -> openEquipment(t1));
-            tabPaneEquipment1.getTabs().add(new Tab(name, listView));
-        }
+        };
+        ProgressBar progressBar = new ProgressBar(task.getProgress());
+        progressBar.setMaxWidth(MAX_VALUE);
+        borderPane.setTop(progressBar);
+        task.setOnSucceeded((succeededEvent)->{
+            
+            List<Equipment> equipmentList = task.getValue();
+            
+            GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getChildren().remove(progressBar);
+            GetListViewEquipmentByListEquipment getListViewEquipmentByName = new ListViewEquipmentByListEquipment();
+            Set<String> nameEquipmentHashSet = new HashSet<>();
+            
+            for (Equipment equipment : equipmentList){
+                nameEquipmentHashSet.add(equipment.getName());
+            }
+            for (String name : nameEquipmentHashSet){
+                List<Equipment> equipmentList1 = new ArrayList<>();
+                for(Equipment equipment : equipmentList){
+                    if(name.equals(equipment.getName())){
+                        equipmentList1.add(equipment);
+                    }
+                }
+                ListView<Equipment> listView = getListViewEquipmentByName.getListView(equipmentList1);
+                listView.getSelectionModel().selectedItemProperty().addListener((observableValue, equipment, t1) -> openEquipment(t1));
+                tabPaneEquipment1.getTabs().add(new Tab(name, listView));
+                borderPane.getChildren().remove(progressBar);
+            }
+        });
+        Platform.runLater(()->{
+            progressBar.progressProperty().bind(task.progressProperty());
+            progressBar.visibleProperty().bind(task.runningProperty());
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(task);
+            executorService.shutdown();
+        });
+        
     }
 
     private void openEquipment(Equipment equipment) {

@@ -4,7 +4,7 @@ import ru.greatlarder.technicalassistant.domain.Room;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.database.GetListRoom;
 import ru.greatlarder.technicalassistant.services.database.general.GetRoomService;
-import ru.greatlarder.technicalassistant.services.database.general.GetRoomServiceImpl;
+import ru.greatlarder.technicalassistant.services.database.general.GetRoomServiceImplSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteRoom;
 
 import java.sql.SQLException;
@@ -19,7 +19,7 @@ public class ListRoomByCompanySQLite implements GetListRoom {
         List<Room> rooms = new ArrayList<Room>();
         createRoomTable();
 
-        GetRoomService getRoomService = new GetRoomServiceImpl();
+        GetRoomService getRoomService = new GetRoomServiceImplSQLite();
         try {
             resultSet = statement.executeQuery(SQLiteRoom.READ_ROOM);
             while (resultSet.next()){

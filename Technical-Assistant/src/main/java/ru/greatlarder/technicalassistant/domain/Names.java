@@ -1,13 +1,16 @@
 package ru.greatlarder.technicalassistant.domain;
 
+import java.io.File;
+
 public class Names {
      int id;
      String names;
      String nameCompany;
-     String url;
+     /*String url;*/
+     File url;
      String domain;
 
-    public Names(String names, String nameCompany, String url, String domain) {
+    public Names(String names, String nameCompany, File url, String domain) {
         this.names = names;
         this.nameCompany = nameCompany;
         this.url = url;
@@ -41,11 +44,11 @@ public class Names {
         this.nameCompany = nameCompany;
     }
 
-    public String getUrl() {
+    public File getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(File url) {
         this.url = url;
     }
 
@@ -56,15 +59,15 @@ public class Names {
     public void setDomain(String domain) {
         this.domain = domain;
     }
-
+    
     @Override
     public String toString() {
         return "Names{" +
-                "id=" + id +
-                ", names='" + names + '\'' +
-                ", nameCompany='" + nameCompany + '\'' +
-                ", url='" + url + '\'' +
-                ", domain='" + domain + '\'' +
-                '}';
+            "id=" + id +
+            ", names='" + names + '\'' +
+            ", nameCompany='" + nameCompany + '\'' +
+            ", url=" + url +
+            ", domain='" + domain + '\'' +
+            '}';
     }
 }

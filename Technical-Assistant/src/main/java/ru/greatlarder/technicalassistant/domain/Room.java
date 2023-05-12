@@ -1,11 +1,13 @@
 package ru.greatlarder.technicalassistant.domain;
 
+import java.io.File;
 import java.util.List;
 
 public class Room {
     int id;
     String nameRoom;
     String nameCompanyForRoom;
+    String urlLogoRoom;
     List<EventFormat> eventsList;
     List<SeatingArrangements> seatingArrangementsList;
     List<Equipment> equipmentList;
@@ -14,9 +16,10 @@ public class Room {
     public Room() {
     }
 
-    public Room(String nameRoom, String nameCompanyForRoom, List<EventFormat> eventsList, List<SeatingArrangements> seatingArrangementsList, List<Equipment> equipmentList, List<Day> dayList) {
+    public Room(String nameRoom, String nameCompanyForRoom,String urlLogoRoom, List<EventFormat> eventsList, List<SeatingArrangements> seatingArrangementsList, List<Equipment> equipmentList, List<Day> dayList) {
         this.nameRoom = nameRoom;
         this.nameCompanyForRoom = nameCompanyForRoom;
+        this.urlLogoRoom = urlLogoRoom;
         this.eventsList = eventsList;
         this.seatingArrangementsList = seatingArrangementsList;
         this.equipmentList = equipmentList;
@@ -78,17 +81,26 @@ public class Room {
     public void setDayList(List<Day> dayList) {
         this.dayList = dayList;
     }
-
+    
+    public String getUrlLogoRoom() {
+        return urlLogoRoom;
+    }
+    
+    public void setUrlLogoRoom(String urlLogoRoom) {
+        this.urlLogoRoom = urlLogoRoom;
+    }
+    
     @Override
     public String toString() {
         return "Room{" +
-                "id=" + id +
-                ", nameRoom='" + nameRoom + '\'' +
-                ", nameCompanyForRoom='" + nameCompanyForRoom + '\'' +
-                ", eventsList=" + eventsList +
-                ", seatingArrangementsList=" + seatingArrangementsList +
-                ", equipmentList=" + equipmentList +
-                ", dayList=" + dayList +
-                '}';
+            "id=" + id +
+            ", nameRoom='" + nameRoom + '\'' +
+            ", nameCompanyForRoom='" + nameCompanyForRoom + '\'' +
+            ", urlLogoRoom='" + urlLogoRoom + '\'' +
+            ", eventsList=" + eventsList +
+            ", seatingArrangementsList=" + seatingArrangementsList +
+            ", equipmentList=" + equipmentList +
+            ", dayList=" + dayList +
+            '}';
     }
 }

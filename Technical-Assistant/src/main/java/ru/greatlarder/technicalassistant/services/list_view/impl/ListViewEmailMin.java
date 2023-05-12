@@ -7,9 +7,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.controller.fragment.FragmentWebTaskController;
 import ru.greatlarder.technicalassistant.controller.fragment_item.ItemEmail;
@@ -17,8 +17,10 @@ import ru.greatlarder.technicalassistant.domain.Email;
 import ru.greatlarder.technicalassistant.domain.MailSettings;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
-import ru.greatlarder.technicalassistant.services.lang.GetLanguageDataName;
-import ru.greatlarder.technicalassistant.services.lang.impl.GetLanguageDataNameImpl;
+import ru.greatlarder.technicalassistant.services.lang.LanguageDataName;
+import ru.greatlarder.technicalassistant.services.lang.LanguageWarnings;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageDataNameImpl;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageWarningsImpl;
 import ru.greatlarder.technicalassistant.services.list_view.GetListViewMail;
 import ru.greatlarder.technicalassistant.services.mail.GetMulti;
 
@@ -31,7 +33,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class ListViewEmailMin implements GetListViewMail {
-    GetLanguageDataName getLanguageDataName = new GetLanguageDataNameImpl();
+    LanguageDataName getLanguageDataName = new LanguageDataNameImpl();
     @Override
     public ListView<Email> getListViewEmail(User user, MailSettings mailSettings) {
 

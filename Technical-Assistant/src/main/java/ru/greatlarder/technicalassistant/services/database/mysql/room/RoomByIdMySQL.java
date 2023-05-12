@@ -2,11 +2,12 @@ package ru.greatlarder.technicalassistant.services.database.mysql.room;
 
 import ru.greatlarder.technicalassistant.domain.Room;
 import ru.greatlarder.technicalassistant.domain.user.User;
+import ru.greatlarder.technicalassistant.services.database.general.GetRoomServiceImplMySQL;
 import ru.greatlarder.technicalassistant.services.database.mysql.ConnectMySQL;
 import ru.greatlarder.technicalassistant.services.database.mysql.sintax.RoomTableMySQL;
 import ru.greatlarder.technicalassistant.services.database.mysql.sintax.impl.RoomTableMySQLImpl;
 import ru.greatlarder.technicalassistant.services.database.general.GetRoomService;
-import ru.greatlarder.technicalassistant.services.database.general.GetRoomServiceImpl;
+import ru.greatlarder.technicalassistant.services.database.general.GetRoomServiceImplSQLite;
 import ru.greatlarder.technicalassistant.services.database.GetRoom;
 
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ public class RoomByIdMySQL implements GetRoom {
             connectMySQL.resultSetMySQL = connectMySQL.statementMySQL.executeQuery(roomTableMySQL.SELECT(user.getNameDB()));
             while (connectMySQL.resultSetMySQL.next()) {
                 if(Objects.equals(connectMySQL.resultSetMySQL.getInt("id"), Integer.valueOf(idRoom))){
-                    GetRoomService getRoomService = new GetRoomServiceImpl();
+                    GetRoomService getRoomService = new GetRoomServiceImplMySQL();
                     return getRoomService.getRoom(connectMySQL.resultSetMySQL);
                 }
             }

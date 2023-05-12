@@ -32,7 +32,7 @@ public class SetAffairsSQLite implements SetAffairs {
             cf.setString(7, affairs.getExecutor());
             cf.setString(8, affairs.getTextTask());
             cf.setInt(9, affairs.getStatus());
-            cf.setString(10, affairs.getNameCompany());
+            cf.setString(10, nameCompany);
             if(cf.executeUpdate() > 0){
                 ResultSet rs = cf.getGeneratedKeys();
                 if(rs.next()){

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="vBox" alignment="TOP_RIGHT" spacing="5.0" style="-fx-border-color: #003399; -fx-border-radius: 5; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentAddRoom">
+   <ImageView fx:id="closeAdRoom" fitHeight="25.0" fitWidth="400.0" onMouseClicked="#closeAddCompanyController" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+      <Image url="@../../images/closed.png" />
+   </ImageView>
+   <HBox alignment="CENTER_RIGHT" spacing="9.0">
+      <children>
+         <Label fx:id="labelNameRoom" text="Название комнаты">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <TextField fx:id="tfNewRoom" HBox.hgrow="ALWAYS" />
+      </children>
+   </HBox>
+   <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+      <GridPane.margin>
+         <Insets right="50.0" />
+      </GridPane.margin>
+      <children>
+         <Label fx:id="labelImageRoom" text="Картинка комнаты">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <ImageView fx:id="imgLogoRoom" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#loadLogoRoom" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/upphoto.png" />
+            </image>
+         </ImageView>
+      </children>
+   </HBox>
+   <Button fx:id="btnAddRoom" mnemonicParsing="false" onMouseClicked="#addNewRoom" text="add" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+   <HBox alignment="CENTER" spacing="9.0">
+      <children>
+         <Label fx:id="labelRooms" text="Комнаты">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Label>
+         <Label fx:id="labelNameCompany">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Label>
+      </children>
+   </HBox>
+   <Pane id="pane" prefHeight="10.0" stylesheets="@../../css/main.css">
+      <padding>
+         <Insets left="5.0" right="5.0" />
+      </padding>
+      <VBox.margin>
+         <Insets left="5.0" right="5.0" />
+      </VBox.margin></Pane>
+   <SplitPane maxHeight="1.7976931348623157E308" orientation="VERTICAL" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.rowSpan="24" VBox.vgrow="SOMETIMES">
+      <items>
+         <ListView fx:id="listViewRooms" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+      </items>
+   </SplitPane>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>
