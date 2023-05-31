@@ -210,6 +210,9 @@ public class GetEquipmentConservation {
         returnEquipment.setCondition(equipment.getCondition());
         returnEquipment.setCompany(company.getNameCompany());
         returnEquipment.setManual(equipment.getManual());
+        
+        returnEquipment.setType(equipment.getType());
+        returnEquipment.setUserVisibility(equipment.isUserVisibility());
 
         GetEquipment getEquipment = new EquipmentBySerialNumberSQLite();
         if (equipment.getIdNetworkSwitcher() != null) {

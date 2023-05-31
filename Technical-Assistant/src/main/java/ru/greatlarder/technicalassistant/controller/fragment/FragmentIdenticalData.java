@@ -7,7 +7,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import ru.greatlarder.technicalassistant.controller.fragment_item.ItemRoom;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.Room;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
@@ -73,7 +72,7 @@ public class FragmentIdenticalData implements Initializable {
 
     private SplitPane updatePaneFrRoom(Room room, Room room_external) {
         SplitPane pane = new SplitPane();
-        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_room.fxml"));
+        /*FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_room.fxml"));
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_item/item_room.fxml"));
 
         try {
@@ -88,7 +87,7 @@ public class FragmentIdenticalData implements Initializable {
             itemRoom2.labelNameRoom.setText(room_external.getNameRoom());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         return pane;
     }
 

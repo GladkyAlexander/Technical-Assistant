@@ -13,16 +13,14 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
-import ru.greatlarder.technicalassistant.domain.Company;
-import ru.greatlarder.technicalassistant.domain.EventFormat;
-import ru.greatlarder.technicalassistant.domain.Room;
-import ru.greatlarder.technicalassistant.domain.SeatingArrangements;
+import ru.greatlarder.technicalassistant.domain.*;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.database.*;
 import ru.greatlarder.technicalassistant.services.database.sqlite.company.CompanyByNameSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.company.SetCompanySQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.company.UpdateCompanySQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.event_format.GetListEventFormatSQLite;
+import ru.greatlarder.technicalassistant.services.database.sqlite.phone_book.SetPhoneBookSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.room.ListRoomByCompanySQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.seating_arrangements.GetListSeatingArrangementsSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.user.GetUserSQLite;
@@ -305,9 +303,36 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
             fileManager.createDirectoryCompany(company1.getNameCompany());
             
             if(setCompany.setCompany(user, company1) != null){
+                
+                SetPhoneBook phoneBook = new SetPhoneBookSQLite();
+                
+                PhoneBook phoneBook1 = new PhoneBook();
+                phoneBook1.setFirstName(tfCuratorFirstName.getText());
+                phoneBook1.setLastName(tfCuratorLastName.getText());
+                phoneBook1.setPhone(tfNumberPhone.getText());
+                phoneBook1.setMail(tfEmail.getText());
+                
+                phoneBook.setPhoneBook(user, company1.getNameCompany(), phoneBook1);
+                
+                PhoneBook phoneBook2 = new PhoneBook();
+                phoneBook2.setFirstName(tfFirstNameManager.getText());
+                phoneBook2.setLastName(tfLastNameManager.getText());
+                phoneBook2.setPhone(tfManagerPhone.getText());
+                phoneBook2.setMail(tfManagerMail.getText());
+                
+                phoneBook.setPhoneBook(user, company1.getNameCompany(), phoneBook2);
+                
+                PhoneBook phoneBook3 = new PhoneBook();
+                phoneBook3.setFirstName(tfFirstNameEngineer.getText());
+                phoneBook3.setLastName(tfLastNameEngineer.getText());
+                phoneBook3.setPhone(tfEngineerPhone.getText());
+                phoneBook3.setMail(tfEngineerMail.getText());
+                
+                phoneBook.setPhoneBook(user, company1.getNameCompany(), phoneBook3);
+                
                 labelOk.setText(tfNameCompany.getText() + language.ADDED(lang));
                 imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
-    
+                
                 fileManager.createDirectoryCompany(company1.getNameCompany());
                 cleanAddCompany();
             }

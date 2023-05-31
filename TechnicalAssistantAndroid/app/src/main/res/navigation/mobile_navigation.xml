@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/mobile_navigation"
+            app:startDestination="@+id/nav_home">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="ru.great_larder.technical_assistant.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+            android:id="@+id/nav_home"
+            android:name="ru.great_larder.technicalAssistant.ui.home.HomeFragment"
+            android:label="@string/menu_home"
+            tools:layout="@layout/fragment_home"/>
 
     <fragment
-        android:id="@+id/nav_equipment_portable"
-        android:name="ru.great_larder.technical_assistant.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+            android:id="@+id/nav_gallery"
+            android:name="ru.great_larder.technicalAssistant.ui.gallery.GalleryFragment"
+            android:label="@string/menu_gallery"
+            tools:layout="@layout/fragment_gallery"/>
 
     <fragment
-        android:id="@+id/nav_settings"
-        android:name="ru.great_larder.technical_assistant.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="ru.great_larder.technical_assistant.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+            android:id="@+id/nav_slideshow"
+            android:name="ru.great_larder.technicalAssistant.ui.slideshow.SlideshowFragment"
+            android:label="@string/menu_slideshow"
+            tools:layout="@layout/fragment_slideshow"/>
 </navigation>

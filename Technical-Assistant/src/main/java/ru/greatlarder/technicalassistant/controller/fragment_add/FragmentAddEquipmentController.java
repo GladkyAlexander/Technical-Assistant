@@ -1089,9 +1089,9 @@ public class FragmentAddEquipmentController implements Initializable {
 
                     Equipment equipment = getEquipmentConservation.loadEquipment(user, company, conservationEquipment);
                         if (equipment != null) {
-                            Task<Integer> task = new Task<Integer>() {
+                            Task<Integer> task = new Task<>() {
                                 @Override
-                                protected Integer call() throws Exception {
+                                protected Integer call() {
                                     SetEquipment setEquipment = new SetEquipmentSQLite();
                                     return setEquipment.setEquipment(user, company.getNameCompany(), equipment);
                                 }
@@ -1208,6 +1208,10 @@ public class FragmentAddEquipmentController implements Initializable {
         uaa13.clear();
         uaa23.clear();
         uaa33.clear();
+        comboBoxType.getItems().clear();
+        textFieldDateOfCommissioning.getEditor().clear();
+        comboBoxStatusSelection.getItems().clear();
+        comboBoxUserVisible.getItems().clear();
     }
 
     public void closeAddEquipmentController() {

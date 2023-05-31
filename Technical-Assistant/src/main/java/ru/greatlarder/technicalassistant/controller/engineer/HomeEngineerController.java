@@ -83,8 +83,10 @@ public class HomeEngineerController implements ObserverLang, Initializable{
     private void setNumberOfFaultyDevices(List<Equipment> equipmentList) {
         List<Equipment> faultyDevicesList = new ArrayList<>();
         for (Equipment equipment : equipmentList) {
-            if (equipment.getCondition().equals("Faulty") || equipment.getCondition().equals("Неисправно")) {
-                faultyDevicesList.add(equipment);
+            if(equipment.getCondition() != null){
+                if (equipment.getCondition().equals("Faulty") || equipment.getCondition().equals("Неисправно")) {
+                    faultyDevicesList.add(equipment);
+                }
             }
         }
         labelQuantityDefectEquipment.setText(String.valueOf(faultyDevicesList.size()));

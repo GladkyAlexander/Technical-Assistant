@@ -1,22 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
-
-    <TextView
-        android:id="@+id/text_home"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        tools:context=".ui.home.HomeFragment" android:orientation="vertical">
+
+    <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/tableLayoutEnter" android:gravity="center_horizontal">
+
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:gravity="center_horizontal">
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10" android:hint="@string/login"
+                    android:id="@+id/editTextLoginEnter" android:autofillHints="@string/autoFillHintsLogin"
+                    tools:ignore="LabelFor" android:minHeight="48dp"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/editTextPasswordEnter" android:autofillHints="autoFillHintsPassword"
+                    tools:ignore="LabelFor" android:hint="@string/autoFillHintsPassword" android:minHeight="48dp"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <Button
+                    android:text="@string/enter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonEnter"/>
+        </TableRow>
+    </TableLayout>
+    <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/tableLayoutRegister">
+
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/firstName"
+                    android:autofillHints="@string/firstName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextFirstName"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/lastName"
+                    android:autofillHints="@string/lastName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextLastName"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/mailAddress"
+                    android:autofillHints="@string/mailAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:ems="10"
+                    android:id="@+id/editTextMailAddress"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/phone"
+                    android:autofillHints="@string/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/editTextPhone"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/position"
+                    android:autofillHints="@string/position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextPosition"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/companyAffiliation"
+                    android:autofillHints="@string/companyAffiliation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextTextCompanyAffiliation"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/language"
+                    android:autofillHints="@string/language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextLanguage"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/login"
+                    android:autofillHints="@string/login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextLoginRegister"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/password"
+                    android:autofillHints="@string/password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextPasswordRegister" tools:ignore="TextFields"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/emailServer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:ems="10"
+                    android:id="@+id/editTextEmailServer" android:autofillHints="@string/emailServer"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/portOnTheEmailServer"
+                    android:autofillHints="@string/portOnTheEmailServer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/editTextPortOnTheEmailServer" tools:ignore="TextFields"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/databaseName"
+                    android:autofillHints="@string/databaseName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextDatabaseName"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+            <EditText
+                    android:hint="@string/databasePassword"
+                    android:autofillHints="@string/databasePassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/editTextTextDatabasePassword" tools:ignore="TextFields"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_horizontal">
+
+            <Button
+                    android:text="@string/register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/register"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
