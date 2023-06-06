@@ -226,7 +226,7 @@ public class StartEngineerController implements ObserverLang,Initializable {
         ptEmail.setText(getCompany().getMailCurator());
         imageViewLogo.setFitHeight(50);
         imageViewLogo.setFitWidth(50);
-        imageViewLogo.setImage(new Image(fileManager.folderImage() + "\\" + getCompany().getLogoCompany()));
+        imageViewLogo.setImage(new Image(getCompany().getLogoCompany()));
 
         loadPageHome();
     }

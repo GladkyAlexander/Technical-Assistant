@@ -36,7 +36,7 @@ public class FragmentUserLogin implements ObserverLang, Initializable {
     String lang;
     Language language = new LanguageImpl();
     HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
-    public void enter(MouseEvent actionEvent) {
+    public void enter() {
         GetUser getUser = new GetUserSQLite();
         User user = getUser.getUser(tfLogin.getText(), tfPassword.getText());
         if(user != null) {
@@ -69,7 +69,7 @@ public class FragmentUserLogin implements ObserverLang, Initializable {
         btnRegistration.setText(language.REGISTRY(lang));
     }
 
-    public void onActionRegistration(ActionEvent actionEvent) {
+    public void onActionRegistration() {
         FXMLLoader loaderRegistration = new FXMLLoader(getClass().
                 getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/fragmentRegisrationUser.fxml"));
         try {

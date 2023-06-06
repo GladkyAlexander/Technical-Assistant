@@ -1,58 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane fx:id="gridPaneAdd" alignment="CENTER" hgap="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="4.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentRegistrationUserController">
-    <columnConstraints>
-        <ColumnConstraints halignment="CENTER" />
-        <ColumnConstraints halignment="CENTER" />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints />
-      <RowConstraints valignment="CENTER" />
-        <RowConstraints />
-        <RowConstraints />
-        <RowConstraints />
-        <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-        <RowConstraints />
-      <RowConstraints />
-        <RowConstraints />
-        <RowConstraints />
-    </rowConstraints>
-    <children>
-        <Label fx:id="labelLastName" text="Label" GridPane.rowIndex="2" />
-        <Label fx:id="labelFirstName" text="Label" GridPane.rowIndex="3" />
-        <Label fx:id="labelEmailAddress" text="Label" GridPane.rowIndex="4" />
-        <Label fx:id="labelPhone" text="Label" GridPane.rowIndex="5" />
-        <TextField fx:id="tfLastName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <TextField fx:id="tfFirstName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <TextField fx:id="tfMailAddress" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-        <TextField fx:id="tfPhone" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveUser" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="20" />
-        <MenuButton fx:id="menuButtonLanguage" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="MenuButton" GridPane.columnSpan="2" GridPane.rowIndex="19">
+<VBox fx:id="vBoxFrRegister" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_add.FragmentRegistrationUserController">
+   <children>
+      <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" spacing="100.0">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/login_unactive.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelRegister" alignment="CENTER" text="Зарегистрируйтесь">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="closeAdRoom" fitHeight="25.0" fitWidth="400.0" onMouseClicked="#closeAddRegisterController" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/closed.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+        <MenuButton fx:id="menuButtonLanguage" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="combo-box" text="Выберите страну">
             <items>
                 <MenuItem fx:id="menuItemRu" mnemonicParsing="false" onAction="#setMenuItemRu" text="Россия">
                     <graphic>
@@ -74,38 +49,155 @@
                 </MenuItem>
             </items>
         </MenuButton>
-        <ComboBox fx:id="comboBoxPost" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="17" />
-      <Label fx:id="labelRegister" alignment="CENTER" text="Label" GridPane.columnSpan="2" GridPane.rowIndex="1">
+        <ComboBox fx:id="comboBoxPost" maxWidth="1.7976931348623157E308" onAction="#setPostValue" promptText="Должность" styleClass="combo-box" />
+      <GridPane fx:id="gridPaneAdd" hgap="3.0" vgap="3.0">
+          <columnConstraints>
+              <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+              <ColumnConstraints halignment="CENTER" />
+          </columnConstraints>
+          <rowConstraints>
+              <RowConstraints />
+            <RowConstraints valignment="CENTER" />
+              <RowConstraints />
+              <RowConstraints />
+              <RowConstraints />
+              <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+          </rowConstraints>
+          <children>
+              <Label fx:id="labelLastName" text="Фамилия" GridPane.rowIndex="1" />
+              <Label fx:id="labelFirstName" text="Имя" GridPane.rowIndex="2" />
+              <Label fx:id="labelEmailAddress" text="Электронный адрес" GridPane.rowIndex="3" />
+              <Label fx:id="labelPhone" text="Телефон" GridPane.rowIndex="4" />
+              <TextField fx:id="tfLastName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+              <TextField fx:id="tfFirstName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+              <TextField fx:id="tfMailAddress" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+              <TextField fx:id="tfPhone" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="labelLogin" text="логин" GridPane.rowIndex="5" />
+            <Label fx:id="labelPassword" text="пароль" GridPane.rowIndex="6" />
+            <TextField fx:id="tfLogin" onKeyReleased="#onKeyRelisedTFLogin" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="tfPassword" onKeyReleased="#onKeyRelisedTFPassword" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="labelNameCompany" text="Компания в которой работаете" GridPane.rowIndex="7" />
+            <TextField fx:id="tfNameCompanyUser" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+          </children>
+      </GridPane>
+      <Button fx:id="btnOpenSettingMail" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" minHeight="20.0" mnemonicParsing="false" onAction="#openSettingsMail" prefHeight="20.0" styleClass="combo-box" text="Настройки электронной почты">
+         <graphic>
+            <ImageView fx:id="imgSetMail" fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/arrowLeft.png" />
+               </image>
+            </ImageView>
+         </graphic>
          <font>
-            <Font name="System Bold" size="13.0" />
-         </font></Label>
-      <Label fx:id="labelLogin" text="Label" GridPane.rowIndex="6" />
-      <Label fx:id="labelPassword" text="Label" GridPane.rowIndex="7" />
-      <TextField fx:id="tfLogin" onKeyReleased="#onKeyRelisedTFLogin" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <TextField fx:id="tfPassword" onKeyReleased="#onKeyRelisedTFPassword" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <Label fx:id="labelNameServer" text="Label" GridPane.rowIndex="8" />
-      <Label fx:id="labelPortServer" text="Label" GridPane.rowIndex="9" />
-      <Label fx:id="labelNameDbExternal" text="Label" GridPane.rowIndex="10" />
-      <Label fx:id="labelUserDbExternal" text="Label" GridPane.rowIndex="11" />
-      <Label fx:id="labelPasswordDbExternal" text="Label" GridPane.rowIndex="12" />
-      <TextField fx:id="tfNameServer" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-      <TextField fx:id="tfPortServerDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-      <TextField fx:id="tfNameDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-      <TextField fx:id="tfNameUserDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-      <TextField fx:id="tfPasswordDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-      <Label fx:id="labelNameCompany" text="Label" GridPane.rowIndex="18" />
-      <TextField fx:id="tfNameCompanyUser" GridPane.columnIndex="1" GridPane.rowIndex="18" />
-      <Button fx:id="buttonIn" mnemonicParsing="false" onMouseClicked="#input" text="Button" GridPane.rowIndex="20" />
-      <Label fx:id="labelServerFTP" text="Server FTP" GridPane.rowIndex="13" />
-      <Label fx:id="labelPortFTP" text="Port FTP" GridPane.rowIndex="14" />
-      <Label fx:id="labelUserFTP" text="User FTP" GridPane.rowIndex="15" />
-      <Label fx:id="labelPasswordFTP" text="Password FTP" GridPane.rowIndex="16" />
-      <TextField fx:id="tfServerFTP" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-      <TextField fx:id="tfPortFTP" onKeyReleased="#onKeyReleasedPortFTP" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-      <TextField fx:id="tfUserFTP" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-      <TextField fx:id="tfPasswordFTP" GridPane.columnIndex="1" GridPane.rowIndex="16" />
-    </children>
-    <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-    </padding>
-</GridPane>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <GridPane fx:id="gridPaneMail" hgap="3.0" vgap="3.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+          <ColumnConstraints hgrow="NEVER" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints vgrow="NEVER" />
+          <RowConstraints vgrow="NEVER" />
+          <RowConstraints vgrow="NEVER" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="labelPasswordMail" text="Пароль от почты" />
+            <TextField fx:id="tfPasswordMail" GridPane.columnIndex="1" />
+            <Label fx:id="labelHost" text="HOST" GridPane.rowIndex="1" />
+            <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ComboBox fx:id="comboBoxHost" styleClass="combo-box" />
+                  <TextField fx:id="tfHost" />
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+      <Button fx:id="btnAddSettingsBD" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" minHeight="20.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#openSettingsDB" prefHeight="20.0" styleClass="combo-box" text="Настройки внешней базы данных">
+         <graphic>
+            <ImageView fx:id="imgSetDB" fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/arrowLeft.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <GridPane fx:id="gridPaneBD" hgap="3.0" vgap="3.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+          <ColumnConstraints hgrow="NEVER" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints vgrow="NEVER" />
+          <RowConstraints vgrow="NEVER" />
+          <RowConstraints vgrow="NEVER" />
+            <RowConstraints vgrow="NEVER" />
+            <RowConstraints vgrow="NEVER" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="labelNameDbExternal" text="Имя базы данных" GridPane.rowIndex="2" />
+            <Label fx:id="labelNameServer" text="Сервер/Имя хоста" />
+            <TextField fx:id="tfNameServer" GridPane.columnIndex="1" />
+            <Label fx:id="labelPortServer" text="Порт" GridPane.rowIndex="1" />
+            <TextField fx:id="tfPortServerDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="tfNameDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="labelUserDbExternal" text="Имя пользователя базы данных" GridPane.rowIndex="3" />
+            <TextField fx:id="tfNameUserDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="labelPasswordDbExternal" text="Пароль базы данных" GridPane.rowIndex="4" />
+            <TextField fx:id="tfPasswordDbExternal" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+      <Button fx:id="btnOpenSettingFTP" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" minHeight="20.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#openSettingsFTP" prefHeight="20.0" styleClass="combo-box" text="Настройки FTP" textAlignment="CENTER">
+         <graphic>
+            <ImageView fx:id="imgSetFTP" fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/arrowLeft.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <GridPane fx:id="gridPaneFtp" hgap="3.0" vgap="3.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="ALWAYS" />
+          <ColumnConstraints hgrow="NEVER" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+          <RowConstraints vgrow="NEVER" />
+          <RowConstraints vgrow="NEVER" />
+            <RowConstraints vgrow="NEVER" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="labelServerFTP" text="Server FTP" />
+            <TextField fx:id="tfServerFTP" GridPane.columnIndex="1" />
+            <Label fx:id="labelPortFTP" text="Port FTP" GridPane.rowIndex="1" />
+            <TextField fx:id="tfPortFTP" onKeyReleased="#onKeyReleasedPortFTP" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="labelUserFTP" text="User FTP" GridPane.rowIndex="2" />
+            <TextField fx:id="tfUserFTP" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="labelPasswordFTP" text="Password FTP" GridPane.rowIndex="3" />
+            <TextField fx:id="tfPasswordFTP" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+      <HBox alignment="CENTER" spacing="5.0">
+         <children>
+            <Button fx:id="buttonIn" mnemonicParsing="false" onMouseClicked="#input" text="Войти" />
+              <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveUser" text="Сохранить" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <opaqueInsets>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </opaqueInsets>
+</VBox>

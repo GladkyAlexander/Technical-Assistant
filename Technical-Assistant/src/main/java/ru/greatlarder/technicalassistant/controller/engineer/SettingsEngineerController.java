@@ -176,6 +176,7 @@ public class SettingsEngineerController implements Initializable {
             borderPaneSettings.getChildren().remove(borderPaneSettings.getRight());
         }
         btnSendToAnExternalDatabase.setDisable(company == null);
+        btnGetDataFromAnExternalDatabase.setDisable(company == null);
         visibleGridUpdateExternalDB(false);
         btnShow.setVisible(false);
         btnShow.setManaged(false);

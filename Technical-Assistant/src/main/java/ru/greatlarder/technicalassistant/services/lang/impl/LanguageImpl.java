@@ -2022,6 +2022,17 @@ public class LanguageImpl implements Language {
     }
     
     @Override
+    public String SELECT_A_MAIL_SERVICE(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Выберите почтовый сервис";
+        } else if (lang.equals(en)) {
+            office = "Select a mail service";
+        }
+        return office;
+    }
+    
+    @Override
     public String OFFICE(String language) {
         String office = "";
         if (language.equals(ru)) {

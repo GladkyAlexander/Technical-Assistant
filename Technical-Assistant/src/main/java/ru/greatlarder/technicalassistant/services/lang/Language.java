@@ -402,4 +402,6 @@ public interface Language {
     String ADD_AS_A_TASK(String lang);
     
     String EVENTS(String lang);
+    
+    String SELECT_A_MAIL_SERVICE(String lang);
 }

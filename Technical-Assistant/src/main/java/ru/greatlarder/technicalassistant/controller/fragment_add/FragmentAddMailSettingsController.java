@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.MailSettings;
 import ru.greatlarder.technicalassistant.domain.user.User;
@@ -47,7 +48,7 @@ public class FragmentAddMailSettingsController implements Initializable {
         labelInfoTheme.setText(language.ENTER_THE_FIRST_WORD(lang));
         btnSave.setText(language.SAVE(lang));
     }
-    public void save(ActionEvent actionEvent) {
+    public void save() {
 
         MailSettings mailSettings = new MailSettings();
         mailSettings.setIdUser(user.getId());
@@ -67,7 +68,7 @@ public class FragmentAddMailSettingsController implements Initializable {
             gridPaneAddLetterTemplate.getChildren().clear();
             gridPaneAddLetterTemplate.setStyle(new GridPane().getStyle());
             GlobalLinkMainController.getMainController().updateUser(new DataUser(user));
-
+            ((BorderPane) gridPaneAddLetterTemplate.getParent()).getChildren().remove(gridPaneAddLetterTemplate);
          } else gridPaneAddLetterTemplate.setStyle(StyleSRC.STYLE_WARNING);
 
     }

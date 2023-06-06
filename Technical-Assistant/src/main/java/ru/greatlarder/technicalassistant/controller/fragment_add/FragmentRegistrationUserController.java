@@ -1,13 +1,17 @@
 package ru.greatlarder.technicalassistant.controller.fragment_add;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import ru.greatlarder.technicalassistant.domain.MailSettings;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.check.CheckForANumber;
 import ru.greatlarder.technicalassistant.services.check.CheckingForANumberImpl;
@@ -16,7 +20,9 @@ import ru.greatlarder.technicalassistant.services.check.check_user.CheckUserLogi
 import ru.greatlarder.technicalassistant.services.check.check_user.CheckUserSQLite;
 import ru.greatlarder.technicalassistant.services.check.check_user.CheckingUserLoginSQLite;
 import ru.greatlarder.technicalassistant.services.database.GetUser;
+import ru.greatlarder.technicalassistant.services.database.SetMailSettings;
 import ru.greatlarder.technicalassistant.services.database.SetUser;
+import ru.greatlarder.technicalassistant.services.database.sqlite.mail_settings.SetMailSettingsSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.user.GetUserSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.user.SetUserSQLite;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
@@ -25,6 +31,8 @@ import ru.greatlarder.technicalassistant.services.lang.HandlerLang;
 import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.ObserverLang;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.mail.GetHostAndPortSSL;
+import ru.greatlarder.technicalassistant.services.mail.impl.GetHostAndPortSSLRuImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
@@ -32,6 +40,7 @@ import ru.greatlarder.technicalassistant.services.user_listener.DataUser;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class FragmentRegistrationUserController implements ObserverLang, Initializable {
@@ -89,11 +98,32 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
     @FXML public TextField tfPortFTP;
     @FXML public TextField tfUserFTP;
     @FXML public TextField tfPasswordFTP;
+    @FXML public ImageView closeAdRoom;
+    @FXML public Button btnOpenSettingMail;
+    @FXML public Label labelPasswordMail;
+    @FXML public TextField tfPasswordMail;
+    @FXML public Label labelHost;
+    @FXML public ComboBox<String> comboBoxHost;
+    @FXML public TextField tfHost;
+    @FXML public Button btnAddSettingsBD;
+    @FXML public GridPane gridPaneBD;
+    @FXML public Button btnOpenSettingFTP;
+    @FXML public GridPane gridPaneFtp;
+    @FXML public ImageView imgSetMail;
+    @FXML public ImageView imgSetDB;
+    @FXML public ImageView imgSetFTP;
+    @FXML public GridPane gridPaneMail;
+    @FXML public VBox vBoxFrRegister;
     Language language = new LanguageImpl();
     FileManager fileManager = new FileManagerImpl();
     HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     String lang;
     SetUser setUser = new SetUserSQLite();
+    
+    int flagMailSettings = 0;
+    int flagDBSettings = 0;
+    int flagFTPSettings = 0;
+    GetHostAndPortSSL getHostAndPortSSL;
 
     public void saveUser() {
         User user = new User();
@@ -114,7 +144,9 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
         user.setUserDB(tfNameUserDbExternal.getText());
         user.setPasswordDB(tfPasswordDbExternal.getText());
         user.setServerFTP(tfServerFTP.getText());
-        user.setPortFTP(Integer.parseInt(tfPortFTP.getText()));
+        if(!tfPortFTP.getText().isEmpty()){
+            user.setPortFTP(Integer.parseInt(tfPortFTP.getText()));
+        }
         user.setUserFTP(tfUserFTP.getText());
         user.setPasswordFTP(tfPasswordFTP.getText());
 
@@ -127,30 +159,82 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
         CheckUser checkUser = new CheckUserSQLite();
         if (user.getLastName() != null && user.getLogin() != null && user.getPassword() != null){
             if(!checkUser.checkUser(user)){
-                setUser.setUser(user);
+                Integer i = setUser.setUser(user);
             }else gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
         }
+        
         GetUser getUser = new GetUserSQLite();
         User ut = getUser.getUser(user.getLogin(), user.getPassword());
-        if (ut.getLastName().equals(user.getLastName()) && ut.getFirstName().equals(user.getFirstName())
-        && ut.getLogin().equals(user.getLogin()) && ut.getPassword().equals(user.getPassword())){
-            handlerLang.unregisterObserverLang(this);
-            gridPaneAdd.setStyle(StyleSRC.STYLE_EXCELLENT);
-            GlobalLinkMainController.getMainController().updateUser(new DataUser(ut));
+        if(ut != null){
+            
+            if (ut.getLastName().equals(user.getLastName()) && ut.getFirstName().equals(user.getFirstName())
+                && ut.getLogin().equals(user.getLogin()) && ut.getPassword().equals(user.getPassword())){
+                
+                    if(!tfMailAddress.getText().isEmpty() && !tfPasswordMail.getText().isEmpty()){
+                        MailSettings mailSettings = new MailSettings();
+                        if(menuButtonLanguage.getText().equals("Россия")){
+                            mailSettings.setMailMonitoring(tfMailAddress.getText());
+                            mailSettings.setPasswordMailMonitoring(tfPasswordMail.getText());
+                            getHostAndPortSSL = new GetHostAndPortSSLRuImpl();
+                            mailSettings.setHostMailMonitoring(String.valueOf(getHostAndPortSSL.getPortSSL(comboBoxHost.getValue(), "IMAP")));
+                            mailSettings.setIdUser(ut.getId());
+                            
+                            SetMailSettings setMailSettings = new SetMailSettingsSQLite();
+                            setMailSettings.setMailSettings(ut, mailSettings);
+                        }
+                        if(menuButtonLanguage.getText().equals("England")){
+                            mailSettings.setMailMonitoring(tfMailAddress.getText());
+                            mailSettings.setPasswordMailMonitoring(tfPasswordMail.getText());
+                            getHostAndPortSSL = new GetHostAndPortSSLRuImpl();
+                            mailSettings.setHostMailMonitoring(tfHost.getText());
+                            mailSettings.setIdUser(ut.getId());
+                            
+                            SetMailSettings setMailSettings = new SetMailSettingsSQLite();
+                            setMailSettings.setMailSettings(ut, mailSettings);
+                        }
+                    }
+                handlerLang.unregisterObserverLang(this);
+                gridPaneAdd.setStyle(StyleSRC.STYLE_EXCELLENT);
+                GlobalLinkMainController.getMainController().updateUser(new DataUser(ut));
+            }
         } else gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
     }
 
     public void loadPage() {
-        gridPaneAdd.setStyle(StyleSRC.STYLE_ORDINARY);
+        vBoxFrRegister.setStyle(StyleSRC.STYLE_ORDINARY);
         comboBoxPost.setItems(FXCollections.observableArrayList(language.LIST_POST(lang)));
+        imgSetMail.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/arrowLeft.png"))));
+        imgSetDB.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/arrowLeft.png"))));
+        imgSetFTP.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/arrowLeft.png"))));
+        gridPaneMail.setVisible(false);
+        gridPaneMail.setManaged(false);
+        gridPaneBD.setVisible(false);
+        gridPaneBD.setManaged(false);
+        btnOpenSettingFTP.setVisible(false);
+        btnOpenSettingFTP.setManaged(false);
+        gridPaneFtp.setVisible(false);
+        gridPaneFtp.setManaged(false);
     }
-
-    public void setMenuItemRu(ActionEvent actionEvent) {
+    public void setMenuItemRu() {
         menuButtonLanguage.setText(menuItemRu.getText());
+        if(flagMailSettings == 1) {
+            comboBoxHost.setVisible(true);
+            comboBoxHost.setManaged(true);
+            tfHost.setVisible(false);
+            tfHost.setManaged(false);
+            getHostAndPortSSL = new GetHostAndPortSSLRuImpl();
+            comboBoxHost.setItems(FXCollections.observableArrayList(getHostAndPortSSL.getListServersName()));
+        }
     }
 
-    public void setMenuItemEn(ActionEvent actionEvent) {
+    public void setMenuItemEn() {
         menuButtonLanguage.setText(menuItemEn.getText());
+        if(flagMailSettings == 1) {
+            comboBoxHost.setVisible(false);
+            comboBoxHost.setManaged(false);
+            tfHost.setVisible(true);
+            tfHost.setManaged(true);
+        }
     }
 
     public void setLanguage(String lange) {
@@ -165,6 +249,7 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
         menuButtonLanguage.setText(language.SELECT_A_COUNTRY(lange));
         btnSave.setText(language.SAVE(lange));
         comboBoxPost.setItems(FXCollections.observableArrayList(language.LIST_POST(lange)));
+        labelPasswordMail.setText(language.MAIL_PASSWORD(lange));
         labelNameServer.setText(language.SERVER_HOSTNAME(lange));
         labelPortServer.setText(language.PORT(lange));
         labelNameDbExternal.setText(language.DATABASE_NAME(lange));
@@ -176,6 +261,10 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
         labelPortFTP.setText(language.PORT(lang) + " FTP");
         labelUserFTP.setText(language.USER(lang) + " FTP");
         labelPasswordFTP.setText(language.PASSWORD(lang) + " FTP");
+        btnOpenSettingMail.setText(language.MAIL_SETTINGS(lange));
+        btnAddSettingsBD.setText(language.SETTINGS_EXTERNAL_DATABASE(lang));
+        btnOpenSettingFTP.setText(language.FTP_SERVER_SETTINGS(lang));
+        comboBoxHost.setPromptText(language.SELECT_A_MAIL_SERVICE(lang));
     }
 
     @Override
@@ -220,5 +309,79 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
         } else {
             tfPortFTP.setStyle(new TextField().getStyle());
         }
+    }
+    
+    public void closeAddRegisterController() {
+        ((BorderPane) vBoxFrRegister.getParent()).getChildren().remove(vBoxFrRegister);
+    }
+    
+    public void openSettingsMail() {
+        
+        if (flagMailSettings == 0){
+            flagMailSettings = 1;
+            imgSetMail.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/arrowBotton.png"))));
+            gridPaneMail.setVisible(true);
+            gridPaneMail.setManaged(true);
+        } else {
+            flagMailSettings = 0;
+            imgSetMail.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/arrowLeft.png"))));
+            gridPaneMail.setVisible(false);
+            gridPaneMail.setManaged(false);
+        }
+        
+        if(menuButtonLanguage.getText().equals("Россия")){
+            comboBoxHost.setVisible(true);
+            comboBoxHost.setManaged(true);
+            tfHost.setVisible(false);
+            tfHost.setManaged(false);
+            getHostAndPortSSL = new GetHostAndPortSSLRuImpl();
+            comboBoxHost.setItems(FXCollections.observableArrayList(getHostAndPortSSL.getListServersName()));
+        }else {
+            comboBoxHost.setVisible(false);
+            comboBoxHost.setManaged(false);
+            tfHost.setVisible(true);
+            tfHost.setManaged(true);
+        }
+        
+    }
+    
+    public void openSettingsDB() {
+        if (flagDBSettings == 0){
+            flagDBSettings = 1;
+            imgSetDB.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/arrowBotton.png"))));
+            gridPaneBD.setVisible(true);
+            gridPaneBD.setManaged(true);
+        } else {
+            flagDBSettings = 0;
+            imgSetDB.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/arrowLeft.png"))));
+            gridPaneBD.setVisible(false);
+            gridPaneBD.setManaged(false);
+        }
+    }
+    
+    public void openSettingsFTP() {
+        if (flagFTPSettings == 0){
+            flagFTPSettings = 1;
+            imgSetFTP.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/arrowBotton.png"))));
+            gridPaneFtp.setVisible(true);
+            gridPaneFtp.setManaged(true);
+        } else {
+            flagFTPSettings = 0;
+            imgSetFTP.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/arrowLeft.png"))));
+            gridPaneFtp.setVisible(false);
+            gridPaneFtp.setManaged(false);
+        }
+    }
+    
+    public void setPostValue() {
+        if(comboBoxPost.getValue().equals("Reception Secretary") || comboBoxPost.getValue().equals("Секретарь приемной")){
+            btnOpenSettingFTP.setVisible(false);
+            btnOpenSettingFTP.setManaged(false);
+        }
+        if(comboBoxPost.getValue().equals("Engineer") || comboBoxPost.getValue().equals("Инженер")){
+            btnOpenSettingFTP.setVisible(true);
+            btnOpenSettingFTP.setManaged(true);
+        }
+        
     }
 }

@@ -2,7 +2,7 @@ package ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite
 
 public interface SQLiteUser {
     String CREATE_TABLE_USER = "CREATE TABLE if not exists 'user' (" +
-            "    'id'                         INTEGER  PRIMARY KEY AUTOINCREMENT, " +
+            "    'id'                         INTEGER  PRIMARY KEY AUTOINCREMENT primary key NOT NULL, " +
             "    'lastName'                   TEXT," +
             "    'firstName'                  TEXT," +
             "    'mailAddress'                TEXT," +

@@ -311,6 +311,7 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
                 phoneBook1.setLastName(tfCuratorLastName.getText());
                 phoneBook1.setPhone(tfNumberPhone.getText());
                 phoneBook1.setMail(tfEmail.getText());
+                phoneBook1.setIdUser(user.getId());
                 
                 phoneBook.setPhoneBook(user, company1.getNameCompany(), phoneBook1);
                 
@@ -319,6 +320,7 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
                 phoneBook2.setLastName(tfLastNameManager.getText());
                 phoneBook2.setPhone(tfManagerPhone.getText());
                 phoneBook2.setMail(tfManagerMail.getText());
+                phoneBook2.setIdUser(user.getId());
                 
                 phoneBook.setPhoneBook(user, company1.getNameCompany(), phoneBook2);
                 
@@ -327,6 +329,7 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
                 phoneBook3.setLastName(tfLastNameEngineer.getText());
                 phoneBook3.setPhone(tfEngineerPhone.getText());
                 phoneBook3.setMail(tfEngineerMail.getText());
+                phoneBook3.setIdUser(user.getId());
                 
                 phoneBook.setPhoneBook(user, company1.getNameCompany(), phoneBook3);
                 
@@ -334,6 +337,9 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
                 imgOk.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ok.png"))));
                 
                 fileManager.createDirectoryCompany(company1.getNameCompany());
+                
+                GlobalLinkMainController.getMainController().setCompany(company1);
+                
                 cleanAddCompany();
             }
             
@@ -413,6 +419,14 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
             tfCuratorLastName.setStyle(new TextField().getStyle());
             returnCompany.setCuratorLastName(company.getCuratorLastName());
         }
+        if (company.getCuratorFirstName() == null || company.getCuratorFirstName().isEmpty()) {
+            tfCuratorFirstName.setStyle(StyleSRC.STYLE_WARNING);
+            tfCuratorFirstName.setPromptText(language.WILL_NOT_BE_ADDED(lang));
+            returnCompany.setCuratorFirstName(null);
+        } else {
+            tfCuratorFirstName.setStyle(new TextField().getStyle());
+            returnCompany.setCuratorFirstName(company.getCuratorFirstName());
+        }
 
         if (company.getPhoneCurator() == null || company.getPhoneCurator().isEmpty()) {
             tfNumberPhone.setStyle(StyleSRC.STYLE_WARNING);
@@ -456,6 +470,15 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
             tfLastNameManager.setStyle(new TextField().getStyle());
             returnCompany.setManagerLastName(company.getManagerLastName());
         }
+        
+        if (company.getManagerFirstName() == null || company.getManagerFirstName().isEmpty()) {
+            tfFirstNameManager.setStyle(StyleSRC.STYLE_WARNING);
+            tfFirstNameManager.setPromptText(language.WILL_NOT_BE_ADDED(lang));
+            returnCompany.setManagerFirstName(null);
+        } else {
+            tfFirstNameManager.setStyle(new TextField().getStyle());
+            returnCompany.setManagerFirstName(company.getManagerFirstName());
+        }
 
         if (company.getMailManager() == null || company.getMailManager().isEmpty()) {
             tfManagerMail.setStyle(StyleSRC.STYLE_WARNING);
@@ -482,6 +505,14 @@ public class FragmentAddCompanyController implements ObserverLang, Initializable
         } else {
             tfLastNameEngineer.setStyle(new TextField().getStyle());
             returnCompany.setEngineerLastName(company.getEngineerLastName());
+        }
+        if (company.getEngineerFirstName() == null || company.getEngineerFirstName().isEmpty()) {
+            tfFirstNameEngineer.setStyle(StyleSRC.STYLE_WARNING);
+            tfFirstNameEngineer.setPromptText(language.WILL_NOT_BE_ADDED(lang));
+            returnCompany.setEngineerFirstName(null);
+        } else {
+            tfFirstNameEngineer.setStyle(new TextField().getStyle());
+            returnCompany.setEngineerFirstName(company.getEngineerFirstName());
         }
 
         if (company.getPhoneEngineer() == null || company.getPhoneEngineer().isEmpty()) {

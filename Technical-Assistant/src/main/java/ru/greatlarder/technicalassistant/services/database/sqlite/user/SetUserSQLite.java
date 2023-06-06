@@ -5,18 +5,22 @@ import ru.greatlarder.technicalassistant.services.database.SetUser;
 import ru.greatlarder.technicalassistant.services.database.sqlite.sintax_sqlite.SQLiteUser;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import static ru.greatlarder.technicalassistant.services.database.sqlite.DBconnect.*;
 import static ru.greatlarder.technicalassistant.services.database.sqlite.DBconnect.closeDB;
 
 public class SetUserSQLite implements SetUser {
     @Override
-    public void setUser(User user) {
+    public Integer setUser(User user) {
+        Integer idUser = null;
+        
         createUserTable();
 
         try {
-            PreparedStatement cf = connection.prepareStatement(SQLiteUser.INSERT_TABLE_USER);
+            PreparedStatement cf = connection.prepareStatement(SQLiteUser.INSERT_TABLE_USER, Statement.RETURN_GENERATED_KEYS);
 
             cf.setString(1, user.getLastName());
             cf.setString(2, user.getFirstName());
@@ -37,7 +41,15 @@ public class SetUserSQLite implements SetUser {
             cf.setString(17, user.getUserFTP());
             cf.setString(18, user.getPasswordFTP());
 
-            cf.executeUpdate();
+//            cf.executeUpdate();
+            
+            if(cf.executeUpdate() > 0){
+                ResultSet rs = cf.getGeneratedKeys();
+                if(rs.next()){
+                    idUser = rs.getInt(1);
+                }
+            }
+            
             closeDB();
 
         } catch (SQLException e) {
@@ -45,5 +57,6 @@ public class SetUserSQLite implements SetUser {
         } finally {
             closeDB();
         }
+        return idUser;
     }
 }
