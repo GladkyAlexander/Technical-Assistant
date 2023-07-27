@@ -13,8 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import ru.greatlarder.technicalassistant.domain.MailSettings;
 import ru.greatlarder.technicalassistant.domain.user.User;
-import ru.greatlarder.technicalassistant.services.check.CheckForANumber;
-import ru.greatlarder.technicalassistant.services.check.CheckingForANumberImpl;
+import ru.greatlarder.technicalassistant.services.check.CheckString;
+import ru.greatlarder.technicalassistant.services.check.CheckingStringImpl;
 import ru.greatlarder.technicalassistant.services.check.check_user.CheckUser;
 import ru.greatlarder.technicalassistant.services.check.check_user.CheckUserLogin;
 import ru.greatlarder.technicalassistant.services.check.check_user.CheckUserSQLite;
@@ -114,90 +114,67 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
     @FXML public ImageView imgSetFTP;
     @FXML public GridPane gridPaneMail;
     @FXML public VBox vBoxFrRegister;
+    @FXML public ImageView imgMBLanguage;
     Language language = new LanguageImpl();
     FileManager fileManager = new FileManagerImpl();
     HandlerLang handlerLang = GlobalLinkMainController.getMainController().getHandlerLang();
     String lang;
     SetUser setUser = new SetUserSQLite();
-    
+    CheckString checkString = new CheckingStringImpl();
     int flagMailSettings = 0;
     int flagDBSettings = 0;
     int flagFTPSettings = 0;
     GetHostAndPortSSL getHostAndPortSSL;
+    User us;
+    
 
     public void saveUser() {
-        User user = new User();
-        user.setLastName(tfLastName.getText());
-        user.setFirstName(tfFirstName.getText());
-        user.setMailAddress(tfMailAddress.getText());
-        user.setPhone(tfPhone.getText());
-        user.setLogin(tfLogin.getText());
-        user.setPassword(tfPassword.getText());
-        user.setPost(comboBoxPost.getValue());
-        user.setCompanyAffiliation(tfNameCompanyUser.getText());
-        if(comboBoxPost.getValue().equals(language.RECEPTION_SECRETARY(lang))){
-            fileManager.createDirectoryCompany(tfNameCompanyUser.getText());
-        }
-        user.setServer(tfNameServer.getText());
-        user.setPort(tfPortServerDbExternal.getText());
-        user.setNameDB(tfNameDbExternal.getText());
-        user.setUserDB(tfNameUserDbExternal.getText());
-        user.setPasswordDB(tfPasswordDbExternal.getText());
-        user.setServerFTP(tfServerFTP.getText());
-        if(!tfPortFTP.getText().isEmpty()){
-            user.setPortFTP(Integer.parseInt(tfPortFTP.getText()));
-        }
-        user.setUserFTP(tfUserFTP.getText());
-        user.setPasswordFTP(tfPasswordFTP.getText());
-
-        if(menuButtonLanguage.getText().equals("Россия")){
-            user.setLanguage("Русский");
-        }
-        if(menuButtonLanguage.getText().equals("England")){
-            user.setLanguage("English");
-        }
-        CheckUser checkUser = new CheckUserSQLite();
-        if (user.getLastName() != null && user.getLogin() != null && user.getPassword() != null){
-            if(!checkUser.checkUser(user)){
-                Integer i = setUser.setUser(user);
-            }else gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
-        }
         
-        GetUser getUser = new GetUserSQLite();
-        User ut = getUser.getUser(user.getLogin(), user.getPassword());
-        if(ut != null){
-            
-            if (ut.getLastName().equals(user.getLastName()) && ut.getFirstName().equals(user.getFirstName())
-                && ut.getLogin().equals(user.getLogin()) && ut.getPassword().equals(user.getPassword())){
-                
-                    if(!tfMailAddress.getText().isEmpty() && !tfPasswordMail.getText().isEmpty()){
-                        MailSettings mailSettings = new MailSettings();
-                        if(menuButtonLanguage.getText().equals("Россия")){
-                            mailSettings.setMailMonitoring(tfMailAddress.getText());
-                            mailSettings.setPasswordMailMonitoring(tfPasswordMail.getText());
-                            getHostAndPortSSL = new GetHostAndPortSSLRuImpl();
-                            mailSettings.setHostMailMonitoring(String.valueOf(getHostAndPortSSL.getPortSSL(comboBoxHost.getValue(), "IMAP")));
-                            mailSettings.setIdUser(ut.getId());
+        if(loadUser() != null){
+            CheckUser checkUser = new CheckUserSQLite();
+                if(!checkUser.checkUser(us)){
+                    setUser.setUser(us);
+                    
+                    GetUser getUser = new GetUserSQLite();
+                    User ut = getUser.getUser(us.getLogin(), us.getPassword());
+                    if(ut != null){
+                        
+                        if (ut.getLastName().equals(us.getLastName()) && ut.getFirstName().equals(us.getFirstName())
+                            && ut.getLogin().equals(us.getLogin()) && ut.getPassword().equals(us.getPassword())){
                             
-                            SetMailSettings setMailSettings = new SetMailSettingsSQLite();
-                            setMailSettings.setMailSettings(ut, mailSettings);
-                        }
-                        if(menuButtonLanguage.getText().equals("England")){
-                            mailSettings.setMailMonitoring(tfMailAddress.getText());
-                            mailSettings.setPasswordMailMonitoring(tfPasswordMail.getText());
-                            getHostAndPortSSL = new GetHostAndPortSSLRuImpl();
-                            mailSettings.setHostMailMonitoring(tfHost.getText());
-                            mailSettings.setIdUser(ut.getId());
+                            if(ut.getMailAddress() != null){
+                                MailSettings mailSettings = new MailSettings();
+                                if(menuButtonLanguage.getText().equals("Россия")){
+                                    mailSettings.setMailMonitoring(ut.getMailAddress());
+                                    mailSettings.setPasswordMailMonitoring(tfPasswordMail.getText());
+                                    getHostAndPortSSL = new GetHostAndPortSSLRuImpl();
+                                    mailSettings.setHostMailMonitoring(getHostAndPortSSL.getServer(comboBoxHost.getValue(), "IMAP"));
+                                    mailSettings.setIdUser(ut.getId());
+                                    
+                                    SetMailSettings setMailSettings = new SetMailSettingsSQLite();
+                                    setMailSettings.setMailSettings(ut, mailSettings);
+                                }
+                                if(menuButtonLanguage.getText().equals("England")){
+                                    mailSettings.setMailMonitoring(ut.getMailAddress());
+                                    mailSettings.setPasswordMailMonitoring(tfPasswordMail.getText());
+                                    getHostAndPortSSL = new GetHostAndPortSSLRuImpl();
+                                    mailSettings.setHostMailMonitoring(tfHost.getText());
+                                    mailSettings.setIdUser(ut.getId());
+                                    
+                                    SetMailSettings setMailSettings = new SetMailSettingsSQLite();
+                                    setMailSettings.setMailSettings(ut, mailSettings);
+                                }
+                            }
                             
-                            SetMailSettings setMailSettings = new SetMailSettingsSQLite();
-                            setMailSettings.setMailSettings(ut, mailSettings);
-                        }
-                    }
-                handlerLang.unregisterObserverLang(this);
-                gridPaneAdd.setStyle(StyleSRC.STYLE_EXCELLENT);
-                GlobalLinkMainController.getMainController().updateUser(new DataUser(ut));
-            }
+                            handlerLang.unregisterObserverLang(this);
+                            gridPaneAdd.setStyle(StyleSRC.STYLE_EXCELLENT);
+                            GlobalLinkMainController.getMainController().updateUser(new DataUser(ut));
+                            
+                        } else gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
+                    } else gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
+                }else gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
         } else gridPaneAdd.setStyle(StyleSRC.STYLE_DANGER);
+        
     }
 
     public void loadPage() {
@@ -217,6 +194,8 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
     }
     public void setMenuItemRu() {
         menuButtonLanguage.setText(menuItemRu.getText());
+        imgMBLanguage.setImage(new Image(Objects.requireNonNull(getClass()
+            .getResourceAsStream("/ru/greatlarder/technicalassistant/images/ru.png"))));
         if(flagMailSettings == 1) {
             comboBoxHost.setVisible(true);
             comboBoxHost.setManaged(true);
@@ -225,16 +204,20 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
             getHostAndPortSSL = new GetHostAndPortSSLRuImpl();
             comboBoxHost.setItems(FXCollections.observableArrayList(getHostAndPortSSL.getListServersName()));
         }
+        handlerLang.onNewDataLang(new DataLang("Русский"));
     }
 
     public void setMenuItemEn() {
         menuButtonLanguage.setText(menuItemEn.getText());
+        imgMBLanguage.setImage(new Image(Objects.requireNonNull(getClass()
+            .getResourceAsStream("/ru/greatlarder/technicalassistant/images/ico-en.png"))));
         if(flagMailSettings == 1) {
             comboBoxHost.setVisible(false);
             comboBoxHost.setManaged(false);
             tfHost.setVisible(true);
             tfHost.setManaged(true);
         }
+        handlerLang.onNewDataLang(new DataLang("English"));
     }
 
     public void setLanguage(String lange) {
@@ -246,7 +229,9 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
         labelLogin.setText(language.LOGIN(lange));
         labelPassword.setText(language.PASSWORD(lange));
         comboBoxPost.setPromptText(language.POST(lange));
-        menuButtonLanguage.setText(language.SELECT_A_COUNTRY(lange));
+        if(menuButtonLanguage.getText().equals("Выберите страну") || menuButtonLanguage.getText().equals("Select a country")) {
+            menuButtonLanguage.setText(language.SELECT_A_COUNTRY(lange));
+        }
         btnSave.setText(language.SAVE(lange));
         comboBoxPost.setItems(FXCollections.observableArrayList(language.LIST_POST(lange)));
         labelPasswordMail.setText(language.MAIL_PASSWORD(lange));
@@ -303,7 +288,7 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
     }
 
     public void onKeyReleasedPortFTP() {
-        CheckForANumber checked = new CheckingForANumberImpl();
+        CheckString checked = new CheckingStringImpl();
         if (!checked.checkingForANumber(tfPortFTP.getText())){
             tfPortFTP.setStyle(StyleSRC.STYLE_DANGER);
         } else {
@@ -383,5 +368,108 @@ public class FragmentRegistrationUserController implements ObserverLang, Initial
             btnOpenSettingFTP.setManaged(true);
         }
         
+    }
+    
+    public User loadUser(){
+        TextField t = new TextField();
+        User user = new User();
+        if(!tfLastName.getText().isEmpty()){
+            tfLastName.setStyle(t.getStyle());
+            user.setLastName(tfLastName.getText());
+        } else {
+            tfLastName.setStyle(StyleSRC.STYLE_DANGER);
+            return null;
+        }
+        if(!tfFirstName.getText().isEmpty()) {
+            tfFirstName.setStyle(t.getStyle());
+            user.setFirstName(tfFirstName.getText());
+        } else {
+            tfFirstName.setStyle(StyleSRC.STYLE_DANGER);
+            return null;
+        }
+        
+        if(!tfMailAddress.getText().isEmpty() && checkString.checkingMail(tfMailAddress.getText())){
+            tfMailAddress.setStyle(t.getStyle());
+            user.setMailAddress(tfMailAddress.getText());
+        } else {
+            tfMailAddress.setStyle(StyleSRC.STYLE_DANGER);
+            return null;
+        }
+        if (!tfPhone.getText().isEmpty() && checkString.checkingForPhone(tfPhone.getText())){
+            tfPhone.setStyle(t.getStyle());
+            user.setPhone(tfPhone.getText());
+        } else {
+            tfPhone.setStyle(StyleSRC.STYLE_DANGER);
+            return null;
+        }
+        if(!tfLogin.getText().isEmpty()){
+            tfLogin.setStyle(t.getStyle());
+            user.setLogin(tfLogin.getText());
+        } else {
+            tfLogin.setStyle(StyleSRC.STYLE_DANGER);
+            return null;
+        }
+        if (!tfPassword.getText().isEmpty()) {
+            tfPassword.setStyle(t.getStyle());
+            user.setPassword(tfPassword.getText());
+        } else {
+            tfPassword.setStyle(StyleSRC.STYLE_DANGER);
+            return null;
+        }
+        if(comboBoxPost.getValue() != null && !comboBoxPost.getValue().isEmpty()){
+            comboBoxPost.setStyle(t.getStyle());
+            user.setPost(comboBoxPost.getValue());
+        } else {
+            comboBoxPost.setStyle(StyleSRC.STYLE_DANGER);
+            return null;
+        }
+        if(!tfNameCompanyUser.getText().isEmpty()){
+            tfNameCompanyUser.setStyle(t.getStyle());
+            user.setCompanyAffiliation(tfNameCompanyUser.getText());
+        } else {
+            tfNameCompanyUser.setStyle(StyleSRC.STYLE_DANGER);
+            return null;
+        }
+        
+        if(comboBoxPost.getValue().equals(language.RECEPTION_SECRETARY(lang))){
+            fileManager.createDirectoryCompany(tfNameCompanyUser.getText());
+        }
+        
+        user.setServer(tfNameServer.getText());
+        if(!tfPortServerDbExternal.getText().isEmpty() && checkString.checkingForANumber(tfPortServerDbExternal.getText())){
+            tfPortServerDbExternal.setStyle(t.getStyle());
+            user.setPort(tfPortServerDbExternal.getText());
+        } else if(!tfPortServerDbExternal.getText().isEmpty() && !checkString.checkingForANumber(tfPortServerDbExternal.getText())){
+            tfPortServerDbExternal.setStyle(StyleSRC.STYLE_DANGER);
+            return null;
+        } else user.setPort(tfPortServerDbExternal.getText());
+        
+        
+        user.setNameDB(tfNameDbExternal.getText());
+        user.setUserDB(tfNameUserDbExternal.getText());
+        user.setPasswordDB(tfPasswordDbExternal.getText());
+        user.setServerFTP(tfServerFTP.getText());
+        
+        if(!tfPortFTP.getText().isEmpty()){
+            user.setPortFTP(Integer.parseInt(tfPortFTP.getText()));
+        }
+        user.setUserFTP(tfUserFTP.getText());
+        user.setPasswordFTP(tfPasswordFTP.getText());
+        
+        if(!menuButtonLanguage.getText().isEmpty() && !menuButtonLanguage.getText().equals("Выберите страну")
+        || !menuButtonLanguage.getText().equals("Select a country")){
+            menuButtonLanguage.setStyle(t.getStyle());
+            if(menuButtonLanguage.getText().equals("Россия")){
+                user.setLanguage("Русский");
+            }
+            if(menuButtonLanguage.getText().equals("England")){
+                user.setLanguage("English");
+            }
+        } else {
+            menuButtonLanguage.setStyle(StyleSRC.STYLE_DANGER);
+            return null;
+        }
+        us = user;
+        return user;
     }
 }

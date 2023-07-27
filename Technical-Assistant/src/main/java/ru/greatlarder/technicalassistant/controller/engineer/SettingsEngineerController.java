@@ -73,8 +73,8 @@ public class SettingsEngineerController implements Initializable {
     public Button btnRegistry;
     @FXML
     public Label labelDSL;
-    @FXML
-    public Button btnSettingsMail;
+   /* @FXML
+    public Button btnSettingsMail;*/
     @FXML
     public Button btnSendToAnExternalDatabase;
     @FXML
@@ -119,7 +119,7 @@ public class SettingsEngineerController implements Initializable {
         }
     }
 
-    public void openSettingsMail() {
+/*    public void openSettingsMail() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/add_mail_settings.fxml"));
         try {
             borderPaneSettings.setCenter(loader.load());
@@ -127,7 +127,7 @@ public class SettingsEngineerController implements Initializable {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     public void actionBtnCompany() {
         GlobalLinkStartEngineerController.getStartEngineerController().borderPaneEngineerPage.getChildren().remove(GlobalLinkStartEngineerController
@@ -148,7 +148,7 @@ public class SettingsEngineerController implements Initializable {
         labelDSL.setText(language.DATE_STORAGE_LOCATION(lang));
         labelReferenceDirectory.setText(language.APPLICATION_FOLDER(lang));
         labelReferenceDataBase.setText(language.DATABASE_HOSTING_FOLDER(lang));
-        btnSettingsMail.setText(language.MAIL_SETTINGS(lang));
+//        btnSettingsMail.setText(language.MAIL_SETTINGS(lang));
         btnSendToAnExternalDatabase.setText(language.UPDATE_DATA_IN_AN_EXTERNAL_DATABASE(lang));
         btnGetDataFromAnExternalDatabase.setText(language.GET_DATA_FROM_AN_EXTERNAL_DATABASE(lang));
 
@@ -168,15 +168,16 @@ public class SettingsEngineerController implements Initializable {
         tfRefDirDB.setPrefColumnCount(tfRefDirDB.getText().length());
         if (user == null) {
             btnCompanyChoice.setDisable(true);
-            btnSettingsMail.setDisable(true);
         } else {
             btnCompanyChoice.setDisable(false);
-            btnSettingsMail.setDisable(false);
             btnRegistry.setDisable(true);
             borderPaneSettings.getChildren().remove(borderPaneSettings.getRight());
         }
-        btnSendToAnExternalDatabase.setDisable(company == null);
-        btnGetDataFromAnExternalDatabase.setDisable(company == null);
+        btnSendToAnExternalDatabase.setDisable(user.getNameDB().isEmpty()
+            && user.getPasswordDB().isEmpty() && user.getUserDB().isEmpty());
+        
+        btnGetDataFromAnExternalDatabase.setDisable(company == null || (user.getNameDB().isEmpty()
+            && user.getPasswordDB().isEmpty() && user.getUserDB().isEmpty()));
         visibleGridUpdateExternalDB(false);
         btnShow.setVisible(false);
         btnShow.setManaged(false);

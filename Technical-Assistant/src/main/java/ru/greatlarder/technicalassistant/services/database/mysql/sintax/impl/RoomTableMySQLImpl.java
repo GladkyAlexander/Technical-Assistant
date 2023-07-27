@@ -8,7 +8,8 @@ public class RoomTableMySQLImpl implements RoomTableMySQL {
         return "CREATE TABLE if not exists`" + nameDB + "`.`room` ( id int AUTO_INCREMENT primary key NOT NULL" +
                 ", nameRoom text" +
                 ", image mediumblob" +
-                ", nameCompany text) ENGINE = InnoDB";
+                ", nameCompany text" +
+                ", instruction longblob) ENGINE = InnoDB";
     }
 
     @Override
@@ -16,7 +17,8 @@ public class RoomTableMySQLImpl implements RoomTableMySQL {
         return "INSERT INTO `" + nameDB + "`.`room` (" +
                 " nameRoom," +
                 " image," +
-                " nameCompany) VALUES (?,?,?)";
+                " nameCompany," +
+                " instruction) VALUES (?,?,?,?)";
     }
 
     @Override
@@ -24,7 +26,8 @@ public class RoomTableMySQLImpl implements RoomTableMySQL {
         return "UPDATE `" + nameDB + "`.`room` SET " +
                 " nameRoom = ?," +
                 " image = ?," +
-                " nameCompany = ? WHERE id = ?";
+                " nameCompany = ?," +
+                " instruction = ? WHERE id = ?";
     }
 
     @Override

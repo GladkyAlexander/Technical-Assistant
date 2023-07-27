@@ -81,4 +81,15 @@ public class LanguageWarningsImpl implements LanguageWarnings {
         }
         return added;
     }
+    
+    @Override
+    public String there_is_no_data_about_the_external_database(String language) {
+        String added = "";
+        if (language.equals(ru)) {
+            added = "Нет данных о внешней базе данных";
+        } else if (language.equals(en)) {
+            added = "There is no data about the external database";
+        }
+        return added;
+    }
 }

@@ -1,20 +1,15 @@
 package ru.greatlarder.technicalassistant.controller;
 
-import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.print.Printer;
-import javafx.scene.Scene;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-import ru.greatlarder.technicalassistant.App;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.company_listener.DataCompany;
@@ -56,6 +51,7 @@ public class MainController implements ObserverLang, ObserverUser, ObserverCompa
     public ImageView imgUserAct;
     @FXML
     public MenuItem menuItemChangeCompany;
+    @FXML public MenuItem menuItemInput;
     Language language = new LanguageImpl();
     HandlerUserListener handlerUserListener = new HandlerUserListener();
     HandlerLang handlerLang = new HandlerLang();
@@ -88,30 +84,41 @@ public class MainController implements ObserverLang, ObserverUser, ObserverCompa
     public void updateLang(DataLang dataLang) {
         setLang(dataLang.getLanguage());
         setLanguage(lang);
+        if(dataLang.getLanguage().equals("Русский")){
+            mbtLang.setText(menuItemRu.getText());
+            imgLangMenuButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ru.png"))));
+        }
+        if(dataLang.getLanguage().equals("English")) {
+            mbtLang.setText(menuItemEn.getText());
+            imgLangMenuButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ico-en.png"))));
+            
+        }
     }
 
     public void setLanguage(String lan) {
         menuItemOut.setText(language.EXIT(lan));
         menuItemChangeCompany.setText(language.CHANGE_COMPANY(lan));
+        menuItemInput.setText(language.ENTER(lan));
     }
 
     public void mBru() {
         mbtLang.setText(menuItemRu.getText());
-        imgLangMenuButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ru.png"))));
-        handlerLang.registerObserverLang(this);
+        imgLangMenuButton.setImage(new Image(Objects.requireNonNull(getClass()
+            .getResourceAsStream("/ru/greatlarder/technicalassistant/images/ru.png"))));
         handlerLang.onNewDataLang(new DataLang("Русский"));
     }
 
     public void mBen() {
         mbtLang.setText(menuItemEn.getText());
-        imgLangMenuButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/ico-en.png"))));
-        handlerLang.registerObserverLang(this);
+        imgLangMenuButton.setImage(new Image(Objects.requireNonNull(getClass()
+            .getResourceAsStream("/ru/greatlarder/technicalassistant/images/ico-en.png"))));
         handlerLang.onNewDataLang(new DataLang("English"));
     }
 
     public void onActionMenuItemOut() {
         setCompany(null);
         handlerUserListener.onNewDataUser(new DataUser(null));
+        menuButtonUserInOut.setText("");
     }
 
     public String getLang() {
@@ -132,12 +139,14 @@ public class MainController implements ObserverLang, ObserverUser, ObserverCompa
         handlerCompanyListener.registerObserverCompany(this);
 
         mbtLang.setText(menuItemRu.getText());
+        
         updateLang(new DataLang(menuItemRu.getText()));
+        
         imgLangMenuButton.setImage(new Image(Objects.requireNonNull(getClass()
                 .getResourceAsStream("/ru/greatlarder/technicalassistant/images/ru.png"))));
 
         if (this.user == null) {
-            menuButtonUserInOut.setVisible(false);
+            //menuButtonUserInOut.setVisible(false);
             imgUserAct.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/login_unactive.png"))));
             FXMLLoader loaderUserLogin = new FXMLLoader(getClass().
                     getResource("/ru/greatlarder/technicalassistant/layout/fragment_add/fragmentUserLogin.fxml"));
@@ -148,16 +157,18 @@ public class MainController implements ObserverLang, ObserverUser, ObserverCompa
             }
 
         } else {
-            menuButtonUserInOut.setVisible(true);
+            //menuButtonUserInOut.setVisible(true);
             updateLang(new DataLang(user.getLanguage()));
             if (this.user.getPost().equals("Engineer") || this.user.getPost().equals("Инженер")) {
                 menuItemChangeCompany.setVisible(true);
                 setLang(user.getLanguage());
+                handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
                 loadEngineer(this.user);
             }
             if (this.user.getPost().equals("Reception Secretary") || this.user.getPost().equals("Секретарь приемной")) {
                 menuItemChangeCompany.setVisible(false);
                 setLang(user.getLanguage());
+                handlerLang.onNewDataLang(new DataLang(user.getLanguage()));
                 loadReception(this.user);
             }
         }
@@ -174,7 +185,6 @@ public class MainController implements ObserverLang, ObserverUser, ObserverCompa
         try {
             borderPaneMainPage.setCenter(loader.load());
             hBoxTopToolbar.getChildren().add(loaderToolBox.load());
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -229,5 +239,23 @@ public class MainController implements ObserverLang, ObserverUser, ObserverCompa
     public void updateCompany(DataCompany dataCompany) {
         setCompany(dataCompany.getCompany());
         startAccount(getUser());
+    }
+    
+    public void onAcMenuButtonUserInOut(MouseEvent actionEvent) {
+        if(getUser() == null){
+            menuItemOut.setVisible(false);
+            menuItemChangeCompany.setVisible(false);
+            menuItemInput.setVisible(true);
+        } else {
+            menuItemOut.setVisible(true);
+            menuItemChangeCompany.setVisible(true);
+            menuItemInput.setVisible(false);
+        }
+    }
+    
+    public void onActionMenuItemInput(ActionEvent actionEvent) {
+        setCompany(null);
+        handlerUserListener.onNewDataUser(new DataUser(null));
+        menuButtonUserInOut.setText("");
     }
 }

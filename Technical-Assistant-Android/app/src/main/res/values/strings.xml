@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Technical Assistant Android</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="enter">Вход</string>
+    <string name="firstName">Имя</string>
+    <string name="lastName">Фамилия</string>
+    <string name="mailAddress">Электронная почта</string>
+    <string name="phone">Телефон</string>
+    <string name="position">Позиция(пост/должность)</string>
+    <string name="companyAffiliation">Компания</string>
+    <string name="language">Язык</string>
+    <string name="emailServer">Сервер электронной почты</string>
+    <string name="portOnTheEmailServer">Порт сервера электронной почты</string>
+    <string name="databaseName">Название базы данных</string>
+    <string name="databasePassword">Пароль базы данных</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="todo">TODO</string>
+</resources>

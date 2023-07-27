@@ -1,5 +1,9 @@
 package ru.greatlarder.technicalassistant.services.lang;
 
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageNameEquipmentImpl;
+
+import java.util.List;
+
 public interface LanguageNameEquipment {
     String getProjector(String language);
 
@@ -34,4 +38,6 @@ public interface LanguageNameEquipment {
     String getTouchControlPanel(String language);
 
     String getController(String language);
+    List<String> getListNameEquipment(String language);
+    String getNameEquipment(String language);
 }

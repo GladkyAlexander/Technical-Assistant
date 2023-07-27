@@ -25,9 +25,7 @@ import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.Room;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
 import ru.greatlarder.technicalassistant.domain.user.User;
-import ru.greatlarder.technicalassistant.services.check.CheckForANumber;
 import ru.greatlarder.technicalassistant.services.check.CheckString;
-import ru.greatlarder.technicalassistant.services.check.CheckingForANumberImpl;
 import ru.greatlarder.technicalassistant.services.check.CheckingStringImpl;
 import ru.greatlarder.technicalassistant.services.check.check_equipment.*;
 import ru.greatlarder.technicalassistant.services.check.check_equipment.check_equipment_sqlite.*;
@@ -41,7 +39,9 @@ import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.Upda
 import ru.greatlarder.technicalassistant.services.database.sqlite.room.ListRoomByCompanySQLite;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.Language;
+import ru.greatlarder.technicalassistant.services.lang.LanguageNameEquipment;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageNameEquipmentImpl;
 import ru.greatlarder.technicalassistant.services.manager.FileManager;
 import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 
@@ -254,7 +254,8 @@ public class FragmentEquipmentOneController implements Initializable {
     CheckString checkingStringWithACondition = new CheckingStringImpl();
     CheckIpAddress checkEquipmentIpAddress = new CheckingIpForEmploymentInTheDatabaseSQLite();
     CheckIpAddressDante checkIpAddressDante = new CheckingIpDanteForEmploymentInTheDatabaseSQLite();
-    CheckForANumber checkingForANumber = new CheckingForANumberImpl();
+    CheckString checkingForANumber = new CheckingStringImpl();
+    LanguageNameEquipment languageNameEquipment = new LanguageNameEquipmentImpl();
 
     public void setLabelStorage(String labelStorage) {
         this.labelStorage.setText(labelStorage);
@@ -1096,7 +1097,7 @@ public class FragmentEquipmentOneController implements Initializable {
 
     public void okrFrequency1(KeyEvent keyEvent) {
         if (!tfFrequency1.getText().trim().isEmpty()) {
-            if(checkingStringWithACondition.chekingStringWithACondition(tfFrequency1.getText())){
+            if(checkingStringWithACondition.checkingStringWithACondition(tfFrequency1.getText())){
                 if (tfFrequency1.getText().length() <= 3) {
                     tfFrequency1.setStyle(new TextField().getStyle());
                 } else tfFrequency1.setStyle(STYLE_DANGER);
@@ -1107,7 +1108,7 @@ public class FragmentEquipmentOneController implements Initializable {
     public void okrFrequency2(KeyEvent keyEvent) {
         CheckFrequency checkFrequency = new CheckingFrequencyDatabaseSQLite();
         if (!tfFrequency2.getText().trim().isEmpty()) {
-            if (checkingStringWithACondition.chekingStringWithACondition(tfFrequency2.getText())) {
+            if (checkingStringWithACondition.checkingStringWithACondition(tfFrequency2.getText())) {
                 if(tfFrequency2.getText().length() <= 3) {
                     if (!checkFrequency.checkFrequency(user, equipment.getCompany(), (tfFrequency1.getText() + "." + tfFrequency2.getText()))) {
                         tfFrequency1.setStyle(new TextField().getStyle());
@@ -1421,7 +1422,7 @@ public class FragmentEquipmentOneController implements Initializable {
     public void openHBoxChangePortNumber(MouseEvent mouseEvent) {
         GetListEquipment getListEquipment = new ListEquipmentByNameSQLite();
         List<Equipment> listEquipment = new ArrayList<>(getListEquipment.getListEquipment(user
-                , company.getNameCompany(), Language.NETWORK_SWITCH_RU));
+                , company.getNameCompany(), languageNameEquipment.getNetworkSwitch(user.getLanguage())));
         if(!listEquipment.isEmpty()) {
             hBoxPortNumber.setVisible(true);
             hBoxPortNumber.setManaged(true);
@@ -1472,9 +1473,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui1(KeyEvent keyEvent) {
         if (oui1.getText().isEmpty()) {
             oui1.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui1.getText()) || oui1.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui1.getText()) || oui1.getText().length() > 2) {
             oui1.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui1.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui1.getText())) {
             oui1.setStyle(new TextField().getStyle());
         } else oui1.setStyle(new TextField().getStyle());
     }
@@ -1482,9 +1483,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui2(KeyEvent keyEvent) {
         if (oui2.getText().isEmpty()) {
             oui2.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui2.getText()) || oui2.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui2.getText()) || oui2.getText().length() > 2) {
             oui2.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui2.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui2.getText())) {
             oui2.setStyle(new TextField().getStyle());
         } else oui2.setStyle(new TextField().getStyle());
     }
@@ -1492,9 +1493,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui3(KeyEvent keyEvent) {
         if (oui3.getText().isEmpty()) {
             oui3.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui3.getText()) || oui3.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui3.getText()) || oui3.getText().length() > 2) {
             oui3.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui3.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui3.getText())) {
             oui3.setStyle(new TextField().getStyle());
         } else oui3.setStyle(new TextField().getStyle());
     }
@@ -1502,9 +1503,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa1(KeyEvent keyEvent) {
         if (uaa1.getText().isEmpty()) {
             uaa1.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa1.getText()) || uaa1.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa1.getText()) || uaa1.getText().length() > 2) {
             uaa1.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa1.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa1.getText())) {
             uaa1.setStyle(new TextField().getStyle());
         } else uaa1.setStyle(new TextField().getStyle());
     }
@@ -1512,9 +1513,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa2(KeyEvent keyEvent) {
         if (uaa2.getText().isEmpty()) {
             uaa2.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa2.getText()) || uaa2.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa2.getText()) || uaa2.getText().length() > 2) {
             uaa2.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa2.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa2.getText())) {
             uaa2.setStyle(new TextField().getStyle());
         } else uaa2.setStyle(new TextField().getStyle());
     }
@@ -1522,9 +1523,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa3(KeyEvent keyEvent) {
         if (uaa3.getText().isEmpty()) {
             uaa3.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa3.getText()) || uaa3.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa3.getText()) || uaa3.getText().length() > 2) {
             uaa3.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa3.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa3.getText())) {
             uaa3.setStyle(new TextField().getStyle());
         } else uaa3.setStyle(new TextField().getStyle());
 
@@ -1544,9 +1545,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui1_1(KeyEvent keyEvent) {
         if (oui11.getText().isEmpty()) {
             oui11.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui11.getText()) || oui11.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui11.getText()) || oui11.getText().length() > 2) {
             oui11.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui11.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui11.getText())) {
             oui11.setStyle(new TextField().getStyle());
         } else oui11.setStyle(new TextField().getStyle());
     }
@@ -1554,9 +1555,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui1_2(KeyEvent keyEvent) {
         if (oui21.getText().isEmpty()) {
             oui21.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui21.getText()) || oui21.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui21.getText()) || oui21.getText().length() > 2) {
             oui21.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui21.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui21.getText())) {
             oui21.setStyle(new TextField().getStyle());
         } else oui21.setStyle(new TextField().getStyle());
     }
@@ -1564,9 +1565,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui1_3(KeyEvent keyEvent) {
         if (oui31.getText().isEmpty()) {
             oui31.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui31.getText()) || oui31.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui31.getText()) || oui31.getText().length() > 2) {
             oui31.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui31.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui31.getText())) {
             oui31.setStyle(new TextField().getStyle());
         } else oui31.setStyle(new TextField().getStyle());
     }
@@ -1574,9 +1575,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa1_1(KeyEvent keyEvent) {
         if (uaa11.getText().isEmpty()) {
             uaa11.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa11.getText()) || uaa11.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa11.getText()) || uaa11.getText().length() > 2) {
             uaa11.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa11.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa11.getText())) {
             uaa11.setStyle(new TextField().getStyle());
         } else uaa11.setStyle(new TextField().getStyle());
     }
@@ -1584,9 +1585,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa1_2(KeyEvent keyEvent) {
         if (uaa12.getText().isEmpty()) {
             uaa12.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa12.getText()) || uaa12.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa12.getText()) || uaa12.getText().length() > 2) {
             uaa12.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa21.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa21.getText())) {
             uaa12.setStyle(new TextField().getStyle());
         } else uaa12.setStyle(new TextField().getStyle());
     }
@@ -1594,9 +1595,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa1_3(KeyEvent keyEvent) {
         if (uaa13.getText().isEmpty()) {
             uaa13.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa13.getText()) || uaa13.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa13.getText()) || uaa13.getText().length() > 2) {
             uaa13.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa13.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa13.getText())) {
             uaa13.setStyle(new TextField().getStyle());
         } else uaa13.setStyle(new TextField().getStyle());
 
@@ -1616,9 +1617,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui2_1(KeyEvent keyEvent) {
         if (oui21.getText().isEmpty()) {
             oui21.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui21.getText()) || oui21.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui21.getText()) || oui21.getText().length() > 2) {
             oui21.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui21.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui21.getText())) {
             oui21.setStyle(new TextField().getStyle());
         } else oui21.setStyle(new TextField().getStyle());
     }
@@ -1626,9 +1627,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui2_2(KeyEvent keyEvent) {
         if (oui22.getText().isEmpty()) {
             oui22.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui22.getText()) || oui22.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui22.getText()) || oui22.getText().length() > 2) {
             oui22.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui22.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui22.getText())) {
             oui22.setStyle(new TextField().getStyle());
         } else oui22.setStyle(new TextField().getStyle());
     }
@@ -1636,9 +1637,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui2_3(KeyEvent keyEvent) {
         if (oui23.getText().isEmpty()) {
             oui23.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui23.getText()) || oui23.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui23.getText()) || oui23.getText().length() > 2) {
             oui23.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui23.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui23.getText())) {
             oui23.setStyle(new TextField().getStyle());
         } else oui23.setStyle(new TextField().getStyle());
     }
@@ -1646,9 +1647,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa2_1(KeyEvent keyEvent) {
         if (uaa21.getText().isEmpty()) {
             uaa21.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa21.getText()) || uaa21.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa21.getText()) || uaa21.getText().length() > 2) {
             uaa21.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa21.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa21.getText())) {
             uaa21.setStyle(new TextField().getStyle());
         } else uaa21.setStyle(new TextField().getStyle());
     }
@@ -1656,9 +1657,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa2_2(KeyEvent keyEvent) {
         if (uaa22.getText().isEmpty()) {
             uaa22.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa22.getText()) || uaa22.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa22.getText()) || uaa22.getText().length() > 2) {
             uaa22.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa22.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa22.getText())) {
             uaa22.setStyle(new TextField().getStyle());
         } else uaa22.setStyle(new TextField().getStyle());
     }
@@ -1666,9 +1667,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa2_3(KeyEvent keyEvent) {
         if (uaa23.getText().isEmpty()) {
             uaa23.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa23.getText()) || uaa23.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa23.getText()) || uaa23.getText().length() > 2) {
             uaa23.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa23.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa23.getText())) {
             uaa23.setStyle(new TextField().getStyle());
         } else uaa23.setStyle(new TextField().getStyle());
 
@@ -1688,9 +1689,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui3_1(KeyEvent keyEvent) {
         if (oui31.getText().isEmpty()) {
             oui31.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui31.getText()) || oui31.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui31.getText()) || oui31.getText().length() > 2) {
             oui31.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui31.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui31.getText())) {
             oui31.setStyle(new TextField().getStyle());
         } else oui31.setStyle(new TextField().getStyle());
     }
@@ -1698,9 +1699,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui3_2(KeyEvent keyEvent) {
         if (oui32.getText().isEmpty()) {
             oui32.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui32.getText()) || oui23.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui32.getText()) || oui23.getText().length() > 2) {
             oui32.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui32.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui32.getText())) {
             oui32.setStyle(new TextField().getStyle());
         } else oui32.setStyle(new TextField().getStyle());
     }
@@ -1708,9 +1709,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyOui3_3(KeyEvent keyEvent) {
         if (oui33.getText().isEmpty()) {
             oui33.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(oui33.getText()) || oui33.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(oui33.getText()) || oui33.getText().length() > 2) {
             oui33.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(oui33.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(oui33.getText())) {
             oui33.setStyle(new TextField().getStyle());
         } else oui33.setStyle(new TextField().getStyle());
     }
@@ -1718,9 +1719,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa3_1(KeyEvent keyEvent) {
         if (uaa31.getText().isEmpty()) {
             uaa31.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa31.getText()) || uaa31.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa31.getText()) || uaa31.getText().length() > 2) {
             uaa31.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa31.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa31.getText())) {
             uaa31.setStyle(new TextField().getStyle());
         } else uaa31.setStyle(new TextField().getStyle());
     }
@@ -1728,9 +1729,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa3_2(KeyEvent keyEvent) {
         if (uaa32.getText().isEmpty()) {
             uaa32.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa32.getText()) || uaa32.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa32.getText()) || uaa32.getText().length() > 2) {
             uaa32.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa32.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa32.getText())) {
             uaa32.setStyle(new TextField().getStyle());
         } else uaa32.setStyle(new TextField().getStyle());
     }
@@ -1738,9 +1739,9 @@ public class FragmentEquipmentOneController implements Initializable {
     public void onKeyUaa3_3(KeyEvent keyEvent) {
         if (uaa33.getText().isEmpty()) {
             uaa33.setStyle(new TextField().getStyle());
-        } else if (!checkingStringWithACondition.chekingStringWithACondition(uaa33.getText()) || uaa33.getText().length() > 2) {
+        } else if (!checkingStringWithACondition.checkingStringWithACondition(uaa33.getText()) || uaa33.getText().length() > 2) {
             uaa33.setStyle(STYLE_DANGER);
-        } else if (checkingStringWithACondition.chekingStringWithACondition(uaa33.getText())) {
+        } else if (checkingStringWithACondition.checkingStringWithACondition(uaa33.getText())) {
             uaa33.setStyle(new TextField().getStyle());
         } else uaa33.setStyle(new TextField().getStyle());
 
@@ -1766,7 +1767,7 @@ public class FragmentEquipmentOneController implements Initializable {
             equipment.setMacAddress3(checkMac(oui31, oui32, oui33, uaa31, uaa32, uaa33).getText());
             updateEquipment.updateEquipment(user, company, equipment);
 
-            if(checkMacAddress3.checkingEquipmentMac3Address(user, equipment.getCompany(), checkMac(oui31, oui32, oui33, uaa31, uaa32, uaa33).getText())){
+            if(!checkMacAddress3.checkingEquipmentMac3Address(user, equipment.getCompany(), checkMac(oui31, oui32, oui33, uaa31, uaa32, uaa33).getText())){
                 labelMac3.setText(checkMac(oui13, oui23, oui33, uaa13, uaa23, uaa33).getText());
                 hBoxMacAddress3.setVisible(false);
                 hBoxMacAddress3.setManaged(false);
@@ -1785,7 +1786,7 @@ public class FragmentEquipmentOneController implements Initializable {
             equipment.setMacAddress2(checkMac(oui21, oui22, oui23, uaa21, uaa22, uaa23).getText());
             updateEquipment.updateEquipment(user, company, equipment);
 
-            if(checkMacAddress2.checkingEquipmentMac2Address(user, equipment.getCompany(), checkMac(oui21, oui22, oui23, uaa21, uaa22, uaa23).getText())){
+            if(!checkMacAddress2.checkingEquipmentMac2Address(user, equipment.getCompany(), checkMac(oui21, oui22, oui23, uaa21, uaa22, uaa23).getText())){
                 labelMac2.setText(checkMac(oui12, oui22, oui32, uaa12, uaa22, uaa32).getText());
                 hBoxNewMacAddress2.setVisible(false);
                 hBoxNewMacAddress2.setManaged(false);
@@ -1804,7 +1805,7 @@ public class FragmentEquipmentOneController implements Initializable {
             equipment.setMacAddress1(checkMac(oui11, oui12, oui13, uaa11, uaa12, uaa13).getText());
             updateEquipment.updateEquipment(user, company, equipment);
 
-            if(checkMacAddress1.checkingEquipmentMac1Address(user, equipment.getCompany(), checkMac(oui11, oui12, oui13, uaa11, uaa12, uaa13).getText())){
+            if(!checkMacAddress1.checkingEquipmentMac1Address(user, equipment.getCompany(), checkMac(oui11, oui12, oui13, uaa11, uaa12, uaa13).getText())){
                 labelMac1.setText(checkMac(oui11, oui21, oui31, uaa11, uaa21, uaa31).getText());
                 hBoxNewMacAddress1.setVisible(false);
                 hBoxNewMacAddress1.setManaged(false);
@@ -1822,8 +1823,7 @@ public class FragmentEquipmentOneController implements Initializable {
             UpdateEquipment updateEquipment = new UpdateEquipmentSQLite();
             equipment.setMacAddress(checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText());
             updateEquipment.updateEquipment(user, company, equipment);
-
-            if(checkMacAddress.checkingEquipmentMacAddress(user, equipment.getCompany(), checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText())){
+            if(!checkMacAddress.checkingEquipmentMacAddress(user, equipment.getCompany(), checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText())){
                 macAddress.setText(checkMac(oui1, oui2, oui3, uaa1, uaa2, uaa3).getText());
                 hBoxNewMacAddress.setVisible(false);
                 hBoxNewMacAddress.setManaged(false);

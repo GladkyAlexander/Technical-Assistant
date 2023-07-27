@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GetRoomServiceImplMySQL implements GetRoomService{
+    FileManager fileManager = new FileManagerImpl();
     @Override
     public Room getRoom(ResultSet resultSet) throws SQLException {
         Room room = new Room();
@@ -21,24 +22,34 @@ public class GetRoomServiceImplMySQL implements GetRoomService{
         room.setNameRoom(resultSet.getString("nameRoom"));
         room.setNameCompanyForRoom(resultSet.getString("nameCompany"));
         
-        
-        
-//        room.setUrlLogoRoom(resultSet.getString("image"));
-        
         byte b[];
         Blob blob;
-        FileManager fileManager = new FileManagerImpl();
+        
         File f=new File(fileManager.folderImage() + "\\" + room.getNameRoom() + ".png");
         try {
-            FileOutputStream fs=new FileOutputStream(f);
-            blob=resultSet.getBlob("image");
-            b=blob.getBytes(1, (int)blob.length());
+            FileOutputStream fs = new FileOutputStream(f);
+            blob = resultSet.getBlob("image");
+            b = blob.getBytes(1, (int)blob.length());
             fs.write(b);
         } catch (IOException e) {
             e.printStackTrace();
         }
         
         room.setUrlLogoRoom(fileManager.folderImage() + "\\" + room.getNameRoom() + ".png");
+        
+        byte b_pdf[];
+        Blob blob_pdf;
+        File f_pdf = new File(fileManager.folderCompanyInstruction(room.getNameCompanyForRoom()) + "\\" + room.getNameRoom() + ".pdf");
+        try {
+            FileOutputStream fs_pdf = new FileOutputStream(f_pdf);
+            blob_pdf = resultSet.getBlob("instruction");
+            b_pdf = blob_pdf.getBytes(1, (int)blob_pdf.length());
+            fs_pdf.write(b_pdf);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        room.setInstruction(fileManager.folderCompanyInstruction(room.getNameCompanyForRoom()) + "\\" + room.getNameRoom() + ".pdf");
         
         return room;
     }

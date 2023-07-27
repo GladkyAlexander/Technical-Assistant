@@ -25,6 +25,7 @@ public class SetRoomSQLite implements SetRoom {
             cf.setString(1, room.getNameRoom());
             cf.setString(2, room.getNameCompanyForRoom());
             cf.setString(3, room.getUrlLogoRoom());
+            cf.setString(4, room.getInstruction());
             
             if(cf.executeUpdate() > 0){
                 ResultSet rs = cf.getGeneratedKeys();

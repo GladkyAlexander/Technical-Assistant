@@ -30,194 +30,6 @@ public class LanguageImpl implements Language {
         }
         return will_not;
     }
-
-    @Override
-    public String PROJECTOR(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Проектор";
-        } else if (language.equals(en)) {
-            will_not = "Projector";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String MICROPHONE(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Микрофон";
-        } else if (language.equals(en)) {
-            will_not = "Microphone";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String CONTROL_PROCESSOR(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Процессор управления";
-        } else if (language.equals(en)) {
-            will_not = "Control processor";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String AUDIO_PROCESSOR(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Аудио процессор";
-        } else if (language.equals(en)) {
-            will_not = "Audio processor";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String AUDIO_AMPLIFIER(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Аудио усилитель";
-        } else if (language.equals(en)) {
-            will_not = "Audio amplifier";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String ACOUSTIC_SPEAKER(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Акустическая колонка";
-        } else if (language.equals(en)) {
-            will_not = "Audio speaker";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String AUDIO_INTERFACE(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Аудио интерфейс";
-        } else if (language.equals(en)) {
-            will_not = "Audio interface";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String TV_PANEL(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Телевизионная панель";
-        } else if (language.equals(en)) {
-            will_not = "TV panel";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String TV_TUNER(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Телевизионный тюнер";
-        } else if (language.equals(en)) {
-            will_not = "TV tuner";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String MEDIA_PLAYER(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Медиа плеер";
-        } else if (language.equals(en)) {
-            will_not = "Media player";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String LAPTOP(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Ноутбук";
-        } else if (language.equals(en)) {
-            will_not = "Laptop";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String VIDEO_TRANSMITTER(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Видео передатчик";
-        } else if (language.equals(en)) {
-            will_not = "Video transmitter";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String VIDEO_RECEIVER(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Видео приемник";
-        } else if (language.equals(en)) {
-            will_not = "Video receiver";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String MATRIX_SWITCHER(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Матричный коммутатор";
-        } else if (language.equals(en)) {
-            will_not = "Matrix switcher";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String NETWORK_SWITCH(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Сетевой коммутатор";
-        } else if (language.equals(en)) {
-            will_not = "Network switch";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String TOUCH_CONTROL_PANEL(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Сенсорная панель управления";
-        } else if (language.equals(en)) {
-            will_not = "Touch control panel";
-        }
-        return will_not;
-    }
-
-    @Override
-    public String PATHS_PANEL(String language) {
-        String will_not = "";
-        if (language.equals(ru)) {
-            will_not = "Патч панель";
-        } else if (language.equals(en)) {
-            will_not = "Paths panel";
-        }
-        return will_not;
-    }
-
     @Override
     public String POST(String language) {
         String post = "";
@@ -1737,60 +1549,6 @@ public class LanguageImpl implements Language {
     }
 
     @Override
-    public String getNameEquipment(String name) {
-
-        List<String> england = new ArrayList<>();
-        england.add("Acoustic Speaker");
-        england.add("Audio Amplifier");
-        england.add("Audio Interface");
-        england.add("Audio Processor");
-        england.add("Controller");
-        england.add("Control Processor");
-        england.add("Laptop");
-        england.add("Matrix Switcher");
-        england.add("Media Player");
-        england.add("Microphone");
-        england.add("Network Switch");
-        england.add("Projector");
-        england.add("Touch Control Panel");
-        england.add("TV panel");
-        england.add("TV tuner");
-        england.add("Video receiver");
-        england.add("Video transmitter");
-
-        List<String> russia = new ArrayList<>();
-        russia.add("Акустическая колонка");
-        russia.add("Аудио усилитель");
-        russia.add("Аудио интерфейс");
-        russia.add("Аудио процессор");
-        russia.add("Контроллер");
-        russia.add("Процессор управления");
-        russia.add("Компьютер");
-        russia.add("Матричный коммутатор");
-        russia.add("Медиа плеер");
-        russia.add("Микрофон");
-        russia.add("Сетевой коммутатор");
-        russia.add("Проектор");
-        russia.add("Сенсорная панель управления");
-        russia.add("ТВ панель");
-        russia.add("ТВ тюнер");
-        russia.add("Видео приемник");
-        russia.add("Видео передатчик");
-
-        for (String e : england){
-            if(e.equals(name)){
-                return e;
-            }
-        }
-        for (String r : russia){
-            if(r.equals(name)){
-                return r;
-            }
-        }
-        return null;
-    }
-
-    @Override
     public String COMPANY_DATA_NOT_FOUND(String lang) {
         String office = "";
         if (lang.equals(ru)) {
@@ -2028,6 +1786,17 @@ public class LanguageImpl implements Language {
             office = "Выберите почтовый сервис";
         } else if (lang.equals(en)) {
             office = "Select a mail service";
+        }
+        return office;
+    }
+    
+    @Override
+    public String SELECT(String lang) {
+        String office = "";
+        if (lang.equals(ru)) {
+            office = "Выберите ";
+        } else if (lang.equals(en)) {
+            office = "Select ";
         }
         return office;
     }

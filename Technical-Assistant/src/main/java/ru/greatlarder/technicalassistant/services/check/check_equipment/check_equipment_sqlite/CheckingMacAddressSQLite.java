@@ -11,9 +11,7 @@ public class CheckingMacAddressSQLite implements CheckMacAddress {
     public boolean checkingEquipmentMacAddress(User user, String macAddress, String nameCompany) {
         if (macAddress != null) {
             GetEquipment getEquipmentByMacAddress = new EquipmentByMacAddressSQLite();
-            if(getEquipmentByMacAddress.getEquipment(user, nameCompany, macAddress) != null){
-                return true;
-            } else return false;
+            return getEquipmentByMacAddress.getEquipment(user, nameCompany, macAddress) != null;
         }
         return false;
     }

@@ -27,7 +27,7 @@
             </ImageView>
          </children>
       </HBox>
-        <MenuButton fx:id="menuButtonLanguage" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="combo-box" text="Выберите страну">
+        <MenuButton fx:id="menuButtonLanguage" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="combo-box" text="Выберите страну">
             <items>
                 <MenuItem fx:id="menuItemRu" mnemonicParsing="false" onAction="#setMenuItemRu" text="Россия">
                     <graphic>
@@ -48,6 +48,9 @@
                     </graphic>
                 </MenuItem>
             </items>
+         <graphic>
+            <ImageView fx:id="imgMBLanguage" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
         </MenuButton>
         <ComboBox fx:id="comboBoxPost" maxWidth="1.7976931348623157E308" onAction="#setPostValue" promptText="Должность" styleClass="combo-box" />
       <GridPane fx:id="gridPaneAdd" hgap="3.0" vgap="3.0">

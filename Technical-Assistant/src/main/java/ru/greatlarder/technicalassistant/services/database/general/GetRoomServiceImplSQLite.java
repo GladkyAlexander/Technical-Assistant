@@ -14,7 +14,7 @@ public class GetRoomServiceImplSQLite implements GetRoomService {
         room.setNameRoom(resultSet.getString("nameRoom"));
         room.setNameCompanyForRoom(resultSet.getString("nameCompany"));
         room.setUrlLogoRoom(resultSet.getString("image"));
-        
+        room.setInstruction(resultSet.getString("instruction"));
         return room;
     }
 }

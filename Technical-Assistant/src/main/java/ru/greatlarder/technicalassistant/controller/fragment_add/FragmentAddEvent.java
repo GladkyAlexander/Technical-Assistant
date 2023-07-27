@@ -24,8 +24,8 @@ import org.jsoup.nodes.Element;
 import ru.greatlarder.technicalassistant.controller.fragment_item.ItemButtonEquipmentForAddEvent;
 import ru.greatlarder.technicalassistant.domain.*;
 import ru.greatlarder.technicalassistant.domain.user.User;
-import ru.greatlarder.technicalassistant.services.check.CheckForANumber;
-import ru.greatlarder.technicalassistant.services.check.CheckingForANumberImpl;
+import ru.greatlarder.technicalassistant.services.check.CheckString;
+import ru.greatlarder.technicalassistant.services.check.CheckingStringImpl;
 import ru.greatlarder.technicalassistant.services.database.*;
 import ru.greatlarder.technicalassistant.services.database.mysql.day.UpdateDayMySQL;
 import ru.greatlarder.technicalassistant.services.database.mysql.equipment.ListEquipmentByRoomVisibleTrueMySQL;
@@ -367,7 +367,7 @@ public class FragmentAddEvent implements Initializable {
         setLanguage(lang);
     }
     public void onKeyRealisedNumberOfParticipants(KeyEvent keyEvent) {
-        CheckForANumber check = new CheckingForANumberImpl();
+        CheckString check = new CheckingStringImpl();
         if(!check.checkingForANumber(textFiledNumberOfParticipants.getText())){
             textFiledNumberOfParticipants.setStyle(StyleSRC.STYLE_DANGER);
         } else {

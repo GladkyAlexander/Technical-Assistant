@@ -1,11 +1,17 @@
 package ru.greatlarder.technicalassistant.services.database.mysql;
 
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.database.mysql.sintax.*;
 import ru.greatlarder.technicalassistant.services.database.mysql.sintax.impl.*;
+import ru.greatlarder.technicalassistant.services.lang.LanguageWarnings;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageWarningsImpl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.util.Objects;
 
 public class ConnectMySQL {
     public Connection connectionMySQL;
@@ -27,17 +33,27 @@ public class ConnectMySQL {
     }
 
     public void connectionDatabaseMySQL() {
-        String server = user.getServer();
-        String port = user.getPort();
-        String password = user.getPasswordDB();
-        String nameDB = user.getNameDB();
-        connectionMySQL = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-            connectionMySQL = DriverManager.getConnection("jdbc:mysql://" + server + ":" + port ,  nameDB , password);
-        } catch (SQLException | ClassNotFoundException | InvocationTargetException | IllegalAccessException |
-                 InstantiationException | NoSuchMethodException e) {
-          e.printStackTrace();
+        if(user.getServer() != null && user.getPort() != null && user.getPasswordDB() != null && user.getNameDB() != null){
+            String server = user.getServer();
+            String port = user.getPort();
+            String password = user.getPasswordDB();
+            String nameDB = user.getNameDB();
+            connectionMySQL = null;
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+                connectionMySQL = DriverManager.getConnection("jdbc:mysql://" + server + ":" + port ,  nameDB , password);
+            } catch (SQLException | ClassNotFoundException | InvocationTargetException | IllegalAccessException |
+                     InstantiationException | NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            LanguageWarnings languageWarnings = new LanguageWarningsImpl();
+            alert.setTitle(languageWarnings.there_is_no_data_about_the_external_database(user.getLanguage()));
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
+            alert.setContentText(languageWarnings.there_is_no_data_about_the_external_database(user.getLanguage()));
+            alert.showAndWait();
         }
     }
     public void closeMySQLDatabase(){

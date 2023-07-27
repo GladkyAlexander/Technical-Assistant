@@ -9,5 +9,5 @@ public interface GetHostAndPortSSL {
     List<String> getListServersName();
     String getServer(String nameServers, String protocol);
     Integer getPortSSL(String nameServers, String protocol);
-    
+    Servers getServersByNameServer(String nameServer, String protocol);
 }

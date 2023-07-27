@@ -7,9 +7,14 @@
 
 <VBox fx:id="vBox" alignment="TOP_CENTER" spacing="4.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.greatlarder.technicalassistant.controller.fragment_item.ItemTypesRoom">
    <children>
-      <HBox alignment="CENTER" spacing="9.0">
+      <HBox alignment="CENTER" spacing="5.0">
          <children>
-            <ImageView fx:id="imgLogoRoom" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgLogoRoom" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgPDF" accessibleRole="BUTTON" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#openInstruction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/doc.png" />
+               </image>
+            </ImageView>
             <Label fx:id="labelNameRoom" text="Label" />
             <VBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <HBox.margin>
@@ -29,7 +34,7 @@
          <children>
             <Label fx:id="labelNewName" text="New name" />
             <TextField fx:id="textFieldNewName" />
-            <ImageView fx:id="imgNewImage" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#selectANewImage" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgNewImage" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#selectANewImage" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/upphoto.png" />
                </image>

@@ -179,7 +179,7 @@ public class StartEngineerController implements ObserverLang,Initializable {
             ptEmail.setText(getCompany().getMailCurator());
             imageViewLogo.setFitHeight(50);
             imageViewLogo.setFitWidth(50);
-            imageViewLogo.setImage(new Image(fileManager.folderImage() + "\\" + getCompany().getLogoCompany()));
+            imageViewLogo.setImage(new Image(getCompany().getLogoCompany()));
 
             loadPageHome();
         }
@@ -216,7 +216,9 @@ public class StartEngineerController implements ObserverLang,Initializable {
 
     private void equalToOne(Company comIn) {
         setCompany(comIn);
-
+        
+        GlobalLinkMainController.getMainController().setCompany(getCompany());
+        
         vBoxNameCompany.setVisible(true);
         vBoxNameCompany.setManaged(true);
         ptAdr.prefColumnCountProperty().bind(ptAdr.textProperty().length());

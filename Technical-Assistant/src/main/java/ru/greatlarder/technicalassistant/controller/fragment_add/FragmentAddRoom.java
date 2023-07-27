@@ -12,7 +12,9 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -58,13 +60,16 @@ public class FragmentAddRoom implements Initializable {
     @FXML public Label labelNameCompany;
     @FXML public ListView<Room> listViewRooms;
     @FXML public Label labelNameRoom;
+    @FXML public Label labelInstruction;
+    @FXML public ImageView imgInstruction;
+    @FXML public HBox hBoxButton;
     Image img ;
     Language language = new LanguageImpl();
     FileManager fileManager = new FileManagerImpl();
     User user;
     Company company;
     String lang;
-    
+    String instr;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.user = GlobalLinkMainController.getMainController().getUser();
@@ -76,6 +81,7 @@ public class FragmentAddRoom implements Initializable {
         labelImageRoom.setText(language.IMAGE(lang));
         labelRooms.setText(language.ROOMS(lang));
         btnAddRoom.setText(language.ADD(lang));
+        labelInstruction.setText(language.INSTRUCTION(lang));
     }
     public void loadFragment(Company company){
         this.company = company;
@@ -173,56 +179,63 @@ public class FragmentAddRoom implements Initializable {
                     room.setUrlLogoRoom(imagePicker(imgLogoRoom.getImage()));
                 } else room.setUrlLogoRoom(imgLogoRoom.getImage().getUrl());
                 room.setNameCompanyForRoom(company.getNameCompany());
-                if (saveRoom(room) != null) {
-                    tfNewRoom.clear();
-                    tfNewRoom.setStyle(new TextField().getStyle());
-                    imgLogoRoom.setImage(img);
-                    loadListEvent(company);
-                } else {
-                    vBox.setStyle(StyleSRC.STYLE_DANGER);
+                if(instr != null){
+                    room.setInstruction(instr);
                 }
+                LanguageWarnings languageWarnings = new LanguageWarningsImpl();
+                SetRoom setRoomSQLite = new SetRoomSQLite();
+                Task<Integer> task = new Task<>() {
+                    @Override
+                    protected Integer call() {
+                        return setRoomSQLite.setRoom(user, company.getNameCompany(), room);
+                    }
+                };
+                ProgressIndicator progressBar = new ProgressIndicator(task.getProgress());
+                hBoxButton.getChildren().add(0, progressBar);
+                task.setOnSucceeded((succeededEvent) -> {
+                    if(task.getValue() != null){
+                        tfNewRoom.clear();
+                        tfNewRoom.setStyle(new TextField().getStyle());
+                        imgLogoRoom.setImage(img);
+                        loadListEvent(company);
+                    } else {
+                        vBox.setStyle(StyleSRC.STYLE_DANGER);
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle(languageWarnings.Error_when_adding_to_the_database(lang));
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
+                        alert.setContentText(languageWarnings.Error_when_adding_to_the_database_SQLite(lang));
+                        alert.showAndWait();
+                    }
+                    hBoxButton.getChildren().remove(progressBar);
+                });
+                Platform.runLater(()->{
+                    progressBar.visibleProperty().bind(task.runningProperty());
+                    ExecutorService executorService = Executors.newFixedThreadPool(1);
+                    executorService.execute(task);
+                    executorService.shutdown();
+                });
+                
             }else tfNewRoom.setStyle(StyleSRC.STYLE_DANGER);
         } else {
             btnAddRoom.setDisable(false);
         }
     }
     private Integer saveRoom(Room room){
-        LanguageWarnings languageWarnings = new LanguageWarningsImpl();
-        
-        SetRoom setRoomSQLite = new SetRoomSQLite();
-        SetRoom setRoomMySQL = new SetRoomMySQL();
-        
-        Integer resultMySQL = setRoomMySQL.setRoom(user, company.getNameCompany(), room);
-        Integer resultSQLite = setRoomSQLite.setRoom(user, company.getNameCompany(), room);
-        
-        int res1 = 0;
-        int res2 = 0;
-        
-        if(resultSQLite == null ){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            
-            alert.setTitle(languageWarnings.Error_when_adding_to_the_database(lang));
-            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
-            alert.setContentText(languageWarnings.Error_when_adding_to_the_database_SQLite(lang));
-            alert.showAndWait();
-        } else {
-            res1 = 1;
-        }
-        if(resultMySQL == null){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-           
-            alert.setTitle(languageWarnings.Error_when_adding_to_the_database(lang));
-            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
-            alert.setContentText(languageWarnings.Error_when_adding_to_the_database_MySQL(lang));
-            alert.showAndWait();
-        } else {
-            res2 = 1;
-        }
-        if (res1 + res2 > 0){
-            return 1;
-        } else return null;
+                LanguageWarnings languageWarnings = new LanguageWarningsImpl();
+                SetRoom setRoomSQLite = new SetRoomSQLite();
+                
+                Integer resultSQLite = setRoomSQLite.setRoom(user, company.getNameCompany(), room);
+                if(resultSQLite == null ){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle(languageWarnings.Error_when_adding_to_the_database(lang));
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ru/greatlarder/technicalassistant/images/logo.png"))));
+                    alert.setContentText(languageWarnings.Error_when_adding_to_the_database_SQLite(lang));
+                    alert.showAndWait();
+                    
+                }
+               return resultSQLite;
     }
     public String imagePicker(Image image) {
         String name = image.getUrl().substring(image.getUrl().lastIndexOf('/') + 1);
@@ -233,5 +246,21 @@ public class FragmentAddRoom implements Initializable {
             e.printStackTrace();
         }
         return fileManager.folderImage() + '\\' + name;
+    }
+    
+    public void openNewInstruction() {
+       
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter(" .Pdf", "*.*");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        File file = fileChooser.showOpenDialog(imgInstruction.getScene().getWindow());
+        
+        File file1 = new File(fileManager.folderCompanyInstruction(company.getNameCompany()) + "\\" + tfNewRoom.getText() + ".pdf");
+        try {
+            FileUtils.copyFile(file, file1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        instr = fileManager.folderCompanyInstruction(company.getNameCompany()) + '\\' + tfNewRoom.getText() + ".pdf";
     }
 }

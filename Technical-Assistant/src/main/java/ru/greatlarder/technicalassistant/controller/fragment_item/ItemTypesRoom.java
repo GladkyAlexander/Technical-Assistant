@@ -4,7 +4,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Room;
 import ru.greatlarder.technicalassistant.domain.user.Engineer;
+import ru.greatlarder.technicalassistant.domain.user.Reception;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.database.GetRoom;
 import ru.greatlarder.technicalassistant.services.database.UpdateRoom;
@@ -36,6 +37,7 @@ import ru.greatlarder.technicalassistant.services.manager.impl.FileManagerImpl;
 import ru.greatlarder.technicalassistant.services.style.StyleSRC;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -53,7 +55,10 @@ public class ItemTypesRoom implements Initializable {
     @FXML public TextField textFieldNewName;
     @FXML public ImageView imgNewImage;
     @FXML public Button btnSave;
+    @FXML public ImageView imgPDF;
     FileManager fileManager = new FileManagerImpl();
+    
+    Language language = new LanguageImpl();
     Room room;
     User user;
     Company company;
@@ -186,9 +191,11 @@ public class ItemTypesRoom implements Initializable {
             imgChange.setManaged(false);
         }
         img = new Image(imagePicker(imgNewImage.getImage()));
+        
+        Tooltip rooms = new Tooltip(language.INSTRUCTION(lang));
+        Tooltip.install(imgPDF, rooms);
     }
     private void setLanguage(String lan){
-        Language language = new LanguageImpl();
         labelNewName.setText(language.NEW_ROOM(lan));
         btnSave.setText(language.SAVE(lan));
     }
@@ -207,5 +214,22 @@ public class ItemTypesRoom implements Initializable {
         imgChange.setDisable(true);
         imgChange.setVisible(false);
         imgChange.setManaged(false);
+    }
+    
+    public void openInstruction() {
+        if(room.getInstruction() != null && !room.getInstruction().isEmpty()) {
+            
+                File pdfFile = new File(room.getInstruction());
+                if (pdfFile.exists()) {
+                    if (Desktop.isDesktopSupported()) {
+                        try {
+                            Desktop.getDesktop().open(pdfFile);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        }
+       
     }
 }

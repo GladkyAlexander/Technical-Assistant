@@ -110,7 +110,10 @@ public class ListViewEmailMin implements GetListViewMail {
         List<Email> list = new ArrayList<>();
 
         Properties prop = new Properties();
+        
         prop.put("mail.store.protocol", "imaps");
+        
+        
         Session.getDefaultInstance(prop);
         Store store = null;
         Folder inbox = null;

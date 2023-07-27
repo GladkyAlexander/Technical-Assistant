@@ -55,7 +55,7 @@
             <Button id=".button" fx:id="btnSettingsUser" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#openSettingsUser" stylesheets="@../../../css/main.css" text="Profile Settings" />
                 <Button fx:id="btnCompanyChoice" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionBtnCompany" stylesheets="@../../../css/main.css" text="Add a company" />
             <Button fx:id="buttonCompanyDataSettings" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#openCompanyDataSettings" text="Company Data Settings" />
-                <Button fx:id="btnSettingsMail" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openSettingsMail" text="Mail Settings" />
+                <!--<Button fx:id="btnSettingsMail" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openSettingsMail" text="Mail Settings" />-->
                 <Button fx:id="btnRegistry" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openLayoutSettingsUser" text="Register" />
             <Button fx:id="btnSendToAnExternalDatabase" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendToAnExternalDatabase" style="-fx-border-color: #e10909;" stylesheets="@../../../css/main.css" text="Update data in an external database" />
             <GridPane fx:id="gridPaneUpdateExternalDB" alignment="CENTER_LEFT" hgap="5.0" vgap="5.0">

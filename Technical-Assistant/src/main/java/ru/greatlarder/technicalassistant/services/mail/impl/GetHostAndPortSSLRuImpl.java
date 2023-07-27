@@ -59,6 +59,29 @@ public class GetHostAndPortSSLRuImpl implements GetHostAndPortSSL {
         }
         return null;
     }
+    
+    @Override
+    public Servers getServersByNameServer(String nameServer, String protocol) {
+        for (Map.Entry<String, Servers> entry : getListNameHost().entrySet()) {
+                if (protocol.equals("POP3")){
+                    if(entry.getValue().getServerPOP().equals(nameServer)){
+                        return entry.getValue();
+                    }
+                }
+                if(protocol.equals("IMAP")){
+                    if(entry.getValue().getServerIMAP().equals(nameServer)) {
+                        return entry.getValue();
+                    }
+                }
+                if(protocol.equals("SMTP")){
+                    if(entry.getValue().getServerSMTP().equals(nameServer)) {
+                        return entry.getValue();
+                    }
+                }
+        }
+        return null;
+    }
+    
     private Map<String, Servers> getListNameHost() {
         
         Map<String, Servers> map = new HashMap<>();

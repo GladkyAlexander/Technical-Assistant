@@ -9,10 +9,10 @@
    <left>
       <SplitPane fx:id="splitPaneStartReception" dividerPositions="0.1" orientation="VERTICAL" stylesheets="@../../../css/main.css" BorderPane.alignment="TOP_CENTER">
         <items>
-            <GridPane alignment="CENTER" hgap="2.0" vgap="2.0">
+            <GridPane hgap="2.0" vgap="2.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="NEVER" />
-                <ColumnConstraints hgrow="NEVER" />
+                <ColumnConstraints halignment="LEFT" hgrow="NEVER" />
+                <ColumnConstraints hgrow="ALWAYS" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints vgrow="NEVER" />

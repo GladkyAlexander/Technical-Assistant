@@ -1,5 +1,8 @@
 package ru.greatlarder.technicalassistant.services.check;
 
 public interface CheckString {
-    boolean chekingStringWithACondition(String value);
+    boolean checkingStringWithACondition(String value);
+    boolean checkingForANumber(String value);
+    boolean checkingForPhone(String value);
+    boolean checkingMail(String value);
 }

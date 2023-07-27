@@ -37,7 +37,7 @@
                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </HBox.margin>
                         </MenuButton>
-               <MenuButton fx:id="menuButtonUserInOut" mnemonicParsing="false" styleClass="button" stylesheets="@css/main.css">
+               <MenuButton fx:id="menuButtonUserInOut" mnemonicParsing="false" onMouseClicked="#onAcMenuButtonUserInOut" styleClass="button" stylesheets="@css/main.css">
                  <items>
                    <MenuItem fx:id="menuItemOut" mnemonicParsing="false" onAction="#onActionMenuItemOut" text="Out">
                         <graphic>
@@ -53,6 +53,15 @@
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@images/change.png" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </MenuItem>
+                     <MenuItem fx:id="menuItemInput" mnemonicParsing="false" onAction="#onActionMenuItemInput" text="Unspecified Action">
+                        <graphic>
+                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@images/in_user.png" />
                               </image>
                            </ImageView>
                         </graphic>

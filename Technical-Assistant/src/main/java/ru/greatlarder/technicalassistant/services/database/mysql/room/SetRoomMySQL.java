@@ -39,6 +39,15 @@ public class SetRoomMySQL implements SetRoom {
             cf.setBlob(2, bais);
             cf.setString(3, room.getNameCompanyForRoom());
             
+            try {
+                Path path = Paths.get(room.getInstruction());
+                File file_pdf = path.toFile();
+                bais = new ByteArrayInputStream(getByteArrayFromFile(file_pdf));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            cf.setBlob(4, bais);
+            
             if(cf.executeUpdate() > 0){
                 ResultSet rs = cf.getGeneratedKeys();
                 if(rs.next()){

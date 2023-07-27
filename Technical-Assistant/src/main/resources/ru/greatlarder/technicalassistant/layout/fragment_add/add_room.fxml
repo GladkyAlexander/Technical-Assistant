@@ -37,7 +37,25 @@
          </ImageView>
       </children>
    </HBox>
-   <Button fx:id="btnAddRoom" mnemonicParsing="false" onMouseClicked="#addNewRoom" text="add" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+   <HBox alignment="CENTER_LEFT" spacing="10.0">
+      <children>
+         <Label fx:id="labelInstruction" text="Инструкция по использованию комнаты">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <ImageView fx:id="imgInstruction" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#openNewInstruction" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/doc.png" />
+            </image>
+         </ImageView>
+      </children>
+   </HBox>
+   <HBox fx:id="hBoxButton" alignment="CENTER_RIGHT">
+      <children>
+         <Button fx:id="btnAddRoom" mnemonicParsing="false" onMouseClicked="#addNewRoom" text="add" />
+      </children>
+   </HBox>
    <HBox alignment="CENTER" spacing="9.0">
       <children>
          <Label fx:id="labelRooms" text="Комнаты">

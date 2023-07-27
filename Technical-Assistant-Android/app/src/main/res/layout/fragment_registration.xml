@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.registration.RegistrationFragment"
+        android:orientation="vertical" android:gravity="center" android:padding="10dp">
+
+        <!--<TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tableLayoutEnter"
+            android:gravity="center_horizontal">
+
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:gravity="center_horizontal">
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:hint="@string/login"
+                    android:id="@+id/editTextLoginEnter"
+                    tools:ignore="LabelFor"
+                    android:minHeight="48dp"
+                    android:autofillHints="@string/login"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:gravity="center_horizontal">
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/editTextPasswordEnter"
+                    android:autofillHints="@string/password"
+                    tools:ignore="LabelFor"
+                    android:hint="@string/password"
+                    android:minHeight="48dp"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:gravity="center_horizontal">
+            <Button
+                    android:text="@string/enter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonEnter"/>
+        </TableRow>
+    </TableLayout>-->
+
+    <ImageView
+            android:src="@drawable/out"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/imageView2"
+            android:scaleType="fitEnd"
+            android:clickable="true"
+            android:contentDescription="@string/todo"/>
+    <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+
+    />
+    <EditText
+                android:hint="@string/firstName"
+                android:autofillHints="@string/firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextFirstName" android:textSize="20sp"/>
+
+        <EditText
+                android:hint="@string/lastName"
+                android:autofillHints="@string/lastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextLastName" android:textSize="20sp"/>
+
+        <EditText
+                android:hint="@string/mailAddress"
+                android:autofillHints="@string/mailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/editTextMailAddress" android:textSize="20sp"/>
+        <EditText
+                android:hint="@string/phone"
+                android:autofillHints="@string/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/editTextPhone" android:textSize="20sp"/>
+        <EditText
+                android:hint="@string/position"
+                android:autofillHints="@string/position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextPosition" android:textSize="20sp"/>
+        <EditText
+                android:hint="@string/companyAffiliation"
+                android:autofillHints="@string/companyAffiliation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextTextCompanyAffiliation" android:textSize="20sp"/>
+        <EditText
+                android:hint="@string/language"
+                android:autofillHints="@string/language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextLanguage" android:textSize="20sp"/>
+        <EditText
+                android:hint="@string/login"
+                android:autofillHints="@string/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextLoginRegister" android:textSize="20sp"/>
+        <EditText
+                android:hint="@string/password"
+                android:autofillHints="@string/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextPasswordRegister" tools:ignore="TextFields" android:textSize="20sp"/>
+        <EditText
+                android:hint="@string/emailServer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/editTextEmailServer" android:autofillHints="@string/emailServer"
+                android:textSize="20sp"/>
+        <EditText
+                android:hint="@string/portOnTheEmailServer"
+                android:autofillHints="@string/portOnTheEmailServer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/editTextPortOnTheEmailServer" tools:ignore="TextFields" android:textSize="20sp"/>
+        <EditText
+                android:hint="@string/databaseName"
+                android:autofillHints="@string/databaseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextDatabaseName" android:textSize="20sp"/>
+        <EditText
+                android:hint="@string/databasePassword"
+                android:autofillHints="@string/databasePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/editTextTextDatabasePassword" tools:ignore="TextFields" android:textSize="20sp"/>
+        <Button
+                android:text="@string/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/register"
+                android:background="@drawable/button"
+                android:elevation="15dp"
+                android:scaleType="centerInside"
+        />
+</LinearLayout>

@@ -9,10 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import ru.greatlarder.technicalassistant.domain.*;
 import ru.greatlarder.technicalassistant.domain.user.User;
-import ru.greatlarder.technicalassistant.services.database.GetListAffairs;
-import ru.greatlarder.technicalassistant.services.database.GetListEquipment;
-import ru.greatlarder.technicalassistant.services.database.GetListMailSettings;
-import ru.greatlarder.technicalassistant.services.database.GetListTool;
+import ru.greatlarder.technicalassistant.services.database.*;
 import ru.greatlarder.technicalassistant.services.database.sqlite.affaris.GetListAffairsActiveSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.affaris.GetListAffairsSQLite;
 import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.ListEquipmentByNameCompanySQLite;
@@ -111,6 +108,7 @@ public class HomeEngineerController implements ObserverLang, Initializable{
 
     public void loadFragment() {
         GlobalLinkMainController.getMainController().getHandlerLang().registerObserverLang(this);
+        
         if (company != null) {
             GetListEquipment getListEquipment = new ListEquipmentByNameCompanySQLite();
             List<Equipment> equipmentList = getListEquipment.getListEquipment(user, company.getNameCompany(), company.getNameCompany());
@@ -126,12 +124,13 @@ public class HomeEngineerController implements ObserverLang, Initializable{
            //tabPaneEngineerHome.getTabs().add(loadTasksAll());
           
             GetListMailSettings getListMailSettings = new GetListMailSettingsSQLite();
-
+            
             MailSettings ms = null;
             for (MailSettings mailSettings : getListMailSettings.getListMailSettings(user, String.valueOf(user.getId()))){
                 ms = mailSettings;
             }
-            if (ms != null) {
+            if (ms != null && ms.getMailMonitoring() != null
+                && ms.getPasswordMailMonitoring() != null && ms.getHostMailMonitoring() != null) {
                 loadMail(ms);
             }
 
@@ -195,6 +194,7 @@ public class HomeEngineerController implements ObserverLang, Initializable{
 
 
     private void loadMail(MailSettings mailSettings) {
+        
         Task<ListView<Email>> task = new Task<>() {
             @Override
             protected ListView<Email> call() {
@@ -223,6 +223,7 @@ public class HomeEngineerController implements ObserverLang, Initializable{
         this.user = GlobalLinkMainController.getMainController().getUser();
         this.lang = GlobalLinkMainController.getMainController().getLang();
         this.company = GlobalLinkMainController.getMainController().getCompany();
+        
         loadFragment();
     }
 

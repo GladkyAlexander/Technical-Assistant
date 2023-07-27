@@ -19,7 +19,9 @@ import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.List
 import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.ListEquipmentByNameSQLite;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.Language;
+import ru.greatlarder.technicalassistant.services.lang.LanguageNameEquipment;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageNameEquipmentImpl;
 import ru.greatlarder.technicalassistant.services.list_view.GetAListOfFilesFromTheDirectory;
 import ru.greatlarder.technicalassistant.services.list_view.impl.ListViewDirectoryDocumentation;
 import ru.greatlarder.technicalassistant.services.work_doc.ExelTask;
@@ -49,6 +51,7 @@ public class DocumentationEngineerController implements Initializable {
     String lang;
     Company company;
     Language language = new LanguageImpl();
+    LanguageNameEquipment languageNameEquipment = new LanguageNameEquipmentImpl();
     LocalDate localDate = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd_MM_yyyy");
     String dateFormat = localDate.format(formatter);
@@ -90,7 +93,7 @@ public class DocumentationEngineerController implements Initializable {
 
     public void createDocLamp(ActionEvent actionEvent) {
         GetListEquipment getListEquipment = new ListEquipmentByNameSQLite();
-        new ExelWorker(getListEquipment.getListEquipment(user, company.getNameCompany(), language.PROJECTOR(lang))
+        new ExelWorker(getListEquipment.getListEquipment(user, company.getNameCompany(), languageNameEquipment.getProjector(lang))
                 , "lamp_time_" + dateFormat + "."+ "xls", company.getNameCompany());
         if(splitPaneDocumentation.getItems().size() == 2) {
             splitPaneDocumentation.getItems().remove(1);

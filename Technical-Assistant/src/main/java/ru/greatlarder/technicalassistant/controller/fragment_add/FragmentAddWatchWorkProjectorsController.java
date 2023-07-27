@@ -11,7 +11,9 @@ import ru.greatlarder.technicalassistant.services.database.GetListEquipment;
 import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.ListEquipmentByNameSQLite;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.Language;
+import ru.greatlarder.technicalassistant.services.lang.LanguageNameEquipment;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageNameEquipmentImpl;
 import ru.greatlarder.technicalassistant.services.tables.TableViewProjectors;
 
 import java.net.URL;
@@ -24,11 +26,12 @@ public class FragmentAddWatchWorkProjectorsController implements Initializable {
 	Company company;
 	String lang;
 	User user;
-	Language language = new LanguageImpl();
+	LanguageNameEquipment languageNameEquipment = new LanguageNameEquipmentImpl();
 
 	public void loadFragment(){
 		GetListEquipment getListEquipment = new ListEquipmentByNameSQLite();
-		TableViewProjectors listProjectors = new TableViewProjectors(getListEquipment.getListEquipment(user, company.getNameCompany(), language.PROJECTOR(lang)));
+		TableViewProjectors listProjectors = new TableViewProjectors(getListEquipment.getListEquipment(user, company.getNameCompany()
+			, languageNameEquipment.getProjector(lang)));
 		vBoxTime.getChildren().add(listProjectors.RemTable());
 	}
 

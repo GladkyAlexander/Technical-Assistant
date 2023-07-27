@@ -6,23 +6,6 @@ public interface Language {
 
     String ADDED(String language);
     String WILL_NOT_BE_ADDED(String language);
-    String PROJECTOR(String language);
-    String MICROPHONE(String language);
-    String CONTROL_PROCESSOR(String language);
-    String AUDIO_PROCESSOR(String language);
-    String AUDIO_AMPLIFIER(String language);
-    String ACOUSTIC_SPEAKER(String language);
-    String AUDIO_INTERFACE(String language);
-    String TV_PANEL(String language);
-    String TV_TUNER(String language);
-    String MEDIA_PLAYER(String language);
-    String LAPTOP(String language);
-    String VIDEO_TRANSMITTER(String language);
-    String VIDEO_RECEIVER(String language);
-    String MATRIX_SWITCHER(String language);
-    String NETWORK_SWITCH(String language);
-    String TOUCH_CONTROL_PANEL(String language);
-    String PATHS_PANEL(String language);
     String POST(String language);
     String CONFIGURE_PERSONAL_DATA(String language);
     String ADD_A_COMPANY (String language);
@@ -145,24 +128,7 @@ public interface Language {
     String EQUIPMENT(String language);
 
     String FILL_IN_THE_FIELDS(String lang);
-    String PROJECTOR_RU = "Проектор";
-    String MICROPHONE_RU = "Микрофон";
-    String CONTROL_PROCESSOR_RU = "Процессор управления";
-    String AUDIO_PROCESSOR_RU = "Аудио процессор";
-    String AUDIO_AMPLIFIER_RU = "Аудио усилитель";
-    String ACOUSTIC_SPEAKER_RU = "Акустическая колонка";
-    String AUDIO_INTERFACE_RU = "Аудио интерфейс";
-    String TV_PANEL_RU = "Телевизионная панель";
-    String TV_TUNER_RU = "Телевизионный тюнер";
-    String MEDIA_PLAYER_RU = "Медиа плеер";
-    String LAPTOP_RU = "Ноутбук";
-    String VIDEO_TRANSMITTER_RU = "Видео передатчик";
-    String VIDEO_RECEIVER_RU = "Видео приемник";
-    String MATRIX_SWITCHER_RU = "Матричный коммутатор";
-    String NETWORK_SWITCH_RU = "Сетевой коммутатор";
-    String TOUCH_CONTROL_PANEL_RU = "Сенсорная панель управления";
-    String CONTROLLER_RU = "Контроллер";
-    String PATHS_PANEL_RU = "Патч панель";
+    
     String LOCATION(String lang);
     String NAME(String lang);
 
@@ -359,7 +325,6 @@ public interface Language {
     String PORTABLE_DEVICES(String lang);
 
     String CHANGE_COMPANY(String lan);
-    String getNameEquipment(String name);
 
     String COMPANY_DATA_NOT_FOUND(String lang);
 
@@ -404,4 +369,6 @@ public interface Language {
     String EVENTS(String lang);
     
     String SELECT_A_MAIL_SERVICE(String lang);
+    
+    String SELECT(String lang);
 }

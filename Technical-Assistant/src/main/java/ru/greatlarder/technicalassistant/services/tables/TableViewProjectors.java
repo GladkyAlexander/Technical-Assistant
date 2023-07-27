@@ -20,7 +20,9 @@ import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.Equi
 import ru.greatlarder.technicalassistant.services.database.sqlite.equipment.UpdateEquipmentSQLite;
 import ru.greatlarder.technicalassistant.services.global_link.GlobalLinkMainController;
 import ru.greatlarder.technicalassistant.services.lang.Language;
+import ru.greatlarder.technicalassistant.services.lang.LanguageNameEquipment;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageNameEquipmentImpl;
 import ru.greatlarder.technicalassistant.services.tables.emp.WorkingHours;
 
 import java.net.URL;
@@ -34,6 +36,7 @@ public class TableViewProjectors implements Initializable {
     public TableColumn<WorkingHours, String> workedTime;
     public TableColumn<WorkingHours, String> columnRoom;
     Language language = new LanguageImpl();
+    LanguageNameEquipment languageNameEquipment = new LanguageNameEquipmentImpl();
     Company company;
     String lang = GlobalLinkMainController.getMainController().getLang();
     User user;
@@ -52,7 +55,7 @@ public class TableViewProjectors implements Initializable {
         }
         tableView.setEditable(true);
 
-        listProjectors = new TableColumn<>(language.PROJECTOR(lang));
+        listProjectors = new TableColumn<>(languageNameEquipment.getProjector(lang));
         listProjectors.setCellValueFactory(data-> data.getValue().serialNumberProperty());
 
         workedTime = new TableColumn<>(language.OPERATING_HOURS(lang));

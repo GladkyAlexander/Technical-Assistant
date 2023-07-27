@@ -31,7 +31,6 @@ public class EquipmentByMacAddressSQLite implements GetEquipment {
         } finally {
             closeDB();
         }
-
         return null;
     }
 }

@@ -2,6 +2,7 @@ package ru.greatlarder.technicalassistant.services.get;
 
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
+import ru.greatlarder.technicalassistant.domain.PatchPanel;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
 import ru.greatlarder.technicalassistant.domain.user.User;
 import ru.greatlarder.technicalassistant.services.check.check_equipment.CheckIpAddress;
@@ -15,6 +16,7 @@ import ru.greatlarder.technicalassistant.services.lang.Language;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageNameEquipmentImpl;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class GetEquipmentConservation {
     LanguageNameEquipment language = new LanguageNameEquipmentImpl();
@@ -22,78 +24,162 @@ public class GetEquipmentConservation {
     public Equipment getEquipment(User user, String value){
 
         Equipment result = null;
-
-        switch (value) {
-            case Language.PROJECTOR_RU ->{
-                result = new Projector();
-                result.setName(language.getProjector(user.getLanguage()));
+        
+        List<String> ru = language.getListNameEquipment("Русский");
+        List<String> en = language.getListNameEquipment("English");
+        
+        for (String f : ru){
+            if(f.equals(value)){
+                switch (value) {
+                    case "Проектор" ->{
+                        result = new Projector();
+                        result.setName(language.getProjector("Русский"));
+                    }
+                    case "Микрофон" -> {
+                        result = new Microphone();
+                        result.setName(language.getMicrophone("Русский"));
+                    }
+                    case "Сетевой коммутатор" ->{
+                        result = new NetworkSwitch();
+                        result.setName(language.getNetworkSwitch("Русский"));
+                    }
+                    case "Акустическая колонка" ->{
+                        result = new AcousticSpeaker();
+                        result.setName(language.getAcousticSpeaker("Русский"));
+                    }
+                    case "Процессор управления" ->{
+                        result = new ControlProcessor();
+                        result.setName(language.getControlProcessor("Русский"));
+                    }
+                    case "Аудио процессор" ->{
+                        result = new AudioProcessor();
+                        result.setName(language.getAudioProcessor("Русский"));
+                    }
+                    case "Аудио усилитель" ->{
+                        result = new AudioAmplifier();
+                        result.setName(language.getAudioAmplifier("Русский"));
+                    }
+                    case "Аудио интерфейс" ->{
+                        result = new AudioInterface();
+                        result.setName(language.getAudioInterface("Русский"));
+                    }
+                    case "ТВ панель" ->{
+                        result = new TvPanel();
+                        result.setName(language.getTvPanel("Русский"));
+                    }
+                    case "ТВ тюнер" ->{
+                        result = new TvTuner();
+                        result.setName(language.getTvTuner("Русский"));
+                    }
+                    case "Медиа плеер" ->{
+                        result = new MediaPlayer();
+                        result.setName(language.getMediaPlayer("Русский"));
+                    }
+                    case "Ноутбук" ->{
+                        result = new Laptop();
+                        result.setName(language.getLaptop("Русский"));
+                    }
+                    case "Видео передатчик" ->{
+                        result = new VideoTransmitter();
+                        result.setName(language.getVideoTransmitter("Русский"));
+                    }
+                    case "Видео приемник" ->{
+                        result = new VideoReceiver();
+                        result.setName(language.getVideoReceiver("Русский"));
+                    }
+                    case "Матричный коммутатор" ->{
+                        result = new MatrixSwitcher();
+                        result.setName(language.getMatrixSwitcher("Русский"));
+                    }
+                    case "Сенсорная панель управления" ->{
+                        result = new TouchControlPanel();
+                        result.setName(language.getTouchControlPanel("Русский"));
+                    }
+                    case "Контроллер" ->{
+                        result = new Controller();
+                        result.setName(language.getController("Русский"));
+                    }
+                }
+                break;
             }
-            case Language.MICROPHONE_RU -> {
-                result = new Microphone();
-                result.setName(language.getMicrophone(user.getLanguage()));
-            }
-            case Language.NETWORK_SWITCH_RU ->{
-                result = new NetworkSwitch();
-                result.setName(language.getNetworkSwitch(user.getLanguage()));
-            }
-            case Language.ACOUSTIC_SPEAKER_RU ->{
-                result = new AcousticSpeaker();
-                result.setName(language.getAcousticSpeaker(user.getLanguage()));
-            }
-            case Language.CONTROL_PROCESSOR_RU ->{
-                result = new ControlProcessor();
-                result.setName(language.getControlProcessor(user.getLanguage()));
-            }
-            case Language.AUDIO_PROCESSOR_RU ->{
-                result = new AudioProcessor();
-                result.setName(language.getAudioProcessor(user.getLanguage()));
-            }
-            case Language.AUDIO_AMPLIFIER_RU ->{
-                result = new AudioAmplifier();
-                result.setName(language.getAudioAmplifier(user.getLanguage()));
-            }
-            case Language.AUDIO_INTERFACE_RU ->{
-                result = new AudioInterface();
-                result.setName(language.getAudioInterface(user.getLanguage()));
-            }
-            case Language.TV_PANEL_RU ->{
-                result = new TvPanel();
-                result.setName(language.getTvPanel(user.getLanguage()));
-            }
-            case Language.TV_TUNER_RU ->{
-                result = new TvTuner();
-                result.setName(language.getTvTuner(user.getLanguage()));
-            }
-            case Language.MEDIA_PLAYER_RU ->{
-                result = new MediaPlayer();
-                result.setName(language.getMediaPlayer(user.getLanguage()));
-            }
-            case Language.LAPTOP_RU ->{
-                result = new Laptop();
-                result.setName(language.getLaptop(user.getLanguage()));
-            }
-            case Language.VIDEO_TRANSMITTER_RU ->{
-                result = new VideoTransmitter();
-                result.setName(language.getVideoTransmitter(user.getLanguage()));
-            }
-            case Language.VIDEO_RECEIVER_RU ->{
-                result = new VideoReceiver();
-                result.setName(language.getVideoReceiver(user.getLanguage()));
-            }
-            case Language.MATRIX_SWITCHER_RU ->{
-                result = new MatrixSwitcher();
-                result.setName(language.getMatrixSwitcher(user.getLanguage()));
-            }
-            case Language.TOUCH_CONTROL_PANEL_RU ->{
-                result = new TouchControlPanel();
-                result.setName(language.getTouchControlPanel(user.getLanguage()));
-            }
-            case Language.CONTROLLER_RU ->{
-                result = new Controller();
-                result.setName(language.getController(user.getLanguage()));
-            }
-
         }
+        for (String f : en){
+            if(f.equals(value)){
+                switch (value) {
+                    case "Projector" ->{
+                        result = new Projector();
+                        result.setName(language.getProjector("English"));
+                    }
+                    case "Microphone"-> {
+                        result = new Microphone();
+                        result.setName(language.getMicrophone("English"));
+                    }
+                    case "Network switch" ->{
+                        result = new NetworkSwitch();
+                        result.setName(language.getNetworkSwitch("English"));
+                    }
+                    case "Acoustic speaker" ->{
+                        result = new AcousticSpeaker();
+                        result.setName(language.getAcousticSpeaker("English"));
+                    }
+                    case "Control processor" ->{
+                        result = new ControlProcessor();
+                        result.setName(language.getControlProcessor("English"));
+                    }
+                    case "Audio processor" ->{
+                        result = new AudioProcessor();
+                        result.setName(language.getAudioProcessor("English"));
+                    }
+                    case "Audio amplifier" ->{
+                        result = new AudioAmplifier();
+                        result.setName(language.getAudioAmplifier("English"));
+                    }
+                    case "Audio interface" ->{
+                        result = new AudioInterface();
+                        result.setName(language.getAudioInterface("English"));
+                    }
+                    case "Tv panel" ->{
+                        result = new TvPanel();
+                        result.setName(language.getTvPanel("English"));
+                    }
+                    case "Tv tuner" ->{
+                        result = new TvTuner();
+                        result.setName(language.getTvTuner("English"));
+                    }
+                    case "Media player" ->{
+                        result = new MediaPlayer();
+                        result.setName(language.getMediaPlayer("English"));
+                    }
+                    case "Laptop" ->{
+                        result = new Laptop();
+                        result.setName(language.getLaptop("English"));
+                    }
+                    case "Video transmitter" ->{
+                        result = new VideoTransmitter();
+                        result.setName(language.getVideoTransmitter("English"));
+                    }
+                    case "Video receiver" ->{
+                        result = new VideoReceiver();
+                        result.setName(language.getVideoReceiver("English"));
+                    }
+                    case "Matrix switcher" ->{
+                        result = new MatrixSwitcher();
+                        result.setName(language.getMatrixSwitcher("English"));
+                    }
+                    case "Touch control panel" ->{
+                        result = new TouchControlPanel();
+                        result.setName(language.getTouchControlPanel("English"));
+                    }
+                    case "Controller" ->{
+                        result = new Controller();
+                        result.setName(language.getController("English"));
+                    }
+                    
+                }
+                break;
+            }
+        }
+        
         return result;
     }
     public Equipment loadEquipment(User user, Company company,Equipment equipment) {
@@ -188,6 +274,7 @@ public class GetEquipmentConservation {
         returnEquipment.setPassword(equipment.getPassword());
         returnEquipment.setRoom(equipment.getRoom());
         returnEquipment.setLocation(equipment.getLocation());
+        
         if (equipment.getDateWork() == null) {
             returnEquipment.setDateWork(LocalDate.now());
         } else returnEquipment.setDateWork(equipment.getDateWork());
@@ -225,4 +312,5 @@ public class GetEquipmentConservation {
             return returnEquipment;
         } else return null;
     }
+    
 }

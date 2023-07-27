@@ -5,6 +5,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import ru.greatlarder.technicalassistant.domain.Company;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.Room;
@@ -22,6 +23,7 @@ import ru.greatlarder.technicalassistant.services.list_view.impl.equipment.ListV
 import ru.greatlarder.technicalassistant.services.list_view.impl.equipment.ListViewEquipmentPortableDatabaseMySQL;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,6 +34,7 @@ public class FragmentRoom implements Initializable {
     @FXML public SplitPane splitPaneRoomFragment;
     @FXML public TabPane tabPane1Room;
     @FXML public TabPane tabPane2Room;
+    @FXML public BorderPane borderPane;
     Company company;
     String lang;
     User user;
@@ -41,7 +44,10 @@ public class FragmentRoom implements Initializable {
         tabPane1Room.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
        if (user instanceof Engineer){
            loadSQLite();
-           loadMySQL();
+           if(user.getNameDB() != null && user.getPasswordDB() != null && user.getUserDB() != null
+           && !user.getNameDB().isEmpty() && !user.getPasswordDB().isEmpty() && !user.getUserDB().isEmpty()) {
+               loadMySQL();
+           }
        }
        if (user instanceof Reception){
            loadMySQL();
@@ -62,8 +68,9 @@ public class FragmentRoom implements Initializable {
                 return getListViewRoom.getListView(user, company.getNameCompany(), null);
             }
         };
-        ProgressBar progressBar = new ProgressBar();
+        ProgressIndicator progressBar = new ProgressIndicator();
         progressBar.setMaxWidth(MAX_VALUE);
+        
         Tab tab = new Tab();
         tab.setText(company.getNameCompany() + " : " + "SQLite");
         tab.setContent(progressBar);
@@ -80,6 +87,7 @@ public class FragmentRoom implements Initializable {
             executorService.execute(task);
             executorService.shutdown();
         });
+        
     }
     private void loadMySQL(){
         Task<ListView<Room>> task = new Task<>() {

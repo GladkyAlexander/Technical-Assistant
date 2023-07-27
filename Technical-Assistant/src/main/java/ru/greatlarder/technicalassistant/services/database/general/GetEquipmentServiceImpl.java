@@ -3,80 +3,82 @@ package ru.greatlarder.technicalassistant.services.database.general;
 import ru.greatlarder.technicalassistant.domain.Equipment;
 import ru.greatlarder.technicalassistant.domain.equipment.*;
 import ru.greatlarder.technicalassistant.services.lang.Language;
+import ru.greatlarder.technicalassistant.services.lang.LanguageNameEquipment;
 import ru.greatlarder.technicalassistant.services.lang.impl.LanguageImpl;
+import ru.greatlarder.technicalassistant.services.lang.impl.LanguageNameEquipmentImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GetEquipmentServiceImpl implements GetEquipmentService {
-    Language language = new LanguageImpl();
+    LanguageNameEquipment languageNameEquipment = new LanguageNameEquipmentImpl();
     @Override
     public Equipment getEquipment(ResultSet resultSet) throws SQLException {
 
         Equipment equipment = new Equipment();
 
-        if (resultSet.getString("name").equals(language.PROJECTOR("Русский"))
-                || resultSet.getString("name").equals(language.PROJECTOR("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getProjector("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getProjector("English"))) {
             equipment = getProjector(resultSet);
         }
-        if (resultSet.getString("name").equals(language.MICROPHONE("Русский"))
-                || resultSet.getString("name").equals(language.MICROPHONE("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getMicrophone("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getMicrophone("English"))) {
             equipment = getMicrophone(resultSet);
         }
-        if (resultSet.getString("name").equals(language.NETWORK_SWITCH("Русский"))
-                || resultSet.getString("name").equals(language.NETWORK_SWITCH("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getNetworkSwitch("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getNetworkSwitch("English"))) {
             equipment = getNetworkSwitch(resultSet);
         }
-        if (resultSet.getString("name").equals(language.ACOUSTIC_SPEAKER("Русский"))
-                || resultSet.getString("name").equals(language.ACOUSTIC_SPEAKER("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getAcousticSpeaker("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getAcousticSpeaker("English"))) {
             equipment = getAcousticSpeaker(resultSet);
         }
-        if (resultSet.getString("name").equals(language.AUDIO_AMPLIFIER("Русский"))
-                || resultSet.getString("name").equals(language.AUDIO_AMPLIFIER("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getAudioAmplifier("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getAudioAmplifier("English"))) {
             equipment = getAudioAmplifier(resultSet);
         }
-        if (resultSet.getString("name").equals(language.AUDIO_INTERFACE("Русский"))
-                || resultSet.getString("name").equals(language.AUDIO_INTERFACE("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getAudioInterface("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getAudioInterface("English"))) {
             equipment = getAudioInterface(resultSet);
         }
-        if (resultSet.getString("name").equals(language.AUDIO_PROCESSOR("Русский"))
-                || resultSet.getString("name").equals(language.AUDIO_PROCESSOR("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getAudioProcessor("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getAudioProcessor("English"))) {
             equipment = getAudioProcessor(resultSet);
         }
-        if (resultSet.getString("name").equals(language.CONTROL_PROCESSOR("Русский"))
-                || resultSet.getString("name").equals(language.CONTROL_PROCESSOR("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getControlProcessor("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getControlProcessor("English"))) {
             equipment = getControlProcessor(resultSet);
         }
-        if (resultSet.getString("name").equals(language.LAPTOP("Русский"))
-                || resultSet.getString("name").equals(language.LAPTOP("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getLaptop("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getLaptop("English"))) {
             equipment = getLaptop(resultSet);
         }
-        if (resultSet.getString("name").equals(language.MATRIX_SWITCHER("Русский"))
-                || resultSet.getString("name").equals(language.MATRIX_SWITCHER("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getMatrixSwitcher("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getMatrixSwitcher("English"))) {
             equipment = getMatrixSwitcher(resultSet);
         }
-        if (resultSet.getString("name").equals(language.MEDIA_PLAYER("Русский"))
-                || resultSet.getString("name").equals(language.MEDIA_PLAYER("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getMediaPlayer("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getMediaPlayer("English"))) {
             equipment = getMediaPlayer(resultSet);
         }
-        if (resultSet.getString("name").equals(language.TOUCH_CONTROL_PANEL("Русский"))
-                || resultSet.getString("name").equals(language.TOUCH_CONTROL_PANEL("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getTouchControlPanel("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getTouchControlPanel("English"))) {
             equipment = getTouchControlPanel(resultSet);
         }
-        if (resultSet.getString("name").equals(language.TV_PANEL("Русский"))
-                || resultSet.getString("name").equals(language.TV_PANEL("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getTvPanel("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getTvPanel("English"))) {
             equipment = getTvPanel(resultSet);
         }
-        if (resultSet.getString("name").equals(language.TV_TUNER("Русский"))
-                || resultSet.getString("name").equals(language.TV_TUNER("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getTvTuner("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getTvTuner("English"))) {
             equipment = getTvTuner(resultSet);
         }
-        if (resultSet.getString("name").equals(language.VIDEO_RECEIVER("Русский"))
-                || resultSet.getString("name").equals(language.VIDEO_RECEIVER("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getVideoReceiver("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getVideoReceiver("English"))) {
             equipment = getVideoReceiver(resultSet);
         }
-        if (resultSet.getString("name").equals(language.VIDEO_TRANSMITTER("Русский"))
-                || resultSet.getString("name").equals(language.VIDEO_TRANSMITTER("English"))) {
+        if (resultSet.getString("name").equals(languageNameEquipment.getVideoTransmitter("Русский"))
+                || resultSet.getString("name").equals(languageNameEquipment.getVideoTransmitter("English"))) {
             equipment = getVideoTransmitter(resultSet);
         }
         equipment.setId(resultSet.getInt("id"));

@@ -8,6 +8,7 @@ public class Room {
     String nameRoom;
     String nameCompanyForRoom;
     String urlLogoRoom;
+    String instruction;
     List<EventFormat> eventsList;
     List<SeatingArrangements> seatingArrangementsList;
     List<Equipment> equipmentList;
@@ -15,17 +16,27 @@ public class Room {
 
     public Room() {
     }
-
-    public Room(String nameRoom, String nameCompanyForRoom,String urlLogoRoom, List<EventFormat> eventsList, List<SeatingArrangements> seatingArrangementsList, List<Equipment> equipmentList, List<Day> dayList) {
+    
+    public Room(int id, String nameRoom, String nameCompanyForRoom, String urlLogoRoom, String instruction, List<EventFormat> eventsList, List<SeatingArrangements> seatingArrangementsList, List<Equipment> equipmentList, List<Day> dayList) {
+        this.id = id;
         this.nameRoom = nameRoom;
         this.nameCompanyForRoom = nameCompanyForRoom;
         this.urlLogoRoom = urlLogoRoom;
+        this.instruction = instruction;
         this.eventsList = eventsList;
         this.seatingArrangementsList = seatingArrangementsList;
         this.equipmentList = equipmentList;
         this.dayList = dayList;
     }
-
+    
+    public String getInstruction() {
+        return instruction;
+    }
+    
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
+    }
+    
     public int getId() {
         return id;
     }
@@ -97,6 +108,7 @@ public class Room {
             ", nameRoom='" + nameRoom + '\'' +
             ", nameCompanyForRoom='" + nameCompanyForRoom + '\'' +
             ", urlLogoRoom='" + urlLogoRoom + '\'' +
+            ", instruction='" + instruction + '\'' +
             ", eventsList=" + eventsList +
             ", seatingArrangementsList=" + seatingArrangementsList +
             ", equipmentList=" + equipmentList +

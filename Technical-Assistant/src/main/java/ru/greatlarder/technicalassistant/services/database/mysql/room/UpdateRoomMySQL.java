@@ -34,8 +34,18 @@ public class UpdateRoomMySQL implements UpdateRoom {
             }
             cf.setBlob(2, bais);
             cf.setString(3, room.getNameCompanyForRoom());
+            
+            try {
+                Path path = Paths.get(room.getInstruction());
+                File file1 = path.toFile();
+                bais = new ByteArrayInputStream(getByteArrayFromFile(file1));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            cf.setBlob(4, bais);
 
-            cf.setInt(4, id);
+            cf.setInt(5, id);
 
             cf.executeUpdate();
             connectMySQL.closeMySQLDatabase();

@@ -12,4 +12,6 @@ public interface LanguageWarnings {
     String Error_when_adding_to_the_database_SQLite(String lang);
     
     String Error_when_adding_to_the_database_MySQL(String lang);
+    
+    String there_is_no_data_about_the_external_database(String language);
 }
